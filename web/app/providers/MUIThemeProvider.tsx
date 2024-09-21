@@ -2,12 +2,12 @@
 
 import { PropsWithChildren } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
-import "@fontsource/poppins";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 
 const theme = createTheme({
+  cssVariables: true,
   typography: {
-    fontFamily: "Poppins, Arial, sans-serif",
+    fontFamily: "var(--font-poppins)",
     h1: {
       fontSize: "3rem",
     },
@@ -30,5 +30,9 @@ const theme = createTheme({
 });
 
 export const MUIThemeProvider = ({ children }: PropsWithChildren<{}>) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return (
+    <AppRouterCacheProvider options={{ key: "css", enableCssLayer: true }}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </AppRouterCacheProvider>
+  );
 };
