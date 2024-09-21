@@ -1,8 +1,10 @@
 import { Stack, Typography } from "@mui/material";
+import { DemoBack } from "../_components/DemoBack";
 
-export default async function GroupsPage() {
+export default function TypographyPage() {
   return (
-    <Stack gap={1}>
+    <Stack gap={2}>
+      <DemoBack />
       <Typography variant="h1">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egestas eget,
         vehicula ac lacus. In rhoncus augue eget sapien rhoncus, ac dapibus ex scelerisque.
