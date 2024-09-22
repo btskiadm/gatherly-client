@@ -22,7 +22,10 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import { GroupTileData } from "../mock";
 
 const GROUP_NAME = "Pellentesque malesuada sapien eu dolor rutrum";
 const GROUP_DESCRIPTION =
@@ -47,19 +50,24 @@ function formatDateDifference(dateInput: Date) {
   }
 }
 
-export const GroupTile = () => {
+export const GroupTile = ({ id, title, description, members, createdAt }: PropsWithChildren<GroupTileData>) => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
   };
 
-  const handleCloseMore = () => {
+  const handleCloseMore = (reason?: "report" | "favorite") => () => {
+    if (reason) {
+      alert(reason);
+    }
+
     setMoreElement(null);
   };
 
   const handleJoin = () => {
     alert("join");
+    toast.success("You have just join a new group. Congrats !");
   };
 
   const open = !!moreElement;
@@ -79,8 +87,9 @@ export const GroupTile = () => {
         }}
       >
         <Stack gap={1} p={1} height="100%">
+          {/* title */}
           <Stack direction="row">
-            <Tooltip title={GROUP_NAME}>
+            <Tooltip title={title}>
               <Typography
                 variant="subtitle1"
                 minWidth="0px"
@@ -88,14 +97,16 @@ export const GroupTile = () => {
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                {GROUP_NAME}
+                {title}
               </Typography>
             </Tooltip>
           </Stack>
+          {/* chips */}
           <Stack gap={1} direction="row" width="min-content">
-            <Chip size="small" label={GROUP_MEMBERS} icon={<Group />} />
-            <Chip size="small" label={formatDateDifference(GROUP_CREATED_AT)} icon={<AccessTime />} />
+            <Chip size="small" label={members} icon={<Group />} />
+            <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
           </Stack>
+          {/* avatars */}
           <AvatarGroup
             slotProps={{
               additionalAvatar: {
@@ -128,6 +139,7 @@ export const GroupTile = () => {
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
           </AvatarGroup>
+          {/* description */}
           <Box height="100%">
             <Typography
               variant="body2"
@@ -136,17 +148,19 @@ export const GroupTile = () => {
                 display: "-webkit-box",
                 WebkitLineClamp: 4,
                 WebkitBoxOrient: "vertical",
+                color: "text.secondary",
               }}
             >
-              {GROUP_DESCRIPTION}
+              {description}
             </Typography>
           </Box>
+          {/* actions */}
           <Box height="100%" />
           <Stack justifyContent="space-between" direction="row">
             <IconButton onClick={handleOpenMore}>
               <MoreVert />
             </IconButton>
-            <Button color="success" variant="contained" startIcon={<GroupAdd />} onClick={handleJoin}>
+            <Button color="primary" variant="contained" startIcon={<GroupAdd />} onClick={handleJoin}>
               Join
             </Button>
           </Stack>
@@ -155,7 +169,7 @@ export const GroupTile = () => {
       <Menu
         anchorEl={moreElement}
         open={open}
-        onClose={handleCloseMore}
+        onClose={handleCloseMore()}
         sx={{
           "& .MuiPaper-root": {
             "& .MuiMenuItem-root": {
@@ -166,13 +180,13 @@ export const GroupTile = () => {
           },
         }}
       >
-        <MenuItem onClick={handleCloseMore} disableRipple>
+        <MenuItem onClick={handleCloseMore("favorite")} disableRipple>
           <FavoriteBorderOutlined />
           Favorite
         </MenuItem>
-        <MenuItem onClick={handleCloseMore} disableRipple>
+        <MenuItem onClick={handleCloseMore("report")} disableRipple>
           <ReportGmailerrorredOutlined color="warning" />
-          Edit
+          Report
         </MenuItem>
       </Menu>
     </>
