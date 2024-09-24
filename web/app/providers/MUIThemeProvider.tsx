@@ -4,12 +4,13 @@ import { PropsWithChildren } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const theme = createTheme({
   cssVariables: true,
   palette: {
     background: {
-      default: "#eeeeee",
+      default: grey[50],
     },
   },
   typography: {

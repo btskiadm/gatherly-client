@@ -2,11 +2,11 @@
 
 import {
   AccessTime,
+  FavoriteBorderOutlined,
   Group,
   GroupAdd,
   MoreVert,
   ReportGmailerrorredOutlined,
-  FavoriteBorderOutlined,
 } from "@mui/icons-material";
 import {
   Avatar,
@@ -17,21 +17,14 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Paper,
   Stack,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { PropsWithChildren, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";
-
-const GROUP_NAME = "Pellentesque malesuada sapien eu dolor rutrum";
-const GROUP_DESCRIPTION =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque malesuada sapien eu dolor rutrum pulvinar.";
-const GROUP_MEMBERS = 299;
-const GROUP_CREATED_AT = new Date("2023-09-18");
+import { CommonGroupTile } from "./CommonGroupTile";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
@@ -74,18 +67,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
 
   return (
     <>
-      <Paper
-        sx={{
-          width: "16rem",
-          height: "16rem",
-          transition: "all 0.2s",
-          boxShadow: 1,
-          "&:hover": {
-            scale: 1.001,
-            boxShadow: 3,
-          },
-        }}
-      >
+      <CommonGroupTile>
         <Stack gap={1} p={1} height="100%">
           {/* title */}
           <Stack direction="row">
@@ -107,7 +89,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
             <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
           </Stack>
           {/* avatars */}
-          <AvatarGroup
+          {/* <AvatarGroup
             slotProps={{
               additionalAvatar: {
                 sx: {
@@ -138,7 +120,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Travis Howard" />
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
             <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
-          </AvatarGroup>
+          </AvatarGroup> */}
           {/* description */}
           <Box height="100%">
             <Typography
@@ -157,15 +139,15 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           {/* actions */}
           <Box height="100%" />
           <Stack justifyContent="space-between" direction="row">
-            <IconButton onClick={handleOpenMore}>
+            <IconButton size="small" onClick={handleOpenMore}>
               <MoreVert />
             </IconButton>
-            <Button color="primary" variant="contained" startIcon={<GroupAdd />} onClick={handleJoin}>
+            <Button size="small" variant="contained" startIcon={<GroupAdd />} onClick={handleJoin}>
               Join
             </Button>
           </Stack>
         </Stack>
-      </Paper>
+      </CommonGroupTile>
       <Menu
         anchorEl={moreElement}
         open={open}
@@ -181,11 +163,11 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
         }}
       >
         <MenuItem onClick={handleCloseMore("favorite")} disableRipple>
-          <FavoriteBorderOutlined />
+          <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
         <MenuItem onClick={handleCloseMore("report")} disableRipple>
-          <ReportGmailerrorredOutlined color="warning" />
+          <ReportGmailerrorredOutlined color="action" />
           Report
         </MenuItem>
       </Menu>
