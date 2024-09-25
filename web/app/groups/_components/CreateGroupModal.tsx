@@ -7,22 +7,44 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { CreateGroup, CreateGroupRef } from "./CreateGroup";
+import { toast } from "react-hot-toast";
+import { delay } from "@/app/common/utils/delay";
+import { LoadingButton } from "@mui/lab";
 
 export const CreateGroupModal = () => {
   const [open, setOpen] = React.useState(false);
   const ref = useRef<CreateGroupRef>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleReset = useCallback(() => {
     ref.current?.reset();
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    const input = ref.current?.save();
+    console.dir({ input });
+
+    setLoading(true);
+    await delay(3000);
+    setLoading(false);
+
+    if (!input) {
+      toast.error("Validation error. Please check the form.");
+      return;
+    }
+
+    toast.success("Group created successfully.");
+    handleClose();
   }, []);
 
   return (
@@ -48,10 +70,15 @@ export const CreateGroupModal = () => {
           <CreateGroup ref={ref} />
         </DialogContent>
         <DialogActions>
-          <Button variant="text" color="error" onClick={handleReset}>
+          <Button disabled={loading} variant="text" color="error" onClick={handleReset}>
             Reset
           </Button>
-          <Button onClick={handleClose}>Create</Button>
+          {/* <Button disabled={loading} onClick={handleSave}>
+            Create
+          </Button> */}
+          <LoadingButton loading={loading} variant="outlined" onClick={handleSave}>
+            Create
+          </LoadingButton>
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
