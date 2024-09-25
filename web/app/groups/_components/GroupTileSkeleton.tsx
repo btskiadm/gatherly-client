@@ -1,4 +1,4 @@
-import { Paper, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { CommonGroupTile } from "./CommonGroupTile";
 
 export const GroupTileSkeleton = () => {

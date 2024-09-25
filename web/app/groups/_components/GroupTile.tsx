@@ -8,19 +8,7 @@ import {
   MoreVert,
   ReportGmailerrorredOutlined,
 } from "@mui/icons-material";
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Button,
-  Chip,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";

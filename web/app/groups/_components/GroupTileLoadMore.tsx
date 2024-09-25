@@ -31,7 +31,6 @@ export const GroupTileLoadMore = () => {
             }}
           />
         )}
-
         {loading && <CircularProgress thickness={4} size="4rem" />}
         {!loading && (
           <>
