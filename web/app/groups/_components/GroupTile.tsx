@@ -7,6 +7,8 @@ import {
   GroupAdd,
   MoreVert,
   ReportGmailerrorredOutlined,
+  StarBorderRounded,
+  VerifiedOutlined,
 } from "@mui/icons-material";
 import { Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
 import { PropsWithChildren, useState } from "react";
@@ -72,43 +74,52 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
             </Tooltip>
           </Stack>
           {/* chips */}
-          <Stack gap={1} direction="row" width="min-content">
-            <Chip size="small" label={members} icon={<Group />} />
-            <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
-          </Stack>
-          {/* avatars */}
-          {/* <AvatarGroup
-            slotProps={{
-              additionalAvatar: {
-                sx: {
-                  width: "1.5rem",
-                  height: "1.5rem",
-                  fontSize: "0.75rem",
-                },
+          <Stack
+            gap={0.5}
+            direction="row"
+            flexShrink={0}
+            width="min-content"
+            sx={{
+              overflowY: "hidden",
+              overflowX: "auto",
+              width: "100%",
+              padding: 0,
+              "::-webkit-scrollbar": {
+                background: "transparent",
+                width: 0,
+                height: 0,
               },
             }}
-            sx={{
-              marginRight: "auto", // to left
-            }}
-            max={9}
           >
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Remy Sharp" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Travis Howard" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Remy Sharp" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Travis Howard" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Remy Sharp" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Travis Howard" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Remy Sharp" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Travis Howard" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Agnes Walker" />
-            <Avatar sx={{ width: "1.5rem", height: "1.5rem" }} alt="Trevor Henderson" />
-          </AvatarGroup> */}
+            <Tooltip title="Number of members">
+              <Chip size="small" label={members} icon={<Group />} />
+            </Tooltip>
+            <Tooltip title="Date of creating">
+              <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
+            </Tooltip>
+            <Tooltip title="Verified group">
+              <Chip
+                size="small"
+                sx={{
+                  ".MuiChip-label": {
+                    px: "4px",
+                  },
+                }}
+                icon={<VerifiedOutlined fontSize="small" />}
+              />
+            </Tooltip>
+            <Tooltip title="Sponsored group">
+              <Chip
+                size="small"
+                sx={{
+                  ".MuiChip-label": {
+                    px: "4px",
+                  },
+                }}
+                icon={<StarBorderRounded fontSize="small" />}
+              />
+            </Tooltip>
+          </Stack>
           {/* description */}
           <Box height="100%">
             <Typography
@@ -130,7 +141,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
             <IconButton size="small" onClick={handleOpenMore}>
               <MoreVert />
             </IconButton>
-            <Button size="small" variant="contained" startIcon={<GroupAdd />} onClick={handleJoin}>
+            <Button size="small" variant="outlined" startIcon={<GroupAdd fontSize="small" />} onClick={handleJoin}>
               Join
             </Button>
           </Stack>

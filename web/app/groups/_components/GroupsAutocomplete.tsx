@@ -56,47 +56,49 @@ export const GroupsAutocomplete = () => {
         setSelected(v);
       }}
       options={options}
-      sx={{
-        width: 320,
+      sx={(theme) => ({
+        width: "100%",
         ".MuiAutocomplete-tag": {
           my: 0, // fix problem with chip inside autocomplete
         },
         ".MuiChip-label": {
           my: 0, // fix problem with chip inside autocomplete
         },
-      }}
+
+        [theme.breakpoints.up("sm")]: {
+          width: "360px",
+        },
+      })}
       groupBy={({ key }) => key}
       ListboxComponent={ListboxComponent(selected, handleDelete)}
       getOptionLabel={(option) => (option.key === "name" ? option.value : option.label)}
-      renderTags={(value, getTagProps) => {
-        return (
-          <Stack direction="row" maxWidth="80%" width="min-content">
-            {value.slice(0, 1).map((option, index: number) => {
-              const { key, ...tagProps } = getTagProps({ index });
-              return (
-                <Chip
-                  key={option.value}
-                  component="div"
-                  variant="outlined"
-                  size="small"
-                  label={option.key === "name" ? option.value : option.label}
-                  {...tagProps}
-                />
-              );
-            })}
-            {value?.length > 1 && (
+      renderTags={(value, getTagProps) => (
+        <Stack direction="row" maxWidth="80%" width="min-content">
+          {value.slice(0, 1).map((option, index: number) => {
+            const { key, ...tagProps } = getTagProps({ index });
+            return (
               <Chip
-                {...getTagProps({ index: 1 })}
+                key={option.value}
                 component="div"
                 variant="outlined"
                 size="small"
-                label={"+" + (value.length - 1)}
-                onDelete={undefined}
+                label={option.key === "name" ? option.value : option.label}
+                {...tagProps}
               />
-            )}
-          </Stack>
-        );
-      }}
+            );
+          })}
+          {value?.length > 1 && (
+            <Chip
+              {...getTagProps({ index: 1 })}
+              component="div"
+              variant="outlined"
+              size="small"
+              label={"+" + (value.length - 1)}
+              onDelete={undefined}
+            />
+          )}
+        </Stack>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}

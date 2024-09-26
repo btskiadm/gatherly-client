@@ -204,10 +204,8 @@ export const GroupsFilter = () => {
         variant="outlined"
         size="small"
         sx={(theme) => ({
-          display: {
-            [theme.breakpoints.down("sm")]: {
-              display: "none",
-            },
+          [theme.breakpoints.down("sm")]: {
+            display: "none",
           },
         })}
         onClick={handleClick}
@@ -221,10 +219,8 @@ export const GroupsFilter = () => {
         size="small"
         selected={!!anchor}
         sx={(theme) => ({
-          display: {
-            [theme.breakpoints.up("sm")]: {
-              display: "none",
-            },
+          [theme.breakpoints.up("sm")]: {
+            display: "none",
           },
         })}
         onClick={handleClick}

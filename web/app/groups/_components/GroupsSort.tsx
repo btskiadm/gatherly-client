@@ -59,10 +59,8 @@ export const GroupsSort = () => {
         variant="outlined"
         size="small"
         sx={(theme) => ({
-          display: {
-            [theme.breakpoints.down("sm")]: {
-              display: "none",
-            },
+          [theme.breakpoints.down("sm")]: {
+            display: "none",
           },
         })}
         startIcon={<SwapVert fontSize="small" />}
@@ -76,10 +74,8 @@ export const GroupsSort = () => {
         size="small"
         selected={!!anchor}
         sx={(theme) => ({
-          display: {
-            [theme.breakpoints.up("sm")]: {
-              display: "none",
-            },
+          [theme.breakpoints.up("sm")]: {
+            display: "none",
           },
         })}
         onClick={handleClick}

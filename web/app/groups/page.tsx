@@ -7,7 +7,6 @@ import { stack } from "./mock";
 export default async function GroupsPage() {
   return (
     <Stack gap={3} mt={4}>
-      <CreateGroupModal />
       <GroupsListing />
       <Stack gap={6} direction="row" flexWrap="wrap" justifyContent="center">
         {stack.map((s, idx) => (

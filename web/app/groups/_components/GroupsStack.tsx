@@ -15,7 +15,23 @@ import { GroupTileSkeleton } from "./GroupTileSkeleton";
 export const GroupsStack = ({ tags, tiles }: PropsWithChildren<GroupsStackData>) => {
   return (
     <Stack gap={2} width="100%">
-      <Stack width="min-content" direction="row" gap={1}>
+      <Stack
+        width="min-content"
+        direction="row"
+        gap={1}
+        flexShrink={0}
+        sx={{
+          overflowY: "hidden",
+          overflowX: "auto",
+          width: "100%",
+          padding: 0,
+          "::-webkit-scrollbar": {
+            background: "transparent",
+            width: 0,
+            height: 0,
+          },
+        }}
+      >
         {tags.map((tag) => {
           if (tag.key === "category" && tag.label && tag.value) {
             return <Chip key={tag.value} icon={<InterestsOutlined fontSize="small" />} label={tag.label} />;
