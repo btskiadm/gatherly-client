@@ -3,8 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import { styled } from "@mui/material/styles";
 
 export const BootstrapDialogTitle = styled(DialogTitle)(({ theme }) => ({
-  m: 0,
-  p: 2,
+  p: 0,
 }));
 
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -20,5 +19,5 @@ export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export const BootstrapDialogActions = styled(DialogActions)(({ theme }) => ({
-  padding: theme.spacing(6),
+  p: 0,
 }));

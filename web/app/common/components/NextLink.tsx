@@ -1,6 +1,7 @@
-import * as React from "react";
+"use client";
+import React from "react";
 import clsx from "clsx";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import MuiLink, { LinkProps as MuiLinkProps } from "@mui/material/Link";
 import { styled } from "@mui/material/styles";
@@ -49,7 +50,7 @@ export type LinkProps = {
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/pages/api-reference/components/link
-const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) {
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) {
   const {
     activeClassName = "active",
     as,
@@ -68,9 +69,10 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
   } = props;
 
   const router = useRouter();
-  const pathname = typeof href === "string" ? href : href.pathname;
+  const pathname = usePathname();
+  // const pathname = typeof href === "string" ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: router.pathname === pathname && activeClassName,
+    [activeClassName]: pathname === pathname && activeClassName,
   });
 
   const linkAs = linkAsProp || as;
@@ -91,5 +93,3 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
 
   return <MuiLink component={NextLinkComposed} className={className} ref={ref} {...nextjsProps} {...other} />;
 });
-
-export default Link;

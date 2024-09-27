@@ -1,5 +1,4 @@
 import { Stack } from "@mui/material";
-import { CreateGroupModal } from "./_components/CreateGroupModal";
 import { GroupsListing } from "./_components/GroupsListing";
 import { GroupsStack } from "./_components/GroupsStack";
 import { stack } from "./mock";

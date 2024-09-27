@@ -1,30 +1,28 @@
 "use client";
 
 import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from "@/app/common/components/BootstrapDialog";
-import { Close, AddCircleOutlineRounded } from "@mui/icons-material";
+import { delay } from "@/app/common/utils/delay";
+import { AddCircleOutlineRounded, Close } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import Button from "@mui/material/Button";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import React, { useCallback, useRef, useState } from "react";
-import { CreateGroup, CreateGroupRef } from "./CreateGroup";
 import { toast } from "react-hot-toast";
-import { delay } from "@/app/common/utils/delay";
-import { LoadingButton, ToggleButton } from "@mui/lab";
+import { CreateGroup, CreateGroupRef } from "./CreateGroup";
 
 export const CreateGroupModal = () => {
-  const [open, setOpen] = React.useState(false);
   const ref = useRef<CreateGroupRef>(null);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   const handleReset = useCallback(() => {
     ref.current?.reset();
