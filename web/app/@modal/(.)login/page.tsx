@@ -1,5 +1,5 @@
 import { LoginIntercepted } from "@/app/common/components/Auth/Login/Login.intercepted";
 
-export default function LoginPage() {
+export default function LoginInterceptedPage() {
   return <LoginIntercepted />;
 }

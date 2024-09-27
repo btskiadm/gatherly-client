@@ -17,6 +17,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import React from "react";
 import { useLoginDispatch } from "./Auth/Login/Login.provider";
 import { Link } from "./NextLink";
+import { AddCircleOutlineRounded } from "@mui/icons-material";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -115,21 +116,25 @@ export const NavBar = (props: Props) => {
                 direction="row"
                 sx={(theme) => ({
                   gap: 1,
-                  [theme.breakpoints.up("md")]: {
+                  [theme.breakpoints.up("sm")]: {
                     gap: 2,
                   },
                 })}
               >
-                <Box
+                <Button
                   sx={(theme) => ({
-                    display: "none",
-                    [theme.breakpoints.up("md")]: {
-                      display: "block",
+                    [theme.breakpoints.down("sm")]: {
+                      display: "none",
                     },
                   })}
+                  color="secondary"
+                  href="/createGroup"
+                  variant="contained"
+                  startIcon={<AddCircleOutlineRounded fontSize="small" />}
+                  LinkComponent={Link}
                 >
-                  <CreateGroupModal />
-                </Box>
+                  Create an group
+                </Button>
                 <Button href="/login" LinkComponent={Link} variant="contained">
                   Login
                 </Button>

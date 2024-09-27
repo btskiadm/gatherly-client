@@ -9,7 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import React, { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import { CreateGroup, CreateGroupRef } from "./CreateGroup";
+import { CreateGroup, CreateGroupRef } from "../../common/components/Group/Create/CreateGroup.component";
 
 export const CreateGroupModal = () => {
   const ref = useRef<CreateGroupRef>(null);

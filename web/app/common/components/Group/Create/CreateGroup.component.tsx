@@ -12,7 +12,6 @@ import {
 } from "@/app/common/utils/zod";
 import {
   Autocomplete,
-  AutocompleteChangeReason,
   Chip,
   CircularProgress,
   FormControl,
@@ -22,17 +21,18 @@ import {
   TextField,
 } from "@mui/material";
 import React, { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { CategorySearch, CitySearch, allCategories, allCities } from "../mock";
+import { CategorySearch, CitySearch, allCategories, allCities } from "../../../../groups/mock";
 
 const loading = false;
 
+export interface CreateGroupData {
+  success: boolean;
+  data?: CreateGroupInput;
+}
+
 export interface CreateGroupRef {
-  name: string;
-  description: string;
-  categories: string[];
-  city?: string; // if not set, then remote
   reset: () => void;
-  save: () => CreateGroupInput | null;
+  save: () => CreateGroupData;
 }
 
 interface CreateGroupProps {}
@@ -44,7 +44,14 @@ export const CreateGroup = forwardRef<CreateGroupRef, CreateGroupProps>(({}, ref
   const [categories, setCategories] = useState<CategorySearch[]>([]);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
-  const handleSave = useCallback((): CreateGroupInput | null => {
+  const handleReset = useCallback(() => {
+    setName("");
+    setDescription("");
+    setCity(null);
+    setCategories([]);
+  }, []);
+
+  const handleSave = useCallback((): CreateGroupData => {
     const { data, success, error } = createGroupSchema.safeParse({
       name,
       description,
@@ -52,29 +59,22 @@ export const CreateGroup = forwardRef<CreateGroupRef, CreateGroupProps>(({}, ref
       categories: categories.map(({ value }) => value),
     });
 
-    if (success) {
-      return data;
+    if (error) {
+      setErrors(flattenIssues(error?.issues));
     }
 
-    setErrors(flattenIssues(error.issues));
-    return null;
+    return {
+      success,
+      data,
+    };
   }, [name, description, city, categories]);
 
   useImperativeHandle(ref, () => ({
-    name,
-    description,
-    city: city?.value,
-    categories: categories.map(({ value }) => value),
     save: handleSave,
-    reset: () => {
-      setName("");
-      setDescription("");
-      setCity(null);
-      setCategories([]);
-    },
+    reset: handleReset,
   }));
 
-  const handleCategories = useCallback((e: unknown, categories: CategorySearch[], reason: AutocompleteChangeReason) => {
+  const handleCategories = useCallback((e: unknown, categories: CategorySearch[]) => {
     setCategories(categories);
   }, []);
 
@@ -96,7 +96,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, CreateGroupProps>(({}, ref
   const cityError = errors["city"];
 
   return (
-    <Stack gap={3} minWidth="320px" width="clamp(320px, 80vw, 560px)" maxWidth="600px">
+    <Stack gap={3} width="100%">
       <FormControl error={!!nameError}>
         <FormLabel required>Nazwa</FormLabel>
         <TextField placeholder="Nazwa grupy" size="small" value={name} onChange={handleName} />
