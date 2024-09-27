@@ -1,20 +1,16 @@
 "use client";
 
+import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { delay } from "../../../utils/delay";
 import { SignUp, SignUpData } from "./SignUp.component";
 import { SignUpModal } from "./SignUp.modal";
-import { useSignUpDispatch, useSignUpState } from "./SignUp.provider";
 
-export const SignUpModule = () => {
-  const { open: openState } = useSignUpState();
-  const { open } = useSignUpDispatch();
+export const SignUpIntercepted = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleClose = useCallback(() => {
-    open(false);
     router.back();
   }, []);
 
@@ -26,7 +22,7 @@ export const SignUpModule = () => {
   }, []);
 
   return (
-    <SignUpModal open={openState} onClose={handleClose}>
+    <SignUpModal open={true} onClose={handleClose}>
       <SignUp loading={loading} onSubmit={handleSubmit} />
     </SignUpModal>
   );

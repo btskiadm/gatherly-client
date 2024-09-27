@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
-import { SignInProvider } from "../common/components/Auth/SignIn/SignIn.provider";
+import { LoginProvider } from "../common/components/Auth/Login/Login.provider";
 import { SignUpProvider } from "../common/components/Auth/SignUp/SignUp.provider";
 import { MUIThemeProvider } from "./MUIThemeProvider";
 
@@ -27,9 +27,9 @@ export const Providers = ({ children }: PropsWithChildren<{}>) => {
           },
         }}
       />
-      <SignInProvider>
+      <LoginProvider>
         <SignUpProvider>{children}</SignUpProvider>
-      </SignInProvider>
+      </LoginProvider>
     </MUIThemeProvider>
   );
 };

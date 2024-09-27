@@ -73,7 +73,7 @@ export const SignUp = ({ loading, onSubmit }: SignUpProps) => {
   const passwordError = errors["password"];
 
   return (
-    <Stack gap={3} minWidth="280px" width="clamp(320px, 50vw, 560px)" maxWidth="560px">
+    <Stack gap={3} width="100%">
       <FormControl required error={!!usernameError}>
         <FormLabel>Username</FormLabel>
         <OutlinedInput notched={false} value={username} onChange={handleUsername} />
@@ -109,7 +109,7 @@ export const SignUp = ({ loading, onSubmit }: SignUpProps) => {
         <Typography align="center" variant="body2">
           Already have an account?
         </Typography>
-        <Link href="/sign-in" variant="body2">
+        <Link href="/login" variant="body2">
           Sign in
         </Link>
       </Stack>

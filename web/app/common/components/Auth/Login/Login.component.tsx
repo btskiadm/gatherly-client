@@ -15,27 +15,27 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { ZodFlattenIssue, flattenIssues, signInSchema } from "../../../utils/zod";
+import { ZodFlattenIssue, flattenIssues, loginSchema } from "../../../utils/zod";
 import { Link } from "../../NextLink";
 
-export interface SignInData {
+export interface LoginData {
   username: string;
   password: string;
 }
 
-export interface SignInProps {
+export interface LoginProps {
   loading: boolean;
-  onSubmit: (data: SignInData) => void;
+  onSubmit: (data: LoginData) => void;
 }
 
-export const SignIn = ({ loading, onSubmit }: SignInProps) => {
+export const Login = ({ loading, onSubmit }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
   const handleSave = useCallback(() => {
-    const { success, error } = signInSchema.safeParse({
+    const { success, error } = loginSchema.safeParse({
       username,
       password,
     });
@@ -66,7 +66,7 @@ export const SignIn = ({ loading, onSubmit }: SignInProps) => {
   const passwordError = errors["password"];
 
   return (
-    <Stack gap={3} minWidth="280px" width="clamp(320px, 50vw, 560px)" maxWidth="560px">
+    <Stack gap={3} width="100%">
       <FormControl required error={!!usernameError}>
         <FormLabel>Username</FormLabel>
         <OutlinedInput notched={false} value={username} onChange={handleUsername} />
@@ -104,7 +104,7 @@ export const SignIn = ({ loading, onSubmit }: SignInProps) => {
         <Typography align="center" variant="body2">
           Don't have an account?
         </Typography>
-        <Link href="/sign-up" variant="body2">
+        <Link href="/signUp" variant="body2">
           Sign up
         </Link>
       </Stack>

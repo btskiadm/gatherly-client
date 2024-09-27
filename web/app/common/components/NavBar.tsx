@@ -15,8 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import React from "react";
-import { useSignUpDispatch } from "./Auth/SignUp/SignUp.provider";
-import { useSignInDispatch } from "./Auth/SignIn/SignIn.provider";
+import { useLoginDispatch } from "./Auth/Login/Login.provider";
+import { Link } from "./NextLink";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -47,7 +47,7 @@ function HideOnScroll(props: Props) {
 }
 
 export const NavBar = (props: Props) => {
-  const { open: signInOpen } = useSignInDispatch();
+  // const { open: loginOpen } = useLoginDispatch();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -130,13 +130,8 @@ export const NavBar = (props: Props) => {
                 >
                   <CreateGroupModal />
                 </Box>
-                <Button
-                  variant="contained"
-                  onClick={() => {
-                    signInOpen(true);
-                  }}
-                >
-                  Sign in
+                <Button href="/login" LinkComponent={Link} variant="contained">
+                  Login
                 </Button>
                 <Box sx={{ flexGrow: 1, display: "flex" }}>
                   <IconButton

@@ -30,12 +30,12 @@ const authUsername = z.string().min(minUsername);
 const authEmail = z.string().email();
 const authPassword = z.string().min(minPassword);
 
-export const signInSchema = z.object({
+export const loginSchema = z.object({
   username: authUsername,
   password: authPassword,
 });
 
-export type SignInInput = z.infer<typeof signInSchema>;
+export type LoginInput = z.infer<typeof loginSchema>;
 
 // sign up
 export const signUpSchema = z.object({

@@ -1,8 +1,7 @@
 "use client";
 
-import { PropsWithChildren, createContext, lazy, useCallback, useContext, useMemo, useRef, useState } from "react";
-import { SignInModule } from "../SignIn/SignIn.module";
-// const LazySignInModule = lazy(() => require('../SignIn/SignIn.module') )
+import { PropsWithChildren, createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
+import { LoginModule } from "../Login/Login.module";
 
 interface SignUpState {
   open: boolean;
@@ -43,7 +42,7 @@ export const SignUpProvider = ({ children }: PropsWithChildren<{}>) => {
   return (
     <SignUpContextDispatch.Provider value={dispatch}>
       <SignUpContextState.Provider value={state}>
-        {loaded.current && <SignInModule />}
+        {loaded.current && <LoginModule />}
         {children}
       </SignUpContextState.Provider>
     </SignUpContextDispatch.Provider>
