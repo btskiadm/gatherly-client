@@ -40,7 +40,7 @@ export const GroupsStack = ({ tags, tiles }: PropsWithChildren<GroupsStackData>)
             return <Chip key={tag.value} icon={<FmdGoodOutlined fontSize="small" />} label={tag.label} />;
           }
           if (tag.key === "remote" && tag.value) {
-            return <Chip icon={<CloudOutlined fontSize="small" />} label="Remote" />;
+            return <Chip key="remote" icon={<CloudOutlined fontSize="small" />} label="Remote" />;
           }
           if (tag.key === "verified" && tag.value) {
             return <Chip key="verified" icon={<VerifiedOutlined fontSize="small" />} label="Verified" />;

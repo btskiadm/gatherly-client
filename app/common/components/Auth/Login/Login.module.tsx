@@ -15,14 +15,17 @@ export const LoginModule = () => {
 
   const handleClose = useCallback(() => {
     open(false);
-  }, []);
+  }, [open]);
 
-  const handleSubmit = useCallback(async (data: LoginData) => {
-    setLoading(true);
-    await delay(2000);
-    setLoading(false);
-    handleClose();
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: LoginData) => {
+      setLoading(true);
+      await delay(2000);
+      setLoading(false);
+      handleClose();
+    },
+    [handleClose]
+  );
 
   return (
     <LoginModal open={openState} onClose={handleClose}>

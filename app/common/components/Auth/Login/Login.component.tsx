@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { ZodFlattenIssue, flattenIssues, loginSchema } from "../../../utils/zod";
+import { flattenIssues, loginSchema, ZodFlattenIssue } from "../../../utils/zod";
 import { Link } from "../../NextLink";
 
 export interface LoginData {
@@ -50,7 +50,7 @@ export const Login = ({ loading, onSubmit }: LoginProps) => {
     }
 
     setErrors(flattenIssues(error.issues));
-  }, [username, password]);
+  }, [username, password, onSubmit]);
 
   const handleUsername = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -102,7 +102,7 @@ export const Login = ({ loading, onSubmit }: LoginProps) => {
       </LoadingButton>
       <Stack direction="row" gap={1} alignContent="center" justifyContent="center">
         <Typography align="center" variant="body2">
-          Don't have an account?
+          Don&apos;t have an account?
         </Typography>
         <Link href="/signUp" variant="body2">
           Sign up

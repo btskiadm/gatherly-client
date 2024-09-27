@@ -52,7 +52,7 @@ export const SignUp = ({ loading, onSubmit }: SignUpProps) => {
     }
 
     setErrors(flattenIssues(error.issues));
-  }, [username, email, password]);
+  }, [username, email, password, onSubmit]);
 
   const handleUsername = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);

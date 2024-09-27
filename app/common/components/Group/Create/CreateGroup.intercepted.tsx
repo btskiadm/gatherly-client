@@ -14,7 +14,7 @@ export const CreateGroupIntercepted = () => {
 
   const handleClose = useCallback(() => {
     router.back();
-  }, []);
+  }, [router]);
 
   const handleCreate = useCallback(async () => {
     const data = ref.current?.save();
@@ -28,7 +28,7 @@ export const CreateGroupIntercepted = () => {
     } else {
       toast.error("Group validation error. Please check a form.");
     }
-  }, []);
+  }, [router]);
 
   const handleReset = useCallback(() => {
     ref.current?.reset();

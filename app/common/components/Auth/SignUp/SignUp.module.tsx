@@ -16,14 +16,17 @@ export const SignUpModule = () => {
   const handleClose = useCallback(() => {
     open(false);
     router.back();
-  }, []);
+  }, [router, open]);
 
-  const handleSubmit = useCallback(async (data: SignUpData) => {
-    setLoading(true);
-    await delay(2000);
-    setLoading(false);
-    handleClose();
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: SignUpData) => {
+      setLoading(true);
+      await delay(2000);
+      setLoading(false);
+      handleClose();
+    },
+    [handleClose]
+  );
 
   return (
     <SignUpModal open={openState} onClose={handleClose}>

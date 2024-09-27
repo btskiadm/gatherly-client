@@ -28,6 +28,7 @@ const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribut
           <Stack direction="row" gap={0.5} flexWrap="wrap" p={1} zIndex={100}>
             {selected.map((selection) => (
               <Chip
+                key={selection.key === "name" ? selection.value : selection.label}
                 variant="outlined"
                 label={selection.key === "name" ? selection.value : selection.label}
                 onDelete={() => onDelete(selection)}

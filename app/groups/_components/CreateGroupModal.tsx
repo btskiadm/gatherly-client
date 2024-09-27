@@ -30,7 +30,6 @@ export const CreateGroupModal = () => {
 
   const handleSave = useCallback(async () => {
     const input = ref.current?.save();
-    console.dir({ input });
 
     if (!input) {
       toast.error("Validation error. Please check the form.");
@@ -43,7 +42,7 @@ export const CreateGroupModal = () => {
 
     toast.success("Group created successfully.");
     handleClose();
-  }, []);
+  }, [handleClose]);
 
   return (
     <React.Fragment>

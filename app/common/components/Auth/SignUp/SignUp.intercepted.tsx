@@ -12,14 +12,17 @@ export const SignUpIntercepted = () => {
 
   const handleClose = useCallback(() => {
     router.back();
-  }, []);
+  }, [router]);
 
-  const handleSubmit = useCallback(async (data: SignUpData) => {
-    setLoading(true);
-    await delay(2000);
-    setLoading(false);
-    handleClose();
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: SignUpData) => {
+      setLoading(true);
+      await delay(2000);
+      setLoading(false);
+      handleClose();
+    },
+    [handleClose]
+  );
 
   return (
     <SignUpModal open={true} onClose={handleClose}>

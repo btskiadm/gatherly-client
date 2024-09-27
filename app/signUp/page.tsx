@@ -1,5 +1,5 @@
-import { SignInWrapper } from "./_components/SignInWrapper";
+import { SignUpWrapper } from "./_components/SignUpWrapper";
 
-export default function SignInPage() {
-  return <SignInWrapper />;
+export default function SignUpPage() {
+  return <SignUpWrapper />;
 }

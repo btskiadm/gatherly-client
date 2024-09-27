@@ -12,14 +12,17 @@ export const LoginIntercepted = () => {
 
   const handleClose = useCallback(() => {
     router.back();
-  }, []);
+  }, [router]);
 
-  const handleSubmit = useCallback(async (data: LoginData) => {
-    setLoading(true);
-    await delay(2000);
-    setLoading(false);
-    handleClose();
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: LoginData) => {
+      setLoading(true);
+      await delay(2000);
+      setLoading(false);
+      handleClose();
+    },
+    [handleClose]
+  );
 
   return (
     <LoginModal open={true} onClose={handleClose}>
