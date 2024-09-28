@@ -10,7 +10,7 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Link, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";
@@ -58,6 +58,26 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
   return (
     <>
       <CommonGroupTile>
+        <Link
+          variant="subtitle1"
+          minWidth="0px"
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          href={`/group/${id}`}
+          sx={{
+            height: 0,
+            width: 0,
+            "&:after": {
+              bottom: 0,
+              content: "''",
+              left: 0,
+              position: "absolute",
+              right: 0,
+              top: 0,
+            },
+          }}
+        ></Link>
         <Stack gap={1} p={1} height="100%">
           {/* title */}
           <Stack direction="row">

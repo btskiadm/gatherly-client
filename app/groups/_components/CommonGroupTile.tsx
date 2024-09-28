@@ -7,6 +7,7 @@ export const CommonGroupTile = ({ children }: PropsWithChildren<{}>) => {
   return (
     <Paper
       sx={(theme) => ({
+        position: "relative",
         width: "100%",
         height: "14rem",
         boxShadow: 1,
