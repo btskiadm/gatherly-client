@@ -1,5 +1,5 @@
 "use client";
-import { CreateGroupModal } from "@/app/groups/_components/CreateGroupModal";
+import { AddCircleOutlineRounded } from "@mui/icons-material";
 import AdbIcon from "@mui/icons-material/Adb";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/material";
@@ -15,9 +15,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import React from "react";
-import { useLoginDispatch } from "./Auth/Login/Login.provider";
 import { Link } from "./NextLink";
-import { AddCircleOutlineRounded } from "@mui/icons-material";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -106,7 +104,12 @@ export const NavBar = (props: Props) => {
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
-                  <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
+                  <Button
+                    size="small"
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
                     {page}
                   </Button>
                 ))}

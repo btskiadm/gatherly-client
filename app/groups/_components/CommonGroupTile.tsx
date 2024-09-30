@@ -16,8 +16,7 @@ export const CommonGroupTile = ({ children }: PropsWithChildren<{}>) => {
           height: "16rem",
           transition: "all 0.2s",
           "&:hover": {
-            scale: 1.001,
-            boxShadow: 3,
+            boxShadow: 6,
           },
         },
       })}

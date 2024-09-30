@@ -1,6 +1,7 @@
 "use client";
 
-import { CalendarMonth, Chat, Event, Group } from "@mui/icons-material";
+import { Link } from "@/app/common/components/NextLink";
+import { CalendarMonth, Chat, Dashboard, Event, Group } from "@mui/icons-material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Box, Paper, Stack, Typography } from "@mui/material";
@@ -10,13 +11,32 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { usePathname } from "next/navigation";
 
-interface Props {}
+export function GroupNav() {
+  const pathName = usePathname();
 
-export function GroupNav(props: Props) {
+  const [
+    dashboardSelected,
+    eventsSelected,
+    calendarSelected,
+    membersSelected,
+    chatSelected,
+    aboutSected,
+    settingsSelected,
+  ] = [
+    pathName.endsWith("/dashboard"),
+    pathName.endsWith("/events"),
+    pathName.endsWith("/calendar"),
+    pathName.endsWith("/members"),
+    pathName.endsWith("/chat"),
+    pathName.endsWith("/about"),
+    pathName.endsWith("/settings"),
+  ];
+
   return (
     <Paper>
-      <Stack width="100%" p={2} gap={1}>
+      <Stack width="100%" p={2} gap={2}>
         <Box
           border="1px solid grey"
           sx={{
@@ -27,20 +47,20 @@ export function GroupNav(props: Props) {
         >
           (Avatar)
         </Box>
-        <Typography variant="body1">(Group name)</Typography>
+        <Typography variant="h6">(Group name)</Typography>
       </Stack>
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href="dashboard" LinkComponent={Link} selected={dashboardSelected}>
             <ListItemIcon>
-              <InfoOutlinedIcon />
+              <Dashboard />
             </ListItemIcon>
-            <ListItemText primary="About" />
+            <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href="events" LinkComponent={Link} selected={eventsSelected}>
             <ListItemIcon>
               <Event />
             </ListItemIcon>
@@ -48,7 +68,7 @@ export function GroupNav(props: Props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href="calendar" LinkComponent={Link} selected={calendarSelected}>
             <ListItemIcon>
               <CalendarMonth />
             </ListItemIcon>
@@ -56,7 +76,7 @@ export function GroupNav(props: Props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href="members" LinkComponent={Link} selected={membersSelected}>
             <ListItemIcon>
               <Group />
             </ListItemIcon>
@@ -64,18 +84,26 @@ export function GroupNav(props: Props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton disabled>
+          <ListItemButton href="chat" LinkComponent={Link} selected={chatSelected}>
             <ListItemIcon>
               <Chat />
             </ListItemIcon>
             <ListItemText primary="Chat" />
           </ListItemButton>
         </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
+            <ListItemIcon>
+              <InfoOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="About" />
+          </ListItemButton>
+        </ListItem>
       </List>
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href="settings" LinkComponent={Link} selected={settingsSelected}>
             <ListItemIcon>
               <SettingsOutlinedIcon />
             </ListItemIcon>
