@@ -19,21 +19,12 @@ import { usePathname } from "next/navigation";
 export function GroupNav() {
   const pathName = usePathname();
 
-  const [
-    dashboardSelected,
-    eventsSelected,
-    calendarSelected,
-    membersSelected,
-    chatSelected,
-    aboutSected,
-    settingsSelected,
-  ] = [
-    pathName.endsWith("/dashboard"),
+  const [aboutSected, eventsSelected, calendarSelected, membersSelected, chatSelected, settingsSelected] = [
+    pathName.endsWith("/about"),
     pathName.endsWith("/events"),
     pathName.endsWith("/calendar"),
     pathName.endsWith("/members"),
     pathName.endsWith("/chat"),
-    pathName.endsWith("/about"),
     pathName.endsWith("/settings"),
   ];
 
@@ -65,11 +56,11 @@ export function GroupNav() {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton href="dashboard" LinkComponent={Link} selected={dashboardSelected}>
+          <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
             <ListItemIcon>
-              <Dashboard />
+              <InfoOutlined />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="About" />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -102,14 +93,6 @@ export function GroupNav() {
               <Chat />
             </ListItemIcon>
             <ListItemText primary="Chat" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
-            <ListItemIcon>
-              <InfoOutlined />
-            </ListItemIcon>
-            <ListItemText primary="About" />
           </ListItemButton>
         </ListItem>
       </List>

@@ -72,7 +72,6 @@ export const Login = ({ loading, onSubmit }: LoginProps) => {
         <OutlinedInput notched={false} value={username} onChange={handleUsername} />
         <FormHelperText>{usernameError && usernameError.message}</FormHelperText>
       </FormControl>
-
       <FormControl required error={!!passwordError}>
         <FormLabel>Password</FormLabel>
         <OutlinedInput
