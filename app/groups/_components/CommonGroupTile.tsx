@@ -9,11 +9,10 @@ export const CommonGroupTile = ({ children }: PropsWithChildren<{}>) => {
       sx={(theme) => ({
         position: "relative",
         width: "100%",
-        height: "14rem",
-        boxShadow: 1,
+        height: "min-content",
         [theme.breakpoints.up("sm")]: {
-          height: "16rem",
-          transition: "all 0.2s",
+          height: "14rem",
+          transition: "all .2s",
           "&:hover": {
             boxShadow: 6,
           },

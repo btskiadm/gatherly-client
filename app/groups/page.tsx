@@ -8,8 +8,8 @@ export default async function GroupsPage() {
     <Stack gap={3} mt={4}>
       <GroupsListing />
       <Stack gap={6} direction="row" flexWrap="wrap" justifyContent="center">
-        {stack.map((s, idx) => (
-          <GroupsStack key={idx} tags={s.tags} tiles={s.tiles} />
+        {stack.map(({ tags, tiles }, idx) => (
+          <GroupsStack key={idx} tags={tags} tiles={tiles} />
         ))}
       </Stack>
     </Stack>
