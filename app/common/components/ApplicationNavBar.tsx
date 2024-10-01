@@ -1,4 +1,5 @@
 "use client";
+
 import { Adb, AddCircleOutlineRounded, Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar,
@@ -66,7 +67,11 @@ export const ApplicationNavBar = (props: Props) => {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar color="default">
+        <AppBar
+          sx={{
+            bgcolor: "background.paper",
+          }}
+        >
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Adb sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />

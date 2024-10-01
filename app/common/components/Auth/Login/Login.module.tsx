@@ -1,7 +1,6 @@
 "use client";
 
 import { delay } from "@/app/common/utils/delay";
-import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Login, LoginData } from "./Login.component";
 import { LoginModal } from "./Login.modal";
@@ -11,7 +10,6 @@ export const LoginModule = () => {
   const { open: openState } = useLoginState();
   const { open } = useLoginDispatch();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleClose = useCallback(() => {
     open(false);

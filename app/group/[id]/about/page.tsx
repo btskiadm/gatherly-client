@@ -40,7 +40,7 @@ export default function GroupMembersPage() {
       </Paper>
       <Paper>
         <Stack p={2} gap={2}>
-          <Typography variant="h6">Comments</Typography>
+          <Typography variant="h6">Opinie</Typography>
           <Divider />
           <AboutCommentsList />
         </Stack>

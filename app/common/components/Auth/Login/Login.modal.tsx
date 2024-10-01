@@ -5,13 +5,13 @@ import { Box, DialogContent, IconButton } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { BootstrapDialog, BootstrapDialogTitle } from "../../BootstrapDialog";
 
-interface LoginModal
+interface Props
   extends PropsWithChildren<{
     onClose: () => void;
     open: boolean;
   }> {}
 
-export const LoginModal = ({ open, onClose, children }: LoginModal) => {
+export const LoginModal = ({ open, onClose, children }: Props) => {
   return (
     <BootstrapDialog onClose={onClose} open={open}>
       <BootstrapDialogTitle>Sign in</BootstrapDialogTitle>

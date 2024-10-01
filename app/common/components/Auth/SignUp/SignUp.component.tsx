@@ -22,12 +22,12 @@ export interface SignUpData {
   password: string;
 }
 
-export interface SignUpProps {
+export interface Props {
   loading: boolean;
   onSubmit: (data: SignUpData) => void;
 }
 
-export const SignUp = ({ loading, onSubmit }: SignUpProps) => {
+export const SignUp = ({ loading, onSubmit }: Props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

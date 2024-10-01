@@ -18,16 +18,17 @@ export const CreateGroupIntercepted = () => {
 
   const handleCreate = useCallback(async () => {
     const data = ref.current?.save();
+
+    if (!data?.success) {
+      toast.error("Group validation error. Please check a form.");
+      return;
+    }
+
     setLoading(true);
     await delay(2000);
     setLoading(false);
-
-    if (data?.success) {
-      toast.success("Group created successfully.");
-      router.back();
-    } else {
-      toast.error("Group validation error. Please check a form.");
-    }
+    toast.success("Group created successfully.");
+    router.back();
   }, [router]);
 
   const handleReset = useCallback(() => {

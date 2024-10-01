@@ -35,9 +35,9 @@ export interface CreateGroupRef {
   save: () => CreateGroupData;
 }
 
-interface CreateGroupProps {}
+interface Props {}
 
-export const CreateGroup = forwardRef<CreateGroupRef, CreateGroupProps>(({}, ref) => {
+export const CreateGroup = forwardRef<CreateGroupRef, Props>(({}, ref) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [city, setCity] = useState<CitySearch | null>(null);

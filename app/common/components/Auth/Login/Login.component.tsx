@@ -23,12 +23,12 @@ export interface LoginData {
   password: string;
 }
 
-export interface LoginProps {
+export interface Props {
   loading: boolean;
   onSubmit: (data: LoginData) => void;
 }
 
-export const Login = ({ loading, onSubmit }: LoginProps) => {
+export const Login = ({ loading, onSubmit }: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

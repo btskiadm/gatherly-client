@@ -1,16 +1,17 @@
 "use client";
+
 import { Close } from "@mui/icons-material";
 import { Box, DialogContent, IconButton } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { BootstrapDialog, BootstrapDialogTitle } from "../../BootstrapDialog";
 
-interface SignUpModalProps
+interface Props
   extends PropsWithChildren<{
     onClose: () => void;
     open: boolean;
   }> {}
 
-export const SignUpModal = ({ open, onClose, children }: SignUpModalProps) => {
+export const SignUpModal = ({ open, onClose, children }: Props) => {
   return (
     <BootstrapDialog onClose={onClose} open={open}>
       <BootstrapDialogTitle>Sign up</BootstrapDialogTitle>

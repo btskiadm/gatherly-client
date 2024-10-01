@@ -1,12 +1,10 @@
-"use client";
-
 import { Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, DialogContent, IconButton } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from "../../BootstrapDialog";
 
-interface CreateGroupModalProps
+interface Props
   extends PropsWithChildren<{
     onClose: () => void;
     onReset: () => void;
@@ -15,7 +13,7 @@ interface CreateGroupModalProps
     loading: boolean;
   }> {}
 
-export const CreateGroupModal = ({ open, onCreate, onReset, onClose, children, loading }: CreateGroupModalProps) => {
+export const CreateGroupModal = ({ open, onCreate, onReset, onClose, children, loading }: Props) => {
   return (
     <BootstrapDialog onClose={onClose} open={open}>
       <BootstrapDialogTitle>Create a new group</BootstrapDialogTitle>
