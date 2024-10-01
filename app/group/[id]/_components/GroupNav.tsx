@@ -1,16 +1,19 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
-import { CalendarMonth, Chat, Dashboard, Event, Group } from "@mui/icons-material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Box, Paper, Stack, Typography } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { CalendarMonth, Chat, Dashboard, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { usePathname } from "next/navigation";
 
 export function GroupNav() {
@@ -47,7 +50,17 @@ export function GroupNav() {
         >
           (Avatar)
         </Box>
-        <Typography variant="h6">(Group name)</Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            overflow: "hidden",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+          }}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egestas eget,
+        </Typography>
       </Stack>
       <Divider />
       <List>
@@ -94,7 +107,7 @@ export function GroupNav() {
         <ListItem disablePadding>
           <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
             <ListItemIcon>
-              <InfoOutlinedIcon />
+              <InfoOutlined />
             </ListItemIcon>
             <ListItemText primary="About" />
           </ListItemButton>
@@ -105,7 +118,7 @@ export function GroupNav() {
         <ListItem disablePadding>
           <ListItemButton href="settings" LinkComponent={Link} selected={settingsSelected}>
             <ListItemIcon>
-              <SettingsOutlinedIcon />
+              <SettingsOutlined />
             </ListItemIcon>
             <ListItemText primary="Settings" />
           </ListItemButton>

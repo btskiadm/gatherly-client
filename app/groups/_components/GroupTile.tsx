@@ -64,7 +64,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
-          href={`/group/${id}`}
+          href={`/group/${id}/dashboard`}
           sx={{
             height: 0,
             width: 0,

@@ -14,10 +14,10 @@ export default function GroupLayout({
   return (
     <Container
       sx={{
-        minHeight: `calc(98vh - ${minHeight}px)`, // 64px toolbar
+        minHeight: `calc(98vh - ${minHeight}px)`,
       }}
     >
-      <Stack py={8} gap={4} direction="row" height="100%">
+      <Stack py={6} gap={4} direction="row" height="100%">
         <Box
           sx={{
             minWidth: "280px",
@@ -26,13 +26,7 @@ export default function GroupLayout({
         >
           <GroupNav />
         </Box>
-        <Box
-          sx={{
-            flexBasis: "100%",
-          }}
-        >
-          {children}
-        </Box>
+        <Box flexBasis="100%">{children}</Box>
       </Stack>
     </Container>
   );

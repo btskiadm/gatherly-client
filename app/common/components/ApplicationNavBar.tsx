@@ -1,24 +1,23 @@
 "use client";
-import { AddCircleOutlineRounded } from "@mui/icons-material";
-import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Stack } from "@mui/material";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Slide from "@mui/material/Slide";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import React from "react";
+import { Adb, AddCircleOutlineRounded, Menu as MenuIcon } from "@mui/icons-material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Menu,
+  MenuItem,
+  Slide,
+  Stack,
+  Toolbar,
+  Typography,
+  useScrollTrigger,
+} from "@mui/material";
+import { useState } from "react";
 import { Link } from "./NextLink";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 interface Props {
   /**
@@ -45,10 +44,9 @@ function HideOnScroll(props: Props) {
   );
 }
 
-export const NavBar = (props: Props) => {
-  // const { open: loginOpen } = useLoginDispatch();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+export const ApplicationNavBar = (props: Props) => {
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -66,17 +64,17 @@ export const NavBar = (props: Props) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <HideOnScroll {...props}>
         <AppBar color="default">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+              <Adb sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
               <Typography
                 variant="h6"
                 noWrap
                 component="a"
-                href="#"
+                href="/groups"
                 sx={{
                   mr: 2,
                   display: { xs: "none", md: "flex" },
@@ -86,12 +84,12 @@ export const NavBar = (props: Props) => {
               >
                 Gatherly
               </Typography>
-              <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+              <Adb sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
               <Typography
                 variant="h5"
                 noWrap
                 component="a"
-                href="#"
+                href="/groups"
                 sx={{
                   mr: 2,
                   display: { xs: "flex", md: "none" },
@@ -100,7 +98,7 @@ export const NavBar = (props: Props) => {
                   textDecoration: "none",
                 }}
               >
-                LOGO
+                Gatherly
               </Typography>
               <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                 {pages.map((page) => (
@@ -136,7 +134,7 @@ export const NavBar = (props: Props) => {
                   startIcon={<AddCircleOutlineRounded fontSize="small" />}
                   LinkComponent={Link}
                 >
-                  Create an group
+                  Create a group
                 </Button>
                 <Button href="/login" LinkComponent={Link} variant="contained">
                   Login
@@ -178,6 +176,6 @@ export const NavBar = (props: Props) => {
         </AppBar>
       </HideOnScroll>
       <Toolbar />
-    </React.Fragment>
+    </>
   );
 };

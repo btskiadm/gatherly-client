@@ -1,4 +1,4 @@
-import { NavBar } from "./common/components/NavBar";
+import { ApplicationNavBar } from "./common/components/ApplicationNavBar";
 import { Providers } from "./providers";
 import { Poppins } from "next/font/google";
 
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html>
       <body className={roboto.variable}>
         <Providers>
-          <NavBar />
+          <ApplicationNavBar />
           {children}
           {modal}
         </Providers>

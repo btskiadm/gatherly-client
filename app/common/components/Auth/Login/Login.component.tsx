@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { flattenIssues, loginSchema, ZodFlattenIssue } from "../../../utils/zod";
+import { ZodFlattenIssue, flattenIssues, loginSchema } from "../../../utils/zod";
 import { Link } from "../../NextLink";
 
 export interface LoginData {

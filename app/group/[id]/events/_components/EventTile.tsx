@@ -1,22 +1,74 @@
 import { Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { EventGroupItem } from "./mock";
+import { Link } from "@/app/common/components/NextLink";
 
-interface Props {}
+interface Props {
+  item: EventGroupItem;
+}
 
-export const EventTile = (props: Props) => {
+export const EventTile = ({ item }: Props) => {
+  const { id, title, startAt, endAt, city, street, members } = item;
+
+  const _members = members > 99 ? "99+" : members;
+  const shortMonth = new Intl.DateTimeFormat("pl-PL", {
+    month: "short",
+  }).format(new Date(startAt));
+  const shortDay = new Intl.DateTimeFormat("pl-PL", {
+    day: "2-digit",
+  }).format(new Date(startAt));
+  const time = `${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(startAt))} - ${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(endAt))}`;
+
   return (
-    <Paper>
+    <Paper
+      sx={(theme) => ({
+        width: "100%",
+        boxShadow: 1,
+        position: "relative",
+        [theme.breakpoints.up("sm")]: {
+          transition: "all 0.2s",
+          "&:hover": {
+            boxShadow: 6,
+          },
+        },
+      })}
+    >
+      <Link
+        variant="subtitle1"
+        minWidth="0px"
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        href="#"
+        sx={{
+          height: 0,
+          width: 0,
+          "&:after": {
+            bottom: 0,
+            content: "''",
+            left: 0,
+            position: "absolute",
+            right: 0,
+            top: 0,
+          },
+        }}
+      ></Link>
       <Box p={2}>
         <Grid2 container spacing={3}>
           <Grid2 size={2}>
             <Stack justifyContent="center" alignItems="center">
-              <Typography variant="body2" color="text.secondary">
-                WED
+              <Typography textTransform="uppercase" variant="body2" color="text.secondary">
+                {shortMonth}
               </Typography>
-              <Typography variant="h5" color="text.secondary" fontWeight="600">
-                31
+              <Typography variant="h4" color="text.secondary" fontWeight="600">
+                {shortDay}
               </Typography>
             </Stack>
           </Grid2>
@@ -30,7 +82,7 @@ export const EventTile = (props: Props) => {
                   }}
                 />
                 <Typography variant="body2" color="text.secondary">
-                  09:00 - 10:30
+                  {time}
                 </Typography>
               </Stack>
               <Stack direction="row" gap={0.5} alignItems="center">
@@ -40,8 +92,16 @@ export const EventTile = (props: Props) => {
                     color: "text.secondary",
                   }}
                 />
-                <Typography variant="body2" color="text.secondary">
-                  Warszawa
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  minWidth="0px"
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {city}
+                  {street ? `, ${street}` : ""}
                 </Typography>
               </Stack>
             </Stack>
@@ -59,10 +119,9 @@ export const EventTile = (props: Props) => {
                   color: "text.secondary",
                 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egestas
-                eget,
+                {title}
               </Typography>
-              <Chip size="small" label={"99+"} icon={<Group />} />
+              <Chip size="small" label={_members} icon={<Group />} />
             </Stack>
           </Grid2>
         </Grid2>

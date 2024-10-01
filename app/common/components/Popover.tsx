@@ -1,5 +1,4 @@
 import { Popover as MUIPopover, PopoverProps, Stack } from "@mui/material";
-import { ReactNode } from "react";
 
 export const Popover = (props: PopoverProps) => {
   return (

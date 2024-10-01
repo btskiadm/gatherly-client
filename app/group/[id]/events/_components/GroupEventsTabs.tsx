@@ -3,7 +3,7 @@
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import * as React from "react";
+import React from "react";
 import { GroupEventsList } from "./GroupEventsList";
 
 interface TabPanelProps {
@@ -16,23 +16,10 @@ function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    <div hidden={value !== index} {...other}>
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
 }
 
 export const GroupEventsTabs = () => {
@@ -48,18 +35,17 @@ export const GroupEventsTabs = () => {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
           textColor="secondary"
           variant="fullWidth"
           indicatorColor="secondary"
           scrollButtons
           allowScrollButtonsMobile
         >
-          <Tab label="Upcoming" {...a11yProps(0)} />
-          <Tab label="Pending" {...a11yProps(1)} />
-          <Tab label="Recurring" {...a11yProps(2)} />
-          <Tab label="Past" {...a11yProps(3)} />
-          <Tab label="Cancelled" {...a11yProps(4)} />
+          <Tab label="Upcoming" />
+          <Tab label="Pending" />
+          <Tab label="Recurring" />
+          <Tab label="Past" />
+          <Tab label="Cancelled" />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

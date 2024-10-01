@@ -1,6 +1,6 @@
 "use client";
-import { ArrowBack } from "@mui/icons-material";
-import { Button, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Grid2, Paper, Stack, Typography } from "@mui/material";
+import { GroupHeader } from "../_components/GroupHeader";
 
 const Tile = ({ primary, secondary }: { primary: string; secondary: string }) => {
   return (
@@ -35,30 +35,17 @@ const Tile = ({ primary, secondary }: { primary: string; secondary: string }) =>
 
 export default function GroupDashboardPage() {
   return (
-    <Stack gap={4}>
-      <Stack>
-        <Button
-          variant="text"
-          startIcon={<ArrowBack />}
-          sx={{
-            width: "min-content",
-          }}
-        >
-          Back
-        </Button>
-        <Stack direction="row" alignItems="end" gap={1}>
-          <Typography variant="h4">Dashboard</Typography>
-        </Stack>
-      </Stack>
+    <Stack gap={3}>
+      <GroupHeader primary="Dashboard" secondary="See basic information about this group." />
       <Grid2 container spacing={4}>
         <Grid2 size={4}>
-          <Tile primary={"24"} secondary="Zakończone" />
+          <Tile primary="24" secondary="Zakończone" />
         </Grid2>
         <Grid2 size={4}>
-          <Tile primary={"24"} secondary="Odwołane" />
+          <Tile primary="24" secondary="Odwołane" />
         </Grid2>
         <Grid2 size={4}>
-          <Tile primary={"24"} secondary="Wszystkie" />
+          <Tile primary="24" secondary="Wszystkie" />
         </Grid2>
       </Grid2>
     </Stack>
