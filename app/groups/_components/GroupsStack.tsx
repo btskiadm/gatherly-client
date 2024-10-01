@@ -5,12 +5,13 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Chip, Stack } from "@mui/material";
+import { Chip, Grid2, Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { GroupsStackData } from "../mock";
 import { GroupTile } from "./GroupTile";
 import { GroupTileLoadMore } from "./GroupTileLoadMore";
 import { GroupTileSkeleton } from "./GroupTileSkeleton";
+import { CommonGroupTile } from "./CommonGroupTile";
 
 export const GroupsStack = ({ tags, tiles }: PropsWithChildren<GroupsStackData>) => {
   return (
@@ -55,13 +56,26 @@ export const GroupsStack = ({ tags, tiles }: PropsWithChildren<GroupsStackData>)
           return null;
         })}
       </Stack>
-      <Stack gap={2} direction="row" flexWrap="wrap" justifyContent="flex-start">
+
+      <Grid2 container spacing={2}>
         {tiles.map((d) => (
-          <GroupTile key={d.id} {...d} />
+          <Grid2 size={{ xs: 12, sm: 6, md: 3 }} key={d.id}>
+            <CommonGroupTile>
+              <GroupTile {...d} />
+            </CommonGroupTile>
+          </Grid2>
         ))}
-        <GroupTileSkeleton />
-        <GroupTileLoadMore />
-      </Stack>
+        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+          <CommonGroupTile>
+            <GroupTileSkeleton />
+          </CommonGroupTile>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, md: 3 }}>
+          <CommonGroupTile>
+            <GroupTileLoadMore />
+          </CommonGroupTile>
+        </Grid2>
+      </Grid2>
     </Stack>
   );
 };

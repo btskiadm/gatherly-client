@@ -14,7 +14,6 @@ import { Box, Button, Chip, IconButton, Link, Menu, MenuItem, Stack, Tooltip, Ty
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";
-import { CommonGroupTile } from "./CommonGroupTile";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
@@ -57,116 +56,114 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
 
   return (
     <>
-      <CommonGroupTile>
-        <Link
-          variant="subtitle1"
-          minWidth="0px"
-          whiteSpace="nowrap"
-          overflow="hidden"
-          textOverflow="ellipsis"
-          href={`/group/${id}/dashboard`}
+      <Link
+        variant="subtitle1"
+        minWidth="0px"
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        href={`/group/${id}/dashboard`}
+        sx={{
+          height: 0,
+          width: 0,
+          "&:after": {
+            bottom: 0,
+            content: "''",
+            left: 0,
+            position: "absolute",
+            right: 0,
+            top: 0,
+          },
+        }}
+      ></Link>
+      <Stack gap={1} p={1} height="100%">
+        {/* title */}
+        <Stack direction="row">
+          <Tooltip title={title}>
+            <Typography
+              variant="subtitle1"
+              minWidth="0px"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {title}
+            </Typography>
+          </Tooltip>
+        </Stack>
+        {/* chips */}
+        <Stack
+          gap={0.5}
+          direction="row"
+          flexShrink={0}
+          width="min-content"
           sx={{
-            height: 0,
-            width: 0,
-            "&:after": {
-              bottom: 0,
-              content: "''",
-              left: 0,
-              position: "absolute",
-              right: 0,
-              top: 0,
+            overflowY: "hidden",
+            overflowX: "auto",
+            width: "100%",
+            padding: 0,
+            "::-webkit-scrollbar": {
+              background: "transparent",
+              width: 0,
+              height: 0,
             },
           }}
-        ></Link>
-        <Stack gap={1} p={1} height="100%">
-          {/* title */}
-          <Stack direction="row">
-            <Tooltip title={title}>
-              <Typography
-                variant="subtitle1"
-                minWidth="0px"
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-              >
-                {title}
-              </Typography>
-            </Tooltip>
-          </Stack>
-          {/* chips */}
-          <Stack
-            gap={0.5}
-            direction="row"
-            flexShrink={0}
-            width="min-content"
+        >
+          <Tooltip title="Number of members">
+            <Chip size="small" label={members} icon={<Group />} />
+          </Tooltip>
+          <Tooltip title="Date of creating">
+            <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
+          </Tooltip>
+          <Tooltip title="Verified group">
+            <Chip
+              size="small"
+              sx={{
+                ".MuiChip-label": {
+                  px: "4px",
+                },
+              }}
+              icon={<VerifiedOutlined fontSize="small" />}
+            />
+          </Tooltip>
+          <Tooltip title="Sponsored group">
+            <Chip
+              size="small"
+              sx={{
+                ".MuiChip-label": {
+                  px: "4px",
+                },
+              }}
+              icon={<StarBorderRounded fontSize="small" />}
+            />
+          </Tooltip>
+        </Stack>
+        {/* description */}
+        <Box height="100%">
+          <Typography
+            variant="body2"
             sx={{
-              overflowY: "hidden",
-              overflowX: "auto",
-              width: "100%",
-              padding: 0,
-              "::-webkit-scrollbar": {
-                background: "transparent",
-                width: 0,
-                height: 0,
-              },
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: "vertical",
+              color: "text.secondary",
             }}
           >
-            <Tooltip title="Number of members">
-              <Chip size="small" label={members} icon={<Group />} />
-            </Tooltip>
-            <Tooltip title="Date of creating">
-              <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
-            </Tooltip>
-            <Tooltip title="Verified group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<VerifiedOutlined fontSize="small" />}
-              />
-            </Tooltip>
-            <Tooltip title="Sponsored group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<StarBorderRounded fontSize="small" />}
-              />
-            </Tooltip>
-          </Stack>
-          {/* description */}
-          <Box height="100%">
-            <Typography
-              variant="body2"
-              sx={{
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-                color: "text.secondary",
-              }}
-            >
-              {description}
-            </Typography>
-          </Box>
-          {/* actions */}
-          <Box height="100%" />
-          <Stack justifyContent="space-between" direction="row">
-            <IconButton size="small" onClick={handleOpenMore}>
-              <MoreVert />
-            </IconButton>
-            <Button size="small" variant="outlined" startIcon={<GroupAdd fontSize="small" />} onClick={handleJoin}>
-              Join
-            </Button>
-          </Stack>
+            {description}
+          </Typography>
+        </Box>
+        {/* actions */}
+        <Box height="100%" />
+        <Stack justifyContent="space-between" direction="row">
+          <IconButton size="small" onClick={handleOpenMore}>
+            <MoreVert />
+          </IconButton>
+          <Button size="small" variant="outlined" startIcon={<GroupAdd fontSize="small" />} onClick={handleJoin}>
+            Join
+          </Button>
         </Stack>
-      </CommonGroupTile>
+      </Stack>
       <Menu
         anchorEl={moreElement}
         open={open}
