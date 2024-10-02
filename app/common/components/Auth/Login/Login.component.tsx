@@ -91,7 +91,7 @@ export const Login = ({ loading, onSubmit }: Props) => {
         />
         <FormHelperText>{passwordError && passwordError.message}</FormHelperText>
       </FormControl>
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack direction="row" justifyContent="space-between" alignItems="center" gap={0.5}>
         <FormControl>
           <FormControlLabel
             control={<Checkbox size="small" defaultChecked />}
