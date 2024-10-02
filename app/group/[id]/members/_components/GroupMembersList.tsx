@@ -3,23 +3,23 @@ import { GroupMemberTile } from "./GroupMemberTile";
 
 export const GroupMembersList = () => {
   return (
-    <Grid2 container spacing={{ xs: 1, md: 3 }}>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+    <Grid2 container spacing={{ xs: 1, sm: 3 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
-      <Grid2 size={{ xs: 6, md: 4 }}>
+      <Grid2 size={{ xs: 6, sm: 4 }}>
         <GroupMemberTile />
       </Grid2>
     </Grid2>

@@ -17,7 +17,7 @@ export default function GroupEventsPage() {
               sx={{
                 display: {
                   xs: "none",
-                  md: "inline-flex",
+                  sm: "inline-flex",
                 },
                 height: "min-content",
                 textWrap: "nowrap",
@@ -31,7 +31,7 @@ export default function GroupEventsPage() {
               sx={{
                 display: {
                   xs: "inline-flex",
-                  md: "none",
+                  sm: "none",
                 },
                 height: "min-content",
                 textWrap: "nowrap",

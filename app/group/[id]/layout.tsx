@@ -23,18 +23,19 @@ export default function GroupLayout({
       <Stack
         py={{
           xs: 4,
-          md: 6,
+          sm: 6,
         }}
         gap={4}
         direction={{
           xs: "column",
-          md: "row",
+          sm: "row",
         }}
       >
         <Box
+          position="sticky"
           display={{
             xs: "block",
-            md: "none",
+            sm: "none",
           }}
           sx={{ borderBottom: 1, borderColor: "divider" }}
         >
@@ -43,10 +44,13 @@ export default function GroupLayout({
         <Box
           display={{
             xs: "none",
-            md: "flex",
+            sm: "flex",
           }}
-          minWidth="280px"
-          flexBasis="clamp(280px, 20%, 560px)"
+          position="sticky"
+          top={minHeight}
+          minWidth="260px"
+          height="min-content"
+          flexBasis="clamp(260px, 20%, 560px)"
         >
           <GroupNav />
         </Box>

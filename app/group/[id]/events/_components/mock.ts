@@ -60,4 +60,27 @@ export const EVENTS: EventsGroup[] = [
       },
     ],
   },
+  {
+    startMonth: "2024-11-01T00:00:00.000Z",
+    events: [
+      {
+        id: "1",
+        title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egesta",
+        startAt: "2024-11-09T14:00:00.000Z",
+        endAt: "2024-11-09T17:00:00.000Z",
+        city: "Warszawa",
+        street: "Al. Włókniarzy 222",
+        members: 34,
+      },
+      {
+        id: "2",
+        title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egesta",
+        startAt: "2024-11-24T14:00:00.000Z",
+        endAt: "2024-11-24T17:00:00.000Z",
+        city: "Warszawa",
+        street: "Al. Włókniarzy 222",
+        members: 55,
+      },
+    ],
+  },
 ];

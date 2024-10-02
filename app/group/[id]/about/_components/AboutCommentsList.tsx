@@ -7,6 +7,9 @@ export const AboutCommentsList = () => {
       <AboutComment />
       <AboutComment />
       <AboutComment />
+      <AboutComment />
+      <AboutComment />
+      <AboutComment />
     </Stack>
   );
 };

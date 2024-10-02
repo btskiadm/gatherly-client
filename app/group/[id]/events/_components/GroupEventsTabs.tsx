@@ -17,7 +17,7 @@ function CustomTabPanel(props: TabPanelProps) {
 
   return (
     <div hidden={value !== index} {...other}>
-      {value === index && <Box pt={{ xs: 2, md: 3 }}>{children}</Box>}
+      {value === index && <Box pt={{ xs: 2, sm: 3 }}>{children}</Box>}
     </div>
   );
 }

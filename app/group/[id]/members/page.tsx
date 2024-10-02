@@ -17,7 +17,7 @@ export default function GroupMembersPage() {
               sx={{
                 display: {
                   xs: "none",
-                  md: "inline-flex",
+                  sm: "inline-flex",
                 },
                 height: "min-content",
               }}
@@ -29,7 +29,7 @@ export default function GroupMembersPage() {
               color="secondary"
               sx={{
                 display: {
-                  md: "none",
+                  sm: "none",
                 },
                 height: "min-content",
               }}

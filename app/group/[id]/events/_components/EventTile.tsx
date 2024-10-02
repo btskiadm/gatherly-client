@@ -57,8 +57,8 @@ export const EventTile = ({ item }: Props) => {
         }}
       />
       <Box p={2}>
-        <Grid2 container spacing={3}>
-          <Grid2 size={2}>
+        <Grid2 container rowSpacing={1} columnSpacing={{ xs: 1, sm: 3 }}>
+          <Grid2 size={{ xs: 3, sm: 2 }}>
             <Stack justifyContent="center" alignItems="center">
               <Typography textTransform="uppercase" variant="body2" color="text.secondary">
                 {shortMonth}
@@ -68,7 +68,7 @@ export const EventTile = ({ item }: Props) => {
               </Typography>
             </Stack>
           </Grid2>
-          <Grid2 size={4}>
+          <Grid2 size={{ xs: 9, sm: 4 }}>
             <Stack gap={1}>
               <Stack direction="row" gap={0.5} alignItems="center">
                 <AccessTimeIcon
@@ -95,15 +95,18 @@ export const EventTile = ({ item }: Props) => {
               </Stack>
             </Stack>
           </Grid2>
-          <Grid2 size={6}>
-            <Stack alignContent="flex-start" alignItems="flex-start" gap={0.5}>
+          <Grid2 size={{ xs: 12, sm: 6 }}>
+            <Stack alignContent="flex-start" alignItems="flex-start" gap={{ xs: 2, sm: 0.5 }}>
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{
                   overflow: "hidden",
                   display: "-webkit-box",
-                  WebkitLineClamp: 1,
+                  WebkitLineClamp: {
+                    xs: 3,
+                    sm: 1,
+                  },
                   WebkitBoxOrient: "vertical",
                   color: "text.secondary",
                 }}
