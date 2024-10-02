@@ -28,7 +28,7 @@ export const SignUpModal = ({ open, onClose, children }: Props) => {
         <Close />
       </IconButton>
       <DialogContent dividers>
-        <Box minWidth="280px" width="clamp(280px, 50vw, 560px)" maxWidth="560px">
+        <Box minWidth="260px" width="clamp(260px, 50vw, 560px)" maxWidth="560px">
           {children}
         </Box>
       </DialogContent>

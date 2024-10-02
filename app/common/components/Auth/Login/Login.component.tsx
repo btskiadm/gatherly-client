@@ -17,6 +17,7 @@ import {
 import React, { useCallback, useState } from "react";
 import { ZodFlattenIssue, flattenIssues, loginSchema } from "../../../utils/zod";
 import { Link } from "../../NextLink";
+import { TruncatedTypography } from "../../TruncatedTypography";
 
 export interface LoginData {
   username: string;
@@ -92,9 +93,12 @@ export const Login = ({ loading, onSubmit }: Props) => {
       </FormControl>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <FormControl>
-          <FormControlLabel control={<Checkbox size="small" defaultChecked />} label="Remember me" />
+          <FormControlLabel
+            control={<Checkbox size="small" defaultChecked />}
+            label={<TruncatedTypography variant="body1">Remember me</TruncatedTypography>}
+          />
         </FormControl>
-        <Typography variant="body2">Forget password?</Typography>
+        <TruncatedTypography variant="body2">Forget password?</TruncatedTypography>
       </Stack>
       <LoadingButton size="large" loading={loading} color="primary" variant="contained" onClick={handleSave}>
         Sign in

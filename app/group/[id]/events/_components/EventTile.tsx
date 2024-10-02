@@ -1,8 +1,9 @@
+import { Link } from "@/app/common/components/NextLink";
+import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { EventGroupItem } from "./mock";
-import { Link } from "@/app/common/components/NextLink";
 
 interface Props {
   item: EventGroupItem;
@@ -41,11 +42,6 @@ export const EventTile = ({ item }: Props) => {
       })}
     >
       <Link
-        variant="subtitle1"
-        minWidth="0px"
-        whiteSpace="nowrap"
-        overflow="hidden"
-        textOverflow="ellipsis"
         href="#"
         sx={{
           height: 0,
@@ -59,7 +55,7 @@ export const EventTile = ({ item }: Props) => {
             top: 0,
           },
         }}
-      ></Link>
+      />
       <Box p={2}>
         <Grid2 container spacing={3}>
           <Grid2 size={2}>
@@ -92,17 +88,10 @@ export const EventTile = ({ item }: Props) => {
                     color: "text.secondary",
                   }}
                 />
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  minWidth="0px"
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
+                <TruncatedTypography variant="body2" color="text.secondary">
                   {city}
                   {street ? `, ${street}` : ""}
-                </Typography>
+                </TruncatedTypography>
               </Stack>
             </Stack>
           </Grid2>

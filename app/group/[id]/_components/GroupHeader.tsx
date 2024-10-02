@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowBack } from "@mui/icons-material";
-import { Button, Stack, Typography } from "@mui/material";
+import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { ReactNode, useCallback } from "react";
+import { ReactNode } from "react";
 
 interface Props {
   primary: string;
@@ -44,15 +44,9 @@ export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) 
               </Typography>
             )}
           </Stack>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-          >
+          <TruncatedTypography variant="body2" color="text.secondary">
             {secondary}
-          </Typography>
+          </TruncatedTypography>
         </Stack>
         {actions}
       </Stack>

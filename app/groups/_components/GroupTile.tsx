@@ -1,5 +1,6 @@
 "use client";
 
+import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import {
   AccessTime,
   FavoriteBorderOutlined,
@@ -60,11 +61,6 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
   return (
     <>
       <Link
-        variant="subtitle1"
-        minWidth="0px"
-        whiteSpace="nowrap"
-        overflow="hidden"
-        textOverflow="ellipsis"
         href={`/group/${id}/about`}
         sx={{
           height: 0,
@@ -78,20 +74,14 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
             top: 0,
           },
         }}
-      ></Link>
+      />
       <Stack gap={1} p={1} height="100%">
         {/* title */}
         <Stack direction="row">
           <Tooltip title={title}>
-            <Typography
-              variant="subtitle1"
-              minWidth="0px"
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-            >
+            <TruncatedTypography variant="subtitle1" minWidth="0px">
               {title}
-            </Typography>
+            </TruncatedTypography>
           </Tooltip>
         </Stack>
         {/* chips */}
