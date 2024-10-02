@@ -17,7 +17,7 @@ function CustomTabPanel(props: TabPanelProps) {
 
   return (
     <div hidden={value !== index} {...other}>
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box pt={{ xs: 2, md: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -36,10 +36,8 @@ export const GroupEventsTabs = () => {
           value={value}
           onChange={handleChange}
           textColor="secondary"
-          variant="fullWidth"
+          variant="scrollable"
           indicatorColor="secondary"
-          scrollButtons
-          allowScrollButtonsMobile
         >
           <Tab label="Upcoming" />
           <Tab label="Pending" />

@@ -40,15 +40,18 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
   };
 
   const handleCloseMore = (reason?: "report" | "favorite") => () => {
-    if (reason) {
-      alert(reason);
+    if (reason === "report") {
+      toast.success("Group reported.");
+    }
+
+    if (reason === "favorite") {
+      toast.success("Group added to favorite.");
     }
 
     setMoreElement(null);
   };
 
   const handleJoin = () => {
-    alert("join");
     toast.success("You have just join a new group. Congrats !");
   };
 
@@ -62,7 +65,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
         whiteSpace="nowrap"
         overflow="hidden"
         textOverflow="ellipsis"
-        href={`/group/${id}/dashboard`}
+        href={`/group/${id}/about`}
         sx={{
           height: 0,
           width: 0,

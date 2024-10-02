@@ -8,17 +8,38 @@ export default function GroupEventsPage() {
       <GroupHeader
         primary="Events"
         subPrimary="(99+)"
-        secondary="See scheduled group events."
+        secondary="See scheduled group eventsevents."
         actions={
-          <Button
-            variant="outlined"
-            color="secondary"
-            sx={{
-              height: "min-content",
-            }}
-          >
-            Create an event
-          </Button>
+          <>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "inline-flex",
+                },
+                height: "min-content",
+                textWrap: "nowrap",
+              }}
+            >
+              Create an event
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{
+                display: {
+                  xs: "inline-flex",
+                  md: "none",
+                },
+                height: "min-content",
+                textWrap: "nowrap",
+              }}
+            >
+              Create
+            </Button>
+          </>
         }
       />
       <GroupEventsTabs />

@@ -15,13 +15,13 @@ interface Props {
 export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) => {
   const router = useRouter();
 
-  const handleBack = useCallback(() => {
-    router.back();
-  }, []);
+  // const handleBack = useCallback(() => {
+  //   router.back();
+  // }, []);
 
   return (
     <Stack>
-      <Button
+      {/* <Button
         variant="text"
         sx={{
           width: "min-content",
@@ -30,9 +30,10 @@ export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) 
         onClick={handleBack}
       >
         Back
-      </Button>
+      </Button> */}
       <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-        <Stack gap={1}>
+        {/* min width for secondary overflow */}
+        <Stack gap={1} minWidth={0}>
           <Stack direction="row" gap={1} alignItems="center">
             <Typography variant="h4" fontWeight="600">
               {primary}
@@ -43,7 +44,13 @@ export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) 
               </Typography>
             )}
           </Stack>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
             {secondary}
           </Typography>
         </Stack>

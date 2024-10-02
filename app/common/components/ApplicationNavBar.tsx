@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 import { Link } from "./NextLink";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["about", "events", "calendar", "members", "chat", "settings"];
 
 interface Props {
   /**
@@ -67,11 +67,7 @@ export const ApplicationNavBar = (props: Props) => {
   return (
     <>
       <HideOnScroll {...props}>
-        <AppBar
-          sx={{
-            bgcolor: "background.paper",
-          }}
-        >
+        <AppBar color="default">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Adb sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -109,6 +105,8 @@ export const ApplicationNavBar = (props: Props) => {
                 {pages.map((page) => (
                   <Button
                     size="small"
+                    LinkComponent={Link}
+                    href={page}
                     key={page}
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
@@ -170,7 +168,9 @@ export const ApplicationNavBar = (props: Props) => {
                   >
                     {pages.map((page) => (
                       <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                        <Link href={page} textAlign="center" underline="none" variant="body1" color="text.primary">
+                          {page}
+                        </Link>
                       </MenuItem>
                     ))}
                   </Menu>

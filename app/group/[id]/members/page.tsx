@@ -10,15 +10,33 @@ export default function GroupMembersPage() {
         subPrimary="(99+)"
         secondary="See group members."
         actions={
-          <Button
-            variant="outlined"
-            color="secondary"
-            sx={{
-              height: "min-content",
-            }}
-          >
-            Add member
-          </Button>
+          <>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{
+                display: {
+                  xs: "none",
+                  md: "inline-flex",
+                },
+                height: "min-content",
+              }}
+            >
+              Add member
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{
+                display: {
+                  md: "none",
+                },
+                height: "min-content",
+              }}
+            >
+              Add
+            </Button>
+          </>
         }
       />
       <GroupMembersList />

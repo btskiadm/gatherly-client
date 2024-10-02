@@ -7,17 +7,17 @@ export default function GroupMembersPage() {
   return (
     <Stack gap={3}>
       <GroupHeader primary="About" secondary="See basic information about group." />
-      <Grid2 container spacing={{ xs: 2, sm: 2 }}>
-        <Grid2 size={{ xs: 12, sm: 3 }}>
+      <Grid2 container spacing={2}>
+        <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="42" secondary="Zakończone" />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 3 }}>
+        <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="5" secondary="Odwołane" />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 3 }}>
+        <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="12" secondary="Upcoming" />
         </Grid2>
-        <Grid2 size={{ xs: 12, sm: 3 }}>
+        <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="4.2" secondary="Ocena" />
         </Grid2>
       </Grid2>
