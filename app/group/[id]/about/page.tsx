@@ -23,6 +23,13 @@ export default function GroupMembersPage() {
       </Grid2>
       <Paper>
         <Stack p={2} gap={2}>
+          <Typography variant="h6">Name</Typography>
+          <Divider />
+          <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit cursus.</Typography>
+        </Stack>
+      </Paper>
+      <Paper>
+        <Stack p={2} gap={2}>
           <Typography variant="h6">Description</Typography>
           <Divider />
           <Typography variant="body1">

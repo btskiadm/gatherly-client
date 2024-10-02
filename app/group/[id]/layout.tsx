@@ -1,10 +1,9 @@
 "use client";
 
 import { useAppBarHeight } from "@/app/common/utils/hooks/useAppBarHeight";
-import { Box, Container, Stack, Tab, Tabs } from "@mui/material";
-import { GroupNav } from "./_components/GroupNav";
-import { Link } from "@/app/common/components/NextLink";
+import { Box, Container, Stack } from "@mui/material";
 import { GroupMobileNav } from "./_components/GroupMobileNav";
+import { GroupNav } from "./_components/GroupNav";
 
 export default function GroupLayout({
   children,
