@@ -22,6 +22,43 @@ export const createGroupSchema = z.object({
 
 export type CreateGroupInput = z.infer<typeof createGroupSchema>;
 
+// create event
+export const minEventName = 5;
+export const maxEventName = 50;
+export const minEventDescription = 5;
+export const maxEventDescription = 250;
+export const minEventCategories = 1;
+export const maxEventCategories = 5;
+
+const eventNameSchema = z.string().min(minEventName).max(maxEventName);
+const eventDescriptionSchema = z.string().min(minEventDescription).max(maxEventDescription);
+const eventCategorySchema = z.string().min(2).max(25);
+const eventDateSchema = z.string().date();
+const eventFromSchema = z.string().time();
+const eventToSchema = z.string().time();
+
+const eventInviteIds = z.string().min(1);
+
+export const createEventDetailsSchema = z.object({
+  name: eventNameSchema,
+  description: eventDescriptionSchema,
+  categories: z.array(eventCategorySchema).min(minEventCategories).max(maxEventCategories),
+});
+
+export const createEventDateAndLocationSchema = z.object({
+  date: eventDateSchema,
+  from: eventFromSchema,
+  to: eventToSchema,
+});
+
+export const createEventInviteSchema = z.object({
+  inviteIds: z.array(eventInviteIds),
+});
+
+export type CreateEventDetailsInput = z.infer<typeof createEventDetailsSchema>;
+export type CreateEventDateAndLocationInput = z.infer<typeof createEventDateAndLocationSchema>;
+export type CreateEventInviteInput = z.infer<typeof createEventInviteSchema>;
+
 // sign in
 export const minUsername = 5;
 export const minPassword = 5;

@@ -1,6 +1,7 @@
 import { Button, Stack } from "@mui/material";
-import { GroupHeader } from "../_components/GroupHeader";
-import { GroupEventsTabs } from "./_components/GroupEventsTabs";
+import { Link } from "@/app/common/components/NextLink";
+import { GroupEventsTabs } from "../_components/GroupEventsTabs";
+import { GroupHeader } from "../../_components/GroupHeader";
 
 export default function GroupEventsPage() {
   return (
@@ -14,6 +15,8 @@ export default function GroupEventsPage() {
             <Button
               variant="outlined"
               color="secondary"
+              LinkComponent={Link}
+              href="events/createEvent"
               sx={{
                 display: {
                   xs: "none",
@@ -28,6 +31,8 @@ export default function GroupEventsPage() {
             <Button
               variant="outlined"
               color="secondary"
+              LinkComponent={Link}
+              href="events/createEvent"
               sx={{
                 display: {
                   xs: "inline-flex",
