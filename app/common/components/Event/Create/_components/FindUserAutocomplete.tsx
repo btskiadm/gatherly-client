@@ -76,6 +76,7 @@ export const FindUserAutocomplete = ({ users, onChange }: Props) => {
           {value?.length > 1 && (
             <Chip
               {...getTagProps({ index: 1 })}
+              key={getTagProps({ index: 1 }).key}
               component="div"
               variant="outlined"
               size="small"
