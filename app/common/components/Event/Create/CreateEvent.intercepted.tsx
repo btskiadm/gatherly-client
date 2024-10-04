@@ -4,13 +4,13 @@ import { delay } from "@/app/common/utils/delay";
 import { Box, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { InviteMember, InviteMemberRef } from "../../InviteMember/_components/InviteMember.components";
 import { CreateEventModal } from "./CreateEvent.modal";
 import {
   CreateEventDateAndLocation,
   CreateEventDateAndLocationRef,
 } from "./_components/CreateEventDateAndLocation.component";
 import { CreateEventDetails, CreateEventDetailsRef } from "./_components/CreateEventDetails.component";
-import { CreateEventInvite, CreateEventInviteRef } from "./_components/CreateEventInvite.components";
 import { CreateEventStep } from "./_components/CreateEventStep.component";
 
 export const CreaetEventIntercepted = () => {
@@ -19,7 +19,7 @@ export const CreaetEventIntercepted = () => {
   const [loading, setLoading] = useState(false);
   const detailsRef = useRef<CreateEventDetailsRef>(null);
   const dateAndLocationRef = useRef<CreateEventDateAndLocationRef>(null);
-  const inviteRef = useRef<CreateEventInviteRef>(null);
+  const inviteRef = useRef<InviteMemberRef>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {
@@ -72,7 +72,7 @@ export const CreaetEventIntercepted = () => {
 
     return {
       onCreate: async () => {
-        const data = inviteRef.current?.next();
+        const data = inviteRef.current?.invite();
 
         if (!data?.success) {
           setErrorStep(2);
@@ -118,7 +118,7 @@ export const CreaetEventIntercepted = () => {
             display: step === 2 ? "block" : "none",
           }}
         >
-          <CreateEventInvite ref={inviteRef} />
+          <InviteMember ref={inviteRef} />
         </Box>
       </Stack>
     </CreateEventModal>

@@ -19,13 +19,20 @@ import { usePathname } from "next/navigation";
 export function GroupNav() {
   const pathName = usePathname();
 
+  const about = "about";
+  const events = "events";
+  const calendar = "calendar";
+  const members = "members";
+  const chat = "chat";
+  const settings = "settings";
+
   const [aboutSected, eventsSelected, calendarSelected, membersSelected, chatSelected, settingsSelected] = [
-    pathName.endsWith("/about"),
-    pathName.endsWith("/events"),
-    pathName.endsWith("/calendar"),
-    pathName.endsWith("/members"),
-    pathName.endsWith("/chat"),
-    pathName.endsWith("/settings"),
+    pathName.includes(`/${about}`),
+    pathName.includes(`/${events}`),
+    pathName.includes(`/${calendar}`),
+    pathName.includes(`/${members}`),
+    pathName.includes(`/${chat}`),
+    pathName.includes(`/${settings}`),
   ];
 
   return (

@@ -1,8 +1,9 @@
+import { Link } from "@/app/common/components/NextLink";
 import { Button, Stack } from "@mui/material";
-import { GroupHeader } from "../_components/GroupHeader";
-import { GroupMembersList } from "./_components/GroupMembersList";
+import { GroupHeader } from "../../../_components/GroupHeader";
+import { GroupMembersList } from "../../_components/GroupMembersList";
 
-export default function GroupMembersPage() {
+export const GroupMembersPage = () => {
   return (
     <Stack gap={3}>
       <GroupHeader
@@ -14,6 +15,8 @@ export default function GroupMembersPage() {
             <Button
               variant="outlined"
               color="secondary"
+              LinkComponent={Link}
+              href="members/add"
               sx={{
                 display: {
                   xs: "none",
@@ -27,6 +30,8 @@ export default function GroupMembersPage() {
             <Button
               variant="outlined"
               color="secondary"
+              LinkComponent={Link}
+              href="members/add"
               sx={{
                 display: {
                   sm: "none",
@@ -42,4 +47,4 @@ export default function GroupMembersPage() {
       <GroupMembersList />
     </Stack>
   );
-}
+};

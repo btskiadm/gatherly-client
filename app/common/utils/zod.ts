@@ -37,8 +37,6 @@ const eventDateSchema = z.string().date();
 const eventFromSchema = z.string().time();
 const eventToSchema = z.string().time();
 
-const eventInviteIds = z.string().min(1);
-
 export const createEventDetailsSchema = z.object({
   name: eventNameSchema,
   description: eventDescriptionSchema,
@@ -51,13 +49,17 @@ export const createEventDateAndLocationSchema = z.object({
   to: eventToSchema,
 });
 
-export const createEventInviteSchema = z.object({
-  inviteIds: z.array(eventInviteIds),
-});
-
 export type CreateEventDetailsInput = z.infer<typeof createEventDetailsSchema>;
 export type CreateEventDateAndLocationInput = z.infer<typeof createEventDateAndLocationSchema>;
-export type CreateEventInviteInput = z.infer<typeof createEventInviteSchema>;
+
+// invite
+const inviteMemberId = z.string().min(1);
+
+export const inviteMemberSchema = z.object({
+  inviteIds: z.array(inviteMemberId),
+});
+
+export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
 
 // sign in
 export const minUsername = 5;
