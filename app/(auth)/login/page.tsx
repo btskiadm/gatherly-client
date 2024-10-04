@@ -1,5 +1,5 @@
-import { LoginPageWrapper } from "./_components/LoginPageWrapper";
+import { LoginPage } from "./_components/LoginPage";
 
-export default function LoginPage() {
-  return <LoginPageWrapper />;
+export default function Page() {
+  return <LoginPage />;
 }

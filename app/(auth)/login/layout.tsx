@@ -1,18 +1,9 @@
-import { Box, Container, Paper, Stack, Typography } from "@mui/material";
+import { LoginLayout } from "./_components/LoginLayout";
 
-export default function LoginLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <Container maxWidth="sm">
-      <Paper>
-        <Stack marginTop="30%" p={4} gap={3} justifyContent="center">
-          <Typography variant="h2">Log in</Typography>
-          {children}
-        </Stack>
-      </Paper>
-    </Container>
-  );
+  return <LoginLayout>{children}</LoginLayout>;
 }

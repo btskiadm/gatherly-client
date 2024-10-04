@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateGroup, CreateGroupRef } from "@/app/common/components/Invite/InviteMember.component";
+import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup.component";
 import { delay } from "@/app/common/utils/delay";
 import { LoadingButton } from "@mui/lab";
 import { Button, Paper, Stack } from "@mui/material";

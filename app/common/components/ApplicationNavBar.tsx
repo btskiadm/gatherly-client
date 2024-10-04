@@ -7,8 +7,6 @@ import {
   Button,
   Container,
   IconButton,
-  Menu,
-  MenuItem,
   Slide,
   Stack,
   Toolbar,
@@ -17,8 +15,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "./NextLink";
-
-const pages = ["about", "events", "calendar", "members", "chat", "settings"];
 
 interface Props {
   /**
@@ -47,21 +43,13 @@ function HideOnScroll(props: Props) {
 
 export const ApplicationNavBar = (props: Props) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -101,20 +89,7 @@ export const ApplicationNavBar = (props: Props) => {
               >
                 Gatherly
               </Typography>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" } }}>
-                {pages.map((page) => (
-                  <Button
-                    size="small"
-                    LinkComponent={Link}
-                    href={page}
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {page}
-                  </Button>
-                ))}
-              </Box>
+              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" } }} />
               <Stack
                 flexGrow={0}
                 direction="row"
@@ -152,28 +127,6 @@ export const ApplicationNavBar = (props: Props) => {
                   >
                     <MenuIcon />
                   </IconButton>
-                  <Menu
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                  >
-                    {pages.map((page) => (
-                      <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Link href={page} textAlign="center" underline="none" variant="body1" color="text.primary">
-                          {page}
-                        </Link>
-                      </MenuItem>
-                    ))}
-                  </Menu>
                 </Box>
               </Stack>
             </Toolbar>

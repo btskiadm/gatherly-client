@@ -1,14 +1,11 @@
-export default function GroupMembersLayout({
+import { GroupMembersLayout } from "./_components/GroupMemberPage";
+
+export default function Layout({
   modal,
   page,
 }: Readonly<{
   modal: React.ReactNode;
   page: React.ReactNode;
 }>) {
-  return (
-    <>
-      {modal}
-      {page}
-    </>
-  );
+  return <GroupMembersLayout modal={modal} page={page} />;
 }

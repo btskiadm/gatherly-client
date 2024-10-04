@@ -5,7 +5,7 @@ import { useLoginDispatch } from "@/app/common/components/Auth/Login/Login.provi
 import { delay } from "@/app/common/utils/delay";
 import { useCallback, useState } from "react";
 
-export const LoginPageWrapper = () => {
+export const SignUpPage = () => {
   const { open } = useLoginDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -15,6 +15,7 @@ export const LoginPageWrapper = () => {
 
   const handleSubmit = useCallback(
     async (data: LoginData) => {
+      //todo: api
       setLoading(true);
       await delay(2000);
       setLoading(false);

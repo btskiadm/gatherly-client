@@ -1,10 +1,5 @@
-import { Stack } from "@mui/material";
-import { GroupHeader } from "../_components/GroupHeader";
+import { GroupChatPage } from "./_components/GroupChatPage";
 
-export default function GroupChatPage() {
-  return (
-    <Stack gap={3}>
-      <GroupHeader primary="Chat" secondary="Chat with group members." />
-    </Stack>
-  );
+export default function Page() {
+  return <GroupChatPage />;
 }

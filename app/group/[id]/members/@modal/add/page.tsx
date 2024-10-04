@@ -1,5 +1,5 @@
-import { InviteMemberIntercepted } from "@/app/common/components/InviteMember/InviteMember.intercepted";
+import { CreateEventModalPage } from "./_compontents/CreateEventModalPage";
 
 export default function CreateEventModal() {
-  return <InviteMemberIntercepted />;
+  return <CreateEventModalPage />;
 }

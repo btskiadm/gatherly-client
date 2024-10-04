@@ -1,12 +1,12 @@
 "use client";
 
-import { CreateGroup, CreateGroupRef } from "@/app/common/components/Invite/InviteMember.component";
+import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup.component";
 import { delay } from "@/app/common/utils/delay";
 import { LoadingButton } from "@mui/lab";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
-export const CreateGroupWrapper = () => {
+export const CreateGroupPageContainer = () => {
   const ref = useRef<CreateGroupRef>(null);
   const [loading, setLoading] = useState(false);
 

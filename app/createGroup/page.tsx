@@ -1,5 +1,5 @@
-import { CreateGroupWrapper } from "./_components/CreateGroupWrapper";
+import { CreateGroupPageContainer } from "./_components/CreateGroupPage";
 
-export default function CreateGroupPage() {
-  return <CreateGroupWrapper />;
+export default function Page() {
+  return <CreateGroupPageContainer />;
 }

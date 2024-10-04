@@ -1,13 +1,12 @@
 "use client";
 
-import { LoginData } from "@/app/common/components/Auth/Login/Login.component";
-import { SignUp } from "@/app/common/components/Auth/SignUp/SignUp.component";
-import { useSignUpDispatch } from "@/app/common/components/Auth/SignUp/SignUp.provider";
+import { Login, LoginData } from "@/app/common/components/Auth/Login/Login.component";
+import { useLoginDispatch } from "@/app/common/components/Auth/Login/Login.provider";
 import { delay } from "@/app/common/utils/delay";
 import { useCallback, useState } from "react";
 
-export const SignUpWrapper = () => {
-  const { open } = useSignUpDispatch();
+export const LoginPage = () => {
+  const { open } = useLoginDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleClose = useCallback(() => {
@@ -16,6 +15,7 @@ export const SignUpWrapper = () => {
 
   const handleSubmit = useCallback(
     async (data: LoginData) => {
+      //todo: api
       setLoading(true);
       await delay(2000);
       setLoading(false);
@@ -24,5 +24,5 @@ export const SignUpWrapper = () => {
     [handleClose]
   );
 
-  return <SignUp loading={loading} onSubmit={handleSubmit} />;
+  return <Login loading={loading} onSubmit={handleSubmit} />;
 };

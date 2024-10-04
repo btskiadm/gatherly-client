@@ -1,3 +1,5 @@
+"use client";
+
 import { Typography, styled } from "@mui/material";
 
 export const TruncatedTypography = styled(Typography)`

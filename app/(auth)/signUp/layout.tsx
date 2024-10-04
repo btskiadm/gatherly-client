@@ -1,18 +1,9 @@
-import { Box, Container, Paper, Stack, Typography } from "@mui/material";
+import { SignUpLayout } from "./_components/SignUpLayout";
 
-export default function SignUpLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <Container maxWidth="sm">
-      <Paper>
-        <Stack marginTop="30%" p={4} gap={3} justifyContent="center">
-          <Typography variant="h2">Sign up</Typography>
-          {children}
-        </Stack>
-      </Paper>
-    </Container>
-  );
+  return <SignUpLayout>{children}</SignUpLayout>;
 }

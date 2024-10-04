@@ -1,7 +1,7 @@
 "use client";
 
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   SearchAttribute,
   SearchAttributeKeys,
@@ -45,17 +45,25 @@ const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribut
 export const GroupsAutocomplete = () => {
   const [selected, setSelected] = useState<SearchAttribute[]>([]);
 
-  const handleDelete = (toDelete: SearchAttribute) => {
-    setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
-  };
+  const handleDelete = useCallback(
+    (toDelete: SearchAttribute) => {
+      setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
+    },
+    [setSelected]
+  );
+
+  const handleChange = useCallback(
+    (e: unknown, value: SearchAttribute[]) => {
+      setSelected(value);
+    },
+    [setSelected]
+  );
 
   return (
     <Autocomplete<SearchAttribute, true>
       multiple
       value={selected}
-      onChange={(e, v, r, d) => {
-        setSelected(v);
-      }}
+      onChange={handleChange}
       options={options}
       sx={(theme) => ({
         width: "100%",
