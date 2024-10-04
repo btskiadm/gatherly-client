@@ -6,7 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline } from "@mui/material";
 import { grey } from "@mui/material/colors";
 
-const theme = createTheme({
+const customTheme: Parameters<typeof createTheme>[0] = {
   cssVariables: true,
   palette: {
     background: {
@@ -52,7 +52,9 @@ const theme = createTheme({
       }),
     },
   },
-});
+};
+
+const theme = createTheme(customTheme);
 
 export const MUIThemeProvider = ({ children }: PropsWithChildren<{}>) => {
   return (

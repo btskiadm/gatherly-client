@@ -21,10 +21,13 @@ export const GroupLayout = ({
     >
       <Stack
         py={{
-          xs: 4,
+          xs: 2,
           sm: 6,
         }}
-        gap={4}
+        gap={{
+          xs: 2,
+          sm: 4,
+        }}
         direction={{
           xs: "column",
           sm: "row",

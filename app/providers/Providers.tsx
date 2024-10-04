@@ -12,7 +12,6 @@ export const Providers = ({ children }: PropsWithChildren<{}>) => {
         reverseOrder={false}
         gutter={8}
         containerClassName=""
-        containerStyle={{}}
         toastOptions={{
           className: "",
           duration: 5000,
