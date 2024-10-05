@@ -1,16 +1,18 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { Group, Place } from "@mui/icons-material";
+import { Add, Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { EventGroupItem } from "./mock";
+import { Box, Button, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { useCallback } from "react";
+import { toast } from "react-hot-toast";
+import { GroupEventItem } from "../events.mock";
 
 interface Props {
-  item: EventGroupItem;
+  item: GroupEventItem;
 }
 
 export const EventTile = ({ item }: Props) => {
-  const { id, title, startAt, endAt, city, street, members } = item;
+  const { title, startAt, endAt, city, street, members } = item;
 
   const _members = members > 99 ? "99+" : members;
   const shortMonth = new Intl.DateTimeFormat("pl-PL", {
@@ -27,16 +29,19 @@ export const EventTile = ({ item }: Props) => {
     minute: "numeric",
   }).format(new Date(endAt))}`;
 
+  const handleJoin = useCallback(() => {
+    toast("Joined to: " + title);
+  }, []);
+
   return (
     <Paper
       sx={(theme) => ({
         width: "100%",
-        boxShadow: 1,
         position: "relative",
         [theme.breakpoints.up("sm")]: {
           transition: "all 0.2s",
           "&:hover": {
-            boxShadow: 6,
+            boxShadow: 3,
           },
         },
       })}
@@ -95,11 +100,12 @@ export const EventTile = ({ item }: Props) => {
               </Stack>
             </Stack>
           </Grid2>
-          <Grid2 size={{ xs: 12, sm: 6 }}>
-            <Stack alignContent="flex-start" alignItems="flex-start" gap={{ xs: 2, sm: 0.5 }}>
+          <Grid2 size={{ xs: 12, sm: 4 }}>
+            <Stack alignContent="flex-start" alignItems="flex-start" gap={{ xs: 1, sm: 0.5 }}>
               <Typography
                 variant="body2"
                 color="text.secondary"
+                fontWeight={600}
                 sx={{
                   overflow: "hidden",
                   display: "-webkit-box",
@@ -113,7 +119,35 @@ export const EventTile = ({ item }: Props) => {
               >
                 {title}
               </Typography>
-              <Chip size="small" label={_members} icon={<Group />} />
+              <Box display={{ xs: "none", sm: "block" }}>
+                <Chip size="small" label={_members} icon={<Group />} />
+              </Box>
+              <Stack
+                display={{ sx: "flex", sm: "none" }}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+                width="100%"
+              >
+                <Chip size="small" label={_members} icon={<Group />} />
+                <Button size="small" variant="outlined" startIcon={<Add />} onClick={handleJoin}>
+                  Join
+                </Button>
+              </Stack>
+            </Stack>
+          </Grid2>
+          <Grid2
+            display={{
+              xs: "none",
+              sm: "block",
+            }}
+            size={{ sm: 2 }}
+            alignContent="center"
+          >
+            <Stack alignItems="flex-end">
+              <Button size="small" variant="outlined" startIcon={<Add />} onClick={handleJoin}>
+                Join
+              </Button>
             </Stack>
           </Grid2>
         </Grid2>

@@ -1,6 +1,20 @@
 import { EventSourceInput } from "@fullcalendar/core/index.js";
-import { green, yellow, blue, red, purple, orange, pink } from "@mui/material/colors";
-import { dark } from "@mui/material/styles/createPalette";
+import { blue, green, orange, pink, purple, red, yellow } from "@mui/material/colors";
+
+const colors = {
+  blue: blue[500],
+  green: green[500],
+  orange: orange[500],
+  pink: pink[500],
+  purple: purple[500],
+  red: red[500],
+  yellow: yellow[500],
+  default: "transparent",
+};
+
+type EventColor = keyof typeof colors;
+
+const mapColor = (color: EventColor) => (color in colors ? colors[color] : colors["default"]);
 
 let eventGuid = 0;
 let today = new Date();
