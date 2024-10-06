@@ -1,65 +1,30 @@
 "use client";
 
 import CityMap16x9 from "@/app/public/assets/citymap_16x9.webp";
-import { Avatar, Grid2, Stack, Typography } from "@mui/material";
+import { Grid2, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { forwardRef, useCallback, useImperativeHandle } from "react";
-import { TruncatedTypography } from "../../../TruncatedTypography";
-import { Event, EventMember } from "../SeeEvent.mock";
 import { toast } from "react-hot-toast";
-import { stringToColor } from "@/app/common/utils/stringToColor";
+import { Event } from "../EventInfo.mock";
+import { EventInfoMember } from "./EventInfoMember.component";
 
-export interface SeeEventData {
+export interface EventInfoData {
   success: boolean;
   data?: {};
 }
 
-export interface SeeEventRef {
-  submit: () => SeeEventData;
+export interface EventInfoRef {
+  submit: () => EventInfoData;
 }
 
 interface Props {
   event: Event;
 }
 
-export const Member = ({ member }: { member: EventMember }) => {
-  const { id, username, role } = member;
-  const isHost = role === "host";
-  const isMember = role === "member";
-  const isModerator = role === "moderator";
-
-  return (
-    <Stack direction="column" alignItems="center" bgcolor="background.paper" p={1} gap={1}>
-      <Avatar alt={username} sx={{ width: "2.5rem", height: "2.5rem", bgcolor: stringToColor(username) }}>
-        {username[0]}
-        {username[1]}
-      </Avatar>
-      <Stack gap={0} alignItems="center">
-        <TruncatedTypography variant="body2">{username}</TruncatedTypography>
-        {isHost && (
-          <TruncatedTypography variant="caption" color="primary">
-            Host
-          </TruncatedTypography>
-        )}
-        {isModerator && (
-          <TruncatedTypography variant="caption" color="secondary">
-            Moderator
-          </TruncatedTypography>
-        )}
-        {isMember && (
-          <TruncatedTypography variant="caption" color="text.secondary">
-            Member
-          </TruncatedTypography>
-        )}
-      </Stack>
-    </Stack>
-  );
-};
-
-export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
+export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
   const { id, title, description, startAt, endAt, city, street, locationId, members } = event;
 
-  const handleSubmit = useCallback((): SeeEventData => {
+  const handleSubmit = useCallback((): EventInfoData => {
     // const { data, success, error } = createEventDateAndLocationSchema.safeParse({
     //   date,
     //   from,
@@ -85,8 +50,8 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
   // }, []);
 
   return (
-    <Stack gap={{ xs: 2, sm: 3 }} width="100%">
-      <Stack bgcolor="background.default" p={2} gap={1}>
+    <Stack gap={2} width="100%">
+      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
         <Typography variant="body2" color="text.secondary">
           Name
         </Typography>
@@ -94,7 +59,7 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
       </Stack>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Stack bgcolor="background.default" p={2} gap={1}>
+          <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
             <Typography variant="body2" color="text.secondary">
               Start at
             </Typography>
@@ -105,44 +70,43 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit",
-              }).format(new Date(event.startAt))}
+              }).format(new Date(startAt))}
             </Typography>
           </Stack>
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Stack bgcolor="background.default" p={2} gap={1}>
+          <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
             <Typography variant="body2" color="text.secondary">
               End at
             </Typography>
             <Typography variant="body1">
-              {" "}
               {new Intl.DateTimeFormat("pl-PL", {
                 year: "numeric",
                 month: "2-digit",
                 day: "2-digit",
                 hour: "2-digit",
                 minute: "2-digit",
-              }).format(new Date(event.endAt))}
+              }).format(new Date(endAt))}
             </Typography>
           </Stack>
         </Grid2>
       </Grid2>
-      <Stack bgcolor="background.default" p={2} gap={1}>
+      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
         <Typography variant="body2" color="text.secondary">
           Description
         </Typography>
         <Typography variant="body1">{description}</Typography>
       </Stack>
       <Stack
-        gap={{ xs: 2, sm: 3 }}
+        gap={2}
         direction={{
           xs: "column",
           sm: "row-reverse",
         }}
       >
-        <Grid2 container spacing={{ xs: 2 }} flexShrink={0}>
+        <Grid2 container spacing={2} flexShrink={0}>
           <Grid2 size={12}>
-            <Stack bgcolor="background.default" p={2} gap={1}>
+            <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
               <Typography variant="body2" color="text.secondary">
                 City
               </Typography>
@@ -150,7 +114,7 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
             </Stack>
           </Grid2>
           <Grid2 size={12}>
-            <Stack bgcolor="background.default" p={2} gap={1}>
+            <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
               <Typography variant="body2" color="text.secondary">
                 Street
               </Typography>
@@ -158,7 +122,7 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
             </Stack>
           </Grid2>
         </Grid2>
-        <Stack bgcolor="background.default" p={2} gap={1}>
+        <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
           <Typography variant="body2" color="text.secondary">
             Map
           </Typography>
@@ -166,7 +130,6 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
             src={CityMap16x9}
             alt="city map"
             sizes="100vw"
-            objectFit="cover"
             onClick={() => {
               toast(`TODO: Show map modal. Id: [${locationId}].`);
             }}
@@ -174,11 +137,12 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
               width: "100%",
               height: "100%",
               cursor: "pointer",
+              objectFit: "cover",
             }}
           />
         </Stack>
       </Stack>
-      <Stack bgcolor="background.default" p={2} gap={1}>
+      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
         <Stack direction="row" alignItems="center" gap={0.5}>
           <Typography variant="body2" color="text.secondary">
             Members
@@ -187,10 +151,10 @@ export const SeeEvent = forwardRef<SeeEventRef, Props>(({ event }, ref) => {
             [{`${members.length}`}]
           </Typography>
         </Stack>
-        <Grid2 container spacing={2}>
+        <Grid2 container spacing={{ xs: 1, sm: 2 }}>
           {members.map((member) => (
             <Grid2 key={member.id} size={{ xs: 6, sm: 4 }}>
-              <Member member={member} />
+              <EventInfoMember member={member} />
             </Grid2>
           ))}
         </Grid2>

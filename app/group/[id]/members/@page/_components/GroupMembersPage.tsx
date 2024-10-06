@@ -5,7 +5,7 @@ import { GroupMembersList } from "../../_components/GroupMembersList";
 
 export const GroupMembersPage = () => {
   return (
-    <Stack gap={3}>
+    <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader
         primary="Members"
         subPrimary="(99+)"

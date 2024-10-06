@@ -5,7 +5,7 @@ import { AboutCommentsList } from "./AboutCommentsList";
 
 export const GroupAboutPage = () => {
   return (
-    <Stack gap={3}>
+    <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader primary="About" secondary="See basic information about group." />
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 6, sm: 3 }}>
@@ -22,14 +22,14 @@ export const GroupAboutPage = () => {
         </Grid2>
       </Grid2>
       <Paper>
-        <Stack p={2} gap={2}>
+        <Stack p={{ xs: 2, sm: 3 }} gap={2}>
           <Typography variant="h6">Name</Typography>
           <Divider />
           <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit cursus.</Typography>
         </Stack>
       </Paper>
       <Paper>
-        <Stack p={2} gap={2}>
+        <Stack p={{ xs: 2, sm: 3 }} gap={2}>
           <Typography variant="h6">Description</Typography>
           <Divider />
           <Typography variant="body1">
@@ -46,7 +46,7 @@ export const GroupAboutPage = () => {
         </Stack>
       </Paper>
       <Paper>
-        <Stack p={2} gap={2}>
+        <Stack p={{ xs: 2, sm: 3 }} gap={2}>
           <Typography variant="h6">Opinie</Typography>
           <Divider />
           <AboutCommentsList />

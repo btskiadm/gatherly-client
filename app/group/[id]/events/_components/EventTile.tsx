@@ -3,8 +3,6 @@ import { TruncatedTypography } from "@/app/common/components/TruncatedTypography
 import { Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { useCallback } from "react";
-import { toast } from "react-hot-toast";
 import { GroupEventItem } from "../events.mock";
 import { EventTileMenu } from "./EventTileMenu";
 

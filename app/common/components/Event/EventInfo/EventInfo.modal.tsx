@@ -25,7 +25,7 @@ interface Props
     dialogLoading?: boolean;
   }> {}
 
-export const SeeEventModal = ({ open, title, cancel, submit, children, loading, dialogLoading }: Props) => {
+export const EventInfoModal = ({ open, title, cancel, submit, children, loading, dialogLoading }: Props) => {
   const { onCancel } = cancel ?? {};
   const { onSubmit, text } = submit ?? {};
 

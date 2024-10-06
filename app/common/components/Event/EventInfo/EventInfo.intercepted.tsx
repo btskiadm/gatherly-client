@@ -3,14 +3,14 @@
 import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { SeeEventModal } from "./SeeEvent.modal";
-import { SeeEvent, SeeEventRef } from "./_components/SeeEvent.component";
-import { Event, eventMock } from "./SeeEvent.mock";
+import { EventInfoModal } from "./EventInfo.modal";
+import { EventInfo, EventInfoRef } from "./_components/EventInfo.component";
+import { Event, eventMock } from "./EventInfo.mock";
 
-export const SeeEventIntercepted = () => {
+export const EventInfoIntercepted = () => {
   const [event, setEvent] = useState<Event>();
   const [loading, setLoading] = useState(false);
-  const seeEventRef = useRef<SeeEventRef>(null);
+  const EventInfoRef = useRef<EventInfoRef>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const SeeEventIntercepted = () => {
     return {
       text: "Join",
       onSubmit: async () => {
-        // const data = seeEventRef.current?.invite();
+        // const data = EventInfoRef.current?.invite();
 
         // if (!data?.success) {
         //   return;
@@ -49,7 +49,7 @@ export const SeeEventIntercepted = () => {
   );
 
   return (
-    <SeeEventModal
+    <EventInfoModal
       open={true}
       dialogLoading={!event}
       title="Lorem ipsum"
@@ -57,7 +57,7 @@ export const SeeEventIntercepted = () => {
       cancel={cancel}
       submit={submit}
     >
-      {event && <SeeEvent ref={seeEventRef} event={event} />}
-    </SeeEventModal>
+      {event && <EventInfo ref={EventInfoRef} event={event} />}
+    </EventInfoModal>
   );
 };

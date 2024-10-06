@@ -8,7 +8,7 @@ interface Props {
 export const AboutEventCounterTile = ({ primary, secondary }: Props) => {
   return (
     <Paper>
-      <Stack justifyContent="center" alignItems="center" gap={1} height="100%" py={{ xs: 2, sm: 4 }}>
+      <Stack justifyContent="center" alignItems="center" gap={1} height="100%" py={{ xs: 2, sm: 3 }}>
         <Typography variant="body2" color="text.secondary">
           {secondary}
         </Typography>

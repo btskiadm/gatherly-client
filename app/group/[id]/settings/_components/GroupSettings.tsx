@@ -31,7 +31,7 @@ export const GroupSettings = () => {
 
   return (
     <Paper>
-      <Stack p={2} gap={4}>
+      <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
         <CreateGroup
           ref={ref}
           name="Lorem ipsum dolor sit amet."

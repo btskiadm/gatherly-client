@@ -32,7 +32,7 @@ export const EventTileMenu = () => {
       case "leave":
         break;
       case "preview":
-        router.push("/group/123-456-789/events/123-456-789");
+        router.push("/event/123-456-789");
         break;
       case "favorite":
         break;

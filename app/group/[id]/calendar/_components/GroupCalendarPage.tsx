@@ -4,7 +4,7 @@ import { GroupCalendar } from "./GroupCalendar.component";
 
 export const GroupCalendarPage = () => {
   return (
-    <Stack gap={3}>
+    <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader primary="Calendar" secondary="See group events on calendar." />
       <GroupCalendar />
     </Stack>

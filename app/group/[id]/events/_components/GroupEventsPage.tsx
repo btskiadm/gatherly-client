@@ -5,7 +5,7 @@ import { GroupHeader } from "../../_components/GroupHeader";
 
 export const GroupEventsPage = () => {
   return (
-    <Stack gap={3}>
+    <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader
         primary="Events"
         subPrimary="(99+)"

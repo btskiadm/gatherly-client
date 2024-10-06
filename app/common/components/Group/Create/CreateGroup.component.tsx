@@ -102,7 +102,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
     const cityError = errors["city"];
 
     return (
-      <Stack gap={3} width="100%">
+      <Stack gap={2} width="100%">
         <FormControl error={!!nameError}>
           <FormLabel required>Nazwa</FormLabel>
           <TextField placeholder="Nazwa grupy" size="small" value={name} onChange={handleName} />

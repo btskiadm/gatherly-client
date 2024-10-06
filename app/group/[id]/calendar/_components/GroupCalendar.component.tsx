@@ -18,6 +18,7 @@ import { useCallback, useRef, useState } from "react";
 import { INITIAL_EVENTS } from "./calendar.mock";
 import { toast } from "react-hot-toast";
 import { grey } from "@mui/material/colors";
+import { useRouter } from "next/navigation";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `
@@ -74,6 +75,7 @@ export const CalendarWrapper = styled("div")(
 export const GroupCalendar = () => {
   const ref = useRef<FullCalendar>(null);
   const [loaded, setLoaded] = useState(false);
+  const router = useRouter();
 
   const handleLoaded = useCallback(() => {
     setLoaded(true);
@@ -145,10 +147,12 @@ export const GroupCalendar = () => {
     calendarApi.changeView("timeGridDay");
   }, []);
 
-  const handleEventClick = useCallback((event: EventClickArg) => {
-    console.dir({ event });
-    toast(event.event.title);
-  }, []);
+  const handleEventClick = useCallback(
+    (event: EventClickArg) => {
+      router.push("/event/123-456-789");
+    },
+    [router]
+  );
 
   return (
     <Stack gap={1}>
