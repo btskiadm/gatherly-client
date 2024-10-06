@@ -1,3 +1,5 @@
-export default function ModalDefault() {
-  return null;
+import { GroupEventsPage } from "../_components/GroupEventsPage";
+
+export default function Default() {
+  return <GroupEventsPage />;
 }

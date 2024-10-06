@@ -1,11 +1,12 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { Add, Group, Place } from "@mui/icons-material";
+import { Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Box, Button, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { GroupEventItem } from "../events.mock";
+import { EventTileMenu } from "./EventTileMenu";
 
 interface Props {
   item: GroupEventItem;
@@ -28,10 +29,6 @@ export const EventTile = ({ item }: Props) => {
     hour: "numeric",
     minute: "numeric",
   }).format(new Date(endAt))}`;
-
-  const handleJoin = useCallback(() => {
-    toast("Joined to: " + title);
-  }, []);
 
   return (
     <Paper
@@ -130,9 +127,7 @@ export const EventTile = ({ item }: Props) => {
                 width="100%"
               >
                 <Chip size="small" label={_members} icon={<Group />} />
-                <Button size="small" variant="outlined" startIcon={<Add />} onClick={handleJoin}>
-                  Join
-                </Button>
+                <EventTileMenu />
               </Stack>
             </Stack>
           </Grid2>
@@ -145,9 +140,7 @@ export const EventTile = ({ item }: Props) => {
             alignContent="center"
           >
             <Stack alignItems="flex-end">
-              <Button size="small" variant="outlined" startIcon={<Add />} onClick={handleJoin}>
-                Join
-              </Button>
+              <EventTileMenu />
             </Stack>
           </Grid2>
         </Grid2>
