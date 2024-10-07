@@ -1,6 +1,7 @@
 "use client";
 
-import { Adb, AddCircleOutlineRounded, Menu as MenuIcon } from "@mui/icons-material";
+import Logo from "@/app/public/assets/logo.webp";
+import { AddCircleOutlineRounded, Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -13,7 +14,8 @@ import {
   Typography,
   useScrollTrigger,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useState } from "react";
 import { Link } from "./NextLink";
 
 interface Props {
@@ -58,38 +60,32 @@ export const ApplicationNavBar = (props: Props) => {
         <AppBar color="default">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <Adb sx={{ display: { xs: "none", sm: "flex" }, mr: 1 }} />
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
+              <Link
                 href="/groups"
                 sx={{
-                  mr: 2,
-                  display: { xs: "none", sm: "flex" },
-                  color: "inherit",
-                  textDecoration: "none",
+                  textDecoration: "unset",
+                  color: "text.primary",
                 }}
               >
-                Gatherly
-              </Typography>
-              <Adb sx={{ display: { xs: "flex", sm: "none" }, mr: 1 }} />
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href="/groups"
-                sx={{
-                  mr: 2,
-                  display: { xs: "flex", sm: "none" },
-                  flexGrow: 1,
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                Gatherly
-              </Typography>
-              <Box sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" } }} />
+                <Stack direction="row" alignItems="center" flexGrow={1} gap={1}>
+                  <Image
+                    src={Logo}
+                    alt="logo"
+                    sizes="100vw"
+                    style={{
+                      width: "38px",
+                      height: "38px",
+                      cursor: "pointer",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  <Typography variant="h6" noWrap>
+                    Gatherly
+                  </Typography>
+                </Stack>
+              </Link>
+              <Box flexGrow={1} />
               <Stack
                 flexGrow={0}
                 direction="row"

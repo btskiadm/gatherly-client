@@ -33,24 +33,30 @@ export default function Page() {
           </Typography>
           <Grid2 container spacing={1}>
             <Grid2 size={4}>
-              <Stack py={1} bgcolor="background.default" alignItems="center" justifyContent="center">
-                <Typography variant="caption">Wydarzeni</Typography>
+              <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">
+                <Typography variant="caption" color="text.secondary">
+                  Wydarzeni
+                </Typography>
                 <Typography variant="body1" fontWeight="600">
                   120
                 </Typography>
               </Stack>
             </Grid2>
             <Grid2 size={4}>
-              <Stack py={1} bgcolor="background.default" alignItems="center" justifyContent="center">
-                <Typography variant="caption">Członków</Typography>
+              <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">
+                <Typography variant="caption" color="text.secondary">
+                  Członków
+                </Typography>
                 <Typography variant="body1" fontWeight="600">
                   134
                 </Typography>
               </Stack>
             </Grid2>
             <Grid2 size={4}>
-              <Stack py={1} bgcolor="background.default" alignItems="center" justifyContent="center">
-                <Typography variant="caption">Ocena</Typography>
+              <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">
+                <Typography variant="caption" color="text.secondary">
+                  Ocena
+                </Typography>
                 <Typography variant="body1" fontWeight="600">
                   4.25/5
                 </Typography>

@@ -51,16 +51,16 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
 
   return (
     <Stack gap={2} width="100%">
-      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-        <Typography variant="body2" color="text.secondary">
+      <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+        <Typography variant="subtitle2" color="text.secondary">
           Name
         </Typography>
         <Typography variant="body1">{title}</Typography>
       </Stack>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-            <Typography variant="body2" color="text.secondary">
+          <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+            <Typography variant="subtitle2" color="text.secondary">
               Start at
             </Typography>
             <Typography variant="body1">
@@ -75,8 +75,8 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
           </Stack>
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-            <Typography variant="body2" color="text.secondary">
+          <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+            <Typography variant="subtitle2" color="text.secondary">
               End at
             </Typography>
             <Typography variant="body1">
@@ -91,8 +91,8 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
           </Stack>
         </Grid2>
       </Grid2>
-      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-        <Typography variant="body2" color="text.secondary">
+      <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+        <Typography variant="subtitle2" color="text.secondary">
           Description
         </Typography>
         <Typography variant="body1">{description}</Typography>
@@ -106,24 +106,24 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
       >
         <Grid2 container spacing={2} flexShrink={0}>
           <Grid2 size={12}>
-            <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-              <Typography variant="body2" color="text.secondary">
+            <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+              <Typography variant="subtitle2" color="text.secondary">
                 City
               </Typography>
               <Typography variant="body1">{city}</Typography>
             </Stack>
           </Grid2>
           <Grid2 size={12}>
-            <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-              <Typography variant="body2" color="text.secondary">
+            <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+              <Typography variant="subtitle2" color="text.secondary">
                 Street
               </Typography>
               <Typography variant="body1"> {street}</Typography>
             </Stack>
           </Grid2>
         </Grid2>
-        <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
-          <Typography variant="body2" color="text.secondary">
+        <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
+          <Typography variant="subtitle2" color="text.secondary">
             Map
           </Typography>
           <Image
@@ -142,9 +142,9 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
           />
         </Stack>
       </Stack>
-      <Stack bgcolor="background.default" p={{ xs: 1, sm: 2 }} gap={1}>
+      <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>
         <Stack direction="row" alignItems="center" gap={0.5}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="subtitle2" color="text.secondary">
             Members
           </Typography>
           <Typography variant="caption" color="text.secondary">

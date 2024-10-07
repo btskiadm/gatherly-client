@@ -3,14 +3,25 @@
 import { PropsWithChildren } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, alpha } from "@mui/material";
 import { grey } from "@mui/material/colors";
+
+declare module "@mui/material/styles" {
+  interface ThemeOptions {
+    background?: Partial<TypeBackground>;
+  }
+
+  interface TypeBackground {
+    light: string;
+  }
+}
 
 const customTheme: Parameters<typeof createTheme>[0] = {
   cssVariables: true,
   palette: {
     background: {
       default: grey[50],
+      light: alpha(grey[50], 0.6),
     },
   },
   typography: {
