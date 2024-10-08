@@ -82,11 +82,12 @@ export const GroupsAutocomplete = () => {
       ListboxComponent={ListboxComponent(selected, handleDelete)}
       getOptionLabel={(option) => (option.key === "name" ? option.value : option.label)}
       renderTags={(value, getTagProps) => (
-        <Stack direction="row" maxWidth="80%" width="min-content">
+        <Stack direction="row" maxWidth="40%" width="min-content">
           {value.slice(0, 1).map((option, index: number) => {
             const { key, ...tagProps } = getTagProps({ index });
             return (
               <Chip
+                {...getTagProps({ index })}
                 key={option.value}
                 component="div"
                 variant="outlined"
@@ -99,6 +100,7 @@ export const GroupsAutocomplete = () => {
           {value?.length > 1 && (
             <Chip
               {...getTagProps({ index: 1 })}
+              key={getTagProps({ index: 1 }).key}
               component="div"
               variant="outlined"
               size="small"

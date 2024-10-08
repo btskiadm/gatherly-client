@@ -25,7 +25,7 @@ export const AboutComment = () => {
 
   return (
     <>
-      <Stack gap={2} p={2} bgcolor="background.default">
+      <Stack gap={2} p={1} bgcolor="background.default">
         <Stack justifyContent="space-between" direction="row">
           <Stack gap={1} direction="row" alignItems="center">
             <Avatar />

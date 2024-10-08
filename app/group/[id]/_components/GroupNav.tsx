@@ -2,7 +2,16 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
-import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
+import {
+  CalendarMonth,
+  Chat,
+  Event,
+  Group,
+  GroupAdd,
+  InfoOutlined,
+  Logout,
+  SettingsOutlined,
+} from "@mui/icons-material";
 import {
   Divider,
   List,
@@ -109,6 +118,25 @@ export function GroupNav() {
                 <SettingsOutlined />
               </ListItemIcon>
               <ListItemText primary="Settings" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton sx={(t) => ({ color: t.palette.primary.main })}>
+              <ListItemIcon>
+                <GroupAdd sx={(t) => ({ color: t.palette.primary.main })} />
+              </ListItemIcon>
+              <ListItemText primary="Join" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Logout />
+              </ListItemIcon>
+              <ListItemText primary="Leave group" />
             </ListItemButton>
           </ListItem>
         </List>

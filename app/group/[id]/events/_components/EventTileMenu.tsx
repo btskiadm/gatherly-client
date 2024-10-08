@@ -41,6 +41,7 @@ export const EventTileMenu = () => {
       case "close":
         close();
         break;
+        break;
       default:
         const _exhaustiveCheck: never = reason;
         return _exhaustiveCheck;

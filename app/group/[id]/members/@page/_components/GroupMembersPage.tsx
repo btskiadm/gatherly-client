@@ -25,7 +25,7 @@ export const GroupMembersPage = () => {
                 height: "min-content",
               }}
             >
-              Add member
+              Invite
             </Button>
             <Button
               variant="outlined"
@@ -39,7 +39,7 @@ export const GroupMembersPage = () => {
                 height: "min-content",
               }}
             >
-              Add
+              Invite
             </Button>
           </>
         }

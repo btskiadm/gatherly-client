@@ -5,7 +5,7 @@ import { GroupsStack } from "./GroupsStack";
 
 export const GroupsPage = () => {
   return (
-    <Stack gap={3} mt={4}>
+    <Stack gap={3}>
       <GroupsListing />
       <Stack gap={6} direction="row" flexWrap="wrap" justifyContent="center">
         {stack.map(({ tags, tiles }, idx) => (

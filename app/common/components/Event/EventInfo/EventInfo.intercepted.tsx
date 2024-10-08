@@ -23,10 +23,10 @@ export const EventInfoIntercepted = () => {
     router.back();
   }, [router]);
 
-  const submit = useMemo(() => {
+  const confirm = useMemo(() => {
     return {
       text: "Join",
-      onSubmit: async () => {
+      onConfirm: async () => {
         // const data = EventInfoRef.current?.invite();
 
         // if (!data?.success) {
@@ -48,6 +48,15 @@ export const EventInfoIntercepted = () => {
     [handleCancel]
   );
 
+  const action = useMemo(
+    () => ({
+      onAction: () => {
+        window.location.replace("/event/123-456-789");
+      },
+    }),
+    []
+  );
+
   return (
     <EventInfoModal
       open={true}
@@ -55,7 +64,8 @@ export const EventInfoIntercepted = () => {
       title="Lorem ipsum"
       loading={loading}
       cancel={cancel}
-      submit={submit}
+      confirm={confirm}
+      action={action}
     >
       {event && <EventInfo ref={EventInfoRef} event={event} />}
     </EventInfoModal>

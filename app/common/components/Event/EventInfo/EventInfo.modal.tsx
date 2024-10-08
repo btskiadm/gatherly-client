@@ -13,26 +13,30 @@ import {
 interface Props
   extends PropsWithChildren<{
     title: string;
+    action?: {
+      onAction: () => void;
+    };
     cancel?: {
       onCancel: () => void;
     };
-    submit?: {
+    confirm?: {
       text: string;
-      onSubmit: () => void;
+      onConfirm: () => void;
     };
     open: boolean;
     loading: boolean;
     dialogLoading?: boolean;
   }> {}
 
-export const EventInfoModal = ({ open, title, cancel, submit, children, loading, dialogLoading }: Props) => {
+export const EventInfoModal = ({ open, title, cancel, action, confirm, children, loading, dialogLoading }: Props) => {
   const { onCancel } = cancel ?? {};
-  const { onSubmit, text } = submit ?? {};
+  const { onConfirm, text } = confirm ?? {};
+  const { onAction } = action ?? {};
 
   return (
     <BootstrapDialog onClose={onCancel} open={open}>
       <BootstrapDialogTitle>
-        {dialogLoading ? <Skeleton width="60%" height="32px" variant="rectangular" /> : title}
+        {dialogLoading ? <Skeleton width="80%" height="32px" variant="rectangular" /> : title}
       </BootstrapDialogTitle>
       <IconButton
         aria-label="close"
@@ -58,15 +62,27 @@ export const EventInfoModal = ({ open, title, cancel, submit, children, loading,
         {dialogLoading && <DialogLoadingActions />}
         {!dialogLoading && (
           <>
-            <Box />
+            {onAction && (
+              <Button
+                disabled={loading}
+                variant="text"
+                size="small"
+                sx={{
+                  color: "text.secondary",
+                }}
+                onClick={onAction}
+              >
+                Detail
+              </Button>
+            )}
             <Stack direction="row" gap={1}>
               {onCancel && (
                 <Button disabled={loading} variant="text" color="error" size="small" onClick={onCancel}>
                   Cancel
                 </Button>
               )}
-              {onSubmit && (
-                <LoadingButton loading={loading} variant="outlined" onClick={onSubmit}>
+              {onConfirm && (
+                <LoadingButton loading={loading} variant="outlined" onClick={onConfirm}>
                   {text}
                 </LoadingButton>
               )}

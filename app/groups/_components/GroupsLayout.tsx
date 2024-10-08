@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 
 export const GroupsLayout = ({
@@ -6,5 +6,9 @@ export const GroupsLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <Container>{children}</Container>;
+  return (
+    <Container>
+      <Box py={{ xs: 3, sm: 6 }}>{children}</Box>
+    </Container>
+  );
 };

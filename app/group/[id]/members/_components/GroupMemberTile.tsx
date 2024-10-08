@@ -1,3 +1,4 @@
+import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { Avatar, Grid2, Paper, Stack, Typography } from "@mui/material";
 
 export const GroupMemberTile = () => {
@@ -7,27 +8,27 @@ export const GroupMemberTile = () => {
         <Stack alignItems="center" gap={1} py={2} bgcolor="background.default">
           <Avatar />
           <Stack alignItems="center">
-            <Typography variant="body1">Adam Bartski</Typography>
-            <Typography variant="body2" color="text.secondary">
+            <TruncatedTypography variant="body1">Adam Bartski</TruncatedTypography>
+            <TruncatedTypography variant="body2" color="text.secondary">
               Łódź
-            </Typography>
+            </TruncatedTypography>
           </Stack>
         </Stack>
         <Grid2 container spacing={2}>
           <Grid2 size={6}>
             <Stack alignItems="center">
-              <Typography variant="body2" color="text.secondary">
+              <TruncatedTypography variant="body2" color="text.secondary">
                 Ukończone
-              </Typography>
-              <Typography variant="h6">63</Typography>
+              </TruncatedTypography>
+              <TruncatedTypography variant="h6">63</TruncatedTypography>
             </Stack>
           </Grid2>
           <Grid2 size={6}>
             <Stack alignItems="center">
-              <Typography variant="body2" color="text.secondary">
+              <TruncatedTypography variant="body2" color="text.secondary">
                 Wszystkie
-              </Typography>
-              <Typography variant="h6">99+</Typography>
+              </TruncatedTypography>
+              <TruncatedTypography variant="h6">99+</TruncatedTypography>
             </Stack>
           </Grid2>
         </Grid2>

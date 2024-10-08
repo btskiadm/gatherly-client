@@ -75,7 +75,7 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           },
         }}
       />
-      <Stack gap={1} p={1} height="100%">
+      <Stack gap={1} p={2} height="100%">
         {/* title */}
         <Stack direction="row">
           <Tooltip title={title}>

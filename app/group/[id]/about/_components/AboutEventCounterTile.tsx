@@ -12,7 +12,7 @@ export const AboutEventCounterTile = ({ primary, secondary }: Props) => {
         <Typography variant="body2" color="text.secondary">
           {secondary}
         </Typography>
-        <Typography variant="h2" fontWeight="600">
+        <Typography variant="h4" fontWeight="600">
           {primary}
         </Typography>
       </Stack>

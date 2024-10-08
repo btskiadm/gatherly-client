@@ -10,7 +10,7 @@ export const EventLayout = ({
 }>) => {
   return (
     <Container>
-      <Box py={{ xs: 2, sm: 6 }}>
+      <Box py={{ xs: 3, sm: 6 }}>
         <Grid2 container spacing={{ xs: 2, sm: 3 }} direction={{ xs: "column-reverse", sm: "row" }}>
           <Grid2 size={{ xs: 12, sm: 8 }}>{event}</Grid2>
           <Grid2 size={{ xs: 12, sm: 4 }}>{group}</Grid2>

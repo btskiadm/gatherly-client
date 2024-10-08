@@ -1,10 +1,10 @@
 "use client";
 
-import { PropsWithChildren } from "react";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { CssBaseline, alpha } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { grey } from "@mui/material/colors";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { PropsWithChildren } from "react";
 
 declare module "@mui/material/styles" {
   interface ThemeOptions {
