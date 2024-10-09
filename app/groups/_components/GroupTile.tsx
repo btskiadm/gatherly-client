@@ -11,10 +11,11 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Box, Button, Chip, IconButton, Link, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
 import { PropsWithChildren, useState } from "react";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";
+import { Link } from "@/app/common/components/NextLink";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
@@ -175,10 +176,21 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
-        <MenuItem onClick={handleCloseMore("report")} disableRipple>
-          <ReportGmailerrorredOutlined color="action" />
-          Report
-        </MenuItem>
+        <Link
+          href={{
+            pathname: "/report",
+            query: {
+              type: "group",
+              id: "123-456-789",
+            },
+          }}
+          underline="none"
+        >
+          <MenuItem onClick={handleCloseMore("report")} disableRipple>
+            <ReportGmailerrorredOutlined color="action" />
+            Report
+          </MenuItem>
+        </Link>
       </Menu>
     </>
   );

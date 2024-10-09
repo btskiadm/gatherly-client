@@ -1,10 +1,10 @@
-interface User {
+export interface User {
   id: string;
   username: string;
   email: string;
 }
 
-interface Group {
+export interface Group {
   id: string;
   tile: string;
   description: string;
@@ -15,7 +15,7 @@ interface Group {
   events: Event[];
 }
 
-interface Event {
+export interface Event {
   id: string;
   title: string;
   startAt: string;
@@ -25,6 +25,15 @@ interface Event {
   members: User[];
   hosts: User[];
   moderators: User[];
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: string;
+  user: User;
+  createdAt: Date;
+  content: string;
+  rate: number;
 }
 
 export const hostUser = {

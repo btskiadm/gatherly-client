@@ -61,6 +61,18 @@ export const inviteMemberSchema = z.object({
 
 export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
 
+// report
+export const minReportContent = 5;
+export const maxReportContent = 250;
+
+const reportContent = z.string().min(minReportContent).max(maxReportContent);
+
+export const reportSchema = z.object({
+  content: reportContent,
+});
+
+export type ReportInput = z.infer<typeof reportSchema>;
+
 // sign in
 export const minUsername = 5;
 export const minPassword = 5;

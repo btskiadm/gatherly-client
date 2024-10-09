@@ -1,7 +1,5 @@
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { ArrowDownwardOutlined, ArrowDropDown } from "@mui/icons-material";
-import { Button, Stack, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import { Stack, Typography } from "@mui/material";
 import { GroupHeaderButton } from "./GroupHeaderButton";
 
 interface Props {

@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/app/common/components/NextLink";
 import {
   FavoriteBorderOutlined,
   Login,
@@ -32,7 +33,6 @@ export const EventTileMenu = () => {
       case "leave":
         break;
       case "preview":
-        router.push("123-456-789");
         break;
       case "favorite":
         break;
@@ -84,18 +84,31 @@ export const EventTileMenu = () => {
           <Logout color="action" />
           Leave
         </MenuItem>
-        <MenuItem onClick={handleCloseMore("preview")} disableRipple>
-          <PreviewOutlined color="action" />
-          Preview
-        </MenuItem>
+        <Link href="123-456-789" underline="none">
+          <MenuItem onClick={handleCloseMore("close")} disableRipple>
+            <PreviewOutlined color="action" />
+            Preview
+          </MenuItem>
+        </Link>
         <MenuItem onClick={handleCloseMore("favorite")} disableRipple>
           <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
-        <MenuItem onClick={handleCloseMore("report")} disableRipple>
-          <ReportGmailerrorredOutlined color="action" />
-          Report
-        </MenuItem>
+        <Link
+          href={{
+            pathname: "/report",
+            query: {
+              type: "event",
+              id: "123-456-789",
+            },
+          }}
+          underline="none"
+        >
+          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("close")}>
+            <ReportGmailerrorredOutlined color="action" />
+            Report
+          </MenuItem>
+        </Link>
       </Menu>
     </>
   );

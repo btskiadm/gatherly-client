@@ -80,10 +80,22 @@ export const GroupHeaderButton = () => {
           </Link>
         )}
 
-        <MenuItem disableRipple onClick={handleCloseReason("close")}>
-          <ReportGmailerrorredOutlined color="action" />
-          Report
-        </MenuItem>
+        <Link
+          href={{
+            pathname: "/report",
+            query: {
+              type: "group",
+              id: "123-456-789",
+            },
+          }}
+          underline="none"
+        >
+          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseReason("close")}>
+            <ReportGmailerrorredOutlined color="action" />
+            Report
+          </MenuItem>
+        </Link>
+
         {(isHost || isModerator) && <Divider />}
         {(isHost || isModerator) && (
           <Link href="createEvent" underline="none">
@@ -95,7 +107,7 @@ export const GroupHeaderButton = () => {
         )}
       </Menu>
 
-      <ButtonGroup disabled={loading} variant="contained" aria-label="Button group with a nested menu">
+      <ButtonGroup disabled={loading} variant="outlined" aria-label="Button group with a nested menu">
         <LoadingButton
           loading={loading}
           ref={btnRef}

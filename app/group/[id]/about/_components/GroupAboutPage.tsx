@@ -53,7 +53,7 @@ export const GroupAboutPage = () => {
       </Paper>
       <Paper>
         <Box p={{ xs: 1, sm: 2 }}>
-          <Stack bgcolor="background.light" p={1} gap={1}>
+          <Stack p={1} gap={1}>
             <Typography variant="subtitle2" color="text.secondary">
               Opinie
             </Typography>
