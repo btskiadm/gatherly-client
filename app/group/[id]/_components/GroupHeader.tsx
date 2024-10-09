@@ -1,17 +1,18 @@
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { Stack, Typography } from "@mui/material";
+import { ArrowDownwardOutlined, ArrowDropDown } from "@mui/icons-material";
+import { Button, Stack, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { GroupHeaderButton } from "./GroupHeaderButton";
 
 interface Props {
   primary: string;
   subPrimary?: string;
   secondary?: string;
-  actions?: ReactNode;
 }
 
-export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) => {
+export const GroupHeader = ({ primary, subPrimary, secondary }: Props) => {
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
+    <Stack direction="row" justifyContent="space-between" alignItems="flex-end" gap={1}>
       {/* min width for secondary overflow */}
       <Stack gap={1} minWidth={0}>
         <Stack direction="row" gap={1} alignItems="center">
@@ -28,7 +29,7 @@ export const GroupHeader = ({ primary, subPrimary, secondary, actions }: Props) 
           {secondary}
         </TruncatedTypography>
       </Stack>
-      {actions}
+      <GroupHeaderButton />
     </Stack>
   );
 };

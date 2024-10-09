@@ -42,7 +42,7 @@ export const EventTile = ({ item }: Props) => {
       })}
     >
       <Link
-        href="/event/123-456-789"
+        href="123-456-789"
         sx={{
           height: 0,
           width: 0,

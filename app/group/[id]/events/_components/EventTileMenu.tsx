@@ -32,7 +32,7 @@ export const EventTileMenu = () => {
       case "leave":
         break;
       case "preview":
-        router.push("/event/123-456-789");
+        router.push("123-456-789");
         break;
       case "favorite":
         break;
@@ -40,7 +40,6 @@ export const EventTileMenu = () => {
         break;
       case "close":
         close();
-        break;
         break;
       default:
         const _exhaustiveCheck: never = reason;

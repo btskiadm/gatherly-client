@@ -9,6 +9,7 @@ import {
   DialogLoadingActions,
   DialogLoadingContent,
 } from "../../BootstrapDialog";
+import { Link } from "../../NextLink";
 
 interface Props
   extends PropsWithChildren<{
@@ -67,12 +68,14 @@ export const EventInfoModal = ({ open, title, cancel, action, confirm, children,
                 disabled={loading}
                 variant="text"
                 size="small"
+                LinkComponent={Link}
+                href="/event/123-456-789"
                 sx={{
                   color: "text.secondary",
                 }}
                 onClick={onAction}
               >
-                Detail
+                Details
               </Button>
             )}
             <Stack direction="row" gap={1}>

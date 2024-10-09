@@ -1,29 +1,12 @@
-import { Box, Button, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { AboutEventCounterTile } from "./AboutEventCounterTile";
+import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { AboutCommentsList } from "./AboutCommentsList";
-import { GroupAdd } from "@mui/icons-material";
+import { AboutEventCounterTile } from "./AboutEventCounterTile";
 
 export const GroupAboutPage = () => {
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
-      <GroupHeader
-        primary="About"
-        secondary="See basic information about group."
-        actions={
-          <Button
-            variant="outlined"
-            color="secondary"
-            sx={{
-              height: "min-content",
-              textWrap: "nowrap",
-            }}
-            startIcon={<GroupAdd />}
-          >
-            Join
-          </Button>
-        }
-      />
+      <GroupHeader primary="About" secondary="See basic information about group." />
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="42" secondary="Zakończone" />

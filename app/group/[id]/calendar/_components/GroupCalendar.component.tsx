@@ -149,7 +149,7 @@ export const GroupCalendar = () => {
 
   const handleEventClick = useCallback(
     (event: EventClickArg) => {
-      router.push("/event/123-456-789");
+      router.push("123-456-789");
     },
     [router]
   );

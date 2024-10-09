@@ -121,25 +121,6 @@ export function GroupNav() {
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider />
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton sx={(t) => ({ color: t.palette.primary.main })}>
-              <ListItemIcon>
-                <GroupAdd sx={(t) => ({ color: t.palette.primary.main })} />
-              </ListItemIcon>
-              <ListItemText primary="Join" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Logout />
-              </ListItemIcon>
-              <ListItemText primary="Leave group" />
-            </ListItemButton>
-          </ListItem>
-        </List>
       </Stack>
     </Paper>
   );
