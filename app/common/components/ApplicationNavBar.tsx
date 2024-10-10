@@ -1,21 +1,46 @@
 "use client";
 
 import Logo from "@/app/public/assets/logo.webp";
-import { AddCircleOutlineRounded, Menu as MenuIcon } from "@mui/icons-material";
+import {
+  AddCircleOutlineRounded,
+  Close,
+  Cookie,
+  Event,
+  FacebookOutlined,
+  Groups,
+  Help,
+  Instagram,
+  Logout,
+  Menu as MenuIcon,
+  Message,
+  Notifications,
+  Person,
+  PrivacyTip,
+  Settings,
+  Twitter,
+} from "@mui/icons-material";
 import {
   AppBar,
   Box,
   Button,
   Container,
+  Divider,
+  Drawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Slide,
   Stack,
   Toolbar,
   Typography,
+  alpha,
   useScrollTrigger,
 } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link } from "./NextLink";
 
 interface Props {
@@ -44,18 +69,169 @@ function HideOnScroll(props: Props) {
 }
 
 export const ApplicationNavBar = (props: Props) => {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [hamburger, setHamburger] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  const handleOpenNavMenu = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    setHamburger(event.currentTarget);
+  }, []);
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const handleCloseNavMenu = useCallback(() => {
+    setHamburger(null);
+  }, []);
 
   return (
     <>
+      <Drawer open={!!hamburger} onClose={handleCloseNavMenu} anchor="right">
+        <Stack
+          width={{
+            xs: "260px",
+            sm: "320px",
+          }}
+          p={{
+            xs: 2,
+            sm: 3,
+          }}
+          gap={2}
+        >
+          <Stack direction="row" gap={4} alignItems="center">
+            <IconButton
+              size="small"
+              sx={{
+                border: "1px solid",
+                borderColor: (t) => alpha(t.palette.divider, 0.1),
+                borderRadius: 2,
+              }}
+              onClick={handleCloseNavMenu}
+            >
+              <Close />
+            </IconButton>
+            <Typography variant="h5" fontWeight={600}>
+              Menu
+            </Typography>
+          </Stack>
+          <List>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Person />
+                </ListItemIcon>
+                <ListItemText primary="View profile" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Event />
+                </ListItemIcon>
+                <ListItemText primary="Your events" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Groups />
+                </ListItemIcon>
+                <ListItemText primary="Your groups" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Message />
+                </ListItemIcon>
+                <ListItemText primary="Messages" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Notifications />
+                </ListItemIcon>
+                <ListItemText primary="Notifications" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/account/edit" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Settings />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Help />
+                </ListItemIcon>
+                <ListItemText primary="Help" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <PrivacyTip />
+                </ListItemIcon>
+                <ListItemText primary="Privacy" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Cookie />
+                </ListItemIcon>
+                <ListItemText primary="Cookies" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Logout />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <Stack direction="row" justifyContent="space-evenly">
+            <IconButton
+              href="https://www.facebook.com"
+              target="_blank"
+              sx={{
+                border: "1px solid",
+                borderColor: (t) => alpha(t.palette.divider, 0.1),
+                borderRadius: 2,
+              }}
+            >
+              <FacebookOutlined />
+            </IconButton>
+            <IconButton
+              href="https://www.instagram.com"
+              target="_blank"
+              sx={{
+                border: "1px solid",
+                borderColor: (t) => alpha(t.palette.divider, 0.1),
+                borderRadius: 2,
+              }}
+            >
+              <Instagram />
+            </IconButton>
+            <IconButton
+              href="https://www.x.com"
+              target="_blank"
+              sx={{
+                border: "1px solid",
+                borderColor: (t) => alpha(t.palette.divider, 0.1),
+                borderRadius: 2,
+              }}
+            >
+              <Twitter />
+            </IconButton>
+          </Stack>
+        </Stack>
+      </Drawer>
       <HideOnScroll {...props}>
         <AppBar color="default">
           <Container maxWidth="xl">
