@@ -85,7 +85,7 @@ export const EventTileMenu = () => {
           Leave
         </MenuItem>
         <Link href="123-456-789" underline="none">
-          <MenuItem onClick={handleCloseMore("close")} disableRipple>
+          <MenuItem disableRipple onClick={handleCloseMore("close")} sx={{ color: "text.primary" }}>
             <PreviewOutlined color="action" />
             Preview
           </MenuItem>

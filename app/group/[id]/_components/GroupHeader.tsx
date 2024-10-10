@@ -14,7 +14,7 @@ export const GroupHeader = ({ primary, subPrimary, secondary }: Props) => {
       {/* min width for secondary overflow */}
       <Stack gap={1} minWidth={0}>
         <Stack direction="row" gap={1} alignItems="center">
-          <Typography variant="h4" fontWeight="600">
+          <Typography variant="h5" fontWeight="600">
             {primary}
           </Typography>
           {subPrimary && (

@@ -2,16 +2,7 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
-import {
-  CalendarMonth,
-  Chat,
-  Event,
-  Group,
-  GroupAdd,
-  InfoOutlined,
-  Logout,
-  SettingsOutlined,
-} from "@mui/icons-material";
+import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
 import {
   Divider,
   List,

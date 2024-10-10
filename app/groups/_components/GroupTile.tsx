@@ -186,7 +186,13 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           }}
           underline="none"
         >
-          <MenuItem onClick={handleCloseMore("report")} disableRipple>
+          <MenuItem
+            onClick={handleCloseMore("report")}
+            disableRipple
+            sx={{
+              color: "text.primary",
+            }}
+          >
             <ReportGmailerrorredOutlined color="action" />
             Report
           </MenuItem>

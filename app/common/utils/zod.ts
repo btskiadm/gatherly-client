@@ -1,5 +1,16 @@
 import { ZodIssue, z } from "zod";
 
+// common
+export const minUsername = 3;
+export const maxUsername = 25;
+export const minPassword = 3;
+export const maxPassword = 25;
+
+const usernameSchema = z.string().min(minUsername).max(maxUsername);
+const locationSchema = z.string();
+const emailSchema = z.string().email();
+const passwordSchema = z.string().min(minPassword).max(maxPassword);
+
 // create group
 export const minGroupName = 5;
 export const maxGroupName = 50;
@@ -53,10 +64,10 @@ export type CreateEventDetailsInput = z.infer<typeof createEventDetailsSchema>;
 export type CreateEventDateAndLocationInput = z.infer<typeof createEventDateAndLocationSchema>;
 
 // invite
-const inviteMemberId = z.string().min(1);
+const inviteMemberIdSchema = z.string().min(1);
 
 export const inviteMemberSchema = z.object({
-  inviteIds: z.array(inviteMemberId),
+  inviteIds: z.array(inviteMemberIdSchema),
 });
 
 export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
@@ -65,34 +76,38 @@ export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
 export const minReportContent = 5;
 export const maxReportContent = 250;
 
-const reportContent = z.string().min(minReportContent).max(maxReportContent);
+const reportContentSchema = z.string().min(minReportContent).max(maxReportContent);
 
 export const reportSchema = z.object({
-  content: reportContent,
+  content: reportContentSchema,
 });
 
 export type ReportInput = z.infer<typeof reportSchema>;
 
+// account edit
+const avatarSchema = z.string().url();
+
+export const accountScheme = z.object({
+  avatarUrl: avatarSchema,
+  username: usernameSchema,
+  location: locationSchema,
+});
+
+export type AccountInput = z.infer<typeof accountScheme>;
+
 // sign in
-export const minUsername = 5;
-export const minPassword = 5;
-
-const authUsername = z.string().min(minUsername);
-const authEmail = z.string().email();
-const authPassword = z.string().min(minPassword);
-
 export const loginSchema = z.object({
-  username: authUsername,
-  password: authPassword,
+  username: usernameSchema,
+  password: passwordSchema,
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
 // sign up
 export const signUpSchema = z.object({
-  username: authUsername,
-  email: authEmail,
-  password: authPassword,
+  username: usernameSchema,
+  email: emailSchema,
+  password: passwordSchema,
 });
 
 export type SignUpInput = z.infer<typeof signUpSchema>;
