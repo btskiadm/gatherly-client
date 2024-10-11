@@ -10,7 +10,7 @@ import { Event, eventMock } from "./EventInfo.mock";
 export const EventInfoIntercepted = () => {
   const [event, setEvent] = useState<Event>();
   const [loading, setLoading] = useState(false);
-  const EventInfoRef = useRef<EventInfoRef>(null);
+  const eventInfoRef = useRef<EventInfoRef>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export const EventInfoIntercepted = () => {
       confirm={confirm}
       action={action}
     >
-      {event && <EventInfo ref={EventInfoRef} event={event} />}
+      {event && <EventInfo ref={eventInfoRef} event={event} />}
     </EventInfoModal>
   );
 };
