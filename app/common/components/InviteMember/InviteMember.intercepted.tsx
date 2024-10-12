@@ -3,8 +3,8 @@
 import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { toast } from "react-hot-toast/headless";
-import { InviteMemberModal } from "./InviteMember.modal";
+import { toast } from "react-hot-toast";
+import { ModalTemplate } from "../Modal/ModalTemplate";
 import { InviteMember, InviteMemberRef } from "./_components/InviteMember.components";
 
 export const InviteMemberIntercepted = () => {
@@ -18,7 +18,7 @@ export const InviteMemberIntercepted = () => {
 
   const invite = useMemo(() => {
     return {
-      onInvite: async () => {
+      onAction: async () => {
         const data = inviteMemberRef.current?.invite();
 
         if (!data?.success) {
@@ -32,19 +32,20 @@ export const InviteMemberIntercepted = () => {
         toast.success("Invitaion sent.");
         handleCancel();
       },
+      text: "Invite",
     };
   }, [handleCancel]);
 
   const cancel = useMemo(
     () => ({
-      onCancel: handleCancel,
+      onAction: handleCancel,
     }),
     [handleCancel]
   );
 
   return (
-    <InviteMemberModal open={true} loading={loading} cancel={cancel} invite={invite}>
+    <ModalTemplate title="Invite members<" open={true} loading={loading} cancel={cancel} confirm={invite}>
       <InviteMember ref={inviteMemberRef} />
-    </InviteMemberModal>
+    </ModalTemplate>
   );
 };

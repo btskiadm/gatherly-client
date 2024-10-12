@@ -3,9 +3,9 @@
 import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { EventInfoModal } from "./EventInfo.modal";
-import { EventInfo, EventInfoRef } from "./_components/EventInfo.component";
+import { ModalTemplate } from "../../Modal/ModalTemplate";
 import { Event, eventMock } from "./EventInfo.mock";
+import { EventInfo, EventInfoRef } from "./_components/EventInfo.component";
 
 export const EventInfoIntercepted = () => {
   const [event, setEvent] = useState<Event>();
@@ -23,10 +23,10 @@ export const EventInfoIntercepted = () => {
     router.back();
   }, [router]);
 
-  const confirm = useMemo(() => {
+  const join = useMemo(() => {
     return {
       text: "Join",
-      onConfirm: async () => {
+      onAction: async () => {
         // const data = EventInfoRef.current?.invite();
 
         // if (!data?.success) {
@@ -43,31 +43,24 @@ export const EventInfoIntercepted = () => {
 
   const cancel = useMemo(
     () => ({
-      onCancel: handleCancel,
+      onAction: handleCancel,
     }),
     [handleCancel]
   );
 
-  const action = useMemo(
+  const details = useMemo(
     () => ({
       onAction: () => {
         window.location.replace("/event/123-456-789");
       },
+      text: "Details",
     }),
     []
   );
 
   return (
-    <EventInfoModal
-      open={true}
-      dialogLoading={!event}
-      title="Lorem ipsum"
-      loading={loading}
-      cancel={cancel}
-      confirm={confirm}
-      action={action}
-    >
+    <ModalTemplate open={true} title="Lorem ipsum" loading={loading} cancel={cancel} confirm={join} back={details}>
       {event && <EventInfo ref={eventInfoRef} event={event} />}
-    </EventInfoModal>
+    </ModalTemplate>
   );
 };

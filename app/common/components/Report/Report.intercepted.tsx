@@ -4,7 +4,7 @@ import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import { ReportModal } from "./Report.modal";
+import { ModalTemplate } from "../Modal/ModalTemplate";
 import { Report, ReportRef } from "./_components/Report.components";
 
 export const ReportIntercepted = () => {
@@ -16,10 +16,10 @@ export const ReportIntercepted = () => {
     router.back();
   }, [router]);
 
-  const confirm = useMemo(() => {
+  const send = useMemo(() => {
     return {
       text: "Send",
-      onConfirm: async () => {
+      onAction: async () => {
         const data = inviteMemberRef.current?.handleData();
 
         if (!data?.success) {
@@ -38,14 +38,14 @@ export const ReportIntercepted = () => {
 
   const cancel = useMemo(
     () => ({
-      onCancel: handleCancel,
+      onAction: handleCancel,
     }),
     [handleCancel]
   );
 
   return (
-    <ReportModal open={true} loading={loading} cancel={cancel} confirm={confirm}>
+    <ModalTemplate title="Report" open={true} loading={loading} cancel={cancel} confirm={send}>
       <Report ref={inviteMemberRef} />
-    </ReportModal>
+    </ModalTemplate>
   );
 };

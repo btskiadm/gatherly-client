@@ -2,32 +2,35 @@ import { ArrowBack, Close } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, DialogContent, IconButton, Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
-import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from "../BootstrapDialog";
+import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from "./../BootstrapDialog";
 
 interface Props
   extends PropsWithChildren<{
     back?: {
-      onBack: () => void;
+      text?: string;
+      onAction: () => void;
     };
     cancel?: {
-      onCancel: () => void;
+      text?: string;
+      onAction: () => void;
     };
     confirm?: {
-      text: string;
-      onConfirm: () => void;
+      text?: string;
+      onAction: () => void;
     };
     open: boolean;
-    loading: boolean;
+    loading?: boolean;
+    title: string;
   }> {}
 
-export const UploadZoneModal = ({ open, cancel, confirm, back, children, loading }: Props) => {
-  const { onBack } = back ?? {};
-  const { onCancel } = cancel ?? {};
-  const { onConfirm, text: confirmText } = confirm ?? {};
+export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, children }: Props) => {
+  const { onAction: onBack, text: backText = "Back" } = back ?? {};
+  const { onAction: onCancel, text: cancelText = "Cancel" } = cancel ?? {};
+  const { onAction: onConfirm, text: confirmText = "Confirm" } = confirm ?? {};
 
   return (
     <BootstrapDialog onClose={onCancel} open={open}>
-      <BootstrapDialogTitle>Upload photo</BootstrapDialogTitle>
+      <BootstrapDialogTitle>{title}</BootstrapDialogTitle>
       <IconButton
         aria-label="close"
         onClick={onCancel}
@@ -59,14 +62,14 @@ export const UploadZoneModal = ({ open, cancel, confirm, back, children, loading
                 startIcon={<ArrowBack />}
                 onClick={onBack}
               >
-                Back
+                {backText}
               </Button>
             )}
           </Box>
           <Stack direction="row" gap={1}>
             {onCancel && (
               <Button disabled={loading} variant="text" color="error" size="small" onClick={onCancel}>
-                Cancel
+                {cancelText}
               </Button>
             )}
             {onConfirm && (

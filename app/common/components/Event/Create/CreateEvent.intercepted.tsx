@@ -5,7 +5,7 @@ import { Box, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { InviteMember, InviteMemberRef } from "../../InviteMember/_components/InviteMember.components";
-import { CreateEventModal } from "./CreateEvent.modal";
+import { ModalTemplate } from "../../Modal/ModalTemplate";
 import {
   CreateEventDateAndLocation,
   CreateEventDateAndLocationRef,
@@ -31,47 +31,47 @@ export const CreaetEventIntercepted = () => {
       return undefined;
     }
     return {
-      onBack: () => {
+      onAction: () => {
         setStep((prev) => --prev);
       },
     };
   }, [step]);
 
-  const next = useMemo(() => {
-    if (step === 2) {
-      return undefined;
-    }
-
-    return {
-      onNext: async () => {
-        if (step === 0) {
+  const nextAndConfirm = useMemo(() => {
+    if (step === 0) {
+      return {
+        onAction: () => {
           const data = detailsRef.current?.next();
           if (!data?.success) {
             setErrorStep(0);
             return;
           }
+
           setErrorStep(-1);
-        } else if (step === 1) {
+          setStep((prev) => ++prev);
+        },
+        text: "Next",
+      };
+    }
+
+    if (step === 1) {
+      return {
+        onAction: () => {
           const data = dateAndLocationRef.current?.next();
           if (!data?.success) {
             setErrorStep(1);
             return;
           }
+
           setErrorStep(-1);
-        }
-
-        setStep((prev) => ++prev);
-      },
-    };
-  }, [step]);
-
-  const create = useMemo(() => {
-    if (step < 2) {
-      return undefined;
+          setStep((prev) => ++prev);
+        },
+        text: "Next",
+      };
     }
 
     return {
-      onCreate: async () => {
+      onAction: async () => {
         const data = inviteRef.current?.invite();
 
         if (!data?.success) {
@@ -90,13 +90,20 @@ export const CreaetEventIntercepted = () => {
 
   const cancel = useMemo(
     () => ({
-      onCancel: handleCancel,
+      onAction: handleCancel,
     }),
     [handleCancel]
   );
 
   return (
-    <CreateEventModal open={true} loading={loading} back={back} next={next} cancel={cancel} create={create}>
+    <ModalTemplate
+      open
+      title="Create a new event"
+      loading={loading}
+      back={back}
+      cancel={cancel}
+      confirm={nextAndConfirm}
+    >
       <Stack gap={3} width="100%">
         <CreateEventStep step={step} errorStep={errorStep} />
         <Box
@@ -121,6 +128,6 @@ export const CreaetEventIntercepted = () => {
           <InviteMember ref={inviteRef} />
         </Box>
       </Stack>
-    </CreateEventModal>
+    </ModalTemplate>
   );
 };

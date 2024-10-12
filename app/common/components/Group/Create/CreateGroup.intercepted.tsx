@@ -2,10 +2,10 @@
 
 import { delay } from "@/app/common/utils/delay";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
-import { toast } from "react-hot-toast/headless";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
+import { ModalTemplate } from "../../Modal/ModalTemplate";
 import { CreateGroup, CreateGroupRef } from "./CreateGroup.component";
-import { CreateGroupModal } from "./CreateGroup.modal";
 
 export const CreateGroupIntercepted = () => {
   const ref = useRef<CreateGroupRef>(null);
@@ -16,28 +16,50 @@ export const CreateGroupIntercepted = () => {
     router.back();
   }, [router]);
 
-  const handleCreate = useCallback(async () => {
-    const data = ref.current?.save();
+  const cancel = useMemo(() => {
+    return {
+      onAction: handleClose,
+    };
+  }, [handleClose]);
 
-    if (!data?.success) {
-      toast.error("Group validation error. Please check a form.");
-      return;
-    }
+  const create = useMemo(() => {
+    return {
+      onAction: async () => {
+        const data = ref.current?.save();
 
-    setLoading(true);
-    await delay(2000);
-    setLoading(false);
-    toast.success("Group created successfully.");
-    router.back();
+        if (!data?.success) {
+          toast.error("Group validation error. Please check a form.");
+          return;
+        }
+
+        setLoading(true);
+        await delay(2000);
+        setLoading(false);
+        toast.success("Group created successfully.");
+        router.back();
+      },
+      text: "Create",
+    };
   }, [router]);
 
-  const handleReset = useCallback(() => {
-    ref.current?.reset();
-  }, []);
+  const reset = useMemo(
+    () => ({
+      onAction: () => ref.current?.reset(),
+      text: "Reset",
+    }),
+    []
+  );
 
   return (
-    <CreateGroupModal open={true} loading={loading} onClose={handleClose} onCreate={handleCreate} onReset={handleReset}>
+    <ModalTemplate
+      title="Create a new group"
+      open={true}
+      loading={loading}
+      back={reset}
+      cancel={cancel}
+      confirm={create}
+    >
       <CreateGroup ref={ref} />
-    </CreateGroupModal>
+    </ModalTemplate>
   );
 };

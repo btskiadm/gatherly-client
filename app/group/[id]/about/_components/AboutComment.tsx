@@ -4,7 +4,6 @@ import { Link } from "@/app/common/components/NextLink";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
-import { toast } from "react-hot-toast/headless";
 
 export const AboutComment = () => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);

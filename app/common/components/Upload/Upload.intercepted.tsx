@@ -3,11 +3,11 @@
 import { delay } from "@/app/common/utils/delay";
 import { Box, Stack } from "@mui/material";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { UploadZoneModal } from "./Upload.modal";
+import { ModalTemplate } from "../Modal/ModalTemplate";
 import { UploadCrop, UploadCropRef } from "./_components/UploadCrop.component";
 import { UploadStep } from "./_components/UploadStep.component";
 import { UploadSuccess } from "./_components/UploadSuccess.component";
-import { UploadZone, UploadZoneRef } from "./_components/UploadZone.component";
+import { UploadZone, UploadZoneData, UploadZoneRef } from "./_components/UploadZone.component";
 
 interface Props {
   open?: boolean;
@@ -29,16 +29,16 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
     onClose?.();
   }, [onClose]);
 
-  const confirm = useMemo(() => {
-    // choose photo
+  const uploadAndDone = useMemo(() => {
+    // choose photo - no confirm and next button, this is handled by callback onUploaded
     if (step === 0) {
       return;
     }
 
-    // upload
+    // Crop view
     if (step === 1) {
       return {
-        onConfirm: async () => {
+        onAction: async () => {
           const data = await uploadCropRef.current?.getData();
 
           if (!data?.success) {
@@ -59,14 +59,14 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
       };
     }
 
-    // success and confirm
+    // Success and confirm view
     return {
-      onConfirm: () => {
+      onAction: () => {
         onConfirm?.(fileRef.current!);
       },
       text: "Done",
     };
-  }, [step, zoneUrl, filename, handleCancel, onConfirm]);
+  }, [step, onConfirm]);
 
   const back = useMemo(() => {
     if (step === 0) {
@@ -74,7 +74,7 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
     }
 
     return {
-      onBack: () => {
+      onAction: () => {
         setStep((prev) => --prev);
       },
     };
@@ -82,13 +82,26 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
 
   const cancel = useMemo(
     () => ({
-      onCancel: handleCancel,
+      onAction: handleCancel,
     }),
     [handleCancel]
   );
 
+  const handleUploadZone = useCallback((data: UploadZoneData["data"]) => {
+    setZoneUrl(data?.url as string);
+    setFilename(data?.filename!);
+    setStep((prev) => ++prev);
+  }, []);
+
   return (
-    <UploadZoneModal open={open ?? true} loading={loading} back={back} cancel={cancel} confirm={confirm}>
+    <ModalTemplate
+      title="Upload photo"
+      open={open ?? true}
+      loading={loading}
+      back={back}
+      cancel={cancel}
+      confirm={uploadAndDone}
+    >
       <Stack gap={3} width="100%">
         <UploadStep step={step} errorStep={errorStep} />
         <Box
@@ -96,14 +109,7 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
             display: step === 0 ? "block" : "none",
           }}
         >
-          <UploadZone
-            ref={uploadZoneRef}
-            onUploaded={(data) => {
-              setZoneUrl(data?.url as string);
-              setFilename(data?.filename!);
-              setStep((prev) => ++prev);
-            }}
-          />
+          <UploadZone ref={uploadZoneRef} onUploaded={handleUploadZone} />
         </Box>
         <Box
           sx={{
@@ -120,6 +126,6 @@ export const UploadIntercepted = ({ open, onClose, onConfirm }: Props) => {
           <UploadSuccess />
         </Box>
       </Stack>
-    </UploadZoneModal>
+    </ModalTemplate>
   );
 };

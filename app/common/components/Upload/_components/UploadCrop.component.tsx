@@ -53,7 +53,7 @@ export const UploadCrop = forwardRef<UploadCropRef, Props>(({ img, filename, asp
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
-  const getData = async (): Promise<UploadCropData> => {
+  const getData = useCallback(async (): Promise<UploadCropData> => {
     try {
       const croppedImage = await getCroppedImg(img, croppedAreaPixels, rotation);
       const success = !!croppedImage;
@@ -74,7 +74,7 @@ export const UploadCrop = forwardRef<UploadCropRef, Props>(({ img, filename, asp
       console.error(error);
       return { success: false };
     }
-  };
+  }, [img, filename, croppedAreaPixels, rotation]);
 
   useImperativeHandle(
     componentRef,

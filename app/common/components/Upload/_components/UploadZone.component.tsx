@@ -46,7 +46,7 @@ const rejectStyle = {
 
 type UploadZoneUrl = string | ArrayBuffer | null;
 
-interface UploadZoneData {
+export interface UploadZoneData {
   success: boolean;
   data?: {
     filename: string;
