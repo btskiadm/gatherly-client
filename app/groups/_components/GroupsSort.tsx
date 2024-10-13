@@ -16,6 +16,8 @@ import { useCallback, useState } from "react";
 
 export const GroupsSort = () => {
   const [anchor, setAnchor] = useState(null);
+  const [dateOfAdding, setDateOfAdding] = useState("newest");
+  const [numberOfMembers, setNumberOfMembers] = useState("");
 
   const handleClick = useCallback((event: any) => {
     setAnchor(event.currentTarget);
@@ -23,6 +25,14 @@ export const GroupsSort = () => {
 
   const handleClose = useCallback(() => {
     setAnchor(null);
+  }, []);
+
+  const handleDateOfAddingChange = useCallback((_: unknown, value: string) => {
+    setDateOfAdding(value);
+  }, []);
+
+  const handleNumberOfMembersChange = useCallback((_: unknown, value: string) => {
+    setNumberOfMembers(value);
   }, []);
 
   return (
@@ -39,15 +49,14 @@ export const GroupsSort = () => {
         <Stack width="280px" gap={3}>
           <FormControl>
             <FormLabel>Data dodania</FormLabel>
-            <RadioGroup>
-              <FormControlLabel value="" control={<Radio size="small" />} label="Default" />
+            <RadioGroup value={dateOfAdding} onChange={handleDateOfAddingChange}>
               <FormControlLabel value="newest" control={<Radio size="small" />} label="Newest" />
               <FormControlLabel value="oldest" control={<Radio size="small" />} label="Oldest" />
             </RadioGroup>
           </FormControl>
           <FormControl>
             <FormLabel>Ilość osób</FormLabel>
-            <RadioGroup>
+            <RadioGroup value={numberOfMembers} onChange={handleNumberOfMembersChange}>
               <FormControlLabel value="" control={<Radio size="small" />} label="Default" />
               <FormControlLabel value="ascending" control={<Radio size="small" />} label="Ascending" />
               <FormControlLabel value="decending" control={<Radio size="small" />} label="Decending" />

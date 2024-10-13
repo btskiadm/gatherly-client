@@ -10,6 +10,10 @@ interface Props
       text?: string;
       onAction: () => void;
     };
+    reset?: {
+      text?: string;
+      onAction: () => void;
+    };
     cancel?: {
       text?: string;
       onAction: () => void;
@@ -23,8 +27,9 @@ interface Props
     title: string;
   }> {}
 
-export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, children }: Props) => {
+export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, reset, children }: Props) => {
   const { onAction: onBack, text: backText = "Back" } = back ?? {};
+  const { onAction: onReset, text: resetText = "Reset" } = reset ?? {};
   const { onAction: onCancel, text: cancelText = "Cancel" } = cancel ?? {};
   const { onAction: onConfirm, text: confirmText = "Confirm" } = confirm ?? {};
 
@@ -50,7 +55,20 @@ export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, chi
       </DialogContent>
       <BootstrapDialogActions>
         <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
-          <Box>
+          <Stack direction="row" gap={1}>
+            {onReset && (
+              <Button
+                disabled={loading}
+                variant="text"
+                size="small"
+                sx={{
+                  color: "text.secondary",
+                }}
+                onClick={onReset}
+              >
+                {resetText}
+              </Button>
+            )}
             {onBack && (
               <Button
                 disabled={loading}
@@ -65,7 +83,7 @@ export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, chi
                 {backText}
               </Button>
             )}
-          </Box>
+          </Stack>
           <Stack direction="row" gap={1}>
             {onCancel && (
               <Button disabled={loading} variant="text" color="error" size="small" onClick={onCancel}>

@@ -110,11 +110,14 @@ export const GroupsFilter = () => {
     }
   };
 
-  const hasAttribute = (key: FilterAttributeKeys) => {
-    return attributes.some((attribute) => attribute.key === key && attribute.value);
-  };
+  const hasAttribute = useCallback(
+    (key: FilterAttributeKeys) => {
+      return attributes.some((attribute) => attribute.key === key && attribute.value);
+    },
+    [attributes]
+  );
 
-  const toggleAttribute = (key: FilterAttributeKeys) => {
+  const toggleAttribute = useCallback((key: FilterAttributeKeys) => {
     setAttributes((prevAttributes) => {
       return prevAttributes.map((attribute) => {
         if (attribute.key === key) {
@@ -123,6 +126,17 @@ export const GroupsFilter = () => {
         return attribute;
       });
     });
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setMinInput(`${min}`);
+    setMaxInput(`${max}+`);
+    setRange([min, max]);
+    setAttributes(attrs);
+  }, []);
+
+  const handleApply = () => {
+    setAnchor(null);
   };
 
   return (
@@ -193,10 +207,12 @@ export const GroupsFilter = () => {
             </Stack>
           </FormControl>
           <Stack direction="row" justifyContent="space-between">
-            <Button variant="text" color="error">
+            <Button variant="text" color="error" onClick={handleReset}>
               Reset
             </Button>
-            <Button variant="contained">Apply</Button>
+            <Button variant="contained" onClick={handleApply}>
+              Apply
+            </Button>
           </Stack>
         </Stack>
       </Popover>

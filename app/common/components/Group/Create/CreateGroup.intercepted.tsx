@@ -55,7 +55,7 @@ export const CreateGroupIntercepted = () => {
       title="Create a new group"
       open={true}
       loading={loading}
-      back={reset}
+      reset={reset}
       cancel={cancel}
       confirm={create}
     >
