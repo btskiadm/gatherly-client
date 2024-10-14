@@ -7,7 +7,7 @@ import { Button, Paper, Stack } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
-export const GroupSettings = () => {
+export const GroupSettingsAboutTab = () => {
   const ref = useRef<CreateGroupRef>(null);
   const [loading, setLoading] = useState(false);
 

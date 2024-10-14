@@ -17,23 +17,26 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-export function GroupNav() {
-  const pathName = usePathname();
+const about = "about";
+const events = "events";
+const calendar = "calendar";
+const members = "members";
+const chat = "chat";
+const settings = "settings";
 
-  const about = "about";
-  const events = "events";
-  const calendar = "calendar";
-  const members = "members";
-  const chat = "chat";
-  const settings = "settings";
+export function GroupNav() {
+  const pathname = usePathname();
+
+  // "/group/123-456-789/settings/avatar"
+  const subPath = pathname.split("/")?.[3] ?? "";
 
   const [aboutSected, eventsSelected, calendarSelected, membersSelected, chatSelected, settingsSelected] = [
-    pathName.includes(`/${about}`),
-    pathName.includes(`/${events}`),
-    pathName.includes(`/${calendar}`),
-    pathName.includes(`/${members}`),
-    pathName.includes(`/${chat}`),
-    pathName.includes(`/${settings}`),
+    subPath.includes(`${about}`),
+    subPath.includes(`${events}`),
+    subPath.includes(`${calendar}`),
+    subPath.includes(`${members}`),
+    subPath.includes(`${chat}`),
+    subPath.includes(`${settings}`),
   ];
 
   return (
@@ -64,7 +67,7 @@ export function GroupNav() {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
+            <ListItemButton href="../about" LinkComponent={Link} selected={aboutSected}>
               <ListItemIcon>
                 <InfoOutlined />
               </ListItemIcon>
@@ -104,7 +107,7 @@ export function GroupNav() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton href="settings" LinkComponent={Link} selected={settingsSelected}>
+            <ListItemButton href="settings/about" LinkComponent={Link} selected={settingsSelected}>
               <ListItemIcon>
                 <SettingsOutlined />
               </ListItemIcon>
