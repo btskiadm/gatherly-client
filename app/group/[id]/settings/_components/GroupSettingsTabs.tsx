@@ -1,10 +1,10 @@
 "use client";
 
 import { Box, Tab, Tabs } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { GroupSettingsAboutTab } from "./GroupSettingsAboutTab";
-import { GroupSettingsMembersTab } from "./GroupSettingsMembersTab";
 import { GroupSettingsAvatarTab } from "./GroupSettingsAvatarTab";
+import { GroupSettingsMembersTab } from "./GroupSettingsMembersTab";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,34 +23,28 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 export const GroupSettingsTabs = () => {
-  const [value, setValue] = useState(0);
+  const [tab, setTab] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+  const handleChange = useCallback((_: unknown, tabValue: number) => {
+    setTab(tabValue);
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="secondary"
-          variant="scrollable"
-          indicatorColor="secondary"
-        >
+        <Tabs value={tab} onChange={handleChange} textColor="secondary" variant="scrollable" indicatorColor="secondary">
           <Tab label="About" />
           <Tab label="Members" />
           <Tab label="Avatar" />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={tab} index={0}>
         <GroupSettingsAboutTab />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={tab} index={1}>
         <GroupSettingsMembersTab />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={tab} index={2}>
         <GroupSettingsAvatarTab />
       </CustomTabPanel>
     </Box>

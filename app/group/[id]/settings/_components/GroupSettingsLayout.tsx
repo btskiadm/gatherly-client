@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import { GroupHeader } from "../../_components/GroupHeader";
-import { GroupSettingsTabs } from "./GroupSettingsTabs";
 
 export const GroupSettingsLayout = ({
   children,
@@ -11,7 +10,7 @@ export const GroupSettingsLayout = ({
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader primary="Settings" secondary="See group settings and change it." />
-      <GroupSettingsTabs />
+      {children}
     </Stack>
   );
 };

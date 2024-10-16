@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { AccountNavigation } from "../_components/AccountNavigation";
 
 export default function Page() {

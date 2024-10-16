@@ -37,23 +37,29 @@ export default function Page() {
     setBio(e.target.value);
   }, []);
 
-  const handleUploadClose = useCallback(() => {
-    setOpenUpoad(false);
-  }, []);
-
+  /**
+   * Upload avatar
+   */
   const handleUploadOpen = useCallback(() => {
     setOpenUpoad(true);
+  }, []);
+
+  const handleUploadClose = useCallback(() => {
+    setOpenUpoad(false);
   }, []);
 
   const handleUploadConfirm = useCallback((file: File) => {
     setOpenUpoad(false);
   }, []);
 
+  /**
+   * Delete avatar
+   */
   const handleDeleteAvatarOpen = useCallback(() => {
     setOpenDeleteAvatar(true);
   }, []);
 
-  const handleDeleteAvatarCancel = useMemo(
+  const deleteAvatarCancel = useMemo(
     () => ({
       onCancel: () => {
         setOpenDeleteAvatar(false);
@@ -63,12 +69,12 @@ export default function Page() {
     []
   );
 
-  const handleDeleteAvatarConfirm = useMemo(
+  const deleteAvatar = useMemo(
     () => ({
       onConfirm: () => {
         setOpenDeleteAvatar(false);
       },
-      text: "Confirm",
+      text: "Delete",
     }),
     []
   );
@@ -79,12 +85,7 @@ export default function Page() {
         <UploadIntercepted open={openUpload} onClose={handleUploadClose} onConfirm={handleUploadConfirm} />
       )}
       {openDeleteAvatar && (
-        <ConfirmModal
-          title="Delete avatar"
-          open={openDeleteAvatar}
-          cancel={handleDeleteAvatarCancel}
-          confirm={handleDeleteAvatarConfirm}
-        >
+        <ConfirmModal title="Delete avatar" open={openDeleteAvatar} cancel={deleteAvatarCancel} confirm={deleteAvatar}>
           <Typography variant="body1">Are you sure you want to delete your profile avatar ?</Typography>
         </ConfirmModal>
       )}

@@ -67,7 +67,7 @@ export function GroupNav() {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton href="../about" LinkComponent={Link} selected={aboutSected}>
+            <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
               <ListItemIcon>
                 <InfoOutlined />
               </ListItemIcon>
@@ -107,7 +107,7 @@ export function GroupNav() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton href="settings/about" LinkComponent={Link} selected={settingsSelected}>
+            <ListItemButton href="settings" LinkComponent={Link} selected={settingsSelected}>
               <ListItemIcon>
                 <SettingsOutlined />
               </ListItemIcon>

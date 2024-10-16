@@ -19,19 +19,20 @@ interface Props {
   mobile?: boolean;
 }
 
-export function AccountNavigation({ mobile = false }: Props) {
+export const AccountNavigation = ({ mobile = false }: Props) => {
   const pathName = usePathname();
 
+  const routeSegment = pathName.split("/")?.[2] ?? "";
   const edit = "edit";
   const personal = "personal";
   const managment = "managment";
   const interest = "interest";
 
   const [editSelected, personalSelected, managmentSelected, interestSelected] = [
-    pathName.includes(`/${edit}`),
-    pathName.includes(`/${personal}`),
-    pathName.includes(`/${managment}`),
-    pathName.includes(`/${interest}`),
+    routeSegment.includes(edit),
+    routeSegment.includes(personal),
+    routeSegment.includes(managment),
+    routeSegment.includes(interest),
   ];
 
   let value = "unknown";
@@ -43,11 +44,9 @@ export function AccountNavigation({ mobile = false }: Props) {
     value = managment;
   } else if (interestSelected) {
     value = interest;
+  } else {
+    value = edit; // fallback
   }
-
-  // edit profile -> avatar / name / location / bio
-  // personal -> birthdate / gender
-  // account managment -> email / password / language / time zone /  password / deactive
 
   if (mobile) {
     return (
@@ -105,4 +104,4 @@ export function AccountNavigation({ mobile = false }: Props) {
       </List>
     </Paper>
   );
-}
+};

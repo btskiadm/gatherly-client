@@ -1,7 +1,10 @@
 "use client";
 
+import { ConfirmModal } from "@/app/common/components/Modal/Confirm.modal";
 import { Link } from "@/app/common/components/NextLink";
 import {
+  CloseOutlined,
+  EditOutlined,
   FavoriteBorderOutlined,
   Login,
   Logout,
@@ -9,16 +12,15 @@ import {
   PreviewOutlined,
   ReportGmailerrorredOutlined,
 } from "@mui/icons-material";
-import { Box, IconButton, Menu, MenuItem } from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Box, Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { useCallback, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
-type MenuAction = "join" | "leave" | "preview" | "favorite" | "report" | "close";
+type MenuAction = "join" | "leave" | "preview" | "favorite" | "report" | "close" | "cancel";
 
 export const EventTileMenu = () => {
-  const router = useRouter();
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
+  const [openCancel, setOpenCancel] = useState(false);
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
@@ -41,6 +43,10 @@ export const EventTileMenu = () => {
       case "close":
         close();
         break;
+      case "cancel":
+        handleCancelOpen();
+        close();
+        break;
       default:
         const _exhaustiveCheck: never = reason;
         return _exhaustiveCheck;
@@ -49,6 +55,30 @@ export const EventTileMenu = () => {
     toast(reason);
     close();
   };
+
+  const handleCancelOpen = useCallback(() => {
+    setOpenCancel(true);
+  }, []);
+
+  const cancelCancelEvent = useMemo(
+    () => ({
+      onCancel: () => {
+        setOpenCancel(false);
+      },
+      text: "Cancel",
+    }),
+    []
+  );
+
+  const confirmCancelEvent = useMemo(
+    () => ({
+      onConfirm: () => {
+        setOpenCancel(false);
+      },
+      text: "Accept",
+    }),
+    []
+  );
 
   return (
     <>
@@ -109,7 +139,47 @@ export const EventTileMenu = () => {
             Report
           </MenuItem>
         </Link>
+        <Divider />
+        {/* <Link
+          href={{
+            pathname: "/report",
+            query: {
+              type: "event",
+              id: "123-456-789",
+            },
+          }}
+          underline="none"
+        > */}
+        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("close")}>
+          <EditOutlined color="action" />
+          Edit
+        </MenuItem>
+        {/* </Link> */}
+
+        {/* <Link
+          href={{
+            pathname: "/delete",
+            query: {
+              type: "event",
+              id: "123-456-789",
+            },
+          }}
+          underline="none"
+        > */}
+        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("cancel")}>
+          <CloseOutlined color="action" />
+          Cancel
+        </MenuItem>
+        {/* </Link> */}
       </Menu>
+
+      {openCancel && (
+        <ConfirmModal title="Cancel event" open={openCancel} cancel={cancelCancelEvent} confirm={confirmCancelEvent}>
+          <Typography variant="body1">
+            Are you sure you want to cancel <b>EVENT TITLE</b> event ?
+          </Typography>
+        </ConfirmModal>
+      )}
     </>
   );
 };

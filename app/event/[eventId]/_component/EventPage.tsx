@@ -9,7 +9,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 export const EventPage = () => {
   const [event, setEvent] = useState<Event>(eventMock);
   const [loading, setLoading] = useState(false);
-  const EventInfoRef = useRef<EventInfoRef>(null);
+  const eventInfoRef = useRef<EventInfoRef>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {
@@ -41,5 +41,5 @@ export const EventPage = () => {
     [handleCancel]
   );
 
-  return <EventInfo ref={EventInfoRef} event={event} />;
+  return <EventInfo ref={eventInfoRef} event={event} />;
 };
