@@ -46,15 +46,20 @@ const customTheme: Parameters<typeof createTheme>[0] = {
     },
   },
   components: {
-    MuiButton: {
+    MuiContainer: {
       styleOverrides: {
-        root: {},
+        root: ({ theme }) => ({
+          [theme.breakpoints.down("sm")]: {
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1),
+          },
+        }),
       },
     },
     MuiCssBaseline: {
-      styleOverrides: (_theme) => ({
+      styleOverrides: (theme) => ({
         body: {
-          backgroundColor: _theme.palette.mode !== "dark" ? _theme.palette.background.default : null,
+          backgroundColor: theme.palette.mode !== "dark" ? theme.palette.background.default : null,
           minHeight: "100vh",
           margin: 0,
           padding: 0,

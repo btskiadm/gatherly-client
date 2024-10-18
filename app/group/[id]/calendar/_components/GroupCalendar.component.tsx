@@ -14,11 +14,10 @@ import FullCalendar from "@fullcalendar/react";
 import timegrid from "@fullcalendar/timegrid";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Button, ButtonGroup, Skeleton, Stack, Tooltip, Typography, alpha, styled } from "@mui/material";
-import { useCallback, useRef, useState } from "react";
-import { INITIAL_EVENTS } from "./calendar.mock";
-import { toast } from "react-hot-toast";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
+import { useCallback, useRef, useState } from "react";
+import { INITIAL_EVENTS } from "./calendar.mock";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `

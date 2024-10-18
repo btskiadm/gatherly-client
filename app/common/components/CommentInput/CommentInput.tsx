@@ -1,10 +1,21 @@
 "use client";
 
 import { Button, IconButton, Stack } from "@mui/material";
+import { useCallback, useState } from "react";
 import { EmojiIcon } from "../Icons/EmojiIcon";
 import { Textarea } from "../Textarea";
 
 export const CommentInput = () => {
+  const [value, setValue] = useState("");
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  }, []);
+
+  const handleSend = useCallback(() => {
+    setValue("");
+  }, []);
+
   return (
     <Stack direction="row" gap={0.5} alignItems="center">
       <IconButton
@@ -17,11 +28,15 @@ export const CommentInput = () => {
       </IconButton>
       <Textarea
         placeholder="Type a comment.."
+        value={value}
         sx={{
           width: "100%",
         }}
+        onChange={handleChange}
       />
-      <Button variant="text">Send</Button>
+      <Button variant="text" onClick={handleSend}>
+        Send
+      </Button>
     </Stack>
   );
 };
