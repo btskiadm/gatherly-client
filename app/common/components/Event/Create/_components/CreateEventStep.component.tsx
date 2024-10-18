@@ -76,9 +76,17 @@ function ColorlibStepIcon(props: StepIconProps) {
   );
 }
 
-const steps = ["Details", "Date and location", "Invite"];
+export type CreateEventSteps = [string, string, string?];
 
-export const CreateEventStep = ({ step, errorStep }: { step: number; errorStep?: number }) => {
+export const CreateEventStep = ({
+  step,
+  errorStep,
+  steps,
+}: {
+  step: number;
+  errorStep?: number;
+  steps: CreateEventSteps;
+}) => {
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
       <Stepper activeStep={step} connector={<QontoConnector />}>

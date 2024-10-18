@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
+import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
@@ -22,9 +23,9 @@ export const AboutComment = () => {
     <>
       <Stack gap={2} p={1} bgcolor="background.default">
         <Stack justifyContent="space-between" direction="row" height="min-content" alignItems="center">
-          <Stack gap={1} direction="row" alignItems="center">
+          <Stack gap={1} direction="row" alignItems="center" minWidth={0}>
             <Avatar />
-            <Stack>
+            <Stack minWidth={0}>
               <Stack direction="row" gap={{ xs: 0.5, sm: 1 }}>
                 <Link
                   underline="none"
@@ -40,19 +41,19 @@ export const AboutComment = () => {
                 </Link>
                 <VerifiedOutlined fontSize="small" color="info" />
               </Stack>
-              <Typography variant="body2" color="text.secondary">
-                10.10.2022 6:00
-              </Typography>
+              <Stack direction="row" gap={0.5}>
+                <TruncatedTypography variant="body2" color="text.secondary">
+                  10.10.2022 6:00
+                </TruncatedTypography>
+                <Rating name="size-small" defaultValue={2} size="small" readOnly />
+              </Stack>
             </Stack>
           </Stack>
           <IconButton size="small" onClick={handleOpenMore} sx={{ height: "min-content" }}>
             <MoreVert fontSize="small" />
           </IconButton>
         </Stack>
-        <Stack>
-          <Rating name="size-small" defaultValue={2} size="small" readOnly />
-          <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography>
-        </Stack>
+        <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography>
       </Stack>
       <Menu
         anchorEl={moreElement}

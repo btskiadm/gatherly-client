@@ -10,23 +10,29 @@ interface Props {
   item: GroupEventItem;
 }
 
+const shortMonth = (iso: string) =>
+  new Intl.DateTimeFormat("pl-PL", {
+    month: "short",
+  }).format(new Date(iso));
+
+const shortDay = (iso: string) =>
+  new Intl.DateTimeFormat("pl-PL", {
+    day: "2-digit",
+  }).format(new Date(iso));
+
+const time = (isoStart: string, isoEnd: string) =>
+  `${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(isoStart))} - ${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(isoEnd))}`;
+
 export const EventTile = ({ item }: Props) => {
   const { title, startAt, endAt, city, street, members } = item;
 
   const _members = members > 99 ? "99+" : members;
-  const shortMonth = new Intl.DateTimeFormat("pl-PL", {
-    month: "short",
-  }).format(new Date(startAt));
-  const shortDay = new Intl.DateTimeFormat("pl-PL", {
-    day: "2-digit",
-  }).format(new Date(startAt));
-  const time = `${new Intl.DateTimeFormat("pl-PL", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(new Date(startAt))} - ${new Intl.DateTimeFormat("pl-PL", {
-    hour: "numeric",
-    minute: "numeric",
-  }).format(new Date(endAt))}`;
 
   return (
     <Paper
@@ -61,10 +67,10 @@ export const EventTile = ({ item }: Props) => {
           <Grid2 size={{ xs: 3, sm: 2 }}>
             <Stack justifyContent="center" alignItems="center">
               <Typography textTransform="uppercase" variant="body2" color="text.secondary">
-                {shortMonth}
+                {shortMonth(startAt)}
               </Typography>
               <Typography variant="h4" color="text.secondary" fontWeight="600">
-                {shortDay}
+                {shortDay(startAt)}
               </Typography>
             </Stack>
           </Grid2>
@@ -78,7 +84,7 @@ export const EventTile = ({ item }: Props) => {
                   }}
                 />
                 <Typography variant="body2" color="text.secondary">
-                  {time}
+                  {time(startAt, endAt)}
                 </Typography>
               </Stack>
               <Stack direction="row" gap={0.5} alignItems="center">

@@ -16,7 +16,7 @@ export const CommentInput = () => {
         <EmojiIcon />
       </IconButton>
       <Textarea
-        placeholder="Write your comment here.."
+        placeholder="Type a comment.."
         sx={{
           width: "100%",
         }}

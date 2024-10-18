@@ -1,5 +1,5 @@
-import { CreaetEventIntercepted } from "@/app/common/components/Event/Create/CreateEvent.intercepted";
+import { CreateEventIntercepted } from "@/app/common/components/Event/Create/CreateEvent.intercepted";
 
-export default function CreateEventModal() {
-  return <CreaetEventIntercepted />;
+export default function Page() {
+  return <CreateEventIntercepted />;
 }

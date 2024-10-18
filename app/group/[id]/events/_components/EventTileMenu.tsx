@@ -14,56 +14,31 @@ import {
 } from "@mui/icons-material";
 import { Box, Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
-import { toast } from "react-hot-toast";
-
-type MenuAction = "join" | "leave" | "preview" | "favorite" | "report" | "close" | "cancel";
 
 export const EventTileMenu = () => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
-  const [openCancel, setOpenCancel] = useState(false);
+  const [openCancelEvent, setOpenCancelEvent] = useState(false);
+  const [openJoinEvent, setOpenJoinEvent] = useState(false);
+  const [openLeaveEvent, setOpenLeaveEvent] = useState(false);
 
-  const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
-  };
-
-  const handleCloseMore = (reason: MenuAction) => () => {
-    const close = () => setMoreElement(null);
-
-    switch (reason) {
-      case "join":
-        break;
-      case "leave":
-        break;
-      case "preview":
-        break;
-      case "favorite":
-        break;
-      case "report":
-        break;
-      case "close":
-        close();
-        break;
-      case "cancel":
-        handleCancelOpen();
-        close();
-        break;
-      default:
-        const _exhaustiveCheck: never = reason;
-        return _exhaustiveCheck;
-    }
-
-    toast(reason);
-    close();
-  };
-
-  const handleCancelOpen = useCallback(() => {
-    setOpenCancel(true);
   }, []);
+
+  const handleCloseMore = useCallback(() => {
+    setMoreElement(null);
+  }, []);
+
+  // cancel event
+  const handleCancelEventOpen = useCallback(() => {
+    setOpenCancelEvent(true);
+    handleCloseMore();
+  }, [handleCloseMore]);
 
   const cancelCancelEvent = useMemo(
     () => ({
       onCancel: () => {
-        setOpenCancel(false);
+        setOpenCancelEvent(false);
       },
       text: "Cancel",
     }),
@@ -73,9 +48,61 @@ export const EventTileMenu = () => {
   const confirmCancelEvent = useMemo(
     () => ({
       onConfirm: () => {
-        setOpenCancel(false);
+        setOpenCancelEvent(false);
       },
-      text: "Accept",
+      text: "Cancel",
+    }),
+    []
+  );
+
+  // join event
+  const handleJoinEventOpen = useCallback(() => {
+    setOpenJoinEvent(true);
+    handleCloseMore();
+  }, [handleCloseMore]);
+
+  const cancelJoinEvent = useMemo(
+    () => ({
+      onCancel: () => {
+        setOpenJoinEvent(false);
+      },
+      text: "Cancel",
+    }),
+    []
+  );
+
+  const confirmJoinEvent = useMemo(
+    () => ({
+      onConfirm: () => {
+        setOpenJoinEvent(false);
+      },
+      text: "Join",
+    }),
+    []
+  );
+
+  // leave event
+  const handleLeaveEventOpen = useCallback(() => {
+    setOpenLeaveEvent(true);
+    handleCloseMore();
+  }, [handleCloseMore]);
+
+  const cancelLeaveEvent = useMemo(
+    () => ({
+      onCancel: () => {
+        setOpenLeaveEvent(false);
+      },
+      text: "Cancel",
+    }),
+    []
+  );
+
+  const confirmLeaveEvent = useMemo(
+    () => ({
+      onConfirm: () => {
+        setOpenLeaveEvent(false);
+      },
+      text: "Leave",
     }),
     []
   );
@@ -95,7 +122,7 @@ export const EventTileMenu = () => {
       <Menu
         anchorEl={moreElement}
         open={!!moreElement}
-        onClose={handleCloseMore("close")}
+        onClose={handleCloseMore}
         sx={{
           "& .MuiPaper-root": {
             "& .MuiMenuItem-root": {
@@ -106,21 +133,21 @@ export const EventTileMenu = () => {
           },
         }}
       >
-        <MenuItem onClick={handleCloseMore("join")} disableRipple>
+        <MenuItem onClick={handleJoinEventOpen} disableRipple>
           <Login color="action" />
           Join
         </MenuItem>
-        <MenuItem onClick={handleCloseMore("leave")} disableRipple>
+        <MenuItem onClick={handleLeaveEventOpen} disableRipple>
           <Logout color="action" />
           Leave
         </MenuItem>
         <Link href="123-456-789" underline="none">
-          <MenuItem disableRipple onClick={handleCloseMore("close")} sx={{ color: "text.primary" }}>
+          <MenuItem disableRipple sx={{ color: "text.primary" }}>
             <PreviewOutlined color="action" />
             Preview
           </MenuItem>
         </Link>
-        <MenuItem onClick={handleCloseMore("favorite")} disableRipple>
+        <MenuItem onClick={handleCloseMore} disableRipple>
           <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
@@ -134,49 +161,49 @@ export const EventTileMenu = () => {
           }}
           underline="none"
         >
-          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("close")}>
+          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
             <ReportGmailerrorredOutlined color="action" />
             Report
           </MenuItem>
         </Link>
         <Divider />
-        {/* <Link
-          href={{
-            pathname: "/report",
-            query: {
-              type: "event",
-              id: "123-456-789",
-            },
-          }}
-          underline="none"
-        > */}
-        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("close")}>
-          <EditOutlined color="action" />
-          Edit
-        </MenuItem>
-        {/* </Link> */}
-
-        {/* <Link
-          href={{
-            pathname: "/delete",
-            query: {
-              type: "event",
-              id: "123-456-789",
-            },
-          }}
-          underline="none"
-        > */}
-        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore("cancel")}>
+        <Link href="editEvent" underline="none">
+          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
+            <EditOutlined color="action" />
+            Edit
+          </MenuItem>
+        </Link>
+        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCancelEventOpen}>
           <CloseOutlined color="action" />
           Cancel
         </MenuItem>
-        {/* </Link> */}
       </Menu>
 
-      {openCancel && (
-        <ConfirmModal title="Cancel event" open={openCancel} cancel={cancelCancelEvent} confirm={confirmCancelEvent}>
+      {openCancelEvent && (
+        <ConfirmModal
+          title="Cancel event"
+          open={openCancelEvent}
+          cancel={cancelCancelEvent}
+          confirm={confirmCancelEvent}
+        >
           <Typography variant="body1">
             Are you sure you want to cancel <b>EVENT TITLE</b> event ?
+          </Typography>
+        </ConfirmModal>
+      )}
+
+      {openJoinEvent && (
+        <ConfirmModal title="Join event" open={openJoinEvent} cancel={cancelJoinEvent} confirm={confirmJoinEvent}>
+          <Typography variant="body1">
+            Are you sure you want to join <b>EVENT TITLE</b> event ?
+          </Typography>
+        </ConfirmModal>
+      )}
+
+      {openLeaveEvent && (
+        <ConfirmModal title="Leave event" open={openLeaveEvent} cancel={cancelLeaveEvent} confirm={confirmLeaveEvent}>
+          <Typography variant="body1">
+            Are you sure you want to leave <b>EVENT TITLE</b> event ?
           </Typography>
         </ConfirmModal>
       )}

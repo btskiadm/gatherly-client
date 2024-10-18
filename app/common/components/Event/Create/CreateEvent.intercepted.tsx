@@ -1,6 +1,8 @@
 "use client";
 
 import { delay } from "@/app/common/utils/delay";
+import { XOR } from "@/app/common/utils/essentials";
+import { CategorySearch } from "@/app/groups/mock";
 import { Box, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -11,9 +13,31 @@ import {
   CreateEventDateAndLocationRef,
 } from "./_components/CreateEventDateAndLocation.component";
 import { CreateEventDetails, CreateEventDetailsRef } from "./_components/CreateEventDetails.component";
-import { CreateEventStep } from "./_components/CreateEventStep.component";
+import { CreateEventStep, CreateEventSteps } from "./_components/CreateEventStep.component";
 
-export const CreaetEventIntercepted = () => {
+export interface CreateEventInit {
+  type: "edit";
+  details: {
+    name: string;
+    description: string;
+    categories: CategorySearch[];
+  };
+  dateAndLocation: {
+    date: string;
+    from: string;
+    to: string;
+  };
+}
+
+type Props = XOR<CreateEventInit, {}>;
+
+const isEditProps = (props: Props) => props.type === "edit";
+
+const createSteps: CreateEventSteps = ["Details", "Date and location", "Invite"];
+const editSteps: CreateEventSteps = ["Details", "Date and location"];
+
+export const CreateEventIntercepted = (props: Props) => {
+  const isEdit = useRef(isEditProps(props));
   const [step, setStep] = useState(0);
   const [errorStep, setErrorStep] = useState(-1);
   const [loading, setLoading] = useState(false);
@@ -54,7 +78,7 @@ export const CreaetEventIntercepted = () => {
       };
     }
 
-    if (step === 1) {
+    if (step === 1 && !isEdit.current) {
       return {
         onAction: () => {
           const data = dateAndLocationRef.current?.next();
@@ -67,6 +91,24 @@ export const CreaetEventIntercepted = () => {
           setStep((prev) => ++prev);
         },
         text: "Next",
+      };
+    }
+
+    if (step === 1 && isEdit.current) {
+      return {
+        onAction: async () => {
+          const data = dateAndLocationRef.current?.next();
+          if (!data?.success) {
+            setErrorStep(1);
+            return;
+          }
+
+          setErrorStep(-1);
+          setLoading(true);
+          await delay(2000);
+          setLoading(false);
+          handleCancel();
+        },
       };
     }
 
@@ -98,35 +140,37 @@ export const CreaetEventIntercepted = () => {
   return (
     <ModalTemplate
       open
-      title="Create a new event"
+      title={isEdit ? "Edit  event" : "Create a new event"}
       loading={loading}
       back={back}
       cancel={cancel}
       confirm={nextAndConfirm}
     >
       <Stack gap={3} width="100%">
-        <CreateEventStep step={step} errorStep={errorStep} />
+        <CreateEventStep step={step} errorStep={errorStep} steps={isEdit.current ? editSteps : createSteps} />
         <Box
           sx={{
             display: step === 0 ? "block" : "none",
           }}
         >
-          <CreateEventDetails ref={detailsRef}></CreateEventDetails>
+          <CreateEventDetails ref={detailsRef} {...(props.details ?? {})} />
         </Box>
         <Box
           sx={{
             display: step === 1 ? "block" : "none",
           }}
         >
-          <CreateEventDateAndLocation ref={dateAndLocationRef} />
+          <CreateEventDateAndLocation ref={dateAndLocationRef} {...(props.dateAndLocation ?? {})} />
         </Box>
-        <Box
-          sx={{
-            display: step === 2 ? "block" : "none",
-          }}
-        >
-          <InviteMember ref={inviteRef} />
-        </Box>
+        {!isEdit.current && (
+          <Box
+            sx={{
+              display: step === 2 ? "block" : "none",
+            }}
+          >
+            <InviteMember ref={inviteRef} />
+          </Box>
+        )}
       </Stack>
     </ModalTemplate>
   );
