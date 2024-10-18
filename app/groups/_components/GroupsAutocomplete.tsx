@@ -12,7 +12,6 @@ import {
   searchLabel,
 } from "../mock";
 
-const loading = true;
 const options: SearchAttribute[] = [...allCategories, ...allCities, ...allGroups];
 
 const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribute: SearchAttribute) => void) =>
@@ -25,18 +24,17 @@ const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribut
     return (
       <div {...other} ref={ref}>
         {selected.length > 0 && (
-          <Stack direction="row" gap={0.5} flexWrap="wrap" p={1} zIndex={100}>
+          <Stack gap={0.5} p={1} flexWrap="wrap" direction="row">
             {selected.map((selection) => (
               <Chip
-                key={selection.key === "name" ? selection.value : selection.label}
                 variant="outlined"
-                label={selection.key === "name" ? selection.value : selection.label}
+                key={selection.value}
+                label={selection.label}
                 onDelete={() => onDelete(selection)}
               />
             ))}
           </Stack>
         )}
-
         {children}
       </div>
     );
@@ -73,14 +71,13 @@ export const GroupsAutocomplete = () => {
         ".MuiChip-label": {
           my: 0, // fix problem with chip inside autocomplete
         },
-
         [theme.breakpoints.up("sm")]: {
           width: "360px",
         },
       })}
       groupBy={({ key }) => key}
       ListboxComponent={ListboxComponent(selected, handleDelete)}
-      getOptionLabel={(option) => (option.key === "name" ? option.value : option.label)}
+      getOptionLabel={({ label }) => label}
       renderTags={(value, getTagProps) => (
         <Stack direction="row" maxWidth="40%" width="min-content">
           {value.slice(0, 1).map((option, index: number) => {
@@ -92,7 +89,7 @@ export const GroupsAutocomplete = () => {
                 component="div"
                 variant="outlined"
                 size="small"
-                label={option.key === "name" ? option.value : option.label}
+                label={option.label}
                 {...tagProps}
               />
             );
@@ -120,7 +117,7 @@ export const GroupsAutocomplete = () => {
               ...params.InputProps,
               endAdornment: (
                 <React.Fragment>
-                  {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                  <CircularProgress color="inherit" size={20} />
                   {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
@@ -139,7 +136,7 @@ export const GroupsAutocomplete = () => {
         return (
           <Stack key={key} component="li" sx={{ "& > svg": { mr: 2, flexShrink: 0 } }} direction="row" {...optionProps}>
             {searchIcon[option.key]}
-            {option.key === "name" ? option.value : option.label}
+            {option.label}
           </Stack>
         );
       }}

@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import {
   AccessTime,
@@ -12,10 +13,9 @@ import {
   VerifiedOutlined,
 } from "@mui/icons-material";
 import { Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { GroupTileData } from "../mock";
-import { Link } from "@/app/common/components/NextLink";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
@@ -35,25 +35,26 @@ function formatDateDifference(dateInput: Date) {
 }
 
 export const GroupTile = ({ id, title, description, members, createdAt }: PropsWithChildren<GroupTileData>) => {
-  const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
+  const [moreElement, setMoreElement] = useState<HTMLElement | null>(null);
 
-  const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
-  };
+  }, []);
 
-  const handleCloseMore = (reason?: "report" | "favorite") => () => {
-    if (reason === "favorite") {
-      toast.success("Group added to favorite.");
-    }
+  const handleCloseMore = useCallback(
+    (reason?: "favorite") => () => {
+      if (reason === "favorite") {
+        toast.success("Group added to favorite.");
+      }
 
-    setMoreElement(null);
-  };
+      setMoreElement(null);
+    },
+    []
+  );
 
-  const handleJoin = () => {
+  const handleJoin = useCallback(() => {
     toast.success("You have just join to the group. Congrats !");
-  };
-
-  const open = !!moreElement;
+  }, []);
 
   return (
     <>
@@ -155,8 +156,8 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
         </Stack>
       </Stack>
       <Menu
+        open={!!moreElement}
         anchorEl={moreElement}
-        open={open}
         onClose={handleCloseMore()}
         sx={{
           "& .MuiPaper-root": {
@@ -183,11 +184,11 @@ export const GroupTile = ({ id, title, description, members, createdAt }: PropsW
           underline="none"
         >
           <MenuItem
-            onClick={handleCloseMore("report")}
             disableRipple
             sx={{
               color: "text.primary",
             }}
+            onClick={handleCloseMore()}
           >
             <ReportGmailerrorredOutlined color="action" />
             Report

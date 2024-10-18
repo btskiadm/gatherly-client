@@ -1,3 +1,4 @@
+import { CommentInput } from "@/app/common/components/CommentInput/CommentInput";
 import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { AboutCommentsList } from "./AboutCommentsList";
@@ -61,6 +62,7 @@ export const GroupAboutPage = () => {
           </Stack>
         </Box>
       </Paper>
+      <CommentInput />
     </Stack>
   );
 };

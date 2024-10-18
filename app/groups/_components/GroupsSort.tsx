@@ -40,11 +40,11 @@ export const GroupsSort = () => {
       <Popover
         open={!!anchor}
         anchorEl={anchor}
-        onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
         }}
+        onClose={handleClose}
       >
         <Stack width="280px" gap={3}>
           <FormControl>

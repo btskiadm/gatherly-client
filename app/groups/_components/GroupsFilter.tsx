@@ -35,7 +35,6 @@ const stringify = (n: number, suffix?: string) => {
 
 export const GroupsFilter = () => {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
-
   const [minInput, setMinInput] = useState(stringify(min));
   const [maxInput, setMaxInput] = useState(stringify(max, "+"));
   const [range, setRange] = useState<number[]>([min, max]);
@@ -49,7 +48,7 @@ export const GroupsFilter = () => {
     setAnchor(null);
   }, []);
 
-  const handleRange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  const handleRange = useCallback((event: unknown, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -76,39 +75,45 @@ export const GroupsFilter = () => {
     setRange([_min, _max]);
     setMinInput(stringify(_min));
     setMaxInput(_max >= max ? stringify(_max, "+") : stringify(_max));
-  };
+  }, []);
 
-  const handleMin = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMin = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     setMinInput(targetValue);
-  };
+  }, []);
 
-  const handleMax = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMax = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     setMaxInput(targetValue);
-  };
+  }, []);
 
-  const handleMinBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const targetValue = Number.parseInt(e.target.value);
-    const maxInputValue = Number.parseInt(minInput);
+  const handleMinBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const targetValue = Number.parseInt(e.target.value);
+      const maxInputValue = Number.parseInt(minInput);
 
-    if (Number.isNaN(targetValue) || targetValue < min || targetValue >= max || targetValue >= maxInputValue) {
-      setMinInput(stringify(min));
-    } else {
-      setMinInput(stringify(targetValue));
-    }
-  };
+      if (Number.isNaN(targetValue) || targetValue < min || targetValue >= max || targetValue >= maxInputValue) {
+        setMinInput(stringify(min));
+      } else {
+        setMinInput(stringify(targetValue));
+      }
+    },
+    [minInput]
+  );
 
-  const handleMaxBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const targetValue = Number.parseInt(e.target.value);
-    const minInputValue = Number.parseInt(minInput);
+  const handleMaxBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const targetValue = Number.parseInt(e.target.value);
+      const minInputValue = Number.parseInt(minInput);
 
-    if (Number.isNaN(targetValue) || targetValue >= max || targetValue <= minInputValue) {
-      setMaxInput(stringify(targetValue, "+"));
-    } else {
-      setMaxInput(stringify(targetValue));
-    }
-  };
+      if (Number.isNaN(targetValue) || targetValue >= max || targetValue <= minInputValue) {
+        setMaxInput(stringify(targetValue, "+"));
+      } else {
+        setMaxInput(stringify(targetValue));
+      }
+    },
+    [minInput]
+  );
 
   const hasAttribute = useCallback(
     (key: FilterAttributeKeys) => {
@@ -135,20 +140,20 @@ export const GroupsFilter = () => {
     setAttributes(attrs);
   }, []);
 
-  const handleApply = () => {
+  const handleApply = useCallback(() => {
     setAnchor(null);
-  };
+  }, []);
 
   return (
     <>
       <Popover
         open={!!anchor}
         anchorEl={anchor}
-        onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
         }}
+        onClose={handleClose}
       >
         <Stack width="320px" gap={3}>
           <FormControl>
@@ -190,16 +195,16 @@ export const GroupsFilter = () => {
               <Slider min={min} max={max} value={range} valueLabelDisplay="auto" onChange={handleRange} />
               <Stack direction="row" gap={1}>
                 <TextField
-                  value={minInput}
                   placeholder="min."
                   size="small"
+                  value={minInput}
                   onChange={handleMin}
                   onBlur={handleMinBlur}
                 />
                 <TextField
-                  value={maxInput}
                   placeholder="max."
                   size="small"
+                  value={maxInput}
                   onChange={handleMax}
                   onBlur={handleMaxBlur}
                 />

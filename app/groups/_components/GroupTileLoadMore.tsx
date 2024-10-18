@@ -29,7 +29,15 @@ export const GroupTileLoadMore = () => {
           }}
         />
       )}
-      {loading && <CircularProgress thickness={4} size="4rem" />}
+      {loading && (
+        <CircularProgress
+          thickness={4}
+          size="4rem"
+          sx={{
+            my: "1rem",
+          }}
+        />
+      )}
       {!loading && (
         <>
           <Button color="primary" variant="outlined" onClick={handleLoading}>
