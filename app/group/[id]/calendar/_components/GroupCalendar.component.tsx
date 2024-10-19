@@ -21,9 +21,9 @@ import { INITIAL_EVENTS } from "./calendar.mock";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `
-  min-height: 600px;
-  max-height: 1000px;
-  height: clamp(600px, 80vh, 1000px);
+  min-height: 520px;
+  max-height: 800px;
+  height: clamp(520px, 50vh, 800px);
 
   .fc-header-toolbar {
     display: none !important;
