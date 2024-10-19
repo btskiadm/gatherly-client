@@ -3,11 +3,13 @@
 import Logo from "@/app/public/assets/logo.webp";
 import {
   AddCircleOutlineRounded,
+  CalendarMonth,
   Close,
   Cookie,
+  Diversity2,
   Event,
   FacebookOutlined,
-  Groups,
+  Groups2,
   Help,
   Instagram,
   Logout,
@@ -91,9 +93,8 @@ export const ApplicationNavBar = (props: Props) => {
             xs: 2,
             sm: 3,
           }}
-          gap={2}
         >
-          <Stack direction="row" gap={4} alignItems="center">
+          <Stack gap={4} mb={2} direction="row" alignItems="center">
             <IconButton
               size="small"
               sx={{
@@ -109,6 +110,26 @@ export const ApplicationNavBar = (props: Props) => {
               Menu
             </Typography>
           </Stack>
+          <Divider />
+          <List>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/groups" LinkComponent={Link}>
+                <ListItemIcon>
+                  <Groups2 />
+                </ListItemIcon>
+                <ListItemText primary="Groups" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/events" LinkComponent={Link}>
+                <ListItemIcon>
+                  <CalendarMonth />
+                </ListItemIcon>
+                <ListItemText primary="Events" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
           <List>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
               <ListItemButton href="/" LinkComponent={Link}>
@@ -129,7 +150,7 @@ export const ApplicationNavBar = (props: Props) => {
             <ListItem disablePadding onClick={handleCloseNavMenu}>
               <ListItemButton href="/" LinkComponent={Link}>
                 <ListItemIcon>
-                  <Groups />
+                  <Diversity2 />
                 </ListItemIcon>
                 <ListItemText primary="Your groups" />
               </ListItemButton>
@@ -195,7 +216,13 @@ export const ApplicationNavBar = (props: Props) => {
             </ListItem>
           </List>
           <Divider />
-          <Stack direction="row" justifyContent="space-evenly">
+          <Stack
+            direction="row"
+            justifyContent="space-evenly"
+            mt={{
+              xs: 2,
+            }}
+          >
             <IconButton
               href="https://www.facebook.com"
               target="_blank"

@@ -13,7 +13,6 @@ import { Button, Chip, FormControl, FormLabel, Slider, Stack, TextField, ToggleB
 import React, { useCallback, useState } from "react";
 import { FilterAttribute, FilterAttributeKeys, filterAttributeLabel } from "../mock";
 
-// todo: appconfig
 const min = 1;
 const max = 50;
 const diff = 5;
@@ -236,6 +235,7 @@ export const GroupsFilter = () => {
         Filter
       </Button>
       <ToggleButton
+        color="primary"
         value="check"
         size="small"
         selected={!!anchor}
