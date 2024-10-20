@@ -1,10 +1,9 @@
-import { Link } from "@/app/common/components/NextLink";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
-import { VisibilityOutlined } from "@mui/icons-material";
-import { Button, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { PlaceOutlined, VerifiedOutlined } from "@mui/icons-material";
+import { Grid2, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
 
-export default function Page() {
+export const ProfileInfo = () => {
   return (
     <Paper>
       <Stack>
@@ -20,22 +19,35 @@ export default function Page() {
           }}
         />
         <Stack gap={2} px={{ xs: 2, sm: 3 }} py={{ xs: 2, sm: 2 }}>
-          <Typography
-            variant="body1"
-            sx={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Typography>
+          <Stack gap={0.5}>
+            <Stack gap={0.5} direction="row" alignItems="center">
+              <Tooltip title="Verified">
+                <VerifiedOutlined color="warning" fontSize="small" />
+              </Tooltip>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                sx={{
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                }}
+              >
+                Jan Kowalski
+              </Typography>
+            </Stack>
+            <Stack gap={0.5} direction="row" alignItems="center">
+              <PlaceOutlined color="action" fontSize="small" />
+              <Typography variant="body2">Warszawa</Typography>
+            </Stack>
+          </Stack>
+
           <Grid2 container spacing={1}>
             <Grid2 size={4}>
               <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">
                 <Typography variant="caption" color="text.secondary">
-                  Wydarzeni
+                  Ukończone
                 </Typography>
                 <Typography variant="body1" fontWeight="600">
                   120
@@ -45,7 +57,7 @@ export default function Page() {
             <Grid2 size={4}>
               <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">
                 <Typography variant="caption" color="text.secondary">
-                  Członków
+                  Wszystkie
                 </Typography>
                 <Typography variant="body1" fontWeight="600">
                   134
@@ -63,7 +75,7 @@ export default function Page() {
               </Stack>
             </Grid2>
           </Grid2>
-          <Divider />
+          {/* <Divider />
           <Button
             fullWidth
             href={`/group/123-456-789/about`}
@@ -72,9 +84,9 @@ export default function Page() {
             startIcon={<VisibilityOutlined />}
           >
             See group
-          </Button>
+          </Button> */}
         </Stack>
       </Stack>
     </Paper>
   );
-}
+};
