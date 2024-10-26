@@ -10,7 +10,7 @@ import {
   allGroups,
   searchIcon,
   searchLabel,
-} from "../mock";
+} from "@/app/groups/mock";
 
 const options: SearchAttribute[] = [...allCategories, ...allCities, ...allGroups];
 
@@ -40,7 +40,7 @@ const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribut
     );
   });
 
-export const GroupsAutocomplete = () => {
+export const GroupAndEventAutocomplete = () => {
   const [selected, setSelected] = useState<SearchAttribute[]>([]);
 
   const handleDelete = useCallback(

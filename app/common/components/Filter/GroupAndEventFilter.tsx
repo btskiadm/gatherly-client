@@ -1,6 +1,7 @@
 "use client";
 
 import { Popover } from "@/app/common/components/Popover";
+import { FilterAttribute, FilterAttributeKeys, filterAttributeLabel } from "@/app/groups/mock";
 import {
   CloudOutlined,
   ExpandMoreOutlined,
@@ -11,7 +12,6 @@ import {
 } from "@mui/icons-material";
 import { Button, Chip, FormControl, FormLabel, Slider, Stack, TextField, ToggleButton } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { FilterAttribute, FilterAttributeKeys, filterAttributeLabel } from "../mock";
 
 const min = 1;
 const max = 50;
@@ -32,7 +32,7 @@ const stringify = (n: number, suffix?: string) => {
   return `${n}`;
 };
 
-export const GroupsFilter = () => {
+export const GroupAndEventFilter = () => {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [minInput, setMinInput] = useState(stringify(min));
   const [maxInput, setMaxInput] = useState(stringify(max, "+"));
@@ -156,7 +156,7 @@ export const GroupsFilter = () => {
       >
         <Stack width="320px" gap={3}>
           <FormControl>
-            <FormLabel>Cechy grupy</FormLabel>
+            <FormLabel>Atrybuty</FormLabel>
             <Stack direction="row" gap={1} mt={1} flexWrap="wrap">
               <Chip
                 variant="outlined"
@@ -189,7 +189,7 @@ export const GroupsFilter = () => {
             </Stack>
           </FormControl>
           <FormControl>
-            <FormLabel>Rozmiar grupy</FormLabel>
+            <FormLabel>Ilość uczestników</FormLabel>
             <Stack gap={1} mt={1} flexWrap="wrap">
               <Slider min={min} max={max} value={range} valueLabelDisplay="auto" onChange={handleRange} />
               <Stack direction="row" gap={1}>

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useCallback, useState } from "react";
 
-export const GroupsSort = () => {
+export const GroupAndEventSort = () => {
   const [anchor, setAnchor] = useState(null);
   const [dateOfAdding, setDateOfAdding] = useState("newest");
   const [numberOfMembers, setNumberOfMembers] = useState("");
