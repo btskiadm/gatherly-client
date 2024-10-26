@@ -44,7 +44,7 @@ export const InviteMemberIntercepted = () => {
   );
 
   return (
-    <ModalTemplate title="Invite members<" open={true} loading={loading} cancel={cancel} confirm={invite}>
+    <ModalTemplate title="Invite members" open={true} loading={loading} cancel={cancel} confirm={invite}>
       <InviteMember ref={inviteMemberRef} />
     </ModalTemplate>
   );

@@ -22,22 +22,22 @@ export const GroupAboutPage = () => {
           <AboutEventCounterTile primary="4.2" secondary="Ocena" />
         </Grid2>
       </Grid2>
-      <Paper>
-        <Box p={{ xs: 1, sm: 2 }}>
-          <Stack bgcolor="background.light" p={1} gap={1}>
-            <Typography variant="subtitle2" color="text.secondary">
-              Name
-            </Typography>
+      <Stack gap={1}>
+        <Typography variant="body1" fontWeight={600}>
+          Name
+        </Typography>
+        <Paper>
+          <Box p={{ xs: 1, sm: 2 }}>
             <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit cursus.</Typography>
-          </Stack>
-        </Box>
-      </Paper>
-      <Paper>
-        <Box p={{ xs: 1, sm: 2 }}>
-          <Stack bgcolor="background.light" p={1} gap={1}>
-            <Typography variant="subtitle2" color="text.secondary">
-              Description
-            </Typography>
+          </Box>
+        </Paper>
+      </Stack>
+      <Stack gap={1}>
+        <Typography variant="body1" fontWeight={600}>
+          Description
+        </Typography>
+        <Paper>
+          <Box p={{ xs: 2, sm: 3 }}>
             <Typography variant="body1">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at urna sem. Integer sit amet augue
               congue, convallis est quis, imperdiet libero. Nunc pharetra luctus lorem nec mollis. Morbi et consequat
@@ -49,19 +49,19 @@ export const GroupAboutPage = () => {
               nunc sapien, lobortis eget commodo eu, vestibulum ut nulla. Quisque feugiat quam quis metus molestie
               sollicitudin. Duis finibus a libero vel cursus.
             </Typography>
-          </Stack>
-        </Box>
-      </Paper>
-      <Paper>
-        <Box p={{ xs: 1, sm: 2 }}>
-          <Stack p={1} gap={1}>
-            <Typography variant="subtitle2" color="text.secondary">
-              Opinie
-            </Typography>
+          </Box>
+        </Paper>
+      </Stack>
+      <Stack gap={1}>
+        <Typography variant="body1" fontWeight={600}>
+          Opinie
+        </Typography>
+        <Paper>
+          <Box p={{ xs: 1, sm: 2 }}>
             <AboutCommentsList />
-          </Stack>
-        </Box>
-      </Paper>
+          </Box>
+        </Paper>
+      </Stack>
       <CommentInput />
     </Stack>
   );
