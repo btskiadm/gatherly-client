@@ -1,4 +1,4 @@
-import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
+import Avatar from "@/app/public/assets/useravatar.webp";
 import { PlaceOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Grid2, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
@@ -8,7 +8,7 @@ export const ProfileInfo = () => {
     <Paper>
       <Stack>
         <Image
-          src={GroupImage4x3}
+          src={Avatar}
           alt="city map"
           sizes="100vw"
           style={{
@@ -75,16 +75,6 @@ export const ProfileInfo = () => {
               </Stack>
             </Grid2>
           </Grid2>
-          {/* <Divider />
-          <Button
-            fullWidth
-            href={`/group/123-456-789/about`}
-            variant="outlined"
-            LinkComponent={Link}
-            startIcon={<VisibilityOutlined />}
-          >
-            See group
-          </Button> */}
         </Stack>
       </Stack>
     </Paper>

@@ -132,7 +132,7 @@ export const ApplicationNavBar = (props: Props) => {
           <Divider />
           <List>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
-              <ListItemButton href="/profile" LinkComponent={Link}>
+              <ListItemButton href="/profile/123-456-789" LinkComponent={Link}>
                 <ListItemIcon>
                   <Person />
                 </ListItemIcon>
