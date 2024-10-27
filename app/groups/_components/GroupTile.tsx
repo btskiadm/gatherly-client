@@ -82,7 +82,10 @@ export const GroupTile = ({ id, title, description, members, createdAt, img }: P
           sizes="100vw"
           sx={{
             width: "100%",
-            height: "12rem",
+            height: {
+              xs: "16rem",
+              sm: "12rem",
+            },
           }}
         >
           <Image

@@ -11,7 +11,7 @@ export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTi
   return (
     <>
       <Link
-        href={`/profile/${id}`}
+        href={`/group/${id}/about`}
         sx={{
           height: 0,
           width: 0,
