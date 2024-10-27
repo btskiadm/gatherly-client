@@ -1,9 +1,9 @@
+import { GroupTile as GroupTileData } from "@/app/mock/mock";
 import { Grid2 } from "@mui/material";
-import { GroupTile as GroupTileData } from "../mock";
 import { CommonGroupTile } from "./CommonGroupTile";
-import { GroupTile } from "./GroupTile";
 import { GroupTileLoadMore } from "./GroupTileLoadMore";
 import { GroupTileSkeleton } from "./GroupTileSkeleton";
+import { GroupTile } from "./GroupTile";
 
 export const GroupTilesList = ({ tiles }: { tiles: GroupTileData[] }) => {
   return (

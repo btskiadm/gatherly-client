@@ -1,13 +1,13 @@
+import { StackedGroups } from "@/app/mock/mock";
 import { Stack } from "@mui/material";
-import { PropsWithChildren } from "react";
-import { GroupStackTags } from "./GroupStackTags";
+import { GroupStackAttributes } from "./GroupStackAttributes";
 import { GroupTilesList } from "./GroupTilesList";
-import { StackedGroupTiles } from "../mock";
 
-export const GroupsStack = ({ tags, tiles }: PropsWithChildren<StackedGroupTiles>) => {
+export const GroupsStack = ({ stackedGroup }: { stackedGroup: StackedGroups }) => {
+  const { attributes, tiles } = stackedGroup;
   return (
     <Stack gap={2} width="100%">
-      <GroupStackTags tags={tags} />
+      <GroupStackAttributes attributes={attributes} />
       <GroupTilesList tiles={tiles} />
     </Stack>
   );

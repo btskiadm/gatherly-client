@@ -1,7 +1,7 @@
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { ReactNode } from "react";
-import { LOGOS4X3 } from "../common/utils/mockLogo";
 import { StaticImageData } from "next/image";
+import { GroupLogo4x3 } from "../mock/mock";
 
 export interface SponsoredTag {
   key: "sponsored";
@@ -90,12 +90,6 @@ Ad reprehenderit elit consectetur id incididunt veniam dolore culpa aute mollit 
     6
   );
 
-const getRandomLoremIpsumSentenses = (n: number) => {
-  let sentences = loremIpsum.match(/[^\.!\?]+[\.!\?]+/g)!;
-  let shuffled = sentences.sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, n).join(" ");
-};
-
 const getLoremIpsumSentenses = (s: number, startAt: number = 0) => {
   let sentences = loremIpsum.split(".");
 
@@ -120,97 +114,6 @@ export const searchIcon: Record<SearchTagKeys, ReactNode> = {
   city: <FmdGoodOutlined />,
   name: <TitleRounded />,
 };
-
-export const data: GroupTile[] = [
-  {
-    id: "1",
-    title: getLoremIpsumSentenses(2, 0),
-    description: getLoremIpsumSentenses(2, 2),
-    members: 10,
-    createdAt: new Date("10.10.2020"),
-    img: LOGOS4X3[0],
-  },
-  {
-    id: "2",
-    title: getLoremIpsumSentenses(2, 2),
-    description: getLoremIpsumSentenses(2, 4),
-    members: 63,
-    createdAt: new Date("10.10.2021"),
-    img: LOGOS4X3[2],
-  },
-  {
-    id: "3",
-    title: getLoremIpsumSentenses(2, 4),
-    description: getLoremIpsumSentenses(2, 6),
-    members: 127,
-    createdAt: new Date("10.10.2022"),
-    img: LOGOS4X3[3],
-  },
-  {
-    id: "4",
-    title: getLoremIpsumSentenses(2, 6),
-    description: getLoremIpsumSentenses(2, 8),
-    members: 1,
-    createdAt: new Date("10.10.2023"),
-    img: LOGOS4X3[4],
-  },
-  {
-    id: "5",
-    title: getLoremIpsumSentenses(2, 8),
-    description: getLoremIpsumSentenses(2, 10),
-    members: 3120,
-    createdAt: new Date("01.01.2024"),
-    img: LOGOS4X3[5],
-  },
-  {
-    id: "6",
-    title: getLoremIpsumSentenses(2, 10),
-    description: getLoremIpsumSentenses(2, 12),
-    members: 421,
-    createdAt: new Date("01.02.2024"),
-    img: LOGOS4X3[6],
-  },
-  {
-    id: "7",
-    title: getLoremIpsumSentenses(2, 12),
-    description: getLoremIpsumSentenses(2, 14),
-    members: 5,
-    createdAt: new Date("01.03.2024"),
-    img: LOGOS4X3[6],
-  },
-  {
-    id: "8",
-    title: getLoremIpsumSentenses(2, 14),
-    description: getLoremIpsumSentenses(2, 16),
-    members: 421,
-    createdAt: new Date("01.04.2024"),
-    img: LOGOS4X3[6],
-  },
-  {
-    id: "9",
-    title: getLoremIpsumSentenses(2, 16),
-    description: getLoremIpsumSentenses(2, 18),
-    members: 74,
-    createdAt: new Date("01.05.2024"),
-    img: LOGOS4X3[6],
-  },
-  {
-    id: "10",
-    title: getLoremIpsumSentenses(2, 18),
-    description: getLoremIpsumSentenses(2, 20),
-    members: 53,
-    createdAt: new Date("01.06.2024"),
-    img: LOGOS4X3[6],
-  },
-  {
-    id: "11",
-    title: getLoremIpsumSentenses(2, 20),
-    description: getLoremIpsumSentenses(2, 22),
-    members: 11,
-    createdAt: new Date("01.07.2024"),
-    img: LOGOS4X3[6],
-  },
-];
 
 export const stackedGroupTiles: StackedGroupTiles[] = [
   {
@@ -241,7 +144,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 2),
         members: 10,
         createdAt: new Date("10.10.2020"),
-        img: LOGOS4X3[0],
+        img: GroupLogo4x3[0],
       },
       {
         id: "2",
@@ -249,7 +152,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 4),
         members: 63,
         createdAt: new Date("10.10.2021"),
-        img: LOGOS4X3[1],
+        img: GroupLogo4x3[1],
       },
       {
         id: "3",
@@ -257,7 +160,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[2],
+        img: GroupLogo4x3[2],
       },
       {
         id: "4",
@@ -265,7 +168,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 8),
         members: 1,
         createdAt: new Date("10.10.2023"),
-        img: LOGOS4X3[3],
+        img: GroupLogo4x3[3],
       },
       {
         id: "5",
@@ -273,7 +176,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 10),
         members: 3120,
         createdAt: new Date("10.10.2024"),
-        img: LOGOS4X3[4],
+        img: GroupLogo4x3[4],
       },
       {
         id: "6",
@@ -281,7 +184,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 12),
         members: 1274,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[5],
+        img: GroupLogo4x3[5],
       },
       {
         id: "7",
@@ -289,7 +192,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 14),
         members: 1227,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[6],
+        img: GroupLogo4x3[6],
       },
       {
         id: "8",
@@ -297,7 +200,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 16),
         members: 9127,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[7],
+        img: GroupLogo4x3[7],
       },
       {
         id: "9",
@@ -305,7 +208,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 18),
         members: 51257,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[8],
+        img: GroupLogo4x3[8],
       },
       {
         id: "10",
@@ -313,7 +216,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 20),
         members: 12713,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[9],
+        img: GroupLogo4x3[9],
       },
       {
         id: "11",
@@ -321,7 +224,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 22),
         members: 12,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[10],
+        img: GroupLogo4x3[10],
       },
       {
         id: "12",
@@ -329,7 +232,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 24),
         members: 527,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[11],
+        img: GroupLogo4x3[11],
       },
       {
         id: "13",
@@ -337,7 +240,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 26),
         members: 1827,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[12],
+        img: GroupLogo4x3[12],
       },
       {
         id: "14",
@@ -345,7 +248,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 28),
         members: 2127,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[13],
+        img: GroupLogo4x3[13],
       },
       {
         id: "15",
@@ -353,7 +256,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 32),
         members: 27,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[14],
+        img: GroupLogo4x3[14],
       },
       {
         id: "16",
@@ -361,7 +264,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 36),
         members: 17,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[15],
+        img: GroupLogo4x3[15],
       },
     ],
   },
@@ -393,13 +296,13 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(6, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
-        img: LOGOS4X3[6],
+        img: GroupLogo4x3[6],
       },
       {
         id: "2",
         title: getLoremIpsumSentenses(8, 6),
         description: getLoremIpsumSentenses(8, 8),
-        img: LOGOS4X3[1],
+        img: GroupLogo4x3[1],
         members: 1,
         createdAt: new Date("10.10.2023"),
       },
@@ -409,7 +312,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(10, 10),
         members: 3120,
         createdAt: new Date("10.10.2024"),
-        img: LOGOS4X3[2],
+        img: GroupLogo4x3[2],
       },
     ],
   },
@@ -440,7 +343,7 @@ export const stackedGroupTiles: StackedGroupTiles[] = [
         description: getLoremIpsumSentenses(2, 2),
         members: 10,
         createdAt: new Date("10.10.2020"),
-        img: LOGOS4X3[0],
+        img: GroupLogo4x3[0],
       },
     ],
   },

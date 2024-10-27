@@ -4,6 +4,7 @@ import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import {
   AccessTime,
+  CalendarMonthOutlined,
   FavoriteBorderOutlined,
   Group,
   GroupAdd,
@@ -16,7 +17,7 @@ import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, 
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
-import { GroupTile as GroupTileData } from "../mock";
+import { GroupTile as GroupTileData } from "@/app/mock/mock";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
@@ -35,7 +36,18 @@ function formatDateDifference(dateInput: Date) {
   }
 }
 
-export const GroupTile = ({ id, title, description, members, createdAt, img }: PropsWithChildren<GroupTileData>) => {
+export const GroupTile = ({
+  id,
+  title,
+  description,
+  src,
+  createdAt,
+  userLength,
+  sponsored,
+  verified,
+  remote,
+  eventsLength,
+}: PropsWithChildren<GroupTileData>) => {
   const [moreElement, setMoreElement] = useState<HTMLElement | null>(null);
 
   const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -90,7 +102,7 @@ export const GroupTile = ({ id, title, description, members, createdAt, img }: P
         >
           <Image
             fill
-            src={img}
+            src={src}
             alt="logo"
             style={{
               objectFit: "cover",
@@ -126,33 +138,40 @@ export const GroupTile = ({ id, title, description, members, createdAt, img }: P
             }}
           >
             <Tooltip title="Number of members">
-              <Chip size="small" label={members} icon={<Group />} />
+              <Chip size="small" label={userLength} icon={<Group />} />
+            </Tooltip>
+            <Tooltip title="Number of events">
+              <Chip size="small" label={eventsLength} icon={<CalendarMonthOutlined />} />
             </Tooltip>
             <Tooltip title="Date of creating">
-              <Chip size="small" label={formatDateDifference(createdAt)} icon={<AccessTime />} />
+              <Chip size="small" label={formatDateDifference(new Date(createdAt))} icon={<AccessTime />} />
             </Tooltip>
-            <Tooltip title="Verified group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<VerifiedOutlined fontSize="small" />}
-              />
-            </Tooltip>
-            <Tooltip title="Sponsored group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<StarBorderRounded fontSize="small" />}
-              />
-            </Tooltip>
+            {verified && (
+              <Tooltip title="Verified group">
+                <Chip
+                  size="small"
+                  sx={{
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<VerifiedOutlined fontSize="small" />}
+                />
+              </Tooltip>
+            )}
+            {sponsored && (
+              <Tooltip title="Sponsored group">
+                <Chip
+                  size="small"
+                  sx={{
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<StarBorderRounded fontSize="small" />}
+                />
+              </Tooltip>
+            )}
           </Stack>
           {/* description */}
           <Box height="100%">
