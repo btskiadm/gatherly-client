@@ -1,5 +1,7 @@
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { ReactNode } from "react";
+import { LOGOS4X3 } from "../common/utils/mockLogo";
+import { StaticImageData } from "next/image";
 
 export interface SponsoredAttribute {
   key: "sponsored";
@@ -77,6 +79,7 @@ export interface GroupTileData {
   members: number;
   createdAt: Date;
   description: string;
+  img: string | StaticImageData;
 }
 
 const loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis imperdiet risus. Duis sem lorem, ullamcorper eu hendrerit in, ultrices eget odio. Donec et sem massa. Morbi pellentesque, libero vel luctus sodales, diam urna pharetra nulla, id luctus turpis magna vitae velit. Vivamus quam mi, pulvinar in elit id, viverra pharetra neque. Integer sed diam eget magna condimentum tincidunt. Proin venenatis fermentum mattis. Sed dapibus rutrum ultricies.
@@ -123,6 +126,7 @@ export const data: GroupTileData[] = [
     description: getLoremIpsumSentenses(2, 2),
     members: 10,
     createdAt: new Date("10.10.2020"),
+    img: LOGOS4X3[0],
   },
   {
     id: "2",
@@ -130,6 +134,7 @@ export const data: GroupTileData[] = [
     description: getLoremIpsumSentenses(4, 4),
     members: 63,
     createdAt: new Date("10.10.2021"),
+    img: LOGOS4X3[2],
   },
   {
     id: "3",
@@ -137,6 +142,7 @@ export const data: GroupTileData[] = [
     description: getLoremIpsumSentenses(6, 6),
     members: 127,
     createdAt: new Date("10.10.2022"),
+    img: LOGOS4X3[3],
   },
   {
     id: "4",
@@ -144,6 +150,7 @@ export const data: GroupTileData[] = [
     description: getLoremIpsumSentenses(8, 8),
     members: 1,
     createdAt: new Date("10.10.2023"),
+    img: LOGOS4X3[4],
   },
   {
     id: "5",
@@ -151,6 +158,15 @@ export const data: GroupTileData[] = [
     description: getLoremIpsumSentenses(10, 10),
     members: 3120,
     createdAt: new Date("10.10.2024"),
+    img: LOGOS4X3[5],
+  },
+  {
+    id: "6",
+    title: getLoremIpsumSentenses(11, 9),
+    description: getLoremIpsumSentenses(12, 12),
+    members: 32,
+    createdAt: new Date("10.11.2024"),
+    img: LOGOS4X3[6],
   },
 ];
 
@@ -183,6 +199,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(2, 2),
         members: 10,
         createdAt: new Date("10.10.2020"),
+        img: LOGOS4X3[0],
       },
       {
         id: "2",
@@ -190,6 +207,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(4, 4),
         members: 63,
         createdAt: new Date("10.10.2021"),
+        img: LOGOS4X3[1],
       },
       {
         id: "3",
@@ -197,6 +215,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(6, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[2],
       },
       {
         id: "4",
@@ -204,6 +223,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(8, 8),
         members: 1,
         createdAt: new Date("10.10.2023"),
+        img: LOGOS4X3[3],
       },
       {
         id: "5",
@@ -211,6 +231,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(10, 10),
         members: 3120,
         createdAt: new Date("10.10.2024"),
+        img: LOGOS4X3[4],
       },
       {
         id: "6",
@@ -218,6 +239,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(6, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[5],
       },
     ],
   },
@@ -249,11 +271,13 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(6, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[6],
       },
       {
         id: "2",
         title: getLoremIpsumSentenses(8, 6),
         description: getLoremIpsumSentenses(8, 8),
+        img: LOGOS4X3[1],
         members: 1,
         createdAt: new Date("10.10.2023"),
       },
@@ -263,6 +287,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(10, 10),
         members: 3120,
         createdAt: new Date("10.10.2024"),
+        img: LOGOS4X3[2],
       },
     ],
   },
@@ -293,6 +318,7 @@ export const stack: GroupsStackData[] = [
         description: getLoremIpsumSentenses(2, 2),
         members: 10,
         createdAt: new Date("10.10.2020"),
+        img: LOGOS4X3[0],
       },
     ],
   },
