@@ -3,8 +3,8 @@
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import {
-  SearchAttribute,
-  SearchAttributeKeys,
+  SearchTag,
+  SearchTagKeys,
   allCategories,
   allCities,
   allGroups,
@@ -12,9 +12,9 @@ import {
   searchLabel,
 } from "@/app/groups/mock";
 
-const options: SearchAttribute[] = [...allCategories, ...allCities, ...allGroups];
+const options: SearchTag[] = [...allCategories, ...allCities, ...allGroups];
 
-const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribute: SearchAttribute) => void) =>
+const ListboxComponent = (selected: SearchTag[], onDelete: (searchAttribute: SearchTag) => void) =>
   React.forwardRef(function ListboxComponent(
     props: React.HTMLAttributes<HTMLElement>,
     ref: React.LegacyRef<HTMLDivElement>
@@ -41,24 +41,24 @@ const ListboxComponent = (selected: SearchAttribute[], onDelete: (searchAttribut
   });
 
 export const GroupAndEventAutocomplete = () => {
-  const [selected, setSelected] = useState<SearchAttribute[]>([]);
+  const [selected, setSelected] = useState<SearchTag[]>([]);
 
   const handleDelete = useCallback(
-    (toDelete: SearchAttribute) => {
+    (toDelete: SearchTag) => {
       setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
     },
     [setSelected]
   );
 
   const handleChange = useCallback(
-    (e: unknown, value: SearchAttribute[]) => {
+    (e: unknown, value: SearchTag[]) => {
       setSelected(value);
     },
     [setSelected]
   );
 
   return (
-    <Autocomplete<SearchAttribute, true>
+    <Autocomplete<SearchTag, true>
       multiple
       value={selected}
       onChange={handleChange}
@@ -127,7 +127,7 @@ export const GroupAndEventAutocomplete = () => {
       )}
       renderGroup={(params) => (
         <Stack key={params.key} px={2} gap={0.5}>
-          <Typography variant="body1">{searchLabel[params.group as SearchAttributeKeys]}</Typography>
+          <Typography variant="body1">{searchLabel[params.group as SearchTagKeys]}</Typography>
           {params.children}
         </Stack>
       )}

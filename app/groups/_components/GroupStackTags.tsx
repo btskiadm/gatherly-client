@@ -6,9 +6,9 @@ import {
   VerifiedOutlined,
 } from "@mui/icons-material";
 import { Chip, Stack } from "@mui/material";
-import { GroupTagData } from "../mock";
+import { StackedGroupTag } from "../mock";
 
-export const GroupStackTags = ({ tags }: { tags: GroupTagData[] }) => {
+export const GroupStackTags = ({ tags }: { tags: StackedGroupTag[] }) => {
   return (
     <Stack
       width="min-content"

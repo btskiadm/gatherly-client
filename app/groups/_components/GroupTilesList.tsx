@@ -1,5 +1,5 @@
 import { Grid2 } from "@mui/material";
-import { GroupTileData } from "../mock";
+import { GroupTile as GroupTileData } from "../mock";
 import { CommonGroupTile } from "./CommonGroupTile";
 import { GroupTile } from "./GroupTile";
 import { GroupTileLoadMore } from "./GroupTileLoadMore";

@@ -1,6 +1,6 @@
 import { ShortCommonGroupTile } from "@/app/common/components/Group/Tile/ShortCommonGroupTile";
 import { ShortGroupTile } from "@/app/common/components/Group/Tile/ShortGroupTile";
-import { stack } from "@/app/groups/mock";
+import { stackedGroupTiles } from "@/app/groups/mock";
 import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 
 export default function Page() {
@@ -26,7 +26,7 @@ export default function Page() {
         <Typography variant="body1" fontWeight={600}>
           Group member
         </Typography>
-        {stack.map(({ tags, tiles }, idx) => {
+        {stackedGroupTiles.map(({ tags, tiles }, idx) => {
           return (
             <Grid2 key={idx} container spacing={2}>
               {tiles.map((tile) => (

@@ -1,13 +1,13 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { GroupTileData } from "@/app/groups/mock";
+import { GroupTile } from "@/app/groups/mock";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { Group, StarBorderRounded, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, Chip, Stack, Tooltip } from "@mui/material";
 import Image from "next/image";
 import { PropsWithChildren } from "react";
 
-export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTileData>) => {
+export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTile>) => {
   return (
     <>
       <Link

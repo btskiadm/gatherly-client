@@ -3,21 +3,21 @@ import { ReactNode } from "react";
 import { LOGOS4X3 } from "../common/utils/mockLogo";
 import { StaticImageData } from "next/image";
 
-export interface SponsoredAttribute {
+export interface SponsoredTag {
   key: "sponsored";
   value: boolean;
 }
-export interface RemoteAttribute {
+export interface RemoteTag {
   key: "remote";
   value: boolean;
 }
 
-export interface VerifiedAttribute {
+export interface VerifiedTag {
   key: "verified";
   value: boolean;
 }
 
-export interface StationaryAttribute {
+export interface StationaryTag {
   key: "stationary";
   value: boolean;
 }
@@ -40,19 +40,13 @@ export interface CategorySearch {
   label: string;
 }
 
-export type FilterAttribute = SponsoredAttribute | RemoteAttribute | VerifiedAttribute | StationaryAttribute;
+export type FilterTag = SponsoredTag | VerifiedTag | StationaryTag | RemoteTag;
 
-export type SearchAttribute = CitySearch | NameSearch | CategorySearch;
+export type SearchTag = CitySearch | NameSearch | CategorySearch;
 
-export type FilterAttributeKeys = FilterAttribute["key"];
+export type FilterTagKeys = FilterTag["key"];
 
-export type SearchAttributeKeys = SearchAttribute["key"];
-
-export interface SponsoredTag extends SponsoredAttribute {}
-
-export interface RemoteTag extends RemoteAttribute {}
-
-export interface VerifiedTag extends VerifiedAttribute {}
+export type SearchTagKeys = SearchTag["key"];
 
 export interface CityTag {
   key: "city";
@@ -66,14 +60,14 @@ export interface CategoryTag {
   label: string;
 }
 
-export type GroupTagData = SponsoredTag | CityTag | VerifiedTag | CategoryTag | RemoteTag;
+export type StackedGroupTag = SponsoredTag | VerifiedTag | RemoteTag | CityTag | CategoryTag;
 
-export interface GroupsStackData {
-  tags: GroupTagData[];
-  tiles: GroupTileData[];
+export interface StackedGroupTiles {
+  tags: StackedGroupTag[];
+  tiles: GroupTile[];
 }
 
-export interface GroupTileData {
+export interface GroupTile {
   id: string;
   title: string;
   members: number;
@@ -82,11 +76,19 @@ export interface GroupTileData {
   img: string | StaticImageData;
 }
 
-const loremIpsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis imperdiet risus. Duis sem lorem, ullamcorper eu hendrerit in, ultrices eget odio. Donec et sem massa. Morbi pellentesque, libero vel luctus sodales, diam urna pharetra nulla, id luctus turpis magna vitae velit. Vivamus quam mi, pulvinar in elit id, viverra pharetra neque. Integer sed diam eget magna condimentum tincidunt. Proin venenatis fermentum mattis. Sed dapibus rutrum ultricies.
-Vivamus id commodo lectus. Donec vestibulum, arcu ut finibus porta, diam urna rhoncus eros, ut viverra ante velit sit amet leo. Donec luctus iaculis volutpat. Nulla laoreet, lorem vel vestibulum congue, dolor lacus consectetur augue, vitae convallis nibh mauris quis risus. Maecenas congue ex eget enim consequat, vitae pulvinar augue commodo. Praesent tristique tristique sagittis. Pellentesque ac accumsan leo, at mollis sapien. In hac habitasse platea dictumst. Vestibulum venenatis rhoncus eleifend. Nulla vel fringilla sapien. Pellentesque vel dignissim mi, ac consectetur metus. Donec nec dui cursus, volutpat arcu nec, lacinia quam. Phasellus sed arcu in nunc porta pellentesque.
-Donec quis lacinia nunc. Ut semper bibendum libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam vestibulum nulla lorem, pretium venenatis diam interdum ut. Vivamus nulla risus, bibendum sit amet ultricies eget, lacinia eget urna. Integer non rhoncus odio, vel sagittis augue. Vestibulum non sapien tellus. Integer vehicula metus quis orci ornare convallis. Morbi sed mattis odio, eu rhoncus sapien. Mauris placerat aliquam felis at tempor. Sed non molestie arcu, ut venenatis lacus.
-In malesuada arcu eget magna semper maximus. In et urna et augue pulvinar luctus. Curabitur suscipit ligula massa, ac tempus nibh interdum ut. Maecenas volutpat dapibus lectus, in efficitur dolor. Aenean fringilla pellentesque faucibus. Aenean euismod porttitor suscipit. Morbi lacinia dolor id nibh pharetra, non facilisis mi lobortis. Mauris mauris lorem, bibendum nec quam id, vulputate rutrum lacus. Proin gravida sapien in augue aliquam, sed luctus lorem tempus.
-Sed pellentesque lacinia nisi sed fringilla. Vivamus eleifend lorem vel urna accumsan, in scelerisque arcu viverra. Curabitur at molestie justo, sit amet facilisis velit. Morbi commodo vel purus sed blandit. Sed pellentesque risus eget faucibus luctus. Proin quis velit eu ex gravida auctor. Vestibulum id bibendum nisl. Aenean pharetra varius felis, eu imperdiet lorem ultricies eu.`;
+const loremIpsum =
+  `Cupidatat officia dolor irure nulla labore cupidatat tempor incididunt nulla adipisicing aute. Et eu proident nulla irure deserunt quis proident minim. Ipsum eu do labore quis tempor ipsum ipsum mollit. Irure velit ipsum fugiat irure veniam in dolor dolor ullamco consequat quis est. Aliquip non duis laboris consequat ad quis excepteur ad sunt labore est.
+Dolor reprehenderit eu ex pariatur ex laborum. Culpa aliquip cillum nulla reprehenderit eiusmod esse incididunt tempor. Amet veniam amet laborum exercitation eiusmod officia in excepteur cillum tempor.
+Ullamco nulla esse esse anim duis labore consequat incididunt eu aliqua mollit laboris esse deserunt. Exercitation nulla nulla aliqua Lorem. Culpa aliqua qui incididunt exercitation eiusmod elit voluptate in occaecat nulla excepteur commodo mollit.
+Anim eiusmod minim minim id dolor amet cupidatat velit tempor dolor officia sit irure. Eu mollit sint minim pariatur sunt consectetur est cupidatat cupidatat magna et. Id voluptate consectetur eiusmod ullamco irure aliqua eiusmod et do magna ad laboris.
+Nisi in sunt amet irure aute id dolore cillum non ullamco sit anim. Officia minim sint id esse enim magna do enim amet incididunt. Anim qui voluptate reprehenderit aute irure mollit aliquip do cillum fugiat et voluptate anim. Reprehenderit ipsum ea nisi deserunt reprehenderit cillum aute tempor qui. Do cupidatat amet tempor ut.
+Ex nulla cillum Lorem quis exercitation elit esse sint tempor cillum velit ea. Aliquip magna elit aliquip eu cupidatat eiusmod. Fugiat voluptate cillum et cillum in nostrud aliqua enim eiusmod sit. Adipisicing magna mollit sunt voluptate. Excepteur non laborum ad consequat incididunt incididunt proident ea elit in ad culpa sint. Est cillum in duis consequat esse dolore ad ex sunt pariatur tempor velit ut consequat.
+Sint quis ex eiusmod cillum eu adipisicing. Eu ut consequat cupidatat tempor elit cupidatat ullamco sint laborum. Velit occaecat ad esse officia. Ipsum commodo esse ullamco exercitation.
+Veniam in ad nostrud Lorem nisi est consequat excepteur. Consectetur exercitation pariatur eiusmod consectetur. Non qui sint voluptate consectetur pariatur id ut qui reprehenderit sint officia aliquip sunt.
+Ad quis aute magna excepteur et deserunt eiusmod mollit. Nulla ex do culpa commodo qui irure occaecat eiusmod adipisicing aliquip aliquip sunt cupidatat. In Lorem quis laboris minim nostrud reprehenderit enim. Culpa dolor tempor aliquip sit pariatur eu tempor fugiat culpa consequat. Consectetur reprehenderit proident ex sint.
+Ad reprehenderit elit consectetur id incididunt veniam dolore culpa aute mollit minim. Deserunt commodo do culpa duis id dolore incididunt sint. Labore magna cupidatat occaecat anim sit amet labore adipisicing do enim ut. Est sunt esse tempor laborum Lorem do amet eiusmod adipisicing aute Lorem aute fugiat. Tempor deserunt proident mollit proident est laboris nulla mollit excepteur nostrud. Dolore culpa eiusmod deserunt enim.`.repeat(
+    6
+  );
 
 const getRandomLoremIpsumSentenses = (n: number) => {
   let sentences = loremIpsum.match(/[^\.!\?]+[\.!\?]+/g)!;
@@ -100,26 +102,26 @@ const getLoremIpsumSentenses = (s: number, startAt: number = 0) => {
   return sentences.slice(startAt, startAt + s).join(". ");
 };
 
-export const filterAttributeLabel: Record<FilterAttributeKeys, string> = {
+export const filterTagLabel: Record<FilterTagKeys, string> = {
   remote: "Remote",
   sponsored: "Sponsored",
   stationary: "Stationary",
   verified: "Verified",
 };
 
-export const searchLabel: Record<SearchAttributeKeys, string> = {
+export const searchLabel: Record<SearchTagKeys, string> = {
   category: "Category",
   name: "Name",
   city: "City",
 };
 
-export const searchIcon: Record<SearchAttributeKeys, ReactNode> = {
+export const searchIcon: Record<SearchTagKeys, ReactNode> = {
   category: <InterestsOutlined />,
   city: <FmdGoodOutlined />,
   name: <TitleRounded />,
 };
 
-export const data: GroupTileData[] = [
+export const data: GroupTile[] = [
   {
     id: "1",
     title: getLoremIpsumSentenses(2, 0),
@@ -130,47 +132,87 @@ export const data: GroupTileData[] = [
   },
   {
     id: "2",
-    title: getLoremIpsumSentenses(4, 2),
-    description: getLoremIpsumSentenses(4, 4),
+    title: getLoremIpsumSentenses(2, 2),
+    description: getLoremIpsumSentenses(2, 4),
     members: 63,
     createdAt: new Date("10.10.2021"),
     img: LOGOS4X3[2],
   },
   {
     id: "3",
-    title: getLoremIpsumSentenses(6, 4),
-    description: getLoremIpsumSentenses(6, 6),
+    title: getLoremIpsumSentenses(2, 4),
+    description: getLoremIpsumSentenses(2, 6),
     members: 127,
     createdAt: new Date("10.10.2022"),
     img: LOGOS4X3[3],
   },
   {
     id: "4",
-    title: getLoremIpsumSentenses(8, 6),
-    description: getLoremIpsumSentenses(8, 8),
+    title: getLoremIpsumSentenses(2, 6),
+    description: getLoremIpsumSentenses(2, 8),
     members: 1,
     createdAt: new Date("10.10.2023"),
     img: LOGOS4X3[4],
   },
   {
     id: "5",
-    title: getLoremIpsumSentenses(10, 8),
-    description: getLoremIpsumSentenses(10, 10),
+    title: getLoremIpsumSentenses(2, 8),
+    description: getLoremIpsumSentenses(2, 10),
     members: 3120,
-    createdAt: new Date("10.10.2024"),
+    createdAt: new Date("01.01.2024"),
     img: LOGOS4X3[5],
   },
   {
     id: "6",
-    title: getLoremIpsumSentenses(11, 9),
-    description: getLoremIpsumSentenses(12, 12),
-    members: 32,
-    createdAt: new Date("10.11.2024"),
+    title: getLoremIpsumSentenses(2, 10),
+    description: getLoremIpsumSentenses(2, 12),
+    members: 421,
+    createdAt: new Date("01.02.2024"),
+    img: LOGOS4X3[6],
+  },
+  {
+    id: "7",
+    title: getLoremIpsumSentenses(2, 12),
+    description: getLoremIpsumSentenses(2, 14),
+    members: 5,
+    createdAt: new Date("01.03.2024"),
+    img: LOGOS4X3[6],
+  },
+  {
+    id: "8",
+    title: getLoremIpsumSentenses(2, 14),
+    description: getLoremIpsumSentenses(2, 16),
+    members: 421,
+    createdAt: new Date("01.04.2024"),
+    img: LOGOS4X3[6],
+  },
+  {
+    id: "9",
+    title: getLoremIpsumSentenses(2, 16),
+    description: getLoremIpsumSentenses(2, 18),
+    members: 74,
+    createdAt: new Date("01.05.2024"),
+    img: LOGOS4X3[6],
+  },
+  {
+    id: "10",
+    title: getLoremIpsumSentenses(2, 18),
+    description: getLoremIpsumSentenses(2, 20),
+    members: 53,
+    createdAt: new Date("01.06.2024"),
+    img: LOGOS4X3[6],
+  },
+  {
+    id: "11",
+    title: getLoremIpsumSentenses(2, 20),
+    description: getLoremIpsumSentenses(2, 22),
+    members: 11,
+    createdAt: new Date("01.07.2024"),
     img: LOGOS4X3[6],
   },
 ];
 
-export const stack: GroupsStackData[] = [
+export const stackedGroupTiles: StackedGroupTiles[] = [
   {
     tags: [
       {
@@ -203,43 +245,123 @@ export const stack: GroupsStackData[] = [
       },
       {
         id: "2",
-        title: getLoremIpsumSentenses(4, 2),
-        description: getLoremIpsumSentenses(4, 4),
+        title: getLoremIpsumSentenses(2, 2),
+        description: getLoremIpsumSentenses(2, 4),
         members: 63,
         createdAt: new Date("10.10.2021"),
         img: LOGOS4X3[1],
       },
       {
         id: "3",
-        title: getLoremIpsumSentenses(6, 4),
-        description: getLoremIpsumSentenses(6, 6),
+        title: getLoremIpsumSentenses(2, 4),
+        description: getLoremIpsumSentenses(2, 6),
         members: 127,
         createdAt: new Date("10.10.2022"),
         img: LOGOS4X3[2],
       },
       {
         id: "4",
-        title: getLoremIpsumSentenses(8, 6),
-        description: getLoremIpsumSentenses(8, 8),
+        title: getLoremIpsumSentenses(2, 6),
+        description: getLoremIpsumSentenses(2, 8),
         members: 1,
         createdAt: new Date("10.10.2023"),
         img: LOGOS4X3[3],
       },
       {
         id: "5",
-        title: getLoremIpsumSentenses(10, 8),
-        description: getLoremIpsumSentenses(10, 10),
+        title: getLoremIpsumSentenses(2, 8),
+        description: getLoremIpsumSentenses(2, 10),
         members: 3120,
         createdAt: new Date("10.10.2024"),
         img: LOGOS4X3[4],
       },
       {
         id: "6",
-        title: getLoremIpsumSentenses(6, 4),
-        description: getLoremIpsumSentenses(6, 6),
-        members: 127,
+        title: getLoremIpsumSentenses(2, 10),
+        description: getLoremIpsumSentenses(2, 12),
+        members: 1274,
         createdAt: new Date("10.10.2022"),
         img: LOGOS4X3[5],
+      },
+      {
+        id: "7",
+        title: getLoremIpsumSentenses(2, 12),
+        description: getLoremIpsumSentenses(2, 14),
+        members: 1227,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[6],
+      },
+      {
+        id: "8",
+        title: getLoremIpsumSentenses(2, 14),
+        description: getLoremIpsumSentenses(2, 16),
+        members: 9127,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[7],
+      },
+      {
+        id: "9",
+        title: getLoremIpsumSentenses(2, 16),
+        description: getLoremIpsumSentenses(2, 18),
+        members: 51257,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[8],
+      },
+      {
+        id: "10",
+        title: getLoremIpsumSentenses(2, 18),
+        description: getLoremIpsumSentenses(2, 20),
+        members: 12713,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[9],
+      },
+      {
+        id: "11",
+        title: getLoremIpsumSentenses(2, 20),
+        description: getLoremIpsumSentenses(2, 22),
+        members: 12,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[10],
+      },
+      {
+        id: "12",
+        title: getLoremIpsumSentenses(2, 22),
+        description: getLoremIpsumSentenses(2, 24),
+        members: 527,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[11],
+      },
+      {
+        id: "13",
+        title: getLoremIpsumSentenses(2, 24),
+        description: getLoremIpsumSentenses(2, 26),
+        members: 1827,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[12],
+      },
+      {
+        id: "14",
+        title: getLoremIpsumSentenses(2, 26),
+        description: getLoremIpsumSentenses(2, 28),
+        members: 2127,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[13],
+      },
+      {
+        id: "15",
+        title: getLoremIpsumSentenses(2, 30),
+        description: getLoremIpsumSentenses(2, 32),
+        members: 27,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[14],
+      },
+      {
+        id: "16",
+        title: getLoremIpsumSentenses(2, 34),
+        description: getLoremIpsumSentenses(2, 36),
+        members: 17,
+        createdAt: new Date("10.10.2022"),
+        img: LOGOS4X3[15],
       },
     ],
   },
@@ -558,7 +680,7 @@ export const allCities: CitySearch[] = [
   { value: "ostroleka", label: "Ostrołęka", key: "city" },
 ];
 
-export const allGroups: SearchAttribute[] = [
+export const allGroups: SearchTag[] = [
   { label: "Pasjonaci piłki nożnej", key: "name", value: "1a2b3c" },
   { label: "Biegacze Gdynia", key: "name", value: "2d3e4f" },
   { label: "Warszawscy Triathloniści", key: "name", value: "3g4h5i" },

@@ -1,7 +1,7 @@
 "use client";
 
 import { Popover } from "@/app/common/components/Popover";
-import { FilterAttribute, FilterAttributeKeys, filterAttributeLabel } from "@/app/groups/mock";
+import { FilterTag, FilterTagKeys, filterTagLabel } from "@/app/groups/mock";
 import {
   CloudOutlined,
   ExpandMoreOutlined,
@@ -17,7 +17,7 @@ const min = 1;
 const max = 50;
 const diff = 5;
 
-const attrs: FilterAttribute[] = [
+const attrs: FilterTag[] = [
   { key: "remote", value: false },
   { key: "stationary", value: false },
   { key: "verified", value: false },
@@ -37,7 +37,7 @@ export const GroupAndEventFilter = () => {
   const [minInput, setMinInput] = useState(stringify(min));
   const [maxInput, setMaxInput] = useState(stringify(max, "+"));
   const [range, setRange] = useState<number[]>([min, max]);
-  const [attributes, setAttributes] = useState<FilterAttribute[]>(attrs);
+  const [attributes, setAttributes] = useState<FilterTag[]>(attrs);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setAnchor(e.currentTarget);
@@ -115,13 +115,13 @@ export const GroupAndEventFilter = () => {
   );
 
   const hasAttribute = useCallback(
-    (key: FilterAttributeKeys) => {
+    (key: FilterTagKeys) => {
       return attributes.some((attribute) => attribute.key === key && attribute.value);
     },
     [attributes]
   );
 
-  const toggleAttribute = useCallback((key: FilterAttributeKeys) => {
+  const toggleAttribute = useCallback((key: FilterTagKeys) => {
     setAttributes((prevAttributes) => {
       return prevAttributes.map((attribute) => {
         if (attribute.key === key) {
@@ -161,28 +161,28 @@ export const GroupAndEventFilter = () => {
               <Chip
                 variant="outlined"
                 color={hasAttribute("sponsored") ? "primary" : "default"}
-                label={filterAttributeLabel["sponsored"]}
+                label={filterTagLabel["sponsored"]}
                 icon={<StarBorderRounded fontSize="small" />}
                 onClick={() => toggleAttribute("sponsored")}
               />
               <Chip
                 variant="outlined"
                 color={hasAttribute("verified") ? "primary" : "default"}
-                label={filterAttributeLabel["verified"]}
+                label={filterTagLabel["verified"]}
                 icon={<VerifiedOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("verified")}
               />
               <Chip
                 variant="outlined"
                 color={hasAttribute("remote") ? "primary" : "default"}
-                label={filterAttributeLabel["remote"]}
+                label={filterTagLabel["remote"]}
                 icon={<CloudOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("remote")}
               />
               <Chip
                 variant="outlined"
                 color={hasAttribute("stationary") ? "primary" : "default"}
-                label={filterAttributeLabel["stationary"]}
+                label={filterTagLabel["stationary"]}
                 icon={<FmdGoodOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("stationary")}
               />

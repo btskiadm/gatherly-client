@@ -15,8 +15,8 @@ import {
 import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
-import { GroupTileData } from "../mock";
 import Image from "next/image";
+import { GroupTile as GroupTileData } from "../mock";
 
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
