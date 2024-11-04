@@ -1,10 +1,15 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
+import { GroupDetails } from "@/app/mock/mock";
 import { Tab, Tabs } from "@mui/material";
 import { usePathname } from "next/navigation";
 
-export function GroupMobileNav() {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export function GroupMobileNavitaion({ groupDetails }: Props) {
   const pathName = usePathname();
 
   const about = "about";

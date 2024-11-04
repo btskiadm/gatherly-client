@@ -1,7 +1,6 @@
 "use client";
 
 import { Popover } from "@/app/common/components/Popover";
-import { FilterTag, FilterTagKeys, filterTagLabel } from "@/app/groups/mock";
 import {
   CloudOutlined,
   ExpandMoreOutlined,
@@ -17,9 +16,32 @@ const min = 1;
 const max = 50;
 const diff = 5;
 
-const attrs: FilterTag[] = [
+export interface Sponsored {
+  key: "sponsored";
+  value: boolean;
+}
+export interface Remote {
+  key: "remote";
+  value: boolean;
+}
+
+export interface Verified {
+  key: "verified";
+  value: boolean;
+}
+
+export type FilterAttribute = Sponsored | Remote | Verified;
+
+export type FilterAttributeKey = FilterAttribute["key"];
+
+export const filterTagLabel: Record<FilterAttributeKey, string> = {
+  remote: "Remote",
+  sponsored: "Sponsored",
+  verified: "Verified",
+};
+
+const attrs: FilterAttribute[] = [
   { key: "remote", value: false },
-  { key: "stationary", value: false },
   { key: "verified", value: false },
   { key: "sponsored", value: false },
 ];
@@ -37,7 +59,7 @@ export const GroupAndEventFilter = () => {
   const [minInput, setMinInput] = useState(stringify(min));
   const [maxInput, setMaxInput] = useState(stringify(max, "+"));
   const [range, setRange] = useState<number[]>([min, max]);
-  const [attributes, setAttributes] = useState<FilterTag[]>(attrs);
+  const [attributes, setAttributes] = useState<FilterAttribute[]>(attrs);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setAnchor(e.currentTarget);
@@ -115,13 +137,13 @@ export const GroupAndEventFilter = () => {
   );
 
   const hasAttribute = useCallback(
-    (key: FilterTagKeys) => {
+    (key: FilterAttributeKey) => {
       return attributes.some((attribute) => attribute.key === key && attribute.value);
     },
     [attributes]
   );
 
-  const toggleAttribute = useCallback((key: FilterTagKeys) => {
+  const toggleAttribute = useCallback((key: FilterAttributeKey) => {
     setAttributes((prevAttributes) => {
       return prevAttributes.map((attribute) => {
         if (attribute.key === key) {
@@ -179,13 +201,13 @@ export const GroupAndEventFilter = () => {
                 icon={<CloudOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("remote")}
               />
-              <Chip
+              {/* <Chip
                 variant="outlined"
                 color={hasAttribute("stationary") ? "primary" : "default"}
                 label={filterTagLabel["stationary"]}
                 icon={<FmdGoodOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("stationary")}
-              />
+              /> */}
             </Stack>
           </FormControl>
           <FormControl>

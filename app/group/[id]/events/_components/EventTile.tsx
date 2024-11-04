@@ -1,13 +1,13 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { Event } from "@/app/mock/mock";
 import { Group, Place } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { GroupEventItem } from "../events.mock";
 import { EventTileMenu } from "./EventTileMenu";
 
 interface Props {
-  item: GroupEventItem;
+  event: Event;
 }
 
 const shortMonth = (iso: string) =>
@@ -29,10 +29,14 @@ const time = (isoStart: string, isoEnd: string) =>
     minute: "numeric",
   }).format(new Date(isoEnd))}`;
 
-export const EventTile = ({ item }: Props) => {
-  const { title, startAt, endAt, city, street, members } = item;
+export const EventTile = ({ event }: Props) => {
+  const {
+    title,
+    date: { startAt, endAt },
+    users,
+  } = event;
 
-  const _members = members > 99 ? "99+" : members;
+  const usersLength = users.length > 99 ? "99+" : users.length;
 
   return (
     <Paper
@@ -70,7 +74,7 @@ export const EventTile = ({ item }: Props) => {
                 {shortMonth(startAt)}
               </Typography>
               <Typography variant="h4" color="text.secondary" fontWeight="600">
-                {shortDay(startAt)}
+                {shortDay(endAt)}
               </Typography>
             </Stack>
           </Grid2>
@@ -95,8 +99,8 @@ export const EventTile = ({ item }: Props) => {
                   }}
                 />
                 <TruncatedTypography variant="body2" color="text.secondary">
-                  {city}
-                  {street ? `, ${street}` : ""}
+                  {/* {city}
+                  {street ? `, ${street}` : ""} */}
                 </TruncatedTypography>
               </Stack>
             </Stack>
@@ -121,7 +125,7 @@ export const EventTile = ({ item }: Props) => {
                 {title}
               </Typography>
               <Box display={{ xs: "none", sm: "block" }}>
-                <Chip size="small" label={_members} icon={<Group />} />
+                <Chip size="small" label={usersLength} icon={<Group />} />
               </Box>
               <Stack
                 display={{ sx: "flex", sm: "none" }}
@@ -130,7 +134,7 @@ export const EventTile = ({ item }: Props) => {
                 alignItems="center"
                 width="100%"
               >
-                <Chip size="small" label={_members} icon={<Group />} />
+                <Chip size="small" label={usersLength} icon={<Group />} />
                 <EventTileMenu />
               </Stack>
             </Stack>

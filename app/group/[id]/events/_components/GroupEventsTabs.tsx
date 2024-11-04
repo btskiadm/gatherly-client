@@ -6,6 +6,7 @@ import Tabs from "@mui/material/Tabs";
 import React from "react";
 import { GroupEventsList } from "./GroupEventsList";
 import { CANCELED_EVENTS, PAST_EVENTS, PENDING_EVENTS, UPCOMING_EVENTS } from "../events.mock";
+import { GroupDetails } from "@/app/mock/mock";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -23,7 +24,11 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export const GroupEventsTabs = () => {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export const GroupEventsTabs = ({ groupDetails }: Props) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -48,19 +53,19 @@ export const GroupEventsTabs = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <GroupEventsList groupEvents={UPCOMING_EVENTS} />
+        <GroupEventsList events={groupDetails.upcoming} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <GroupEventsList groupEvents={PENDING_EVENTS} />
+        <GroupEventsList events={groupDetails.pending} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <GroupEventsList groupEvents={[]} />
+        <GroupEventsList events={[]} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <GroupEventsList groupEvents={PAST_EVENTS} />
+        <GroupEventsList events={groupDetails.past} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <GroupEventsList groupEvents={CANCELED_EVENTS} />
+        <GroupEventsList events={groupDetails.cancelled} />
       </CustomTabPanel>
     </Box>
   );

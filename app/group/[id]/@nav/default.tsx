@@ -1,9 +1,9 @@
 import { getGroupDetails } from "@/app/mock/mock";
-import { GroupAboutPage } from "./_components/GroupAboutPage";
 import { notFound } from "next/navigation";
 import { GroupParams, getGroupId } from "../GroupParams";
+import { GroupNavigation } from "../_components/GroupNavigation/GroupNavigation";
 
-export default function Page(params: GroupParams) {
+export default function Default(params: GroupParams) {
   const id = getGroupId(params);
   const groupDetails = getGroupDetails(id);
 
@@ -11,5 +11,5 @@ export default function Page(params: GroupParams) {
     return notFound();
   }
 
-  return <GroupAboutPage groupDetails={groupDetails} />;
+  return <GroupNavigation groupDetails={groupDetails} />;
 }

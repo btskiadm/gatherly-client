@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
+import { GroupDetails } from "@/app/mock/mock";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
 import {
@@ -24,7 +25,11 @@ const members = "members";
 const chat = "chat";
 const settings = "settings";
 
-export function GroupNav() {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export function GroupDesktopNavigation({ groupDetails }: Props) {
   const pathname = usePathname();
 
   // "/group/123-456-789/settings/avatar"
@@ -39,11 +44,13 @@ export function GroupNav() {
     subPath.includes(`${settings}`),
   ];
 
+  const { src, title } = groupDetails;
+
   return (
     <Paper>
       <Image
-        src={GroupImage4x3}
-        alt="city map"
+        src={src}
+        alt="group logo"
         sizes="100vw"
         style={{
           width: "100%",
@@ -62,7 +69,7 @@ export function GroupNav() {
             WebkitBoxOrient: "vertical",
           }}
         >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egestas eget,
+          {title}
         </Typography>
         <Divider />
         <List>

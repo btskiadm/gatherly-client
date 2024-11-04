@@ -1,20 +1,37 @@
 "use client";
 
+import { getAllCategories, getAllCities, getAllGroupTitles } from "@/app/mock/mock";
+import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
-import {
-  SearchTag,
-  SearchTagKeys,
-  allCategories,
-  allCities,
-  allGroups,
-  searchIcon,
-  searchLabel,
-} from "@/app/groups/mock";
+import React, { ReactNode, useCallback, useState } from "react";
 
-const options: SearchTag[] = [...allCategories, ...allCities, ...allGroups];
+type SearchCategory = "category" | "name" | "city";
 
-const ListboxComponent = (selected: SearchTag[], onDelete: (searchAttribute: SearchTag) => void) =>
+interface SearchItem {
+  category: SearchCategory;
+  label: string;
+  value: string;
+}
+
+const searchLabel: Record<SearchCategory, string> = {
+  category: "Category",
+  name: "Name",
+  city: "City",
+};
+
+const searchIcon: Record<SearchCategory, ReactNode> = {
+  category: <InterestsOutlined />,
+  city: <FmdGoodOutlined />,
+  name: <TitleRounded />,
+};
+
+const options: SearchItem[] = [
+  ...getAllCategories().slice(0, 25),
+  ...getAllGroupTitles().slice(0, 25),
+  ...getAllCities().slice(0, 25),
+];
+
+const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
   React.forwardRef(function ListboxComponent(
     props: React.HTMLAttributes<HTMLElement>,
     ref: React.LegacyRef<HTMLDivElement>
@@ -41,24 +58,24 @@ const ListboxComponent = (selected: SearchTag[], onDelete: (searchAttribute: Sea
   });
 
 export const GroupAndEventAutocomplete = () => {
-  const [selected, setSelected] = useState<SearchTag[]>([]);
+  const [selected, setSelected] = useState<SearchItem[]>([]);
 
   const handleDelete = useCallback(
-    (toDelete: SearchTag) => {
+    (toDelete: SearchItem) => {
       setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
     },
     [setSelected]
   );
 
   const handleChange = useCallback(
-    (e: unknown, value: SearchTag[]) => {
+    (e: unknown, value: SearchItem[]) => {
       setSelected(value);
     },
     [setSelected]
   );
 
   return (
-    <Autocomplete<SearchTag, true>
+    <Autocomplete<SearchItem, true>
       multiple
       value={selected}
       onChange={handleChange}
@@ -75,38 +92,50 @@ export const GroupAndEventAutocomplete = () => {
           width: "360px",
         },
       })}
-      groupBy={({ key }) => key}
+      groupBy={({ category }) => category}
       ListboxComponent={ListboxComponent(selected, handleDelete)}
       getOptionLabel={({ label }) => label}
-      renderTags={(value, getTagProps) => (
-        <Stack direction="row" maxWidth="40%" width="min-content">
-          {value.slice(0, 1).map((option, index: number) => {
-            const { key, ...tagProps } = getTagProps({ index });
-            return (
-              <Chip
-                {...getTagProps({ index })}
-                key={option.value}
-                component="div"
-                variant="outlined"
-                size="small"
-                label={option.label}
-                {...tagProps}
-              />
-            );
-          })}
-          {value?.length > 1 && (
-            <Chip
-              {...getTagProps({ index: 1 })}
-              key={getTagProps({ index: 1 }).key}
-              component="div"
-              variant="outlined"
-              size="small"
-              label={"+" + (value.length - 1)}
-              onDelete={undefined}
-            />
-          )}
-        </Stack>
-      )}
+      renderTags={(value, getTagProps) => {
+        const tags = value.slice(0, 2);
+
+        if (tags.length <= 0) {
+          return null;
+        }
+
+        return (
+          <Stack direction="row" maxWidth="40%" width="min-content">
+            {tags.map((option, index) => {
+              const { key, ...tagProps } = getTagProps({ index });
+
+              if (index === 1) {
+                return (
+                  <Chip
+                    {...tagProps}
+                    key={key}
+                    component="div"
+                    variant="outlined"
+                    size="small"
+                    label={"+" + (value.length - 1)}
+                    onDelete={undefined}
+                  />
+                );
+              }
+
+              return (
+                <Chip
+                  {...tagProps}
+                  key={key}
+                  component="div"
+                  variant="outlined"
+                  size="small"
+                  label={option.label}
+                  {...tagProps}
+                />
+              );
+            })}
+          </Stack>
+        );
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -127,7 +156,7 @@ export const GroupAndEventAutocomplete = () => {
       )}
       renderGroup={(params) => (
         <Stack key={params.key} px={2} gap={0.5}>
-          <Typography variant="body1">{searchLabel[params.group as SearchTagKeys]}</Typography>
+          <Typography variant="body1">{searchLabel[params.group as SearchCategory]}</Typography>
           {params.children}
         </Stack>
       )}
@@ -135,7 +164,7 @@ export const GroupAndEventAutocomplete = () => {
         const { key, ...optionProps } = props;
         return (
           <Stack key={key} component="li" sx={{ "& > svg": { mr: 2, flexShrink: 0 } }} direction="row" {...optionProps}>
-            {searchIcon[option.key]}
+            {searchIcon[option.category]}
             {option.label}
           </Stack>
         );

@@ -1,12 +1,17 @@
+import { GroupDetails } from "@/app/mock/mock";
 import { Stack } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { GroupEventsTabs } from "../_components/GroupEventsTabs";
 
-export const GroupEventsPage = () => {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export const GroupEventsPage = ({ groupDetails }: Props) => {
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader primary="Events" subPrimary="(99+)" secondary="See scheduled group eventsevents." />
-      <GroupEventsTabs />
+      <GroupEventsTabs groupDetails={groupDetails} />
     </Stack>
   );
 };

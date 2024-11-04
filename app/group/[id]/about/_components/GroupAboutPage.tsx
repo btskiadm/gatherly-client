@@ -3,11 +3,36 @@ import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { AboutCommentsList } from "./AboutCommentsList";
 import { AboutEventCounterTile } from "./AboutEventCounterTile";
+import { GroupDetails } from "@/app/mock/mock";
+import Image from "next/image";
 
-export const GroupAboutPage = () => {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export const GroupAboutPage = ({ groupDetails }: Props) => {
+  const { title, description, src } = groupDetails;
+
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader primary="About" secondary="See basic information about group." />
+      <Box
+        display={{
+          sm: "none",
+        }}
+      >
+        <Image
+          src={src}
+          alt="group logo"
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "100%",
+            cursor: "pointer",
+            objectFit: "cover",
+          }}
+        />
+      </Box>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="42" secondary="Zakończone" />
@@ -28,7 +53,7 @@ export const GroupAboutPage = () => {
         </Typography>
         <Paper>
           <Box p={{ xs: 1, sm: 2 }}>
-            <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit cursus.</Typography>
+            <Typography variant="body1">{title}</Typography>
           </Box>
         </Paper>
       </Stack>
@@ -38,17 +63,7 @@ export const GroupAboutPage = () => {
         </Typography>
         <Paper>
           <Box p={{ xs: 2, sm: 3 }}>
-            <Typography variant="body1">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at urna sem. Integer sit amet augue
-              congue, convallis est quis, imperdiet libero. Nunc pharetra luctus lorem nec mollis. Morbi et consequat
-              tellus. Ut mattis quis metus in condimentum. Morbi pulvinar ultricies nisl a vestibulum. Cras nec
-              ultricies dui. Aenean egestas justo sit amet libero varius, eget maximus ex aliquam. Donec est diam,
-              tempus nec diam eget, dapibus volutpat odio. Morbi enim enim, laoreet quis pulvinar eu, blandit eu est.
-              Nulla facilisi. Quisque tincidunt erat sed enim pharetra facilisis. Donec lectus nunc, hendrerit ultricies
-              suscipit nec, ullamcorper ut nunc. Curabitur luctus scelerisque mi, at bibendum nisi consequat ut. Sed
-              nunc sapien, lobortis eget commodo eu, vestibulum ut nulla. Quisque feugiat quam quis metus molestie
-              sollicitudin. Duis finibus a libero vel cursus.
-            </Typography>
+            <Typography variant="body1">{description}</Typography>
           </Box>
         </Paper>
       </Stack>
@@ -58,7 +73,7 @@ export const GroupAboutPage = () => {
         </Typography>
         <Paper>
           <Box p={{ xs: 1, sm: 2 }}>
-            <AboutCommentsList />
+            <AboutCommentsList comments={groupDetails.comments} />
           </Box>
         </Paper>
       </Stack>

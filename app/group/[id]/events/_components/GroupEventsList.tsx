@@ -1,9 +1,9 @@
+import { EventStack } from "@/app/mock/mock";
 import { Stack, Typography } from "@mui/material";
-import { GroupEvents } from "../events.mock";
 import { EventTile } from "./EventTile";
 
 interface Props {
-  groupEvents: GroupEvents[];
+  events: EventStack[];
 }
 
 const formatMonth = (iso: string) =>
@@ -11,16 +11,16 @@ const formatMonth = (iso: string) =>
     month: "long",
   }).format(new Date(iso));
 
-export const GroupEventsList = ({ groupEvents }: Props) => {
+export const GroupEventsList = ({ events }: Props) => {
   return (
     <Stack gap={2}>
-      {groupEvents.map((event) => (
-        <Stack key={event.startMonth} gap={1}>
+      {events.map((eventStack) => (
+        <Stack key={eventStack.monthReference} gap={1}>
           <Typography textTransform="capitalize" variant="body1" fontWeight="600" color="text.secondary">
-            {formatMonth(event.startMonth)}
+            {formatMonth(eventStack.monthReference)}
           </Typography>
-          {event.events.map((eventItem) => (
-            <EventTile key={eventItem.id} item={eventItem} />
+          {eventStack.events.map((event) => (
+            <EventTile key={event.id} event={event} />
           ))}
         </Stack>
       ))}

@@ -1,15 +1,17 @@
 import { Stack } from "@mui/material";
 import { AboutComment } from "./AboutComment";
+import { Comment } from "@/app/mock/mock";
 
-export const AboutCommentsList = () => {
+interface Props {
+  comments: Comment[];
+}
+
+export const AboutCommentsList = ({ comments }: Props) => {
   return (
     <Stack gap={2}>
-      <AboutComment />
-      <AboutComment />
-      <AboutComment />
-      <AboutComment />
-      <AboutComment />
-      <AboutComment />
+      {comments.map((comment) => (
+        <AboutComment key={comment.id} comment={comment} />
+      ))}
     </Stack>
   );
 };

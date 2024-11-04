@@ -1,7 +1,7 @@
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { ReactNode } from "react";
 import { StaticImageData } from "next/image";
-import { GroupLogo4x3 } from "../mock/mock";
+import { GroupLogo4x3 } from "../mock/mock-img";
 
 export interface SponsoredTag {
   key: "sponsored";
@@ -21,7 +21,7 @@ export interface StationaryTag {
   key: "stationary";
   value: boolean;
 }
-
+1;
 export interface CitySearch {
   key: "city";
   value: string;

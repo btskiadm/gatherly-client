@@ -2,11 +2,16 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { Comment } from "@/app/mock/mock";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 
-export const AboutComment = () => {
+interface Props {
+  comment: Comment;
+}
+
+export const AboutComment = ({ comment }: Props) => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,15 +42,21 @@ export const AboutComment = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  Adam Bartski
+                  {comment.user.username}
                 </Link>
-                <VerifiedOutlined fontSize="small" color="info" />
+                {!!comment.user.verifiedAt && <VerifiedOutlined fontSize="small" color="info" />}
               </Stack>
               <Stack direction="row" gap={0.5}>
                 <TruncatedTypography variant="body2" color="text.secondary">
-                  10.10.2022 6:00
+                  {new Intl.DateTimeFormat("pl-PL", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }).format(comment.createdAt)}
                 </TruncatedTypography>
-                <Rating name="size-small" defaultValue={2} size="small" readOnly />
+                <Rating name="size-small" defaultValue={comment.rate} size="small" readOnly />
               </Stack>
             </Stack>
           </Stack>
@@ -53,7 +64,7 @@ export const AboutComment = () => {
             <MoreVert fontSize="small" />
           </IconButton>
         </Stack>
-        <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography>
+        <Typography variant="body1">{comment.content}</Typography>
       </Stack>
       <Menu
         anchorEl={moreElement}
