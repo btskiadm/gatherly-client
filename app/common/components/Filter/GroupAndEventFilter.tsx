@@ -5,7 +5,6 @@ import {
   CloudOutlined,
   ExpandMoreOutlined,
   FilterAltOutlined,
-  FmdGoodOutlined,
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
@@ -16,23 +15,23 @@ const min = 1;
 const max = 50;
 const diff = 5;
 
-export interface Sponsored {
+interface Sponsored {
   key: "sponsored";
   value: boolean;
 }
-export interface Remote {
+interface Remote {
   key: "remote";
   value: boolean;
 }
 
-export interface Verified {
+interface Verified {
   key: "verified";
   value: boolean;
 }
 
-export type FilterAttribute = Sponsored | Remote | Verified;
+type FilterAttribute = Sponsored | Remote | Verified;
 
-export type FilterAttributeKey = FilterAttribute["key"];
+type FilterAttributeKey = FilterAttribute["key"];
 
 export const filterTagLabel: Record<FilterAttributeKey, string> = {
   remote: "Remote",
@@ -40,7 +39,7 @@ export const filterTagLabel: Record<FilterAttributeKey, string> = {
   verified: "Verified",
 };
 
-const attrs: FilterAttribute[] = [
+const initAttributes: FilterAttribute[] = [
   { key: "remote", value: false },
   { key: "verified", value: false },
   { key: "sponsored", value: false },
@@ -59,7 +58,7 @@ export const GroupAndEventFilter = () => {
   const [minInput, setMinInput] = useState(stringify(min));
   const [maxInput, setMaxInput] = useState(stringify(max, "+"));
   const [range, setRange] = useState<number[]>([min, max]);
-  const [attributes, setAttributes] = useState<FilterAttribute[]>(attrs);
+  const [attributes, setAttributes] = useState<FilterAttribute[]>(initAttributes);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setAnchor(e.currentTarget);
@@ -158,7 +157,7 @@ export const GroupAndEventFilter = () => {
     setMinInput(`${min}`);
     setMaxInput(`${max}+`);
     setRange([min, max]);
-    setAttributes(attrs);
+    setAttributes(initAttributes);
   }, []);
 
   const handleApply = useCallback(() => {
@@ -201,13 +200,6 @@ export const GroupAndEventFilter = () => {
                 icon={<CloudOutlined fontSize="small" />}
                 onClick={() => toggleAttribute("remote")}
               />
-              {/* <Chip
-                variant="outlined"
-                color={hasAttribute("stationary") ? "primary" : "default"}
-                label={filterTagLabel["stationary"]}
-                icon={<FmdGoodOutlined fontSize="small" />}
-                onClick={() => toggleAttribute("stationary")}
-              /> */}
             </Stack>
           </FormControl>
           <FormControl>

@@ -5,6 +5,7 @@ import { TruncatedTypography } from "@/app/common/components/TruncatedTypography
 import {
   AccessTime,
   CalendarMonthOutlined,
+  CloudOutlined,
   FavoriteBorderOutlined,
   Group,
   GroupAdd,
@@ -106,7 +107,6 @@ export const GroupTile = ({
             alt="logo"
             style={{
               objectFit: "cover",
-              // objectFit: "none",
             }}
           />
         </Avatar>
@@ -146,6 +146,19 @@ export const GroupTile = ({
             <Tooltip title="Date of creating">
               <Chip size="small" label={formatDateDifference(new Date(createdAt))} icon={<AccessTime />} />
             </Tooltip>
+            {remote && (
+              <Tooltip title="Remote">
+                <Chip
+                  size="small"
+                  sx={{
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<CloudOutlined fontSize="small" />}
+                />
+              </Tooltip>
+            )}
             {verified && (
               <Tooltip title="Verified group">
                 <Chip

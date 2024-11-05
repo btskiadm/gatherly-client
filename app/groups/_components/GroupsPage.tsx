@@ -3,8 +3,10 @@ import { Stack } from "@mui/material";
 import { GroupsListing } from "./GroupsListing";
 import { GroupsStack } from "./GroupsStack";
 
+//todo: mock
+const stackedGroups = getStackedGroups();
+
 export const GroupsPage = () => {
-  const stackedGroups = getStackedGroups();
   return (
     <Stack gap={3}>
       <GroupsListing />

@@ -13,12 +13,14 @@ interface SearchItem {
   value: string;
 }
 
+// todo: translation
 const searchLabel: Record<SearchCategory, string> = {
   category: "Category",
   name: "Name",
   city: "City",
 };
 
+// todo: translation
 const searchIcon: Record<SearchCategory, ReactNode> = {
   category: <InterestsOutlined />,
   city: <FmdGoodOutlined />,
@@ -62,7 +64,7 @@ export const GroupAndEventAutocomplete = () => {
 
   const handleDelete = useCallback(
     (toDelete: SearchItem) => {
-      setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
+      setSelected((prevSelected) => prevSelected.filter(({ value }) => value !== toDelete.value));
     },
     [setSelected]
   );
@@ -89,12 +91,13 @@ export const GroupAndEventAutocomplete = () => {
           my: 0, // fix problem with chip inside autocomplete
         },
         [theme.breakpoints.up("sm")]: {
-          width: "360px",
+          width: "100%",
+          maxWidth: "360px",
         },
       })}
       groupBy={({ category }) => category}
-      ListboxComponent={ListboxComponent(selected, handleDelete)}
       getOptionLabel={({ label }) => label}
+      ListboxComponent={ListboxComponent(selected, handleDelete)}
       renderTags={(value, getTagProps) => {
         const tags = value.slice(0, 2);
 
@@ -107,19 +110,9 @@ export const GroupAndEventAutocomplete = () => {
             {tags.map((option, index) => {
               const { key, ...tagProps } = getTagProps({ index });
 
-              if (index === 1) {
-                return (
-                  <Chip
-                    {...tagProps}
-                    key={key}
-                    component="div"
-                    variant="outlined"
-                    size="small"
-                    label={"+" + (value.length - 1)}
-                    onDelete={undefined}
-                  />
-                );
-              }
+              const firstItem = index === 0;
+              const label = firstItem ? option.label : "+" + (value.length - 1);
+              const onDelete = firstItem ? tagProps.onDelete : undefined;
 
               return (
                 <Chip
@@ -128,8 +121,8 @@ export const GroupAndEventAutocomplete = () => {
                   component="div"
                   variant="outlined"
                   size="small"
-                  label={option.label}
-                  {...tagProps}
+                  label={label}
+                  onDelete={onDelete}
                 />
               );
             })}
@@ -163,7 +156,13 @@ export const GroupAndEventAutocomplete = () => {
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
-          <Stack key={key} component="li" sx={{ "& > svg": { mr: 2, flexShrink: 0 } }} direction="row" {...optionProps}>
+          <Stack
+            {...optionProps}
+            key={option.value}
+            component="li"
+            sx={{ "& > svg": { mr: 2, flexShrink: 0 } }}
+            direction="row"
+          >
             {searchIcon[option.category]}
             {option.label}
           </Stack>
