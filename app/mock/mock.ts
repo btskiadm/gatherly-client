@@ -18,11 +18,14 @@ export interface RemoteAttribute {
   value: boolean;
 }
 
+export interface GroupThumbnails {
+  thumb: string;
+}
+
 export interface Group {
   id: string;
   title: string;
   description: string;
-  src: string | StaticImageData;
   createdAt: DateISO;
   sponsored: SponsoredAttribute;
   verified: VerifiedAttribute;
@@ -32,6 +35,7 @@ export interface Group {
   events: Event[];
   users: GroupUser[];
   comments: Comment[];
+  thumbnails: GroupThumbnails;
 }
 
 export interface Comment {
@@ -50,6 +54,7 @@ export interface Event {
   users: EventUser[];
   canceled: boolean;
   date: EventDate;
+  city: City;
 }
 
 export interface EventDate {
@@ -70,11 +75,21 @@ export interface EventUser {
   user: User;
 }
 
+interface UserThumbnails {
+  thumb: string;
+}
+
 export interface User {
   id: string;
   username: string;
-  src: string | StaticImageData;
+  thumbnails: UserThumbnails;
+  staticImageData: StaticImageData;
   verifiedAt?: DateISO;
+}
+
+export interface UserShortDetails extends User {
+  allEvents: number;
+  finishedEvents: number;
 }
 
 export interface Category {
@@ -104,7 +119,10 @@ export interface StackedGroupAttributes extends Attributes {
   category: Category;
 }
 
-export type GroupTile = Pick<Group, "id" | "title" | "description" | "src" | "createdAt" | "cities" | "categories"> & {
+export type GroupTile = Pick<
+  Group,
+  "id" | "title" | "description" | "thumbnails" | "createdAt" | "cities" | "categories"
+> & {
   eventsLength: number;
   userLength: number;
 } & Attributes;
@@ -163,7 +181,7 @@ export const getStackedGroups = (): StackedGroups[] => {
           userLength: group.users.length,
           remote: group.remote.value,
           sponsored: group.sponsored.value,
-          src: group.src,
+          thumbnails: group.thumbnails,
           verified: group.verified.value,
           categories: group.categories,
           cities: group.cities,

@@ -1,9 +1,5 @@
 import { GroupMembersLayout } from "./_components/GroupMemberPage";
 
-export default function Layout({
-  page,
-}: Readonly<{
-  page: React.ReactNode;
-}>) {
-  return <GroupMembersLayout page={page} />;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <GroupMembersLayout>{children}</GroupMembersLayout>;
 }

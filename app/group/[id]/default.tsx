@@ -10,5 +10,6 @@ export default function Default(params: GroupParams) {
   if (!groupDetails) {
     return notFound();
   }
+
   return <GroupAboutPage groupDetails={groupDetails} />;
 }

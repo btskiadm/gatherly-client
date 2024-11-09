@@ -2,14 +2,20 @@
 
 import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup.component";
 import { delay } from "@/app/common/utils/delay";
+import { GroupDetails } from "@/app/mock/mock";
 import { LoadingButton } from "@mui/lab";
 import { Button, Paper, Stack } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
-export const GroupSettingsAboutTab = () => {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {
   const ref = useRef<CreateGroupRef>(null);
   const [loading, setLoading] = useState(false);
+  const { title, description, categories, cities } = groupDetails;
 
   const handleSave = useCallback(async () => {
     const data = ref.current?.save();
@@ -32,21 +38,7 @@ export const GroupSettingsAboutTab = () => {
   return (
     <Paper>
       <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-        <CreateGroup
-          ref={ref}
-          name="Lorem ipsum dolor sit amet."
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam arcu dui, laoreet ultricies egesta"
-          categories={[
-            { key: "category", label: "Bieganie", value: "running" },
-            { key: "category", label: "Wspinaczka", value: "climbing" },
-            { key: "category", label: "Taniec", value: "dancing" },
-          ]}
-          city={{
-            key: "city",
-            label: "Warszawa",
-            value: "warsaw",
-          }}
-        />
+        <CreateGroup ref={ref} name={title} description={description} categories={categories} city={cities[0]} />
         <Stack direction="row" justifyContent="space-between">
           <Button disabled={loading} variant="text" color="error" onClick={handleReset}>
             Reset

@@ -1,7 +1,7 @@
 "use client";
 
-import { GroupsError } from "./_components/GroupsError";
+import { GroupsPageError } from "./_components/GroupsPageError";
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
-  return <GroupsError error={error} reset={reset} />;
+  return <GroupsPageError error={error} reset={reset} />;
 }

@@ -2,7 +2,6 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import { GroupDetails } from "@/app/mock/mock";
-import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
 import {
   Divider,
@@ -44,12 +43,18 @@ export function GroupDesktopNavigation({ groupDetails }: Props) {
     subPath.includes(`${settings}`),
   ];
 
-  const { src, title } = groupDetails;
+  const {
+    thumbnails: { thumb },
+    title,
+  } = groupDetails;
 
   return (
     <Paper>
+      {/* todo: width */}
       <Image
-        src={src}
+        src={thumb}
+        width="0"
+        height="0"
         alt="group logo"
         sizes="100vw"
         style={{

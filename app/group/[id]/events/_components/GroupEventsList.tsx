@@ -1,6 +1,7 @@
 import { EventStack } from "@/app/mock/mock";
 import { Stack, Typography } from "@mui/material";
 import { EventTile } from "./EventTile";
+import { SentimentVeryDissatisfied } from "@mui/icons-material";
 
 interface Props {
   events: EventStack[];
@@ -12,6 +13,19 @@ const formatMonth = (iso: string) =>
   }).format(new Date(iso));
 
 export const GroupEventsList = ({ events }: Props) => {
+  if (!events.length) {
+    return (
+      <Stack p={2} direction="column" gap={1} justifyContent="center" alignItems="center">
+        <SentimentVeryDissatisfied
+          sx={{
+            fontSize: "4rem",
+          }}
+        />
+        <Typography variant="h5">NO EVENTS</Typography>
+      </Stack>
+    );
+  }
+
   return (
     <Stack gap={2}>
       {events.map((eventStack) => (

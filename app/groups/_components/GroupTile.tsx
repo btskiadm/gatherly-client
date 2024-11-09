@@ -41,7 +41,7 @@ export const GroupTile = ({
   id,
   title,
   description,
-  src,
+  thumbnails: { thumb },
   createdAt,
   userLength,
   sponsored,
@@ -103,7 +103,7 @@ export const GroupTile = ({
         >
           <Image
             fill
-            src={src}
+            src={thumb}
             alt="logo"
             style={{
               objectFit: "cover",

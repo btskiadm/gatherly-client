@@ -2,6 +2,7 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { stringToColor } from "@/app/common/utils/stringToColor";
 import { Comment } from "@/app/mock/mock";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
@@ -13,6 +14,13 @@ interface Props {
 
 export const AboutComment = ({ comment }: Props) => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
+
+  const {
+    content,
+    createdAt,
+    rate,
+    user: { thumbnails, username, verifiedAt },
+  } = comment;
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
@@ -26,10 +34,18 @@ export const AboutComment = ({ comment }: Props) => {
 
   return (
     <>
-      <Stack gap={2} p={1} bgcolor="background.default">
+      <Stack gap={2}>
         <Stack justifyContent="space-between" direction="row" height="min-content" alignItems="center">
           <Stack gap={1} direction="row" alignItems="center" minWidth={0}>
-            <Avatar />
+            <Avatar
+              alt={username}
+              sx={{
+                bgcolor: stringToColor(username),
+              }}
+              src={thumbnails.thumb}
+            >
+              {username[0]}
+            </Avatar>
             <Stack minWidth={0}>
               <Stack direction="row" gap={{ xs: 0.5, sm: 1 }}>
                 <Link
@@ -42,9 +58,9 @@ export const AboutComment = ({ comment }: Props) => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {comment.user.username}
+                  {username}
                 </Link>
-                {!!comment.user.verifiedAt && <VerifiedOutlined fontSize="small" color="info" />}
+                {!!verifiedAt && <VerifiedOutlined fontSize="small" color="info" />}
               </Stack>
               <Stack direction="row" gap={0.5}>
                 <TruncatedTypography variant="body2" color="text.secondary">
@@ -54,9 +70,9 @@ export const AboutComment = ({ comment }: Props) => {
                     day: "2-digit",
                     hour: "2-digit",
                     minute: "2-digit",
-                  }).format(comment.createdAt)}
+                  }).format(new Date(createdAt))}
                 </TruncatedTypography>
-                <Rating name="size-small" defaultValue={comment.rate} size="small" readOnly />
+                <Rating name="size-small" defaultValue={rate} size="small" readOnly />
               </Stack>
             </Stack>
           </Stack>
@@ -64,7 +80,7 @@ export const AboutComment = ({ comment }: Props) => {
             <MoreVert fontSize="small" />
           </IconButton>
         </Stack>
-        <Typography variant="body1">{comment.content}</Typography>
+        <Typography variant="body1">{content}</Typography>
       </Stack>
       <Menu
         anchorEl={moreElement}

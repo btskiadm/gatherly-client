@@ -1,5 +1,6 @@
 "use client";
 
+import { GroupDetails } from "@/app/mock/mock";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useCallback, useState } from "react";
 import { GroupSettingsAboutTab } from "./GroupSettingsAboutTab";
@@ -22,7 +23,11 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export const GroupSettingsTabs = () => {
+interface Props {
+  groupDetails: GroupDetails;
+}
+
+export const GroupSettingsTabs = ({ groupDetails }: Props) => {
   const [tab, setTab] = useState(0);
 
   const handleChange = useCallback((_: unknown, tabValue: number) => {
@@ -39,13 +44,13 @@ export const GroupSettingsTabs = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={tab} index={0}>
-        <GroupSettingsAboutTab />
+        <GroupSettingsAboutTab groupDetails={groupDetails} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
-        <GroupSettingsMembersTab />
+        <GroupSettingsMembersTab groupDetails={groupDetails} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={2}>
-        <GroupSettingsAvatarTab />
+        <GroupSettingsAvatarTab groupDetails={groupDetails} />
       </CustomTabPanel>
     </Box>
   );

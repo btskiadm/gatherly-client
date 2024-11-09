@@ -52,7 +52,7 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
           Name
         </Typography>
         <Paper>
-          <Box p={{ xs: 1, sm: 2 }}>
+          <Box p={{ xs: 2, sm: 3 }}>
             <Typography variant="body1">{title}</Typography>
           </Box>
         </Paper>
@@ -72,7 +72,7 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
           Opinie
         </Typography>
         <Paper>
-          <Box p={{ xs: 1, sm: 2 }}>
+          <Box p={{ xs: 2, sm: 3 }}>
             <AboutCommentsList comments={groupDetails.comments} />
           </Box>
         </Paper>

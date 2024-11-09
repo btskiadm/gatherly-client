@@ -3,8 +3,8 @@
 import { ConfirmModal } from "@/app/common/components/Modal/Confirm.modal";
 import { ModalTemplate } from "@/app/common/components/Modal/ModalTemplate";
 import { users as allUsers } from "@/app/group/[id]/events/_components/mock";
+import { GroupDetails } from "@/app/mock/mock";
 import {
-  AdminPanelSettingsOutlined,
   DeleteOutline,
   GppGoodOutlined,
   LocalPoliceOutlined,
@@ -30,13 +30,17 @@ import {
 } from "@mui/material";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+interface Props {
+  groupDetails: GroupDetails;
+}
+
 function createData(username: string, id: string) {
   return { username, id };
 }
 
 const rows = allUsers.map((m) => createData(m.name, m.id));
 
-export const GroupSettingsMembersTab = () => {
+export const GroupSettingsMembersTab = ({ groupDetails: { users } }: Props) => {
   const moreContext = useRef({ username: "", id: "" });
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
   const [openDelete, setOpenDelete] = useState(false);
@@ -126,19 +130,18 @@ export const GroupSettingsMembersTab = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={row.username} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+            {users.map(({ user, isHost, isModerator }, index) => (
+              <TableRow key={user.username} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {row.username}
+                  {user.username}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {index === 0 && "Host"}
-                  {index === 1 && "Moderator"}
-                  {index === 2 && "Moderator"}
-                  {index > 2 && "Member"}
+                  {isHost && "Host"}
+                  {isModerator && "Moderator"}
+                  {!isHost && !isModerator && "Member"}
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={handleOpenMore({ id: row.id, username: row.username })}>
+                  <IconButton onClick={handleOpenMore({ id: user.id, username: user.username })}>
                     <MoreVert />
                   </IconButton>
                 </TableCell>
