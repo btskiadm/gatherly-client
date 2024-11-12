@@ -3,24 +3,24 @@
 import { Autocomplete, Chip, CircularProgress, TextField } from "@mui/material";
 import React, { useCallback, useState } from "react";
 
-import { CategorySearch, allCategories, searchIcon } from "@/app/groups/mock";
+import { getSearchCategories } from "@/app/mock/mock-api";
+import { SearchCategoryDto } from "@/app/mock/mock-api.types";
 import { Button, FormControl, FormLabel, Paper, Stack, Typography } from "@mui/material";
 
 const loading = true;
-const options: CategorySearch[] = [...allCategories];
 
 export default function Page() {
-  const [selected, setSelected] = useState<CategorySearch[]>([]);
+  const [selected, setSelected] = useState<SearchCategoryDto[]>([]);
 
   const handleDelete = useCallback(
-    (toDelete: CategorySearch) => {
+    (toDelete: SearchCategoryDto) => {
       setSelected((prev) => prev.filter((p) => p.value !== toDelete.value));
     },
     [setSelected]
   );
 
   const handleChange = useCallback(
-    (e: unknown, value: CategorySearch[]) => {
+    (e: unknown, value: SearchCategoryDto[]) => {
       setSelected(value);
     },
     [setSelected]
@@ -34,11 +34,11 @@ export default function Page() {
         </Typography>
         <FormControl>
           <FormLabel>Categories</FormLabel>
-          <Autocomplete<CategorySearch, true>
+          <Autocomplete<SearchCategoryDto, true>
             multiple
             value={selected}
             onChange={handleChange}
-            options={options}
+            options={getSearchCategories()}
             sx={(theme) => ({
               width: "100%",
               ".MuiAutocomplete-tag": {
@@ -111,7 +111,7 @@ export default function Page() {
                   direction="row"
                   {...optionProps}
                 >
-                  {searchIcon[option.key]}
+                  {/* {searchIcon[option.key as SearchCategory]} */}
                   {option.label}
                 </Stack>
               );

@@ -63,6 +63,22 @@ export const createEventDateAndLocationSchema = z.object({
 export type CreateEventDetailsInput = z.infer<typeof createEventDetailsSchema>;
 export type CreateEventDateAndLocationInput = z.infer<typeof createEventDateAndLocationSchema>;
 
+// send comment
+export const minComment = 5;
+export const maxComment = 250;
+export const minRate = 1;
+export const maxRate = 5;
+
+const commentSchema = z.string().min(minComment).max(maxComment);
+const rateSchema = z.number().min(minRate).max(maxRate);
+
+export const sendCommentSchema = z.object({
+  comment: commentSchema,
+  rate: rateSchema,
+});
+
+export type SendCommentInput = z.infer<typeof sendCommentSchema>;
+
 // invite
 const inviteMemberIdSchema = z.string().min(1);
 

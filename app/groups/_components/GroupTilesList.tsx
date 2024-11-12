@@ -1,17 +1,17 @@
-import { GroupTile as GroupTileData } from "@/app/mock/mock";
+import { GroupTileDto } from "@/app/mock/mock-api.types";
 import { Grid2 } from "@mui/material";
 import { CommonGroupTile } from "./CommonGroupTile";
+import { GroupTile } from "./GroupTile";
 import { GroupTileLoadMore } from "./GroupTileLoadMore";
 import { GroupTileSkeleton } from "./GroupTileSkeleton";
-import { GroupTile } from "./GroupTile";
 
-export const GroupTilesList = ({ tiles }: { tiles: GroupTileData[] }) => {
+export const GroupTilesList = ({ tiles }: { tiles: GroupTileDto[] }) => {
   return (
     <Grid2 container spacing={2}>
       {tiles.map((tile) => (
         <Grid2 key={tile.id} size={{ xs: 12, sm: 6, md: 3 }}>
           <CommonGroupTile>
-            <GroupTile {...tile} />
+            <GroupTile tile={tile} />
           </CommonGroupTile>
         </Grid2>
       ))}

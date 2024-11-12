@@ -9,10 +9,11 @@ import {
   maxEventDescription,
   maxEventName,
 } from "@/app/common/utils/zod";
-import { CategorySearch, allCategories } from "@/app/groups/mock";
 import { Autocomplete, Chip, CircularProgress, FormControl, FormLabel, Stack, TextField } from "@mui/material";
 import React, { forwardRef, useCallback, useImperativeHandle, useState } from "react";
 import { TruncatedFormHelperText } from "../../../TruncatedFormHelperText";
+import { SearchCategoryDto } from "@/app/mock/mock-api.types";
+import { getSearchCategories } from "@/app/mock/mock-api";
 
 const loading = false;
 
@@ -32,14 +33,14 @@ export interface CreateEventDetailsRef {
 interface Props {
   name?: string;
   description?: string;
-  categories?: CategorySearch[];
+  categories?: SearchCategoryDto[];
 }
 
 export const CreateEventDetails = forwardRef<CreateEventDetailsRef, Props>(
   ({ name: _name = "", description: _description = "", categories: _categories = [] }, ref) => {
     const [name, setName] = useState(_name);
     const [description, setDescription] = useState(_description);
-    const [categories, setCategories] = useState<CategorySearch[]>(_categories);
+    const [categories, setCategories] = useState<SearchCategoryDto[]>(_categories);
     const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
     const handleNext = useCallback((): CreateEventDetailsData => {
@@ -63,7 +64,7 @@ export const CreateEventDetails = forwardRef<CreateEventDetailsRef, Props>(
       next: handleNext,
     }));
 
-    const handleCategories = useCallback((e: unknown, categories: CategorySearch[]) => {
+    const handleCategories = useCallback((e: unknown, categories: SearchCategoryDto[]) => {
       setCategories(categories);
     }, []);
 
@@ -96,12 +97,12 @@ export const CreateEventDetails = forwardRef<CreateEventDetailsRef, Props>(
         </FormControl>
         <FormControl error={!!categoriesError} fullWidth>
           <FormLabel required>Kategorie</FormLabel>
-          <Autocomplete<CategorySearch, true>
+          <Autocomplete<SearchCategoryDto, true>
             multiple
             value={categories}
             defaultValue={categories}
             onChange={handleCategories}
-            options={allCategories}
+            options={getSearchCategories()}
             sx={{
               ".MuiAutocomplete-tag": {
                 my: 0, // fix problem with chip inside autocomplete

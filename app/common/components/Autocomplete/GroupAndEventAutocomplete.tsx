@@ -1,36 +1,32 @@
 "use client";
 
-import { getAllCategories, getAllCities, getAllGroupTitles } from "@/app/mock/mock";
+import { getSearchCategories, getSearchCities, getSearchGroups } from "@/app/mock/mock-api";
+import { SearchCategoryDto, SearchCityDto, SearchGroupDto } from "@/app/mock/mock-api.types";
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import React, { ReactNode, useCallback, useState } from "react";
 
-type SearchCategory = "category" | "name" | "city";
-
-interface SearchItem {
-  category: SearchCategory;
-  label: string;
-  value: string;
-}
+type SearchItem = SearchCategoryDto | SearchCityDto | SearchGroupDto;
+type SearchItemType = SearchItem["type"];
 
 // todo: translation
-const searchLabel: Record<SearchCategory, string> = {
-  category: "Category",
-  name: "Name",
-  city: "City",
+const searchLabel: Record<SearchItemType, string> = {
+  category: "Kategoria",
+  city: "Miasto",
+  title: "Tytuł",
 };
 
-// todo: translation
-const searchIcon: Record<SearchCategory, ReactNode> = {
+const searchIcon: Record<SearchItemType, ReactNode> = {
   category: <InterestsOutlined />,
   city: <FmdGoodOutlined />,
-  name: <TitleRounded />,
+  title: <TitleRounded />,
 };
 
+// todo: mock
 const options: SearchItem[] = [
-  ...getAllCategories().slice(0, 25),
-  ...getAllGroupTitles().slice(0, 25),
-  ...getAllCities().slice(0, 25),
+  ...getSearchCategories().slice(0, 25),
+  ...getSearchCities().slice(0, 25),
+  ...getSearchGroups().slice(0, 25),
 ];
 
 const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
@@ -95,7 +91,7 @@ export const GroupAndEventAutocomplete = () => {
           maxWidth: "360px",
         },
       })}
-      groupBy={({ category }) => category}
+      groupBy={({ type }) => type}
       getOptionLabel={({ label }) => label}
       ListboxComponent={ListboxComponent(selected, handleDelete)}
       renderTags={(value, getTagProps) => {
@@ -149,12 +145,13 @@ export const GroupAndEventAutocomplete = () => {
       )}
       renderGroup={(params) => (
         <Stack key={params.key} px={2} gap={0.5}>
-          <Typography variant="body1">{searchLabel[params.group as SearchCategory]}</Typography>
+          <Typography variant="body1">{searchLabel[params.group as SearchItemType]}</Typography>
           {params.children}
         </Stack>
       )}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
+
         return (
           <Stack
             {...optionProps}
@@ -163,7 +160,7 @@ export const GroupAndEventAutocomplete = () => {
             sx={{ "& > svg": { mr: 2, flexShrink: 0 } }}
             direction="row"
           >
-            {searchIcon[option.category]}
+            {searchIcon[option.type as SearchItemType]}
             {option.label}
           </Stack>
         );

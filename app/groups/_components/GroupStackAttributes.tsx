@@ -1,8 +1,8 @@
-import { StackedGroupAttributes } from "@/app/mock/mock";
+import { StackedGroupAttributesDto } from "@/app/mock/mock-api.types";
 import { CloudOutlined, FmdGoodOutlined, InterestsOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Chip, Stack } from "@mui/material";
 
-export const GroupStackAttributes = ({ attributes }: { attributes: StackedGroupAttributes }) => {
+export const GroupStackAttributes = ({ attributes }: { attributes: StackedGroupAttributesDto }) => {
   const { city, category, remote, sponsored, verified } = attributes;
   return (
     <Stack

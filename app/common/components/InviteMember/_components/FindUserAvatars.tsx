@@ -1,7 +1,7 @@
 "use client";
 
 import { stringToColor } from "@/app/common/utils/stringToColor";
-import { User } from "@/app/group/[id]/events/_components/mock";
+import { SearchUserDto } from "@/app/mock/mock-api.types";
 import { Close } from "@mui/icons-material";
 import { Avatar, Badge, IconButton, Stack, Tooltip } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -10,17 +10,17 @@ import { useCallback } from "react";
 const avatarCounts = 6;
 
 interface Props {
-  users: User[];
-  onDelete: (user: User) => void;
+  users: SearchUserDto[];
+  onDelete: (user: SearchUserDto) => void;
 }
 
-const DeletableUserAvatar = ({ user, onDelete }: { user: User; onDelete: (user: User) => void }) => {
+const DeletableUserAvatar = ({ user, onDelete }: { user: SearchUserDto; onDelete: (user: SearchUserDto) => void }) => {
   const handleDelete = useCallback(() => {
     onDelete(user);
   }, [onDelete, user]);
 
   return (
-    <Tooltip key={user.id} title={user.name}>
+    <Tooltip key={user.id} title={user.username}>
       <IconButton
         onClick={handleDelete}
         sx={{
@@ -46,14 +46,15 @@ const DeletableUserAvatar = ({ user, onDelete }: { user: User; onDelete: (user: 
           }
         >
           <Avatar
-            alt={user.name}
+            alt={user.username}
             sx={{
-              bgcolor: stringToColor(user.name),
+              bgcolor: stringToColor(user.username),
               height: "30px",
               width: "30px",
             }}
+            src={user.thumbnails.thumb}
           >
-            {user.name[0]}
+            {user.username[0]}
           </Avatar>
         </Badge>
       </IconButton>

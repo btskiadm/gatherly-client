@@ -1,10 +1,10 @@
-import { StackedGroups } from "@/app/mock/mock";
+import { StackedGroupTilesDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { GroupStackAttributes } from "./GroupStackAttributes";
 import { GroupTilesList } from "./GroupTilesList";
 
-export const GroupsStack = ({ stackedGroup }: { stackedGroup: StackedGroups }) => {
-  const { attributes, tiles } = stackedGroup;
+export const GroupsStack = ({ stackedGroupTile }: { stackedGroupTile: StackedGroupTilesDto }) => {
+  const { attributes, tiles } = stackedGroupTile;
   return (
     <Stack gap={2} width="100%">
       <GroupStackAttributes attributes={attributes} />

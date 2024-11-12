@@ -1,12 +1,13 @@
 "use client";
 
-import { User, users as allUsers } from "@/app/group/[id]/events/_components/mock";
+import { getSeachUsers } from "@/app/mock/mock-api";
+import { SearchUserDto } from "@/app/mock/mock-api.types";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField } from "@mui/material";
 import React, { useCallback } from "react";
 
 const loading = true;
 
-const ListboxComponent = (selected: User[], onDelete: (searchAttribute: User) => void) =>
+const ListboxComponent = (selected: SearchUserDto[], onDelete: (searchAttribute: SearchUserDto) => void) =>
   React.forwardRef(function ListboxComponent(
     props: React.HTMLAttributes<HTMLElement>,
     ref: React.LegacyRef<HTMLDivElement>
@@ -18,7 +19,12 @@ const ListboxComponent = (selected: User[], onDelete: (searchAttribute: User) =>
         {selected.length > 0 && (
           <Stack direction="row" gap={0.5} flexWrap="wrap" p={1} zIndex={100}>
             {selected.map((selection) => (
-              <Chip key={selection.id} variant="outlined" label={selection.name} onDelete={() => onDelete(selection)} />
+              <Chip
+                key={selection.id}
+                variant="outlined"
+                label={selection.username}
+                onDelete={() => onDelete(selection)}
+              />
             ))}
           </Stack>
         )}
@@ -29,31 +35,31 @@ const ListboxComponent = (selected: User[], onDelete: (searchAttribute: User) =>
   });
 
 interface Props {
-  users: User[];
-  onChange: (users: User[]) => void;
+  users: SearchUserDto[];
+  onChange: (users: SearchUserDto[]) => void;
 }
 
 export const FindUserAutocomplete = ({ users, onChange }: Props) => {
   const handleDelete = useCallback(
-    (toDelete: User) => {
+    (toDelete: SearchUserDto) => {
       onChange(users.filter((p) => p.id !== toDelete.id));
     },
     [users, onChange]
   );
 
   const handleUsers = useCallback(
-    (e: unknown, users: User[]) => {
+    (e: unknown, users: SearchUserDto[]) => {
       onChange(users);
     },
     [onChange]
   );
 
   return (
-    <Autocomplete<User, true>
+    <Autocomplete<SearchUserDto, true>
       multiple
       value={users}
       onChange={handleUsers}
-      options={allUsers}
+      options={getSeachUsers()}
       sx={(theme) => ({
         width: "100%",
         ".MuiAutocomplete-tag": {
@@ -64,13 +70,20 @@ export const FindUserAutocomplete = ({ users, onChange }: Props) => {
         },
       })}
       ListboxComponent={ListboxComponent(users, handleDelete)}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.username}
       renderTags={(value, getTagProps) => (
         <Stack direction="row" maxWidth="80%" width="min-content">
           {value.slice(0, 1).map((option, index: number) => {
             const { key, ...tagProps } = getTagProps({ index });
             return (
-              <Chip key={option.id} component="div" variant="outlined" size="small" label={option.name} {...tagProps} />
+              <Chip
+                key={option.id}
+                component="div"
+                variant="outlined"
+                size="small"
+                label={option.username}
+                {...tagProps}
+              />
             );
           })}
           {value?.length > 1 && (

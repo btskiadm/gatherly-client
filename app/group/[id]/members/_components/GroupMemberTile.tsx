@@ -1,11 +1,11 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { stringToColor } from "@/app/common/utils/stringToColor";
-import { GroupUser } from "@/app/mock/mock";
+import { GroupUserDto } from "@/app/mock/mock-api.types";
 import { Verified } from "@mui/icons-material";
 import { Avatar, Box, Grid2, Paper, Stack, type TypographyOwnProps } from "@mui/material";
 
-const usernameColor = (groupUser: GroupUser): TypographyOwnProps["color"] => {
+const usernameColor = (groupUser: GroupUserDto): TypographyOwnProps["color"] => {
   if (groupUser.isHost) {
     return "primary";
   }
@@ -18,7 +18,7 @@ const usernameColor = (groupUser: GroupUser): TypographyOwnProps["color"] => {
 };
 
 interface Props {
-  groupUser: GroupUser;
+  groupUser: GroupUserDto;
 }
 
 export const GroupMemberTile = ({ groupUser }: Props) => {

@@ -1,12 +1,11 @@
 "use client";
 
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import React from "react";
 import { GroupEventsList } from "./GroupEventsList";
-import { CANCELED_EVENTS, PAST_EVENTS, PENDING_EVENTS, UPCOMING_EVENTS } from "../events.mock";
-import { GroupDetails } from "@/app/mock/mock";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,7 +24,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupEventsTabs = ({ groupDetails }: Props) => {

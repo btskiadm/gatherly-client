@@ -1,12 +1,12 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { Tab, Tabs } from "@mui/material";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export function GroupMobileNavitaion({ groupDetails }: Props) {

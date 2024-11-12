@@ -1,11 +1,11 @@
 "use client";
 
 import { InviteMemberInput, ZodFlattenIssue, flattenIssues, inviteMemberSchema } from "@/app/common/utils/zod";
-import { User } from "@/app/group/[id]/events/_components/mock";
 import { FormControl, FormHelperText, FormLabel, Stack } from "@mui/material";
 import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { FindUserAutocomplete } from "../../Event/Create/_components/FindUserAutocomplete";
-import { FindUserAvatars } from "../../Event/Create/_components/FindUserAvatars";
+import { FindUserAutocomplete } from "./FindUserAutocomplete";
+import { SearchUserDto } from "@/app/mock/mock-api.types";
+import { FindUserAvatars } from "./FindUserAvatars";
 
 export interface InviteMemberData {
   success: boolean;
@@ -19,7 +19,7 @@ export interface InviteMemberRef {
 interface Props {}
 
 export const InviteMember = forwardRef<InviteMemberRef, Props>(({}, ref) => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<SearchUserDto[]>([]);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
   const handleInvite = useCallback((): InviteMemberData => {
@@ -41,11 +41,11 @@ export const InviteMember = forwardRef<InviteMemberRef, Props>(({}, ref) => {
     invite: handleInvite,
   }));
 
-  const handleUsers = useCallback((selectedUsers: User[]) => {
+  const handleUsers = useCallback((selectedUsers: SearchUserDto[]) => {
     setUsers(selectedUsers);
   }, []);
 
-  const handleDelete = (toDelete: User) => {
+  const handleDelete = (toDelete: SearchUserDto) => {
     setUsers((prev) => prev.filter((p) => p.id !== toDelete.id));
   };
 

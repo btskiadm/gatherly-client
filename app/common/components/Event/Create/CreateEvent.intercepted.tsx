@@ -2,7 +2,7 @@
 
 import { delay } from "@/app/common/utils/delay";
 import { XOR } from "@/app/common/utils/essentials";
-import { CategorySearch } from "@/app/groups/mock";
+import { SearchCategoryDto } from "@/app/mock/mock-api.types";
 import { Box, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -20,7 +20,7 @@ export interface CreateEventInit {
   details: {
     name: string;
     description: string;
-    categories: CategorySearch[];
+    categories: SearchCategoryDto[];
   };
   dateAndLocation: {
     date: string;
@@ -140,7 +140,7 @@ export const CreateEventIntercepted = (props: Props) => {
   return (
     <ModalTemplate
       open
-      title={isEdit ? "Edit  event" : "Create a new event"}
+      title={isEdit ? "Edit event" : "Create a new event"}
       loading={loading}
       back={back}
       cancel={cancel}

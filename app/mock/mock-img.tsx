@@ -32,8 +32,6 @@ import GroupLogo4x3_7 from "@/app/public/assets/group_logo_7.webp";
 import GroupLogo4x3_8 from "@/app/public/assets/group_logo_8.webp";
 import GroupLogo4x3_9 from "@/app/public/assets/group_logo_9.webp";
 
-type DateISO = string;
-
 export const GroupLogo4x3 = [
   GroupLogo4x3_0,
   GroupLogo4x3_1,

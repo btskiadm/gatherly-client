@@ -1,16 +1,29 @@
+import { UserDto } from "@/app/mock/mock-api.types";
 import Avatar from "@/app/public/assets/useravatar.webp";
 import { PlaceOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Grid2, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
 
-export const ProfileInfo = () => {
+interface Props {
+  user: UserDto;
+}
+
+export const ProfileInfo = ({
+  user: {
+    username,
+    userDetails: { city },
+    thumbnails: { thumb },
+  },
+}: Props) => {
   return (
     <Paper>
       <Stack>
         <Image
-          src={Avatar}
-          alt="city map"
+          src={thumb}
+          alt="user avatar"
           sizes="100vw"
+          width={0}
+          height={0}
           style={{
             width: "100%",
             height: "100%",
@@ -34,12 +47,12 @@ export const ProfileInfo = () => {
                   WebkitBoxOrient: "vertical",
                 }}
               >
-                Jan Kowalski
+                {username}
               </Typography>
             </Stack>
             <Stack gap={0.5} direction="row" alignItems="center">
               <PlaceOutlined color="action" fontSize="small" />
-              <Typography variant="body2">Warszawa</Typography>
+              <Typography variant="body2">{city.label}</Typography>
             </Stack>
           </Stack>
 

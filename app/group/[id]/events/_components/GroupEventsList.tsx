@@ -1,10 +1,10 @@
-import { EventStack } from "@/app/mock/mock";
 import { Stack, Typography } from "@mui/material";
 import { EventTile } from "./EventTile";
 import { SentimentVeryDissatisfied } from "@mui/icons-material";
+import { EventStackDto } from "@/app/mock/mock-api.types";
 
 interface Props {
-  events: EventStack[];
+  events: EventStackDto[];
 }
 
 const formatMonth = (iso: string) =>

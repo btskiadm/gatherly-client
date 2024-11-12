@@ -19,6 +19,7 @@ interface Sponsored {
   key: "sponsored";
   value: boolean;
 }
+
 interface Remote {
   key: "remote";
   value: boolean;
@@ -33,6 +34,7 @@ type FilterAttribute = Sponsored | Remote | Verified;
 
 type FilterAttributeKey = FilterAttribute["key"];
 
+//todo: translation
 export const filterTagLabel: Record<FilterAttributeKey, string> = {
   remote: "Remote",
   sponsored: "Sponsored",

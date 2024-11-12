@@ -2,6 +2,7 @@
 
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { GroupTileDto } from "@/app/mock/mock-api.types";
 import {
   AccessTime,
   CalendarMonthOutlined,
@@ -15,11 +16,11 @@ import {
   VerifiedOutlined,
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
+import Image from "next/image";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
-import Image from "next/image";
-import { GroupTile as GroupTileData } from "@/app/mock/mock";
 
+// todo: translation
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
   // @ts-ignore: It is valid operation
@@ -38,17 +39,19 @@ function formatDateDifference(dateInput: Date) {
 }
 
 export const GroupTile = ({
-  id,
-  title,
-  description,
-  thumbnails: { thumb },
-  createdAt,
-  userLength,
-  sponsored,
-  verified,
-  remote,
-  eventsLength,
-}: PropsWithChildren<GroupTileData>) => {
+  tile: {
+    id,
+    title,
+    description,
+    thumbnails: { thumb },
+    createdAt,
+    userLength,
+    sponsored,
+    verified,
+    remote,
+    eventsLength,
+  },
+}: PropsWithChildren<{ tile: GroupTileDto }>) => {
   const [moreElement, setMoreElement] = useState<HTMLElement | null>(null);
 
   const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {

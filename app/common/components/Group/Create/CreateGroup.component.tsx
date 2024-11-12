@@ -1,6 +1,7 @@
 "use client";
 
 import { Textarea } from "@/app/common/components/Textarea";
+import { categoryDtoToSearchCategoryDto, cityDtoToSearchCityDto } from "@/app/common/utils/dto.helper";
 import {
   CreateGroupInput,
   ZodFlattenIssue,
@@ -10,7 +11,8 @@ import {
   maxGroupDescription,
   maxGroupName,
 } from "@/app/common/utils/zod";
-import { Category, City, getAllCategories, getAllCities } from "@/app/mock/mock";
+import { getSearchCategories, getSearchCities } from "@/app/mock/mock-api";
+import { CategoryDto, CityDto, SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
 import {
   Autocomplete,
   Chip,
@@ -38,16 +40,16 @@ export interface CreateGroupRef {
 interface Props {
   name?: string;
   description?: string;
-  city?: City;
-  categories?: Category[];
+  city?: CityDto;
+  categories?: CategoryDto[];
 }
 
 export const CreateGroup = forwardRef<CreateGroupRef, Props>(
   ({ name: _name = "", description: _description = "", city: _city = null, categories: _categories = [] }, ref) => {
     const [name, setName] = useState(_name);
     const [description, setDescription] = useState(_description);
-    const [city, setCity] = useState<City | null>(_city);
-    const [categories, setCategories] = useState<Category[]>(_categories);
+    const [city, setCity] = useState<SearchCityDto | null>(_city ? cityDtoToSearchCityDto(_city) : null);
+    const [categories, setCategories] = useState<SearchCategoryDto[]>(_categories.map(categoryDtoToSearchCategoryDto));
     const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
     const handleReset = useCallback(() => {
@@ -80,11 +82,11 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
       reset: handleReset,
     }));
 
-    const handleCategories = useCallback((e: unknown, categories: Category[]) => {
+    const handleCategories = useCallback((e: unknown, categories: SearchCategoryDto[]) => {
       setCategories(categories);
     }, []);
 
-    const handleCity = useCallback((e: unknown, value: City | null) => {
+    const handleCity = useCallback((e: unknown, value: SearchCityDto | null) => {
       setCity(value);
     }, []);
 
@@ -118,12 +120,12 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
         </FormControl>
         <FormControl error={!!categoriesError}>
           <FormLabel required>Kategorie</FormLabel>
-          <Autocomplete<Category, true>
+          <Autocomplete<SearchCategoryDto, true>
             multiple
             value={categories}
             defaultValue={categories}
             onChange={handleCategories}
-            options={getAllCategories()}
+            options={getSearchCategories()}
             sx={{
               ".MuiAutocomplete-tag": {
                 my: 0, // fix problem with chip inside autocomplete
@@ -208,11 +210,11 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
         </FormControl>
         <FormControl error={!!cityError}>
           <FormLabel>Miasto</FormLabel>
-          <Autocomplete<City>
+          <Autocomplete<SearchCityDto>
             value={city}
             defaultValue={city}
             onChange={handleCity}
-            options={getAllCities()}
+            options={getSearchCities()}
             getOptionLabel={({ label }) => label}
             renderInput={(params) => (
               <TextField

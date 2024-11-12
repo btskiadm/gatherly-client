@@ -1,10 +1,10 @@
+import { CommentDto } from "@/app/mock/mock-api.types";
 import { Divider, Stack } from "@mui/material";
-import { AboutComment } from "./AboutComment";
-import { Comment } from "@/app/mock/mock";
 import { Fragment } from "react";
+import { AboutComment } from "./AboutComment";
 
 interface Props {
-  comments: Comment[];
+  comments: CommentDto[];
 }
 
 export const AboutCommentsList = ({ comments }: Props) => {

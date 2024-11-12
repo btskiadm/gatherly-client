@@ -1,5 +1,3 @@
-import { notFound } from "next/navigation";
-
 export interface GroupParams {
   params: {
     id: string;

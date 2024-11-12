@@ -1,4 +1,4 @@
-import { Category, City, Group, User } from "./mock";
+import { Category, City, Group, User } from "./mock-db.types";
 import { GroupLogo4x3, ProfileLogo4x3 } from "./mock-img";
 
 const loremIpsum =
@@ -192,144 +192,6 @@ export const DBCategory: Category[] = [
   // { value: "flatwater_kayaking", label: "Kajakarstwo na płaskich wodach" },
 ];
 
-export const DBUser: User[] = [
-  {
-    id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-    username: "seoquesto",
-    staticImageData: ProfileLogo4x3[0],
-    thumbnails: {
-      thumb: ProfileLogo4x3[0].src,
-    },
-  },
-  {
-    id: "f27c9d4b-8c91-489f-a72a-ec1923f3f0b5",
-    username: "techwizard",
-    staticImageData: ProfileLogo4x3[0],
-    thumbnails: {
-      thumb: ProfileLogo4x3[0].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "b4f4bc78-e1c5-44b3-b4af-021aa9ed64b5",
-    username: "marketingguru",
-    staticImageData: ProfileLogo4x3[1],
-    thumbnails: {
-      thumb: ProfileLogo4x3[1].src,
-    },
-  },
-  {
-    id: "c2b66e0e-663b-4e8d-a6e4-1845c4fbdf0f",
-    username: "designmaster",
-    staticImageData: ProfileLogo4x3[2],
-    thumbnails: {
-      thumb: ProfileLogo4x3[2].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "a57b5fd3-3b27-4f11-bf3d-839e4b79231b",
-    username: "codemaverick",
-    staticImageData: ProfileLogo4x3[3],
-    thumbnails: {
-      thumb: ProfileLogo4x3[3].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "7ad9b292-1d2e-4fc2-8175-0c31d965d3c2",
-    username: "analyticspro",
-    staticImageData: ProfileLogo4x3[4],
-    thumbnails: {
-      thumb: ProfileLogo4x3[4].src,
-    },
-  },
-  {
-    id: "d91ff2cd-f89b-44b6-b33d-5741c4f12514",
-    username: "webcreator",
-    staticImageData: ProfileLogo4x3[5],
-    thumbnails: {
-      thumb: ProfileLogo4x3[5].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "42f6d06f-6b34-4b99-b676-215c97f681b8",
-    username: "growthhacker",
-    staticImageData: ProfileLogo4x3[6],
-    thumbnails: {
-      thumb: ProfileLogo4x3[6].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "2a5c8f18-3ff4-4b0b-93b6-48b0ef17e7c1",
-    username: "conversionking",
-    staticImageData: ProfileLogo4x3[7],
-    thumbnails: {
-      thumb: ProfileLogo4x3[7].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "e5b8db69-9c48-4b21-9182-61a282f72e3e",
-    username: "contentninja",
-    staticImageData: ProfileLogo4x3[8],
-    thumbnails: {
-      thumb: ProfileLogo4x3[8].src,
-    },
-  },
-  {
-    id: "cd88d305-daff-4a72-a7f2-7585279beed8",
-    username: "trafficgenius",
-    staticImageData: ProfileLogo4x3[9],
-    thumbnails: {
-      thumb: ProfileLogo4x3[9].src,
-    },
-  },
-  {
-    id: "85e073df-5de7-409f-a1b3-0b6ad4b98790",
-    username: "brandbuilder",
-    staticImageData: ProfileLogo4x3[10],
-    thumbnails: {
-      thumb: ProfileLogo4x3[10].src,
-    },
-    verifiedAt: new Date("2020-10-10").toISOString(),
-  },
-  {
-    id: "94d93bfb-b671-4a55-81c4-5d89d5fd632f",
-    username: "leadstrategist",
-    staticImageData: ProfileLogo4x3[11],
-    thumbnails: {
-      thumb: ProfileLogo4x3[11].src,
-    },
-  },
-  {
-    id: "a9b5f4da-97e1-4d85-b32e-0ec2aaf5b86e",
-    username: "devopschamp",
-    staticImageData: ProfileLogo4x3[12],
-    thumbnails: {
-      thumb: ProfileLogo4x3[12].src,
-    },
-  },
-  {
-    id: "e3cb6e7d-10b1-4c5b-92ea-e18421c9c93b",
-    username: "frontenddev",
-    staticImageData: ProfileLogo4x3[13],
-    thumbnails: {
-      thumb: ProfileLogo4x3[13].src,
-    },
-  },
-  {
-    id: "ff48e1df-4bde-4563-b5b4-65fd0d8c909b",
-    username: "adexperto",
-    staticImageData: ProfileLogo4x3[14],
-    thumbnails: {
-      thumb: ProfileLogo4x3[14].src,
-    },
-  },
-];
-
 export const DBCity: City[] = [
   { value: "warsaw", label: "Warszawa" },
   { value: "krakow", label: "Kraków" },
@@ -393,6 +255,194 @@ export const DBCity: City[] = [
   // { value: "ostroleka", label: "Ostrołęka" },
 ];
 
+export const DBUser: User[] = [
+  {
+    id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    username: "seoquesto",
+    staticImageData: ProfileLogo4x3[0],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[0].src },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 1),
+      city: DBCity[0],
+    },
+  },
+  {
+    id: "f27c9d4b-8c91-489f-a72a-ec1923f3f0b5",
+    username: "techwizard",
+    staticImageData: ProfileLogo4x3[0],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[0].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 2),
+      city: DBCity[0],
+    },
+  },
+  {
+    id: "b4f4bc78-e1c5-44b3-b4af-021aa9ed64b5",
+    username: "marketingguru",
+    staticImageData: ProfileLogo4x3[1],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[1].src },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 3),
+      city: DBCity[0],
+    },
+  },
+  {
+    id: "c2b66e0e-663b-4e8d-a6e4-1845c4fbdf0f",
+    username: "designmaster",
+    staticImageData: ProfileLogo4x3[2],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[2].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 4),
+      city: DBCity[1],
+    },
+  },
+  {
+    id: "a57b5fd3-3b27-4f11-bf3d-839e4b79231b",
+    username: "codemaverick",
+    staticImageData: ProfileLogo4x3[3],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[3].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 5),
+      city: DBCity[1],
+    },
+  },
+  {
+    id: "7ad9b292-1d2e-4fc2-8175-0c31d965d3c2",
+    username: "analyticspro",
+    staticImageData: ProfileLogo4x3[4],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[4].src },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 7),
+      city: DBCity[1],
+    },
+  },
+  {
+    id: "d91ff2cd-f89b-44b6-b33d-5741c4f12514",
+    username: "webcreator",
+    staticImageData: ProfileLogo4x3[5],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[5].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 2),
+      city: DBCity[2],
+    },
+  },
+  {
+    id: "42f6d06f-6b34-4b99-b676-215c97f681b8",
+    username: "growthhacker",
+    staticImageData: ProfileLogo4x3[6],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[6].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 4),
+      city: DBCity[2],
+    },
+  },
+  {
+    id: "2a5c8f18-3ff4-4b0b-93b6-48b0ef17e7c1",
+    username: "conversionking",
+    staticImageData: ProfileLogo4x3[7],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[7].src },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 6),
+      city: DBCity[2],
+    },
+  },
+  {
+    id: "e5b8db69-9c48-4b21-9182-61a282f72e3e",
+    username: "contentninja",
+    staticImageData: ProfileLogo4x3[8],
+    thumbnails: { id: "thumbnails", thumb: ProfileLogo4x3[8].src },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 1),
+      city: DBCity[2],
+    },
+  },
+  {
+    id: "cd88d305-daff-4a72-a7f2-7585279beed8",
+    username: "trafficgenius",
+    staticImageData: ProfileLogo4x3[9],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[9].src,
+    },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 11),
+      city: DBCity[3],
+    },
+  },
+  {
+    id: "85e073df-5de7-409f-a1b3-0b6ad4b98790",
+    username: "brandbuilder",
+    staticImageData: ProfileLogo4x3[10],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[10].src,
+    },
+    verifiedAt: new Date("2020-10-10").toISOString(),
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 14),
+      city: DBCity[3],
+    },
+  },
+  {
+    id: "94d93bfb-b671-4a55-81c4-5d89d5fd632f",
+    username: "leadstrategist",
+    staticImageData: ProfileLogo4x3[11],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[11].src,
+    },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 16),
+      city: DBCity[3],
+    },
+  },
+  {
+    id: "a9b5f4da-97e1-4d85-b32e-0ec2aaf5b86e",
+    username: "devopschamp",
+    staticImageData: ProfileLogo4x3[12],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[12].src,
+    },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 6),
+      city: DBCity[3],
+    },
+  },
+  {
+    id: "e3cb6e7d-10b1-4c5b-92ea-e18421c9c93b",
+    username: "frontenddev",
+    staticImageData: ProfileLogo4x3[13],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[13].src,
+    },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 5),
+      city: DBCity[4],
+    },
+  },
+  {
+    id: "ff48e1df-4bde-4563-b5b4-65fd0d8c909b",
+    username: "adexperto",
+    staticImageData: ProfileLogo4x3[14],
+    thumbnails: {
+      id: "thumbnails",
+      thumb: ProfileLogo4x3[14].src,
+    },
+    userDetails: {
+      description: getLoremIpsumSentenses(4, 3),
+      city: DBCity[4],
+    },
+  },
+];
+
 const monthInDays = 31;
 
 export const DBGroups: Group[] = [];
@@ -414,6 +464,7 @@ DBCity.forEach((city) => {
         description: getLoremIpsumSentenses(8, groupIdx + 1),
         createdAt: groupCratedAt.toISOString(),
         thumbnails: {
+          id: `${gId}_thumbnailds`,
           thumb: groupSrc.src,
         },
         cities: [
@@ -477,7 +528,12 @@ DBCity.forEach((city) => {
                       username: user.username,
                       staticImageData: user.staticImageData,
                       thumbnails: {
+                        id: "thumbnails",
                         thumb: user.staticImageData.src,
+                      },
+                      userDetails: {
+                        description: user.userDetails.description,
+                        city: user.userDetails.city,
                       },
                     },
                   };
@@ -496,8 +552,10 @@ DBCity.forEach((city) => {
                 id: user.id,
                 username: user.username,
                 staticImageData: user.staticImageData,
-                thumbnails: {
-                  thumb: user.staticImageData.src,
+                thumbnails: { id: "thumbnails", thumb: user.staticImageData.src },
+                userDetails: {
+                  description: user.userDetails.description,
+                  city: user.userDetails.city,
                 },
               },
             };

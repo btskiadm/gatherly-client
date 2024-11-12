@@ -1,9 +1,9 @@
+import { GroupUserDto } from "@/app/mock/mock-api.types";
 import { Grid2 } from "@mui/material";
 import { GroupMemberTile } from "./GroupMemberTile";
-import { GroupUser } from "@/app/mock/mock";
 
 interface Props {
-  groupUsers: GroupUser[];
+  groupUsers: GroupUserDto[];
 }
 
 export const GroupMembersList = ({ groupUsers }: Props) => {

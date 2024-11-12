@@ -2,8 +2,7 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/Confirm.modal";
 import { ModalTemplate } from "@/app/common/components/Modal/ModalTemplate";
-import { users as allUsers } from "@/app/group/[id]/events/_components/mock";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import {
   DeleteOutline,
   GppGoodOutlined,
@@ -31,14 +30,8 @@ import {
 import { useCallback, useMemo, useRef, useState } from "react";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
-
-function createData(username: string, id: string) {
-  return { username, id };
-}
-
-const rows = allUsers.map((m) => createData(m.name, m.id));
 
 export const GroupSettingsMembersTab = ({ groupDetails: { users } }: Props) => {
   const moreContext = useRef({ username: "", id: "" });
@@ -150,7 +143,6 @@ export const GroupSettingsMembersTab = ({ groupDetails: { users } }: Props) => {
           </TableBody>
         </Table>
       </TableContainer>
-
       <Menu
         anchorEl={moreElement}
         open={!!moreElement}

@@ -1,17 +1,17 @@
-import { getStackedGroups } from "@/app/mock/mock";
 import { Stack } from "@mui/material";
 import { GroupsListing } from "./GroupsListing";
 import { GroupsStack } from "./GroupsStack";
+import { getStackedGroupTiles } from "@/app/mock/mock-api";
 
 //todo: mock
-const stackedGroups = getStackedGroups();
+const stackedGroupTiles = getStackedGroupTiles();
 
 export const GroupsPage = () => {
   return (
     <Stack gap={3}>
       <GroupsListing />
-      {stackedGroups.map((stackedGroup, idx) => (
-        <GroupsStack key={idx} stackedGroup={stackedGroup} />
+      {stackedGroupTiles.map((stackedGroupTile, idx) => (
+        <GroupsStack key={idx} stackedGroupTile={stackedGroupTile} />
       ))}
     </Stack>
   );

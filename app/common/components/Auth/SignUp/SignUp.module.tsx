@@ -11,12 +11,10 @@ export const SignUpModule = () => {
   const { open: openState } = useSignUpState();
   const { open } = useSignUpDispatch();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleClose = useCallback(() => {
     open(false);
-    router.back();
-  }, [router, open]);
+  }, [open]);
 
   const handleSubmit = useCallback(
     async (data: SignUpData) => {

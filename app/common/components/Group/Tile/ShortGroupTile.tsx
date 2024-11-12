@@ -1,13 +1,14 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { GroupTile } from "@/app/groups/mock";
-import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
+import { ShortGroupDto } from "@/app/mock/mock-api.types";
 import { Group, StarBorderRounded, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, Chip, Stack, Tooltip } from "@mui/material";
 import Image from "next/image";
 import { PropsWithChildren } from "react";
 
-export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTile>) => {
+export const ShortGroupTile = ({
+  shortGroup: { id, title, users, thumbnails, verified, sponsored },
+}: PropsWithChildren<{ shortGroup: ShortGroupDto }>) => {
   return (
     <>
       <Link
@@ -38,7 +39,7 @@ export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTi
         >
           <Image
             fill
-            src={GroupImage4x3}
+            src={thumbnails.thumb}
             alt="logo"
             style={{
               objectFit: "cover",
@@ -67,30 +68,34 @@ export const ShortGroupTile = ({ id, title, members }: PropsWithChildren<GroupTi
             }}
           >
             <Tooltip title="Number of members">
-              <Chip size="small" label={members} icon={<Group />} />
+              <Chip size="small" label={users} icon={<Group />} />
             </Tooltip>
-            <Tooltip title="Verified group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<VerifiedOutlined fontSize="small" />}
-              />
-            </Tooltip>
-            <Tooltip title="Sponsored group">
-              <Chip
-                size="small"
-                sx={{
-                  ".MuiChip-label": {
-                    px: "4px",
-                  },
-                }}
-                icon={<StarBorderRounded fontSize="small" />}
-              />
-            </Tooltip>
+            {verified && (
+              <Tooltip title="Verified group">
+                <Chip
+                  size="small"
+                  sx={{
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<VerifiedOutlined fontSize="small" />}
+                />
+              </Tooltip>
+            )}
+            {sponsored && (
+              <Tooltip title="Sponsored group">
+                <Chip
+                  size="small"
+                  sx={{
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<StarBorderRounded fontSize="small" />}
+                />
+              </Tooltip>
+            )}
           </Stack>
         </Stack>
       </Stack>

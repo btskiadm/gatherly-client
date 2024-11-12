@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { DBCategory, DBCity, DBGroups } from "./mock-db";
+import { DBCategory, DBCity, DBGroups, DBUser } from "./mock-db";
 
 export type DateISO = string;
 
@@ -18,7 +18,8 @@ export interface RemoteAttribute {
   value: boolean;
 }
 
-export interface GroupThumbnails {
+export interface Thumbnails {
+  id: string;
   thumb: string;
 }
 
@@ -35,7 +36,7 @@ export interface Group {
   events: Event[];
   users: GroupUser[];
   comments: Comment[];
-  thumbnails: GroupThumbnails;
+  thumbnails: Thumbnails;
 }
 
 export interface Comment {
@@ -75,16 +76,18 @@ export interface EventUser {
   user: User;
 }
 
-interface UserThumbnails {
-  thumb: string;
+export interface UserDetails {
+  description: string;
+  city: City;
 }
 
 export interface User {
   id: string;
   username: string;
-  thumbnails: UserThumbnails;
+  thumbnails: Thumbnails;
   staticImageData: StaticImageData;
   verifiedAt?: DateISO;
+  userDetails: UserDetails;
 }
 
 export interface UserShortDetails extends User {
@@ -278,13 +281,6 @@ export const getGroupDetails = (groupId: string): GroupDetails | null => {
   };
 };
 
-export const getAllCategories = () =>
-  DBCategory.map(({ label, value }) => ({
-    category: "category" as const,
-    label: label,
-    value: value,
-  }));
-
 export const getAllGroupTitles = () =>
   DBGroups.map(({ title, id }) => ({
     category: "name" as const,
@@ -298,3 +294,5 @@ export const getAllCities = () =>
     label: label,
     value: value,
   }));
+
+export const getAllUsers = () => DBUser;

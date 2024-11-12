@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { GroupDesktopNavigation } from "./GroupDesktopNavigation";
 import { GroupMobileNavitaion } from "./GroupMobileNavigation";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export function GroupNavigation({ groupDetails }: Props) {

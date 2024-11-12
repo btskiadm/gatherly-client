@@ -1,13 +1,13 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { Event } from "@/app/mock/mock";
+import { EventDto } from "@/app/mock/mock-api.types";
 import { Group, Place } from "@mui/icons-material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { AccessTime } from "@mui/icons-material";
 import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { EventTileMenu } from "./EventTileMenu";
 
 interface Props {
-  event: Event;
+  event: EventDto;
 }
 
 const shortMonth = (iso: string) =>
@@ -82,7 +82,7 @@ export const EventTile = ({ event }: Props) => {
           <Grid2 size={{ xs: 9, sm: 4 }}>
             <Stack gap={1}>
               <Stack direction="row" gap={0.5} alignItems="center">
-                <AccessTimeIcon
+                <AccessTime
                   fontSize="small"
                   sx={{
                     color: "text.secondary",

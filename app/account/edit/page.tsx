@@ -133,7 +133,6 @@ export default function Page() {
                 <Button fullWidth variant="contained" startIcon={<UploadFileRounded />} onClick={handleUploadOpen}>
                   Upload
                 </Button>
-
                 <Button
                   fullWidth
                   variant="outlined"

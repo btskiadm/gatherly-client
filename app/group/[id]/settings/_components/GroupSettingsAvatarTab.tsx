@@ -2,14 +2,14 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/Confirm.modal";
 import { UploadIntercepted } from "@/app/common/components/Upload/Upload.intercepted";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { DeleteOutlined, UploadFileRounded } from "@mui/icons-material";
 import { Avatar, Button, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {

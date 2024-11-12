@@ -2,14 +2,14 @@
 
 import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup.component";
 import { delay } from "@/app/common/utils/delay";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { LoadingButton } from "@mui/lab";
 import { Button, Paper, Stack } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import {
   AllDayContentArg,
   DayCellContentArg,
@@ -17,7 +18,6 @@ import { Button, ButtonGroup, Skeleton, Stack, Tooltip, Typography, alpha, style
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
-import { INITIAL_EVENTS } from "./calendar.mock";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `
@@ -71,9 +71,13 @@ export const CalendarWrapper = styled("div")(
 `
 );
 
-export const GroupCalendar = () => {
+interface Props {
+  groupDetails: GroupDetailsDto;
+}
+
+export const GroupCalendar = ({ groupDetails }: Props) => {
   const ref = useRef<FullCalendar>(null);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(groupDetails.events.length > 0);
   const router = useRouter();
 
   const handleLoaded = useCallback(() => {
@@ -184,7 +188,12 @@ export const GroupCalendar = () => {
           }}
           initialView="dayGridMonth"
           dayMaxEvents={true}
-          initialEvents={INITIAL_EVENTS}
+          initialEvents={groupDetails.events.map((e) => ({
+            id: e.id,
+            title: e.title,
+            start: e.date.startAt,
+            end: e.date.endAt,
+          }))}
           dayHeaderContent={renderDayHeaderContent}
           allDayContent={renderAllDayContent}
           slotLabelContent={renderSlotLabelContent}

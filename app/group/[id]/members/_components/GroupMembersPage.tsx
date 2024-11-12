@@ -1,10 +1,10 @@
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { GroupMembersList } from "./GroupMembersList";
-import { GroupDetails } from "@/app/mock/mock";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupMembersPage = ({ groupDetails }: Props) => {

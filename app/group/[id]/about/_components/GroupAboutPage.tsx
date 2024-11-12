@@ -1,17 +1,25 @@
-import { CommentInput } from "@/app/common/components/CommentInput/CommentInput";
-import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Link } from "@/app/common/components/NextLink";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
+import { AddOutlined } from "@mui/icons-material";
+import { Box, Button, Grid2, Paper, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { AboutCommentsList } from "./AboutCommentsList";
 import { AboutEventCounterTile } from "./AboutEventCounterTile";
-import { GroupDetails } from "@/app/mock/mock";
-import Image from "next/image";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupAboutPage = ({ groupDetails }: Props) => {
-  const { title, description, src } = groupDetails;
+  const {
+    title,
+    description,
+    upcomingLength,
+    pastLength,
+    cancelledLength,
+    thumbnails: { thumb },
+  } = groupDetails;
 
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
@@ -22,9 +30,11 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
         }}
       >
         <Image
-          src={src}
+          src={thumb}
           alt="group logo"
           sizes="100vw"
+          width={0}
+          height={0}
           style={{
             width: "100%",
             height: "100%",
@@ -35,13 +45,13 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
       </Box>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary="42" secondary="Zakończone" />
+          <AboutEventCounterTile primary={`${upcomingLength}`} secondary="Upcoming" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary="5" secondary="Odwołane" />
+          <AboutEventCounterTile primary={`${pastLength}`} secondary="Zakończone" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary="12" secondary="Upcoming" />
+          <AboutEventCounterTile primary={`${cancelledLength}`} secondary="Odwołane" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary="4.2" secondary="Ocena" />
@@ -68,16 +78,25 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
         </Paper>
       </Stack>
       <Stack gap={1}>
-        <Typography variant="body1" fontWeight={600}>
-          Opinie
-        </Typography>
+        <Stack alignItems="flex-end" direction="row" justifyContent="space-between">
+          <Typography variant="body1" fontWeight={600}>
+            Opinie
+          </Typography>
+          <Button href="about/comment" LinkComponent={Link} size="small" variant="contained" endIcon={<AddOutlined />}>
+            Add
+          </Button>
+        </Stack>
         <Paper>
           <Box p={{ xs: 2, sm: 3 }}>
-            <AboutCommentsList comments={groupDetails.comments} />
+            {groupDetails.comments.length > 0 && <AboutCommentsList comments={groupDetails.comments} />}
+            {groupDetails.comments.length === 0 && (
+              <Typography color="error" variant="body1">
+                No comments
+              </Typography>
+            )}
           </Box>
         </Paper>
       </Stack>
-      <CommentInput />
     </Stack>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/app/common/components/NextLink";
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
 import {
   Divider,
@@ -25,7 +25,7 @@ const chat = "chat";
 const settings = "settings";
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export function GroupDesktopNavigation({ groupDetails }: Props) {

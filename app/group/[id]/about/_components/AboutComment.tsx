@@ -3,13 +3,13 @@
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { stringToColor } from "@/app/common/utils/stringToColor";
-import { Comment } from "@/app/mock/mock";
+import { CommentDto } from "@/app/mock/mock-api.types";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 
 interface Props {
-  comment: Comment;
+  comment: CommentDto;
 }
 
 export const AboutComment = ({ comment }: Props) => {
@@ -50,7 +50,7 @@ export const AboutComment = ({ comment }: Props) => {
               <Stack direction="row" gap={{ xs: 0.5, sm: 1 }}>
                 <Link
                   underline="none"
-                  href="#"
+                  href={`/profile/${username}`}
                   variant="body1"
                   color="text.primary"
                   minWidth="0px"

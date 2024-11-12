@@ -1,6 +1,6 @@
 "use client";
 
-import { GroupDetails } from "@/app/mock/mock";
+import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useCallback, useState } from "react";
 import { GroupSettingsAboutTab } from "./GroupSettingsAboutTab";
@@ -24,7 +24,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 interface Props {
-  groupDetails: GroupDetails;
+  groupDetails: GroupDetailsDto;
 }
 
 export const GroupSettingsTabs = ({ groupDetails }: Props) => {
