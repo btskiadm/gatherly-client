@@ -1,7 +1,7 @@
 import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { GroupHeader } from "../../_components/GroupHeader";
-import { GroupEventsTabs } from "../_components/GroupEventsTabs";
+import { GroupEventsTabs } from "./GroupEventsTabs";
 
 interface Props {
   groupDetails: GroupDetailsDto;

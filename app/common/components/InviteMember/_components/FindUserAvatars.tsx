@@ -49,8 +49,6 @@ const DeletableUserAvatar = ({ user, onDelete }: { user: SearchUserDto; onDelete
             alt={user.username}
             sx={{
               bgcolor: stringToColor(user.username),
-              height: "30px",
-              width: "30px",
             }}
             src={user.thumbnails.thumb}
           >
@@ -75,8 +73,6 @@ export const FindUserAvatars = ({ users, onDelete }: Props) => {
           <Avatar
             alt={`${userCountRest} more members`}
             sx={{
-              height: "30px",
-              width: "30px",
               fontSize: "1rem",
             }}
           >
