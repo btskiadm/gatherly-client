@@ -52,10 +52,14 @@ export interface Event {
   title: string;
   description: string;
   createdAt: DateISO;
-  users: EventUser[];
   canceled: boolean;
+  sponsored: SponsoredAttribute;
+  verified: VerifiedAttribute;
+  remote: RemoteAttribute;
+  users: EventUser[];
   date: EventDate;
-  city: City;
+  cities: City[];
+  categories: Category[];
 }
 
 export interface EventDate {

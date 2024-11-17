@@ -34,7 +34,7 @@ export const EventTile = ({ event }: Props) => {
     title,
     date: { startAt, endAt },
     users,
-    city,
+    cities,
   } = event;
 
   const usersLength = users.length > 99 ? "99+" : users.length;
@@ -100,7 +100,8 @@ export const EventTile = ({ event }: Props) => {
                   }}
                 />
                 <TruncatedTypography variant="body2" color="text.secondary">
-                  {city.label}
+                  {/* todo */}
+                  {cities[0].label}
                 </TruncatedTypography>
               </Stack>
             </Stack>

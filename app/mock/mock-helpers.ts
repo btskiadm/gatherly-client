@@ -4,8 +4,9 @@ import {
   CommentDto,
   EventDateDto,
   EventDto,
+  EventGroupMetaDto,
   EventStackDto,
-  EventUserDto,
+  EventTileDto,
   GroupDto,
   GroupTileDto,
   ShortGroupDto,
@@ -13,7 +14,7 @@ import {
   UserDetailsDto,
   UserDto,
 } from "./mock-api.types";
-import { Category, City, Event, EventDate, Group, Thumbnails, User, Comment, UserDetails } from "./mock-db.types";
+import { Category, City, Comment, Event, EventDate, Group, Thumbnails, User, UserDetails } from "./mock-db.types";
 
 export const toUserDetailsDto = ({ city, description }: UserDetails): UserDetailsDto => ({
   description: description,
@@ -57,19 +58,45 @@ export const toUserDto = ({ id, username, verifiedAt, staticImageData, thumbnail
   userDetails: toUserDetailsDto(userDetails),
 });
 
-export const toEventDto = ({ id, title, description, canceled, city, createdAt, date, users }: Event): EventDto => ({
+export const toEventDto = ({
+  id,
+  title,
+  description,
+  canceled,
+  cities,
+  createdAt,
+  date,
+  users,
+  categories,
+  remote,
+  sponsored,
+  verified,
+}: Event): EventDto => ({
   id: id,
   title: title,
   description: description,
   canceled: canceled,
   createdAt: createdAt,
-  users: users.map<EventUserDto>(({ isHost, isModerator, user }) => ({
+  remote: {
+    id: remote.id,
+    value: remote.value,
+  },
+  sponsored: {
+    id: sponsored.id,
+    value: sponsored.value,
+  },
+  verified: {
+    id: verified.id,
+    value: verified.value,
+  },
+  users: users.map(({ isHost, isModerator, user }) => ({
     isHost,
     isModerator,
     user: toUserDto(user),
   })),
-  city: toCityDto(city),
+  cities: cities.map(toCityDto),
   date: toEventDateDto(date),
+  categories: categories.map(toCategoryDto),
 });
 
 export const toGroupDto = ({
@@ -90,7 +117,6 @@ export const toGroupDto = ({
   id,
   title,
   description,
-  verified,
   createdAt,
   thumbnails: toThumbnailsDto(thumbnails),
   sponsored: {
@@ -99,6 +125,10 @@ export const toGroupDto = ({
   },
   remote: {
     id: remote.id,
+    value: remote.value,
+  },
+  verified: {
+    id: verified.id,
     value: remote.value,
   },
   cities: cities.map(toCityDto),
@@ -121,11 +151,34 @@ export const toGroupTileDto = (group: Group): GroupTileDto => ({
   userLength: group.users.length,
   remote: group.remote.value,
   sponsored: group.sponsored.value,
-  thumbnails: group.thumbnails,
   verified: group.verified.value,
+  thumbnails: group.thumbnails,
   categories: group.categories.map(toCategoryDto),
   cities: group.cities.map(toCityDto),
 });
+
+export const groupToEventGroupMeta = (group: Group): EventGroupMetaDto => ({
+  id: group.id,
+  title: group.title,
+  remote: group.remote.value,
+  sponsored: group.sponsored.value,
+  verified: group.verified.value,
+  thumbnail: toThumbnailsDto(group.thumbnails),
+});
+
+export const toEventTileDto =
+  (event: Event) =>
+  (group: Group): EventTileDto => ({
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    createdAt: event.createdAt,
+    userLength: event.users.length,
+    groupMeta: groupToEventGroupMeta(group),
+    date: event.date,
+    categories: event.categories.map(toCategoryDto),
+    cities: event.cities.map(toCityDto),
+  });
 
 export const getGroupedEvents = (
   events: Event[]

@@ -57,7 +57,30 @@ export type GroupTileDto = {
   userLength: number;
 } & AttributesDto;
 
+export type EventGroupMetaDto = {
+  id: string;
+  thumbnail: ThumbnailsDto;
+  title: string;
+} & AttributesDto;
+
+export type EventTileDto = {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: DateISO;
+  categories: CategoryDto[];
+  userLength: number;
+  date: EventDateDto;
+  cities: CityDto[];
+  groupMeta: EventGroupMetaDto;
+};
+
 export interface StackedGroupAttributesDto extends AttributesDto {
+  city: CityDto;
+  category: CategoryDto;
+}
+
+export interface StackedEventAttributesDto extends AttributesDto {
   city: CityDto;
   category: CategoryDto;
 }
@@ -65,6 +88,11 @@ export interface StackedGroupAttributesDto extends AttributesDto {
 export interface StackedGroupTilesDto {
   attributes: StackedGroupAttributesDto;
   tiles: GroupTileDto[];
+}
+
+export interface StackedEventTilesDto {
+  attributes: StackedEventAttributesDto;
+  tiles: EventTileDto[];
 }
 
 export interface SponsoredAttributeDto {
@@ -143,10 +171,14 @@ export interface EventDto {
   title: string;
   description: string;
   createdAt: DateISO;
-  users: EventUserDto[];
   canceled: boolean;
+  sponsored: SponsoredAttributeDto;
+  verified: VerifiedAttributeDto;
+  remote: RemoteAttributeDto;
+  users: EventUserDto[];
   date: EventDateDto;
-  city: CityDto;
+  cities: CityDto[];
+  categories: CategoryDto[];
 }
 
 export interface EventStackDto {

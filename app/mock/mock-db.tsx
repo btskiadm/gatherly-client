@@ -451,7 +451,7 @@ DBCity.forEach((city) => {
   DBCategory.forEach((category) => {
     GroupLogo4x3.forEach((groupSrc, groupIdx) => {
       const groupUsersCount = (groupIdx * 12) % DBUser.length || 1;
-      const groupEventsCount = groupIdx * 5;
+      const groupEventsCount = groupIdx * 1;
 
       const groupCratedAt = new Date();
       groupCratedAt.setDate(groupCratedAt.getDate() + -(3 * monthInDays) + groupIdx * 10);
@@ -515,7 +515,31 @@ DBCity.forEach((city) => {
                 startAt: startAt.toISOString(),
                 endAt: endAt.toISOString(),
               },
-              city: DBCity[eventIdx % DBCity.length],
+              cities: [
+                {
+                  label: city.label,
+                  value: city.value,
+                },
+              ],
+              sponsored: {
+                id: `group_${groupIdx}_event_${eventIdx}_sponsored`,
+                value: groupIdx % 2 === 0,
+              },
+              verified: {
+                id: `group_${groupIdx}_event_${eventIdx}_verified`,
+                value: groupIdx % 3 === 0,
+              },
+              remote: {
+                id: `group_${groupIdx}_event_${eventIdx}_remote`,
+                value: groupIdx % 5 === 0,
+              },
+              categories: [
+                {
+                  label: category.label,
+                  value: category.value,
+                },
+              ],
+
               users: Array(eventUsersCount)
                 .fill("")
                 .map((_, userIdx) => {

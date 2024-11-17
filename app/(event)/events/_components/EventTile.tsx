@@ -1,11 +1,11 @@
 "use client";
 
+import { ClampTypography } from "@/app/common/components/ClampTypography";
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
-import { GroupTileDto } from "@/app/mock/mock-api.types";
+import { EventTileDto } from "@/app/mock/mock-api.types";
 import {
   AccessTime,
-  CalendarMonthOutlined,
   CloudOutlined,
   FavoriteBorderOutlined,
   Group,
@@ -15,8 +15,19 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
-import Image from "next/image";
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -38,20 +49,19 @@ function formatDateDifference(dateInput: Date) {
   }
 }
 
-export const GroupTile = ({
+export const EventTile = ({
   tile: {
-    id,
-    title,
+    id: eventId,
+    title: eventTile,
     description,
-    thumbnails: { thumb },
     createdAt,
     userLength,
-    sponsored,
-    verified,
-    remote,
-    eventsLength,
+    categories,
+    cities,
+    date: { startAt, endAt },
+    groupMeta: { id: groupId, title: groupTile, remote, sponsored, thumbnail, verified },
   },
-}: PropsWithChildren<{ tile: GroupTileDto }>) => {
+}: PropsWithChildren<{ tile: EventTileDto }>) => {
   const [moreElement, setMoreElement] = useState<HTMLElement | null>(null);
 
   const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,8 +86,9 @@ export const GroupTile = ({
   return (
     <>
       <Link
-        href={`/group/${id}/about`}
+        href={`/event/${eventId}`}
         sx={{
+          zIndex: 1,
           height: 0,
           width: 0,
           "&:after": {
@@ -92,7 +103,7 @@ export const GroupTile = ({
         }}
       />
       <Stack height="100%">
-        <Avatar
+        {/* <Avatar
           alt="logo"
           variant="rounded"
           sizes="100vw"
@@ -112,13 +123,49 @@ export const GroupTile = ({
               objectFit: "cover",
             }}
           />
-        </Avatar>
+        </Avatar> */}
+
         <Stack gap={1} p={2} height="100%">
+          <Box position="relative">
+            <Link
+              href={`/group/${groupId}`}
+              sx={{
+                zIndex: 2,
+                height: 0,
+                width: 0,
+                "&:after": {
+                  zIndex: 1,
+                  bottom: 0,
+                  content: "''",
+                  left: 0,
+                  position: "absolute",
+                  right: 0,
+                  top: 0,
+                },
+              }}
+            />
+            <Stack direction="row" gap={1} alignItems="center">
+              <Avatar
+                src={thumbnail.thumb}
+                variant="rounded"
+                sx={{
+                  height: "4rem",
+                  width: "4rem",
+                }}
+              />
+              <Tooltip title={groupTile}>
+                <ClampTypography clamp={2} variant="body2">
+                  {groupTile}
+                </ClampTypography>
+              </Tooltip>
+            </Stack>
+          </Box>
+          <Divider />
           {/* title */}
           <Stack direction="row">
-            <Tooltip title={title}>
+            <Tooltip title={eventTile}>
               <TruncatedTypography variant="subtitle1" minWidth="0px">
-                {title}
+                {eventTile}
               </TruncatedTypography>
             </Tooltip>
           </Stack>
@@ -142,9 +189,6 @@ export const GroupTile = ({
           >
             <Tooltip title="Number of members">
               <Chip size="small" label={userLength} icon={<Group />} />
-            </Tooltip>
-            <Tooltip title="Number of events">
-              <Chip size="small" label={eventsLength} icon={<CalendarMonthOutlined />} />
             </Tooltip>
             <Tooltip title="Date of creating">
               <Chip size="small" label={formatDateDifference(new Date(createdAt))} icon={<AccessTime />} />
@@ -252,8 +296,8 @@ export const GroupTile = ({
           href={{
             pathname: "/report",
             query: {
-              type: "group",
-              id: id,
+              type: "event",
+              id: eventId,
             },
           }}
           underline="none"

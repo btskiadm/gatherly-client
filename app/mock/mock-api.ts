@@ -1,17 +1,25 @@
 import {
   EventStackDto,
+  EventTileDto,
   GroupDetailsDto,
-  GroupTileDto,
   SearchCategoryDto,
   SearchCityDto,
   SearchGroupDto,
   SearchUserDto,
   ShortGroupDto,
+  StackedEventTilesDto,
   StackedGroupTilesDto,
   UserDto,
 } from "./mock-api.types";
 import { DBCategory, DBCity, DBGroups, DBUser } from "./mock-db";
-import { getGroupedEvents, stackEventsDto, toGroupDto, toGroupTileDto, toShortGroup } from "./mock-helpers";
+import {
+  getGroupedEvents,
+  stackEventsDto,
+  toEventTileDto,
+  toGroupDto,
+  toGroupTileDto,
+  toShortGroup,
+} from "./mock-helpers";
 
 export const getSearchCategories = (): SearchCategoryDto[] =>
   DBCategory.map(({ label, value }) => ({
@@ -44,16 +52,16 @@ export const getSeachUsers = (): SearchUserDto[] =>
     },
   }));
 
-const city = DBCity[0];
-const category = DBCategory[0];
-const sponsored = false;
-const remote = false;
-const verified = false;
+const g_city = DBCity[0];
+const g_category = DBCategory[0];
+const g_sponsored = false;
+const g_remote = false;
+const g_verified = false;
 
 export const getStackedGroupTiles = (): StackedGroupTilesDto[] => {
-  const groupsByCity = DBGroups.filter((group) => group.cities.some((c) => c.value === city.value)) ?? [];
+  const groupsByCity = DBGroups.filter((group) => group.cities.some((c) => c.value === g_city.value)) ?? [];
   const groupsByCategory =
-    groupsByCity.filter((group) => group.categories.some((c) => c.value === category.value)) ?? [];
+    groupsByCity.filter((group) => group.categories.some((c) => c.value === g_category.value)) ?? [];
 
   if (groupsByCategory.length <= 0) {
     return [];
@@ -63,13 +71,13 @@ export const getStackedGroupTiles = (): StackedGroupTilesDto[] => {
     let numToValidate = 0;
     let numToValidateCounter = 0;
 
-    sponsored && numToValidate++;
-    remote && numToValidate++;
-    verified && numToValidate++;
+    g_sponsored && numToValidate++;
+    g_remote && numToValidate++;
+    g_verified && numToValidate++;
 
-    sponsored && g.sponsored.value && numToValidateCounter++;
-    remote && g.remote.value && numToValidateCounter++;
-    verified && g.verified.value && numToValidateCounter++;
+    g_sponsored && g.sponsored.value && numToValidateCounter++;
+    g_remote && g.remote.value && numToValidateCounter++;
+    g_verified && g.verified.value && numToValidateCounter++;
 
     return numToValidateCounter === numToValidate;
   });
@@ -77,13 +85,13 @@ export const getStackedGroupTiles = (): StackedGroupTilesDto[] => {
   return [
     {
       attributes: {
-        category: category,
-        city: city,
-        remote: remote,
-        sponsored: sponsored,
-        verified: verified,
+        category: g_category,
+        city: g_city,
+        remote: g_remote,
+        sponsored: g_sponsored,
+        verified: g_verified,
       },
-      tiles: filtered.map<GroupTileDto>(toGroupTileDto),
+      tiles: filtered.map(toGroupTileDto),
     },
   ];
 };
@@ -132,4 +140,57 @@ export const getShortGroupsByUsername = (username: string): ShortGroupDto[] => {
   const groups = DBGroups.filter((group) => group.users.some((groupUser) => groupUser.user.id === user.id));
 
   return groups.map(toShortGroup);
+};
+
+const e_city = DBCity[0];
+const e_category = DBCategory[0];
+const e_sponsored = true;
+const e_remote = false;
+const e_verified = true;
+
+export const getStackedEvents = (): StackedEventTilesDto[] => {
+  const events: EventTileDto[] = [];
+
+  DBGroups.forEach((group) => {
+    group.events.forEach((event) => {
+      events.push(toEventTileDto(event)(group));
+    });
+  });
+
+  const eventsByCity = events.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? [];
+
+  const eventsByCategory =
+    eventsByCity.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? [];
+
+  if (eventsByCategory.length <= 0) {
+    return [];
+  }
+
+  const filtered = eventsByCategory.filter((e) => {
+    let numToValidate = 0;
+    let numToValidateCounter = 0;
+
+    e_sponsored && numToValidate++;
+    e_remote && numToValidate++;
+    e_verified && numToValidate++;
+
+    e_sponsored && e.groupMeta.sponsored && numToValidateCounter++;
+    e_remote && e.groupMeta.remote && numToValidateCounter++;
+    e_verified && e.groupMeta.verified && numToValidateCounter++;
+
+    return numToValidateCounter === numToValidate;
+  });
+
+  return [
+    {
+      attributes: {
+        category: e_category,
+        city: e_city,
+        remote: e_remote,
+        sponsored: e_sponsored,
+        verified: e_verified,
+      },
+      tiles: filtered,
+    },
+  ];
 };
