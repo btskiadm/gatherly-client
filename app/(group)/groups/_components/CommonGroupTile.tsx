@@ -11,7 +11,7 @@ export const CommonGroupTile = ({ children }: PropsWithChildren<{}>) => {
         width: "100%",
         height: "min-content",
         [theme.breakpoints.up("sm")]: {
-          height: "26rem",
+          height: "28rem",
           transition: "all .2s",
           "&:hover": {
             boxShadow: 4,

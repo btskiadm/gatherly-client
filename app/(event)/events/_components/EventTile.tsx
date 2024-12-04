@@ -6,48 +6,35 @@ import { TruncatedTypography } from "@/app/common/components/TruncatedTypography
 import { EventTileDto } from "@/app/mock/mock-api.types";
 import {
   AccessTime,
-  CloudOutlined,
+  CalendarMonth,
   FavoriteBorderOutlined,
   Group,
   GroupAdd,
   MoreVert,
+  Place,
   ReportGmailerrorredOutlined,
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Chip, Divider, Grid2, IconButton, Menu, MenuItem, Stack, Tooltip } from "@mui/material";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 
-// todo: translation
-function formatDateDifference(dateInput: Date) {
-  const now = new Date();
-  // @ts-ignore: It is valid operation
-  const differenceInMilliseconds = now - dateInput;
-  const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
-  const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+const time = (isoStart: string, isoEnd: string) =>
+  `${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(isoStart))} - ${new Intl.DateTimeFormat("pl-PL", {
+    hour: "numeric",
+    minute: "numeric",
+  }).format(new Date(isoEnd))}`;
 
-  if (differenceInHours < 24) {
-    return "new";
-  } else if (differenceInDays < 7) {
-    return `${Math.floor(differenceInDays)} d.`;
-  } else {
-    const differenceInWeeks = Math.floor(differenceInDays / 7);
-    return `${differenceInWeeks} w.`;
-  }
-}
+const shortDay1 = (iso: string) =>
+  new Intl.DateTimeFormat("pl-PL", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  }).format(new Date(iso));
 
 export const EventTile = ({
   tile: {
@@ -71,7 +58,7 @@ export const EventTile = ({
   const handleCloseMore = useCallback(
     (reason?: "favorite") => () => {
       if (reason === "favorite") {
-        toast.success("Group added to favorite.");
+        toast.success("Event added to favorite.");
       }
 
       setMoreElement(null);
@@ -80,7 +67,7 @@ export const EventTile = ({
   );
 
   const handleJoin = useCallback(() => {
-    toast.success("You have just join to the group. Congrats !");
+    toast.success("You have just join to the event. Congrats !");
   }, []);
 
   return (
@@ -103,28 +90,6 @@ export const EventTile = ({
         }}
       />
       <Stack height="100%">
-        {/* <Avatar
-          alt="logo"
-          variant="rounded"
-          sizes="100vw"
-          sx={{
-            width: "100%",
-            height: {
-              xs: "16rem",
-              sm: "12rem",
-            },
-          }}
-        >
-          <Image
-            fill
-            src={thumb}
-            alt="logo"
-            style={{
-              objectFit: "cover",
-            }}
-          />
-        </Avatar> */}
-
         <Stack gap={1} p={2} height="100%">
           <Box position="relative">
             <Link
@@ -149,8 +114,8 @@ export const EventTile = ({
                 src={thumbnail.thumb}
                 variant="rounded"
                 sx={{
-                  height: "4rem",
-                  width: "4rem",
+                  height: "3rem",
+                  width: "3rem",
                 }}
               />
               <Tooltip title={groupTile}>
@@ -158,96 +123,117 @@ export const EventTile = ({
                   {groupTile}
                 </ClampTypography>
               </Tooltip>
+              <Stack direction="row" gap={0.5}>
+                {verified && (
+                  <Chip
+                    size="small"
+                    sx={{
+                      ".MuiChip-label": {
+                        px: "4px",
+                      },
+                    }}
+                    icon={
+                      <VerifiedOutlined
+                        fontSize="small"
+                        sx={{
+                          color: "text.secondary",
+                        }}
+                      />
+                    }
+                  />
+                )}
+                {sponsored && (
+                  <Chip
+                    size="small"
+                    sx={{
+                      ".MuiChip-label": {
+                        px: "4px",
+                      },
+                    }}
+                    icon={
+                      <StarBorderRounded
+                        fontSize="small"
+                        sx={{
+                          color: "text.secondary",
+                        }}
+                      />
+                    }
+                  />
+                )}
+              </Stack>
             </Stack>
           </Box>
           <Divider />
+
           {/* title */}
-          <Stack direction="row">
+          <Stack direction="row" justifyContent="center" alignItems="center" gap={1}>
             <Tooltip title={eventTile}>
-              <TruncatedTypography variant="subtitle1" minWidth="0px">
+              <ClampTypography variant="subtitle2" minWidth="0px" clamp={2}>
                 {eventTile}
-              </TruncatedTypography>
+              </ClampTypography>
             </Tooltip>
           </Stack>
-          {/* chips */}
-          <Stack
-            gap={0.5}
-            direction="row"
-            flexShrink={0}
-            width="min-content"
-            sx={{
-              overflowY: "hidden",
-              overflowX: "auto",
-              width: "100%",
-              padding: 0,
-              "::-webkit-scrollbar": {
-                background: "transparent",
-                width: 0,
-                height: 0,
-              },
-            }}
-          >
-            <Tooltip title="Number of members">
-              <Chip size="small" label={userLength} icon={<Group />} />
-            </Tooltip>
-            <Tooltip title="Date of creating">
-              <Chip size="small" label={formatDateDifference(new Date(createdAt))} icon={<AccessTime />} />
-            </Tooltip>
-            {remote && (
-              <Tooltip title="Remote">
-                <Chip
-                  size="small"
+
+          {/* date and location */}
+          <Grid2 container spacing={1}>
+            <Grid2 size={7}>
+              <Stack direction="row" gap={0.5} alignItems="center">
+                <CalendarMonth
+                  fontSize="small"
                   sx={{
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
+                    color: "text.secondary",
                   }}
-                  icon={<CloudOutlined fontSize="small" />}
                 />
-              </Tooltip>
-            )}
-            {verified && (
-              <Tooltip title="Verified group">
-                <Chip
-                  size="small"
+                <TruncatedTypography variant="body2" color="text.secondary">
+                  {shortDay1(startAt)}
+                </TruncatedTypography>
+              </Stack>
+            </Grid2>
+            <Grid2 size={5}>
+              <Stack direction="row" gap={0.5} alignItems="center">
+                <Place
+                  fontSize="small"
                   sx={{
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
+                    color: "text.secondary",
                   }}
-                  icon={<VerifiedOutlined fontSize="small" />}
                 />
-              </Tooltip>
-            )}
-            {sponsored && (
-              <Tooltip title="Sponsored group">
-                <Chip
-                  size="small"
+                <TruncatedTypography variant="body2" color="text.secondary">
+                  {cities[0].label}
+                </TruncatedTypography>
+              </Stack>
+            </Grid2>
+          </Grid2>
+
+          {/* time and members */}
+          <Grid2 container spacing={1}>
+            <Grid2 size={7}>
+              <Stack direction="row" gap={0.5} alignItems="center">
+                <AccessTime
+                  fontSize="small"
                   sx={{
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
+                    color: "text.secondary",
                   }}
-                  icon={<StarBorderRounded fontSize="small" />}
                 />
-              </Tooltip>
-            )}
-          </Stack>
-          {/* description */}
-          <Box height="100%">
-            <Typography
-              variant="body2"
-              sx={{
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-                color: "text.secondary",
-              }}
-            >
-              {description}
-            </Typography>
-          </Box>
+                <TruncatedTypography variant="body2" color="text.secondary">
+                  {time(startAt, endAt)}
+                </TruncatedTypography>
+              </Stack>
+            </Grid2>
+            <Grid2 size={5}>
+              <Stack direction="row" gap={0.5} alignItems="center">
+                <Group
+                  fontSize="small"
+                  sx={{
+                    color: "text.secondary",
+                  }}
+                />
+                <TruncatedTypography variant="body2" color="text.secondary">
+                  {userLength} participants
+                </TruncatedTypography>
+              </Stack>
+            </Grid2>
+          </Grid2>
+
           {/* actions */}
           <Box height="100%" />
           <Stack justifyContent="space-between" direction="row">
@@ -274,6 +260,8 @@ export const EventTile = ({
           </Stack>
         </Stack>
       </Stack>
+
+      {/* menu */}
       <Menu
         open={!!moreElement}
         anchorEl={moreElement}

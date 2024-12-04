@@ -5,17 +5,31 @@ import { TruncatedTypography } from "@/app/common/components/TruncatedTypography
 import { GroupTileDto } from "@/app/mock/mock-api.types";
 import {
   AccessTime,
+  ArrowDropDown,
   CalendarMonthOutlined,
-  CloudOutlined,
   FavoriteBorderOutlined,
   Group,
   GroupAdd,
+  InterestsOutlined,
   MoreVert,
+  PlaceOutlined,
   ReportGmailerrorredOutlined,
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Menu,
+  MenuItem,
+  Popover,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -50,24 +64,37 @@ export const GroupTile = ({
     verified,
     remote,
     eventsLength,
+    cities,
+    categories,
   },
 }: PropsWithChildren<{ tile: GroupTileDto }>) => {
   const [moreElement, setMoreElement] = useState<HTMLElement | null>(null);
+  const [citiesMoreElement, setCitiesMoreElement] = useState<HTMLElement | null>(null);
+  const [categoriesMoreElement, setCategoriesMoreElement] = useState<HTMLElement | null>(null);
 
   const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
   }, []);
 
-  const handleCloseMore = useCallback(
-    (reason?: "favorite") => () => {
-      if (reason === "favorite") {
-        toast.success("Group added to favorite.");
-      }
+  const handleOpenCities = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setCitiesMoreElement(event.currentTarget);
+  }, []);
 
-      setMoreElement(null);
-    },
-    []
-  );
+  const handleOpenCategories = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setCategoriesMoreElement(event.currentTarget);
+  }, []);
+
+  const handleCloseCities = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setCitiesMoreElement(null);
+  }, []);
+
+  const handlecCloseCategories = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setCategoriesMoreElement(null);
+  }, []);
+
+  const handleCloseMore = useCallback(() => {
+    setMoreElement(null);
+  }, []);
 
   const handleJoin = useCallback(() => {
     toast.success("You have just join to the group. Congrats !");
@@ -129,6 +156,7 @@ export const GroupTile = ({
             flexShrink={0}
             width="min-content"
             sx={{
+              flexWrap: "wrap",
               overflowY: "hidden",
               overflowX: "auto",
               width: "100%",
@@ -140,33 +168,113 @@ export const GroupTile = ({
               },
             }}
           >
-            <Tooltip title="Number of members">
-              <Chip size="small" label={userLength} icon={<Group />} />
-            </Tooltip>
-            <Tooltip title="Number of events">
-              <Chip size="small" label={eventsLength} icon={<CalendarMonthOutlined />} />
-            </Tooltip>
-            <Tooltip title="Date of creating">
-              <Chip size="small" label={formatDateDifference(new Date(createdAt))} icon={<AccessTime />} />
-            </Tooltip>
-            {remote && (
-              <Tooltip title="Remote">
+            {/* location chip */}
+            {cities.length <= 1 && (
+              <Tooltip title={`${cities[0].label} location`}>
                 <Chip
                   size="small"
+                  variant="outlined"
+                  label={cities[0].label}
                   sx={{
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
+                    zIndex: 1,
                   }}
-                  icon={<CloudOutlined fontSize="small" />}
+                  icon={<PlaceOutlined />}
                 />
               </Tooltip>
             )}
-            {verified && (
-              <Tooltip title="Verified group">
+            {cities.length > 1 && (
+              <Tooltip title={`${cities[0].label} and ${cities.length - 1} more locations`}>
+                <Chip
+                  clickable
+                  size="small"
+                  variant="outlined"
+                  label={`${cities[0].label} +${cities.length - 1}`}
+                  sx={{
+                    zIndex: 1,
+                  }}
+                  icon={<PlaceOutlined />}
+                  deleteIcon={<ArrowDropDown fontSize="small" />}
+                  onClick={handleOpenCities as any}
+                  onDelete={handleOpenCities}
+                />
+              </Tooltip>
+            )}
+
+            {/* category chip */}
+            {categories.length <= 1 && (
+              <Tooltip title={`${categories[0].label} category`}>
                 <Chip
                   size="small"
+                  variant="outlined"
+                  label={categories[0].label}
                   sx={{
+                    zIndex: 1,
+                  }}
+                  icon={<InterestsOutlined />}
+                />
+              </Tooltip>
+            )}
+            {categories.length > 1 && (
+              <Tooltip title={`${categories[0].label} and ${categories.length - 1} more locations`}>
+                <Chip
+                  clickable
+                  size="small"
+                  variant="outlined"
+                  label={`${categories[0].label} +${categories.length - 1}`}
+                  sx={{
+                    zIndex: 1,
+                  }}
+                  icon={<InterestsOutlined />}
+                  deleteIcon={<ArrowDropDown fontSize="small" />}
+                  onClick={handleOpenCategories as any}
+                  onDelete={handleOpenCategories}
+                />
+              </Tooltip>
+            )}
+
+            {/* member chip */}
+            <Tooltip title={`${userLength} members`}>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={userLength}
+                sx={{
+                  zIndex: 1,
+                }}
+                icon={<Group />}
+              />
+            </Tooltip>
+
+            {/* event chip */}
+            <Tooltip title={`${eventsLength} events`}>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={eventsLength}
+                sx={{ zIndex: 1 }}
+                icon={<CalendarMonthOutlined />}
+              />
+            </Tooltip>
+
+            {/* created at chip */}
+            <Tooltip title={`Created at ${new Date(createdAt).toLocaleDateString()}`}>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={formatDateDifference(new Date(createdAt))}
+                sx={{ zIndex: 1 }}
+                icon={<AccessTime />}
+              />
+            </Tooltip>
+
+            {/* verified chip */}
+            {verified && (
+              <Tooltip title="Group verified">
+                <Chip
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    zIndex: 1,
                     ".MuiChip-label": {
                       px: "4px",
                     },
@@ -175,11 +283,15 @@ export const GroupTile = ({
                 />
               </Tooltip>
             )}
+
+            {/* sponsored chip */}
             {sponsored && (
-              <Tooltip title="Sponsored group">
+              <Tooltip title="Group sponsored">
                 <Chip
                   size="small"
+                  variant="outlined"
                   sx={{
+                    zIndex: 1,
                     ".MuiChip-label": {
                       px: "4px",
                     },
@@ -189,6 +301,7 @@ export const GroupTile = ({
               </Tooltip>
             )}
           </Stack>
+
           {/* description */}
           <Box height="100%">
             <Typography
@@ -204,6 +317,7 @@ export const GroupTile = ({
               {description}
             </Typography>
           </Box>
+
           {/* actions */}
           <Box height="100%" />
           <Stack justifyContent="space-between" direction="row">
@@ -230,10 +344,47 @@ export const GroupTile = ({
           </Stack>
         </Stack>
       </Stack>
+      <Popover
+        open={!!citiesMoreElement}
+        anchorEl={citiesMoreElement}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        onClose={handleCloseCities}
+      >
+        <Stack direction="column" gap={1} px={1} py={2}>
+          {cities.slice(1).map((city) => (
+            <Chip key={city.value} size="small" variant="outlined" label={city.label} icon={<InterestsOutlined />} />
+          ))}
+        </Stack>
+      </Popover>
+      <Popover
+        open={!!categoriesMoreElement}
+        anchorEl={categoriesMoreElement}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        onClose={handlecCloseCategories}
+      >
+        <Stack direction="column" gap={1} px={1} py={2}>
+          {categories.slice(1).map((category) => (
+            <Chip
+              key={category.value}
+              size="small"
+              variant="outlined"
+              label={category.label}
+              icon={<InterestsOutlined />}
+            />
+          ))}
+        </Stack>
+      </Popover>
+
       <Menu
         open={!!moreElement}
         anchorEl={moreElement}
-        onClose={handleCloseMore()}
+        onClose={handleCloseMore}
         sx={{
           "& .MuiPaper-root": {
             "& .MuiMenuItem-root": {
@@ -244,7 +395,7 @@ export const GroupTile = ({
           },
         }}
       >
-        <MenuItem onClick={handleCloseMore("favorite")} disableRipple>
+        <MenuItem onClick={handleCloseMore} disableRipple>
           <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
@@ -263,7 +414,7 @@ export const GroupTile = ({
             sx={{
               color: "text.primary",
             }}
-            onClick={handleCloseMore()}
+            onClick={handleCloseMore}
           >
             <ReportGmailerrorredOutlined color="action" />
             Report

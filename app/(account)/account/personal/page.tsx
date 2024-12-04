@@ -124,9 +124,14 @@ export default function Page() {
   return (
     <Paper>
       <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-        <Typography variant="h5" fontWeight="600">
-          Personal information
-        </Typography>
+        <Stack direction="column">
+          <Typography variant="h5" fontWeight="600">
+            Personal information
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Informacje będą widoczne dla wszystkich użytkowników.
+          </Typography>
+        </Stack>
         <FormControl>
           <FormLabel>Birthdate</FormLabel>
           <Grid2 container spacing={1}>
@@ -220,7 +225,6 @@ export default function Page() {
             <MenuItem value="non-binary">Non-Binary</MenuItem>
             <MenuItem value="not-listed">Not listed</MenuItem>
           </Select>
-          <TruncatedFormHelperText>Your gender is not visible to others</TruncatedFormHelperText>
         </FormControl>
         <FormControl>
           <FormLabel>What are you looking for?</FormLabel>
@@ -255,9 +259,7 @@ export default function Page() {
               onClick={() => toogleLooginFor("professionallyNetwork")}
             />
           </Stack>
-          <TruncatedFormHelperText>Your gender is not visible to others</TruncatedFormHelperText>
         </FormControl>
-
         <FormControl>
           <FormLabel>Life stages</FormLabel>
           <Stack direction="row" gap={1} flexWrap="wrap">
@@ -274,7 +276,6 @@ export default function Page() {
               );
             })}
           </Stack>
-          <TruncatedFormHelperText>Your life stage is not visible to others</TruncatedFormHelperText>
         </FormControl>
         <Stack direction="row" justifyContent="flex-end">
           <Button variant="contained">Save</Button>

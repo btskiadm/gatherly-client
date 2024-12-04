@@ -86,16 +86,21 @@ export default function Page() {
       )}
       {openDeleteAvatar && (
         <ConfirmModal title="Delete avatar" open={openDeleteAvatar} cancel={deleteAvatarCancel} confirm={deleteAvatar}>
-          <Typography variant="body1">Are you sure you want to delete your profile avatar ?</Typography>
+          <Typography variant="body1">Are you sure you want to delete your profile picture ?</Typography>
         </ConfirmModal>
       )}
       <Paper>
         <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-          <Typography variant="h5" fontWeight="600">
-            Personal information
-          </Typography>
-          <FormControl error={!!bioError} fullWidth>
-            <FormLabel>Avatar</FormLabel>
+          <Stack direction="column">
+            <Typography variant="h5" fontWeight="600">
+              Edit profile
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Informacje będą widoczne dla wszystkich użytkowników.
+            </Typography>
+          </Stack>
+          <FormControl error={!!avatarError} fullWidth>
+            <FormLabel>User picutre</FormLabel>
             <Stack direction="row" gap={2} alignItems="center">
               <Avatar
                 alt="logo"
@@ -144,9 +149,7 @@ export default function Page() {
                 </Button>
               </Stack>
             </Stack>
-            <TruncatedFormHelperText>
-              {!bioError ? <>{/* Dostępne znaki: {content.length}/{maxReportContent} */}</> : bioError.message}
-            </TruncatedFormHelperText>
+            <TruncatedFormHelperText>{!avatarError ? <></> : avatarError.message}</TruncatedFormHelperText>
           </FormControl>
           <FormControl error={!!bioError} fullWidth>
             <FormLabel>Location</FormLabel>
@@ -165,16 +168,12 @@ export default function Page() {
                 />
               )}
             />
-            <TruncatedFormHelperText>
-              {!bioError ? <>{/* Dostępne znaki: {content.length}/{maxReportContent} */}</> : bioError.message}
-            </TruncatedFormHelperText>
+            <TruncatedFormHelperText>{!locationError ? <></> : locationError.message}</TruncatedFormHelperText>
           </FormControl>
           <FormControl error={!!bioError} fullWidth>
             <FormLabel>Bio</FormLabel>
-            <Textarea placeholder="Description.." minRows={6} value={bio} onChange={handleBio} />
-            <TruncatedFormHelperText>
-              {!bioError ? <>{/* Dostępne znaki: {content.length}/{maxReportContent} */}</> : bioError.message}
-            </TruncatedFormHelperText>
+            <Textarea placeholder="Bio.." minRows={6} value={bio} onChange={handleBio} />
+            <TruncatedFormHelperText>{!bioError ? <></> : bioError.message}</TruncatedFormHelperText>
           </FormControl>
           <Stack direction="row" justifyContent="flex-end">
             <Button variant="contained">Save</Button>

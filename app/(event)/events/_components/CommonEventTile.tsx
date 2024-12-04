@@ -11,7 +11,7 @@ export const CommonEventTile = ({ children }: PropsWithChildren<{}>) => {
         width: "100%",
         height: "min-content",
         [theme.breakpoints.up("sm")]: {
-          height: "19rem",
+          height: "16rem",
           transition: "all .2s",
           "&:hover": {
             boxShadow: 4,

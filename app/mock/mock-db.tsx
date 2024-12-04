@@ -458,6 +458,9 @@ DBCity.forEach((city) => {
 
       const gId = `${city.value}${category.value}${groupIdx}`;
 
+      const additionalCities = DBCity.slice(0, groupIdx % 5 || 0);
+      const additionalCategories = DBCategory.slice(0, groupIdx % 5 || 0);
+
       DBGroups.push({
         id: gId,
         title: getLoremIpsumSentenses(1, groupIdx),
@@ -467,18 +470,8 @@ DBCity.forEach((city) => {
           id: `${gId}_thumbnailds`,
           thumb: groupSrc.src,
         },
-        cities: [
-          {
-            label: city.label,
-            value: city.value,
-          },
-        ],
-        categories: [
-          {
-            label: category.label,
-            value: category.value,
-          },
-        ],
+        cities: [...additionalCities.map((c) => ({ label: c.label, value: c.value }))],
+        categories: [...additionalCategories.map((c) => ({ label: c.label, value: c.value }))],
         sponsored: {
           id: `group_${groupIdx}_sponsored`,
           value: groupIdx % 2 === 0,
