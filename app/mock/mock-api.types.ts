@@ -85,11 +85,6 @@ export interface StackedEventAttributesDto extends AttributesDto {
   category: CategoryDto;
 }
 
-export interface StackedGroupTilesDto {
-  attributes: StackedGroupAttributesDto;
-  tiles: GroupTileDto[];
-}
-
 export interface StackedEventTilesDto {
   attributes: StackedEventAttributesDto;
   tiles: EventTileDto[];

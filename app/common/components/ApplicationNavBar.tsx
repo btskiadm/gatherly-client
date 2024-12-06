@@ -113,6 +113,17 @@ export const ApplicationNavBar = (props: Props) => {
           <Divider />
           <List>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
+              <ListItemButton href="/createGroup" LinkComponent={Link}>
+                <ListItemIcon>
+                  <AddCircleOutlineRounded />
+                </ListItemIcon>
+                <ListItemText primary="Create a group" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem disablePadding onClick={handleCloseNavMenu}>
               <ListItemButton href="/groups" LinkComponent={Link}>
                 <ListItemIcon>
                   <Groups2 />

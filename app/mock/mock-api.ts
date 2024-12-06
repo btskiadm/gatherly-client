@@ -2,13 +2,13 @@ import {
   EventStackDto,
   EventTileDto,
   GroupDetailsDto,
+  GroupTileDto,
   SearchCategoryDto,
   SearchCityDto,
   SearchGroupDto,
   SearchUserDto,
   ShortGroupDto,
   StackedEventTilesDto,
-  StackedGroupTilesDto,
   UserDto,
 } from "./mock-api.types";
 import { DBCategory, DBCity, DBGroups, DBUser } from "./mock-db";
@@ -58,7 +58,7 @@ const g_sponsored = false;
 const g_remote = false;
 const g_verified = false;
 
-export const getStackedGroupTiles = (): StackedGroupTilesDto[] => {
+export const getGroupTiles = (): GroupTileDto[] => {
   const groupsByCity = DBGroups.filter((group) => group.cities.some((c) => c.value === g_city.value)) ?? [];
   const groupsByCategory =
     groupsByCity.filter((group) => group.categories.some((c) => c.value === g_category.value)) ?? [];
@@ -82,18 +82,7 @@ export const getStackedGroupTiles = (): StackedGroupTilesDto[] => {
     return numToValidateCounter === numToValidate;
   });
 
-  return [
-    {
-      attributes: {
-        category: g_category,
-        city: g_city,
-        remote: g_remote,
-        sponsored: g_sponsored,
-        verified: g_verified,
-      },
-      tiles: filtered.map(toGroupTileDto),
-    },
-  ];
+  return filtered.map(toGroupTileDto);
 };
 
 export const getGroupDetailsApi = (groupId: string): GroupDetailsDto | null => {

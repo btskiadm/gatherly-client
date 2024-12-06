@@ -1,18 +1,16 @@
 import { Stack } from "@mui/material";
 import { GroupsListing } from "./GroupsListing";
-import { GroupsStack } from "./GroupsStack";
-import { getStackedGroupTiles } from "@/app/mock/mock-api";
+import { getGroupTiles } from "@/app/mock/mock-api";
+import { GroupTilesList } from "./GroupTilesList";
 
 //todo: mock
-const stackedGroupTiles = getStackedGroupTiles();
+const tiles = getGroupTiles();
 
 export const GroupsPage = () => {
   return (
     <Stack gap={3}>
       <GroupsListing />
-      {stackedGroupTiles.map((stackedGroupTile, idx) => (
-        <GroupsStack key={idx} stackedGroupTile={stackedGroupTile} />
-      ))}
+      <GroupTilesList tiles={tiles} />
     </Stack>
   );
 };
