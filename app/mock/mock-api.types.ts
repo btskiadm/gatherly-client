@@ -85,11 +85,6 @@ export interface StackedEventAttributesDto extends AttributesDto {
   category: CategoryDto;
 }
 
-export interface StackedEventTilesDto {
-  attributes: StackedEventAttributesDto;
-  tiles: EventTileDto[];
-}
-
 export interface SponsoredAttributeDto {
   id: string;
   value: boolean;

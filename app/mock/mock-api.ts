@@ -8,7 +8,6 @@ import {
   SearchGroupDto,
   SearchUserDto,
   ShortGroupDto,
-  StackedEventTilesDto,
   UserDto,
 } from "./mock-api.types";
 import { DBCategory, DBCity, DBGroups, DBUser } from "./mock-db";
@@ -137,7 +136,7 @@ const e_sponsored = true;
 const e_remote = false;
 const e_verified = true;
 
-export const getStackedEvents = (): StackedEventTilesDto[] => {
+export const getEventTiles = (): EventTileDto[] => {
   const events: EventTileDto[] = [];
 
   DBGroups.forEach((group) => {
@@ -155,7 +154,7 @@ export const getStackedEvents = (): StackedEventTilesDto[] => {
     return [];
   }
 
-  const filtered = eventsByCategory.filter((e) => {
+  return eventsByCategory.filter((e) => {
     let numToValidate = 0;
     let numToValidateCounter = 0;
 
@@ -169,17 +168,4 @@ export const getStackedEvents = (): StackedEventTilesDto[] => {
 
     return numToValidateCounter === numToValidate;
   });
-
-  return [
-    {
-      attributes: {
-        category: e_category,
-        city: e_city,
-        remote: e_remote,
-        sponsored: e_sponsored,
-        verified: e_verified,
-      },
-      tiles: filtered,
-    },
-  ];
 };
