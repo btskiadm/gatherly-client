@@ -113,7 +113,7 @@ export const ApplicationNavBar = (props: Props) => {
           <Divider />
           <List>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
-              <ListItemButton href="/createGroup" LinkComponent={Link}>
+              <ListItemButton href="/create-group" LinkComponent={Link}>
                 <ListItemIcon>
                   <AddCircleOutlineRounded />
                 </ListItemIcon>
@@ -317,7 +317,7 @@ export const ApplicationNavBar = (props: Props) => {
                     },
                   })}
                   color="secondary"
-                  href="/createGroup"
+                  href="/create-group"
                   variant="contained"
                   startIcon={<AddCircleOutlineRounded fontSize="small" />}
                   LinkComponent={Link}
