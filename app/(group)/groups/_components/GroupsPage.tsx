@@ -4,7 +4,7 @@ import { getGroupTiles } from "@/app/mock/mock-api";
 import { GroupTilesList } from "./GroupTilesList";
 
 //todo: mock
-const tiles = getGroupTiles();
+const tiles = getGroupTiles().slice(0, 50);
 
 export const GroupsPage = () => {
   return (

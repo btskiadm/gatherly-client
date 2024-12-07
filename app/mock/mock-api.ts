@@ -51,16 +51,21 @@ export const getSeachUsers = (): SearchUserDto[] =>
     },
   }));
 
-const g_city = DBCity[0];
-const g_category = DBCategory[0];
+// const g_city = DBCity[0];
+// const g_category = DBCategory[0];
+const g_city: any = null;
+const g_category: any = null;
 const g_sponsored = false;
 const g_remote = false;
 const g_verified = false;
 
 export const getGroupTiles = (): GroupTileDto[] => {
-  const groupsByCity = DBGroups.filter((group) => group.cities.some((c) => c.value === g_city.value)) ?? [];
-  const groupsByCategory =
-    groupsByCity.filter((group) => group.categories.some((c) => c.value === g_category.value)) ?? [];
+  const groupsByCity = g_city
+    ? DBGroups.filter((group) => group.cities.some((c) => c.value === g_city.value)) ?? []
+    : DBGroups;
+  const groupsByCategory = g_category
+    ? groupsByCity.filter((group) => group.categories.some((c) => c.value === g_category.value)) ?? []
+    : groupsByCity;
 
   if (groupsByCategory.length <= 0) {
     return [];
@@ -132,9 +137,9 @@ export const getShortGroupsByUsername = (username: string): ShortGroupDto[] => {
 
 const e_city = DBCity[0];
 const e_category = DBCategory[0];
-const e_sponsored = true;
+const e_sponsored = false;
 const e_remote = false;
-const e_verified = true;
+const e_verified = false;
 
 export const getEventTiles = (): EventTileDto[] => {
   const events: EventTileDto[] = [];
@@ -145,7 +150,7 @@ export const getEventTiles = (): EventTileDto[] => {
     });
   });
 
-  const eventsByCity = events.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? [];
+  const eventsByCity = events.filter((event) => event.cities.some((c) => c.value === e_city.value)) ?? [];
 
   const eventsByCategory =
     eventsByCity.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? [];
