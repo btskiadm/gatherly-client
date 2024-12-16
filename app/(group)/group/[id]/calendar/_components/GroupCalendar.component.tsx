@@ -17,7 +17,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { Button, ButtonGroup, Skeleton, Stack, Tooltip, Typography, alpha, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `
@@ -152,9 +152,20 @@ export const GroupCalendar = ({ groupDetails }: Props) => {
 
   const handleEventClick = useCallback(
     (event: EventClickArg) => {
-      router.push("123-456-789");
+      router.push(event.event._def.publicId);
     },
     [router]
+  );
+
+  const events = useMemo(
+    () =>
+      groupDetails.events.map((e) => ({
+        id: e.id,
+        title: e.title,
+        start: e.date.startAt,
+        end: e.date.endAt,
+      })),
+    [groupDetails]
   );
 
   return (
@@ -188,12 +199,7 @@ export const GroupCalendar = ({ groupDetails }: Props) => {
           }}
           initialView="dayGridMonth"
           dayMaxEvents={true}
-          initialEvents={groupDetails.events.map((e) => ({
-            id: e.id,
-            title: e.title,
-            start: e.date.startAt,
-            end: e.date.endAt,
-          }))}
+          initialEvents={events}
           dayHeaderContent={renderDayHeaderContent}
           allDayContent={renderAllDayContent}
           slotLabelContent={renderSlotLabelContent}

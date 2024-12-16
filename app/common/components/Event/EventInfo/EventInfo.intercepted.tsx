@@ -53,13 +53,13 @@ export const EventInfoIntercepted = () => {
       onAction: () => {
         window.location.replace("/event/123-456-789");
       },
-      text: "Details",
+      text: "Show detail",
     }),
     []
   );
 
   return (
-    <ModalTemplate open={true} title="Lorem ipsum" loading={loading} cancel={cancel} confirm={join} back={details}>
+    <ModalTemplate open={true} title="Lorem ipsum" loading={loading} cancel={cancel} confirm={join} action={details}>
       {event && <EventInfo ref={eventInfoRef} event={event} />}
     </ModalTemplate>
   );

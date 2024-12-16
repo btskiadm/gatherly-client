@@ -7,6 +7,7 @@ import {
   AccessTime,
   ArrowDropDown,
   CalendarMonthOutlined,
+  CloudOutlined,
   FavoriteBorderOutlined,
   Group,
   GroupAdd,
@@ -125,10 +126,7 @@ export const GroupTile = ({
           sizes="100vw"
           sx={{
             width: "100%",
-            height: {
-              xs: "16rem",
-              sm: "12rem",
-            },
+            height: "13rem",
           }}
         >
           <Image
@@ -297,6 +295,23 @@ export const GroupTile = ({
                     },
                   }}
                   icon={<StarBorderRounded fontSize="small" />}
+                />
+              </Tooltip>
+            )}
+
+            {/* remote chip */}
+            {remote && (
+              <Tooltip title="Remote group">
+                <Chip
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    zIndex: 1,
+                    ".MuiChip-label": {
+                      px: "4px",
+                    },
+                  }}
+                  icon={<CloudOutlined fontSize="small" />}
                 />
               </Tooltip>
             )}

@@ -9,6 +9,7 @@ import {
   EventTileDto,
   GroupDto,
   GroupTileDto,
+  ShortEventDto,
   ShortGroupDto,
   ThumbnailsDto,
   UserDetailsDto,
@@ -267,4 +268,12 @@ export const toShortGroup = ({ id, title, users, thumbnails, sponsored, verified
   sponsored: sponsored.value,
   verified: verified.value,
   thumbnails: toThumbnailsDto(thumbnails),
+});
+
+export const toShortEvent = ({ id, title, users, sponsored, verified }: Event): ShortEventDto => ({
+  id,
+  title,
+  users: users.length,
+  sponsored: sponsored.value,
+  verified: verified.value,
 });

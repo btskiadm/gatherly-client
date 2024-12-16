@@ -6,6 +6,10 @@ import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from ".
 
 interface Props
   extends PropsWithChildren<{
+    action?: {
+      text?: string;
+      onAction: () => void;
+    };
     back?: {
       text?: string;
       onAction: () => void;
@@ -27,7 +31,8 @@ interface Props
     title: string;
   }> {}
 
-export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, reset, children }: Props) => {
+export const ModalTemplate = ({ open, loading, title, action, cancel, confirm, back, reset, children }: Props) => {
+  const { onAction: onAction, text: actionText = "Action" } = action ?? {};
   const { onAction: onBack, text: backText = "Back" } = back ?? {};
   const { onAction: onReset, text: resetText = "Reset" } = reset ?? {};
   const { onAction: onCancel, text: cancelText = "Cancel" } = cancel ?? {};
@@ -56,6 +61,11 @@ export const ModalTemplate = ({ open, loading, title, cancel, confirm, back, res
       <BootstrapDialogActions>
         <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
           <Stack direction="row" gap={1}>
+            {onAction && (
+              <Button disabled={loading} variant="contained" size="small" onClick={onAction}>
+                {actionText}
+              </Button>
+            )}
             {onReset && (
               <Button
                 disabled={loading}

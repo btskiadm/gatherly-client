@@ -15,11 +15,20 @@ import {
 import { Box, Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 
+const isAdmin = true;
+const isModerator = false;
+const isMember = false;
+
 export const EventTileMenu = () => {
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
   const [openCancelEvent, setOpenCancelEvent] = useState(false);
   const [openJoinEvent, setOpenJoinEvent] = useState(false);
   const [openLeaveEvent, setOpenLeaveEvent] = useState(false);
+
+  const canEdit = isAdmin;
+  const canJoin = !isAdmin && !isModerator && !isMember;
+  const canLeave = isAdmin || isMember || isModerator;
+  const canCancel = isAdmin || isModerator;
 
   const handleOpenMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMoreElement(event.currentTarget);
@@ -81,7 +90,6 @@ export const EventTileMenu = () => {
     []
   );
 
-  // leave event
   const handleLeaveEventOpen = useCallback(() => {
     setOpenLeaveEvent(true);
     handleCloseMore();
@@ -133,14 +141,19 @@ export const EventTileMenu = () => {
           },
         }}
       >
-        <MenuItem onClick={handleJoinEventOpen} disableRipple>
-          <Login color="action" />
-          Join
-        </MenuItem>
-        <MenuItem onClick={handleLeaveEventOpen} disableRipple>
-          <Logout color="action" />
-          Leave
-        </MenuItem>
+        {canJoin && (
+          <MenuItem onClick={handleJoinEventOpen} disableRipple>
+            <Login color="action" />
+            Join
+          </MenuItem>
+        )}
+
+        {canLeave && (
+          <MenuItem onClick={handleLeaveEventOpen} disableRipple>
+            <Logout color="action" />
+            Leave
+          </MenuItem>
+        )}
         <Link href="123-456-789" underline="none">
           <MenuItem disableRipple sx={{ color: "text.primary" }}>
             <PreviewOutlined color="action" />
@@ -166,17 +179,21 @@ export const EventTileMenu = () => {
             Report
           </MenuItem>
         </Link>
-        <Divider />
-        <Link href="editEvent" underline="none">
-          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
-            <EditOutlined color="action" />
-            Edit
+        {(canEdit || canCancel) && <Divider />}
+        {canEdit && (
+          <Link href="editEvent" underline="none">
+            <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
+              <EditOutlined color="action" />
+              Edit
+            </MenuItem>
+          </Link>
+        )}
+        {canCancel && (
+          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCancelEventOpen}>
+            <CloseOutlined color="action" />
+            Cancel
           </MenuItem>
-        </Link>
-        <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCancelEventOpen}>
-          <CloseOutlined color="action" />
-          Cancel
-        </MenuItem>
+        )}
       </Menu>
 
       {openCancelEvent && (

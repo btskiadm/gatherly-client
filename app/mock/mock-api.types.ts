@@ -195,3 +195,11 @@ export interface ShortGroupDto {
   sponsored: boolean;
   thumbnails: ThumbnailsDto;
 }
+
+export interface ShortEventDto {
+  id: string;
+  title: string;
+  users: number;
+  verified: boolean;
+  sponsored: boolean;
+}

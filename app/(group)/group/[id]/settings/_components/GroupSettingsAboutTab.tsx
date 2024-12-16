@@ -15,7 +15,7 @@ interface Props {
 export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {
   const ref = useRef<CreateGroupRef>(null);
   const [loading, setLoading] = useState(false);
-  const { title, description, categories, cities } = groupDetails;
+  const { title, description, categories, cities, remote } = groupDetails;
 
   const handleSave = useCallback(async () => {
     const data = ref.current?.save();
@@ -38,7 +38,14 @@ export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {
   return (
     <Paper>
       <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-        <CreateGroup ref={ref} name={title} description={description} categories={categories} city={cities[0]} />
+        <CreateGroup
+          ref={ref}
+          name={title}
+          description={description}
+          categories={categories}
+          city={cities[0]}
+          remote={remote.value}
+        />
         <Stack direction="row" justifyContent="space-between">
           <Button disabled={loading} variant="text" color="error" onClick={handleReset}>
             Reset

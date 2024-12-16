@@ -31,6 +31,7 @@ const time = (isoStart: string, isoEnd: string) =>
 
 export const EventTile = ({ event }: Props) => {
   const {
+    id,
     title,
     date: { startAt, endAt },
     users,
@@ -53,7 +54,7 @@ export const EventTile = ({ event }: Props) => {
       })}
     >
       <Link
-        href="123-456-789"
+        href={`/event/${id}`}
         sx={{
           height: 0,
           width: 0,
@@ -110,8 +111,6 @@ export const EventTile = ({ event }: Props) => {
             <Stack alignContent="flex-start" alignItems="flex-start" gap={{ xs: 1, sm: 0.5 }}>
               <Typography
                 variant="body2"
-                color="text.secondary"
-                fontWeight={600}
                 sx={{
                   overflow: "hidden",
                   display: "-webkit-box",
@@ -120,7 +119,6 @@ export const EventTile = ({ event }: Props) => {
                     sm: 1,
                   },
                   WebkitBoxOrient: "vertical",
-                  color: "text.secondary",
                 }}
               >
                 {title}

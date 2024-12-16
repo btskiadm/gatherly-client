@@ -27,8 +27,9 @@ const groupCategorySchema = z.string().min(2).max(25);
 export const createGroupSchema = z.object({
   name: groupNameSchema,
   description: groupDescriptionSchema,
-  city: groupCitySchema.optional(),
+  city: groupCitySchema,
   categories: z.array(groupCategorySchema).min(minGroupCategories).max(maxGroupCategories),
+  remote: z.boolean(),
 });
 
 export type CreateGroupInput = z.infer<typeof createGroupSchema>;

@@ -473,7 +473,7 @@ iterate(numbOfGroups, (groupIndex) => {
   const totalEventsCount = Math.floor(groupIndex * 1.91) % maxEventsPerGroup;
   const totalCommentsCount = Math.floor(groupIndex & 2.01) % maxCommentsPerGroup;
 
-  const groupId = `group:${groupIndex}`;
+  const groupId = `group-${groupIndex}`;
 
   const groupCreatedAt = new Date();
   groupCreatedAt.setDate(groupCreatedAt.getDate() - groupIndex * 7);
@@ -518,7 +518,7 @@ iterate(numbOfGroups, (groupIndex) => {
       value: groupIndex % 5 === 0,
     },
     events: arrayable(totalEventsCount).map((_, eventIdx) => {
-      const eventId = `${groupId}_event:${eventIdx}`;
+      const eventId = `${groupId}_event-${eventIdx}`;
       const eventCreatedAt = new Date(groupCreatedAt);
       eventCreatedAt.setDate(eventCreatedAt.getDate() + eventIdx * 3);
 
@@ -618,7 +618,7 @@ iterate(numbOfGroups, (groupIndex) => {
       createdAt.setHours(createdAt.getHours() + commentIdx * 12);
 
       return {
-        id: `${groupId}_comment:${commentIdx}`,
+        id: `${groupId}_comment-${commentIdx}`,
         content: getLoremIpsumSentenses(1, commentIdx),
         createdAt: createdAt.toISOString(),
         rate: commentIdx % 6 || 1,

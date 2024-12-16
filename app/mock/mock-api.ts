@@ -7,16 +7,19 @@ import {
   SearchCityDto,
   SearchGroupDto,
   SearchUserDto,
+  ShortEventDto,
   ShortGroupDto,
   UserDto,
 } from "./mock-api.types";
 import { DBCategory, DBCity, DBGroups, DBUser } from "./mock-db";
+import { Event } from "./mock-db.types";
 import {
   getGroupedEvents,
   stackEventsDto,
   toEventTileDto,
   toGroupDto,
   toGroupTileDto,
+  toShortEvent,
   toShortGroup,
 } from "./mock-helpers";
 
@@ -135,8 +138,29 @@ export const getShortGroupsByUsername = (username: string): ShortGroupDto[] => {
   return groups.map(toShortGroup);
 };
 
-const e_city = DBCity[0];
-const e_category = DBCategory[0];
+export const getShortEventsByUsername = (username: string): ShortEventDto[] => {
+  const user = getUserApi(username);
+
+  if (!user) {
+    return [];
+  }
+
+  const events: Event[] = [];
+  DBGroups.forEach((group) => {
+    group.events.forEach((event) => {
+      if (event.users.some((eUser) => eUser.user.id === user.id)) {
+        events.push(event);
+      }
+    });
+  });
+
+  return events.map(toShortEvent);
+};
+
+// const e_city = DBCity[0];
+// const e_category = DBCategory[0];
+const e_city: any = null;
+const e_category: any = null;
 const e_sponsored = false;
 const e_remote = false;
 const e_verified = false;
@@ -150,10 +174,13 @@ export const getEventTiles = (): EventTileDto[] => {
     });
   });
 
-  const eventsByCity = events.filter((event) => event.cities.some((c) => c.value === e_city.value)) ?? [];
+  const eventsByCity = e_city
+    ? events.filter((event) => event.cities.some((c) => c.value === e_city.value)) ?? []
+    : events;
 
-  const eventsByCategory =
-    eventsByCity.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? [];
+  const eventsByCategory = e_category
+    ? eventsByCity.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? []
+    : eventsByCity;
 
   if (eventsByCategory.length <= 0) {
     return [];

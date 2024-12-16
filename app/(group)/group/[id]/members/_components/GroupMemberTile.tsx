@@ -29,7 +29,7 @@ export const GroupMemberTile = ({ groupUser }: Props) => {
   return (
     <Box position="relative">
       <Link
-        href={`/profile/123-456-789`}
+        href={`/profile/${groupUser.user.username}`}
         sx={{
           height: 0,
           width: 0,

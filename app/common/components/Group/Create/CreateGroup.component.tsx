@@ -15,15 +15,20 @@ import { getSearchCategories, getSearchCities } from "@/app/mock/mock-api";
 import { CategoryDto, CityDto, SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
 import {
   Autocomplete,
+  Checkbox,
   Chip,
   CircularProgress,
+  Divider,
   FormControl,
+  FormControlLabel,
   FormHelperText,
   FormLabel,
+  Grid2,
   Stack,
   TextField,
 } from "@mui/material";
 import React, { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { TruncatedTypography } from "../../TruncatedTypography";
 
 const loading = false;
 
@@ -42,14 +47,52 @@ interface Props {
   description?: string;
   city?: CityDto;
   categories?: CategoryDto[];
+  remote?: boolean;
 }
 
+const ListboxComponent = (selected: SearchCategoryDto[], onDelete: (toDelete: SearchCategoryDto) => void) =>
+  React.forwardRef(function ListboxComponent(
+    props: React.HTMLAttributes<HTMLElement>,
+    ref: React.LegacyRef<HTMLDivElement>
+  ) {
+    const { children, ...other } = props;
+
+    return (
+      <div {...other} ref={ref}>
+        {selected.length > 0 && (
+          <Stack direction="row" gap={0.5} flexWrap="wrap" p={1} zIndex={100}>
+            {selected.map((selection) => (
+              <Chip
+                key={selection.value}
+                variant="outlined"
+                label={selection.label}
+                onDelete={() => onDelete(selection)}
+              />
+            ))}
+          </Stack>
+        )}
+
+        {children}
+      </div>
+    );
+  });
+
 export const CreateGroup = forwardRef<CreateGroupRef, Props>(
-  ({ name: _name = "", description: _description = "", city: _city = null, categories: _categories = [] }, ref) => {
+  (
+    {
+      name: _name = "",
+      description: _description = "",
+      city: _city = null,
+      categories: _categories = [],
+      remote: _remote = false,
+    },
+    ref
+  ) => {
     const [name, setName] = useState(_name);
     const [description, setDescription] = useState(_description);
     const [city, setCity] = useState<SearchCityDto | null>(_city ? cityDtoToSearchCityDto(_city) : null);
     const [categories, setCategories] = useState<SearchCategoryDto[]>(_categories.map(categoryDtoToSearchCategoryDto));
+    const [remote, setRemote] = useState(_remote);
     const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
     const handleReset = useCallback(() => {
@@ -57,6 +100,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
       setDescription("");
       setCity(null);
       setCategories([]);
+      setRemote(false);
     }, []);
 
     const handleSave = useCallback((): CreateGroupData => {
@@ -65,6 +109,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
         description,
         city: city?.value,
         categories: categories.map(({ value }) => value),
+        remote,
       });
 
       if (error) {
@@ -75,7 +120,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
         success,
         data,
       };
-    }, [name, description, city, categories]);
+    }, [name, description, city, categories, remote]);
 
     useImperativeHandle(ref, () => ({
       save: handleSave,
@@ -85,6 +130,13 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
     const handleCategories = useCallback((e: unknown, categories: SearchCategoryDto[]) => {
       setCategories(categories);
     }, []);
+
+    const handleDeleteCategories = useCallback(
+      (toDelete: SearchCategoryDto) => {
+        setCategories((prevCategories) => prevCategories.filter((p) => p.value !== toDelete.value));
+      },
+      [setCategories]
+    );
 
     const handleCity = useCallback((e: unknown, value: SearchCityDto | null) => {
       setCity(value);
@@ -97,6 +149,13 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
     const handleDescription = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setDescription(e.target.value);
     }, []);
+
+    const handleRemote = useCallback(
+      (event: unknown, checked: boolean) => {
+        setRemote(checked);
+      },
+      [remote]
+    );
 
     const nameError = errors["name"];
     const descriptionError = errors["description"];
@@ -123,7 +182,6 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
           <Autocomplete<SearchCategoryDto, true>
             multiple
             value={categories}
-            defaultValue={categories}
             onChange={handleCategories}
             options={getSearchCategories()}
             sx={{
@@ -134,6 +192,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
                 my: 0, // fix problem with chip inside autocomplete
               },
             }}
+            ListboxComponent={ListboxComponent(categories, handleDeleteCategories)}
             getOptionLabel={(option) => option.label}
             renderInput={(params) => (
               <TextField
@@ -195,6 +254,51 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
             )}
           </FormHelperText>
         </FormControl>
+        <Grid2 container spacing={{ xs: 0.5, sm: 2 }}>
+          <Grid2 size={{ xs: 12, sm: 8 }}>
+            <FormControl error={!!cityError} fullWidth>
+              <FormLabel required>Miasto</FormLabel>
+              <Autocomplete<SearchCityDto>
+                value={city}
+                defaultValue={city}
+                onChange={handleCity}
+                options={getSearchCities()}
+                getOptionLabel={({ label }) => label}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    slotProps={{
+                      input: {
+                        ...params.InputProps,
+                        placeholder: "Miasto",
+                        endAdornment: (
+                          <React.Fragment>
+                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                            {params.InputProps.endAdornment}
+                          </React.Fragment>
+                        ),
+                      },
+                    }}
+                  />
+                )}
+              />
+            </FormControl>
+          </Grid2>
+          <Grid2
+            size={{ xs: 12, sm: 4 }}
+            display="flex"
+            alignItems="flex-end"
+            justifyContent={{ xs: "flex-start", sm: "center" }}
+          >
+            <FormControl>
+              <FormControlLabel
+                control={<Checkbox value={remote} onChange={handleRemote} />}
+                label={<FormLabel>Remote</FormLabel>}
+              />
+            </FormControl>
+          </Grid2>
+        </Grid2>
         <FormControl error={!!descriptionError}>
           <FormLabel required>Description</FormLabel>
           <Textarea placeholder="Opis" minRows={6} value={description} onChange={handleDescription} />
@@ -208,34 +312,7 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
             )}
           </FormHelperText>
         </FormControl>
-        <FormControl error={!!cityError}>
-          <FormLabel>Miasto</FormLabel>
-          <Autocomplete<SearchCityDto>
-            value={city}
-            defaultValue={city}
-            onChange={handleCity}
-            options={getSearchCities()}
-            getOptionLabel={({ label }) => label}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                size="small"
-                slotProps={{
-                  input: {
-                    ...params.InputProps,
-                    placeholder: "Miasto",
-                    endAdornment: (
-                      <React.Fragment>
-                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                        {params.InputProps.endAdornment}
-                      </React.Fragment>
-                    ),
-                  },
-                }}
-              />
-            )}
-          />
-        </FormControl>
+        <Divider />
       </Stack>
     );
   }

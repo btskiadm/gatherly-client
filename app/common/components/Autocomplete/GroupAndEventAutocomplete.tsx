@@ -102,7 +102,7 @@ export const GroupAndEventAutocomplete = () => {
         }
 
         return (
-          <Stack direction="row" maxWidth="40%" width="min-content">
+          <Stack direction="row" width="min-content">
             {tags.map((option, index) => {
               const { key, ...tagProps } = getTagProps({ index });
 
