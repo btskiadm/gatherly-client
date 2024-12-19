@@ -3,10 +3,14 @@ import { GroupsListing } from "./GroupsListing";
 import { getGroupTiles } from "@/app/mock/mock-api";
 import { GroupTilesList } from "./GroupTilesList";
 
-//todo: mock
-const tiles = getGroupTiles().slice(0, 50);
+interface Props {
+  categories: string[];
+  locations: string[];
+}
 
-export const GroupsPage = () => {
+export const GroupsPage = ({ locations, categories }: Props) => {
+  const tiles = getGroupTiles({ locations, categories });
+
   return (
     <Stack gap={3}>
       <GroupsListing />

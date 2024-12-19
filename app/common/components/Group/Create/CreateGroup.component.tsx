@@ -28,7 +28,6 @@ import {
   TextField,
 } from "@mui/material";
 import React, { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { TruncatedTypography } from "../../TruncatedTypography";
 
 const loading = false;
 
@@ -150,12 +149,9 @@ export const CreateGroup = forwardRef<CreateGroupRef, Props>(
       setDescription(e.target.value);
     }, []);
 
-    const handleRemote = useCallback(
-      (event: unknown, checked: boolean) => {
-        setRemote(checked);
-      },
-      [remote]
-    );
+    const handleRemote = useCallback((event: unknown, checked: boolean) => {
+      setRemote(checked);
+    }, []);
 
     const nameError = errors["name"];
     const descriptionError = errors["description"];

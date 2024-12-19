@@ -54,21 +54,30 @@ export const getSeachUsers = (): SearchUserDto[] =>
     },
   }));
 
-// const g_city = DBCity[0];
-// const g_category = DBCategory[0];
-const g_city: any = null;
-const g_category: any = null;
 const g_sponsored = false;
 const g_remote = false;
 const g_verified = false;
 
-export const getGroupTiles = (): GroupTileDto[] => {
-  const groupsByCity = g_city
-    ? DBGroups.filter((group) => group.cities.some((c) => c.value === g_city.value)) ?? []
-    : DBGroups;
-  const groupsByCategory = g_category
-    ? groupsByCity.filter((group) => group.categories.some((c) => c.value === g_category.value)) ?? []
-    : groupsByCity;
+export const getGroupTiles = ({
+  locations,
+  categories,
+}: {
+  locations: string[];
+  categories: string[];
+}): GroupTileDto[] => {
+  const groupsByCity =
+    locations.length > 0
+      ? DBGroups.filter((group) =>
+          locations.every((location) => group.cities.some((groupCity) => groupCity.value === location))
+        )
+      : DBGroups;
+
+  const groupsByCategory =
+    categories.length > 0
+      ? groupsByCity.filter((group) =>
+          categories.every((category) => group.categories.some((groupCategory) => groupCategory.value === category))
+        )
+      : groupsByCity;
 
   if (groupsByCategory.length <= 0) {
     return [];
