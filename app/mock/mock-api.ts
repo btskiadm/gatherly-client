@@ -61,9 +61,11 @@ const g_verified = false;
 export const getGroupTiles = ({
   locations,
   categories,
+  titles,
 }: {
   locations: string[];
   categories: string[];
+  titles: string[];
 }): GroupTileDto[] => {
   const groupsByCity =
     locations.length > 0

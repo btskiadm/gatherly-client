@@ -1,13 +1,12 @@
 "use client";
 
-import { getSearchCategories, getSearchCities, getSearchGroups } from "@/app/mock/mock-api";
 import { SearchCategoryDto, SearchCityDto, SearchGroupDto } from "@/app/mock/mock-api.types";
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { ReactNode, useCallback } from "react";
 
-type SearchItem = SearchCategoryDto | SearchCityDto | SearchGroupDto;
-type SearchItemType = SearchItem["type"];
+export type SearchItem = SearchCategoryDto | SearchCityDto | SearchGroupDto;
+export type SearchItemType = SearchItem["type"];
 
 // todo: translation
 const searchLabel: Record<SearchItemType, string> = {
@@ -23,11 +22,11 @@ const searchIcon: Record<SearchItemType, ReactNode> = {
 };
 
 // todo: mock
-const options: SearchItem[] = [
-  ...getSearchCategories().slice(0, 25),
-  ...getSearchCities().slice(0, 25),
-  ...getSearchGroups().slice(0, 25),
-];
+// const options: SearchItem[] = [
+//   ...getSearchCategories().slice(0, 25),
+//   ...getSearchCities().slice(0, 25),
+//   ...getSearchGroups().slice(0, 25),
+// ];
 
 const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
   React.forwardRef(function ListboxComponent(
@@ -55,21 +54,27 @@ const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: Se
     );
   });
 
-export const GroupAndEventAutocomplete = () => {
-  const [selected, setSelected] = useState<SearchItem[]>([]);
+interface Props {
+  onChange(items: SearchItem[]): void;
+  onDelete(items: SearchItem): void;
+  selected: SearchItem[];
+  allLocations: SearchCityDto[];
+  allCategories: SearchCategoryDto[];
+}
 
+export const GroupAndEventAutocomplete = ({ selected, onChange, onDelete, allLocations, allCategories }: Props) => {
   const handleDelete = useCallback(
     (toDelete: SearchItem) => {
-      setSelected((prevSelected) => prevSelected.filter(({ value }) => value !== toDelete.value));
+      onDelete(toDelete);
     },
-    [setSelected]
+    [onDelete]
   );
 
   const handleChange = useCallback(
     (e: unknown, value: SearchItem[]) => {
-      setSelected(value);
+      onChange(value);
     },
-    [setSelected]
+    [onChange]
   );
 
   return (
@@ -77,7 +82,7 @@ export const GroupAndEventAutocomplete = () => {
       multiple
       value={selected}
       onChange={handleChange}
-      options={options}
+      options={[...allCategories, ...allLocations]}
       sx={(theme) => ({
         width: "100%",
         ".MuiAutocomplete-tag": {

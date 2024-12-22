@@ -1,34 +1,15 @@
 import { GroupsPage } from "./_components/GroupsPage";
+import { resolveParams, resolveQueries } from "./utils/groups.routing";
 
-interface ParsedParams {
-  locations: string[];
-  categories: string[];
-}
+export default async function Page({
+  params: { params },
+  searchParams: { titles },
+}: {
+  params: { params: string[] };
+  searchParams: { titles: string };
+}) {
+  const { categories, locations } = resolveParams(params);
+  const { titles: queryTitles } = resolveQueries({ titles });
 
-const create = (locations: string[] = [], categories: string[] = []): ParsedParams => ({ locations, categories });
-
-const resolveParams = (param: string) => decodeURIComponent(param).split(",");
-
-const getParams = (params: string[]): ParsedParams => {
-  // empty
-  if (!params || (params && params.length === 0)) {
-    return create();
-  }
-
-  // lodz,warsaw,cracow
-  if (params[0] !== "all-locations" && params.length === 1) {
-    return create(resolveParams(params[0]));
-  }
-
-  // all-locations/football,basketball,dance
-  if (params[0] === "all-locations" && params.length >= 2) {
-    return create([], resolveParams(params[1]));
-  }
-
-  return create(resolveParams(params[0]), resolveParams(params[1]));
-};
-
-export default async function Page({ params: { params } }: { params: { params: string[] } }) {
-  const { categories, locations } = getParams(params);
-  return <GroupsPage categories={categories} locations={locations} />;
+  return <GroupsPage categories={categories} locations={locations} titles={queryTitles} />;
 }
