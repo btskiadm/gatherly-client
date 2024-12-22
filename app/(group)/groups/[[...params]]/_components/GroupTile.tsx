@@ -1,5 +1,6 @@
 "use client";
 
+import { ClampTypography } from "@/app/common/components/ClampTypography";
 import { Link } from "@/app/common/components/NextLink";
 import { TruncatedTypography } from "@/app/common/components/TruncatedTypography";
 import { GroupTileDto } from "@/app/mock/mock-api.types";
@@ -319,18 +320,9 @@ export const GroupTile = ({
 
           {/* description */}
           <Box height="100%">
-            <Typography
-              variant="body2"
-              sx={{
-                overflow: "hidden",
-                display: "-webkit-box",
-                WebkitLineClamp: 4,
-                WebkitBoxOrient: "vertical",
-                color: "text.secondary",
-              }}
-            >
+            <ClampTypography variant="body2" clamp={3} color="text.secondary">
               {description}
-            </Typography>
+            </ClampTypography>
           </Box>
 
           {/* actions */}

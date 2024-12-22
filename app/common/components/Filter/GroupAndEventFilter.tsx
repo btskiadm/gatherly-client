@@ -15,37 +15,12 @@ const min = 1;
 const max = 50;
 const diff = 5;
 
-interface Sponsored {
-  key: "sponsored";
-  value: boolean;
-}
-
-interface Remote {
-  key: "remote";
-  value: boolean;
-}
-
-interface Verified {
-  key: "verified";
-  value: boolean;
-}
-
-type FilterAttribute = Sponsored | Remote | Verified;
-
-type FilterAttributeKey = FilterAttribute["key"];
-
 //todo: translation
-export const filterTagLabel: Record<FilterAttributeKey, string> = {
+export const filterTagLabel: Record<"remote" | "sponsored" | "verified", string> = {
   remote: "Remote",
   sponsored: "Sponsored",
   verified: "Verified",
 };
-
-const initAttributes: FilterAttribute[] = [
-  { key: "remote", value: false },
-  { key: "verified", value: false },
-  { key: "sponsored", value: false },
-];
 
 const stringify = (n: number, suffix?: string) => {
   if (suffix) {
@@ -55,12 +30,32 @@ const stringify = (n: number, suffix?: string) => {
   return `${n}`;
 };
 
-export const GroupAndEventFilter = () => {
+interface Props {
+  sponsored: boolean;
+  verified: boolean;
+  remote: boolean;
+  minMembers: number;
+  maxMembers: number;
+  onChange(sponsored: boolean, verified: boolean, remote: boolean, minMembers: number, maxMembers: number): void;
+}
+
+export const GroupAndEventFilter = ({
+  remote: _remote,
+  sponsored: _sponsored,
+  verified: _verified,
+  minMembers: _minMembers,
+  maxMembers: _maxMembers,
+  onChange,
+}: Props) => {
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
-  const [minInput, setMinInput] = useState(stringify(min));
-  const [maxInput, setMaxInput] = useState(stringify(max, "+"));
-  const [range, setRange] = useState<number[]>([min, max]);
-  const [attributes, setAttributes] = useState<FilterAttribute[]>(initAttributes);
+
+  const [sponsored, setSponsored] = useState(_sponsored);
+  const [verified, setVerified] = useState(_verified);
+  const [remote, setRemote] = useState(_remote);
+
+  const [minInput, setMinInput] = useState(stringify(_minMembers ?? min));
+  const [maxInput, setMaxInput] = useState(stringify(_maxMembers ?? max, "+"));
+  const [range, setRange] = useState<number[]>([_minMembers ?? min, _maxMembers ?? max]);
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setAnchor(e.currentTarget);
@@ -137,34 +132,31 @@ export const GroupAndEventFilter = () => {
     [minInput]
   );
 
-  const hasAttribute = useCallback(
-    (key: FilterAttributeKey) => {
-      return attributes.some((attribute) => attribute.key === key && attribute.value);
-    },
-    [attributes]
-  );
-
-  const toggleAttribute = useCallback((key: FilterAttributeKey) => {
-    setAttributes((prevAttributes) => {
-      return prevAttributes.map((attribute) => {
-        if (attribute.key === key) {
-          return { key: key, value: !attribute.value };
-        }
-        return attribute;
-      });
-    });
-  }, []);
-
   const handleReset = useCallback(() => {
     setMinInput(`${min}`);
     setMaxInput(`${max}+`);
     setRange([min, max]);
-    setAttributes(initAttributes);
+    setSponsored(false);
+    setRemote(false);
+    setVerified(false);
   }, []);
 
   const handleApply = useCallback(() => {
     setAnchor(null);
-  }, []);
+    onChange(sponsored, verified, remote, Number.parseInt(minInput), Number.parseInt(maxInput));
+  }, [onChange, sponsored, verified, remote, minInput, maxInput]);
+
+  const handleSponsored = useCallback(() => {
+    setSponsored(!sponsored);
+  }, [sponsored]);
+
+  const handleVerified = useCallback(() => {
+    setVerified(!verified);
+  }, [verified]);
+
+  const handleRemote = useCallback(() => {
+    setRemote(!remote);
+  }, [remote]);
 
   return (
     <>
@@ -183,24 +175,24 @@ export const GroupAndEventFilter = () => {
             <Stack direction="row" gap={1} mt={1} flexWrap="wrap">
               <Chip
                 variant="outlined"
-                color={hasAttribute("sponsored") ? "primary" : "default"}
+                color={sponsored ? "primary" : "default"}
                 label={filterTagLabel["sponsored"]}
                 icon={<StarBorderRounded fontSize="small" />}
-                onClick={() => toggleAttribute("sponsored")}
+                onClick={handleSponsored}
               />
               <Chip
                 variant="outlined"
-                color={hasAttribute("verified") ? "primary" : "default"}
+                color={verified ? "primary" : "default"}
                 label={filterTagLabel["verified"]}
                 icon={<VerifiedOutlined fontSize="small" />}
-                onClick={() => toggleAttribute("verified")}
+                onClick={handleVerified}
               />
               <Chip
                 variant="outlined"
-                color={hasAttribute("remote") ? "primary" : "default"}
+                color={remote ? "primary" : "default"}
                 label={filterTagLabel["remote"]}
                 icon={<CloudOutlined fontSize="small" />}
-                onClick={() => toggleAttribute("remote")}
+                onClick={handleRemote}
               />
             </Stack>
           </FormControl>

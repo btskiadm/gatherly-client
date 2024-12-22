@@ -54,53 +54,60 @@ export const getSeachUsers = (): SearchUserDto[] =>
     },
   }));
 
-const g_sponsored = false;
-const g_remote = false;
-const g_verified = false;
-
 export const getGroupTiles = ({
   locations,
   categories,
   titles,
+  sponsored,
+  remote,
+  verified,
+  minMembers,
+  maxMembers,
 }: {
   locations: string[];
   categories: string[];
   titles: string[];
+  sponsored: boolean;
+  verified: boolean;
+  remote: boolean;
+  minMembers: number;
+  maxMembers: number;
 }): GroupTileDto[] => {
-  const groupsByCity =
-    locations.length > 0
-      ? DBGroups.filter((group) =>
-          locations.every((location) => group.cities.some((groupCity) => groupCity.value === location))
-        )
-      : DBGroups;
+  const filteredGroups = DBGroups.filter((group) => {
+    const matchesCities =
+      locations.length === 0 ||
+      locations.every((location) => group.cities.some((groupCity) => groupCity.value === location));
 
-  const groupsByCategory =
-    categories.length > 0
-      ? groupsByCity.filter((group) =>
-          categories.every((category) => group.categories.some((groupCategory) => groupCategory.value === category))
-        )
-      : groupsByCity;
+    const matchesCategories =
+      categories.length === 0 ||
+      categories.every((category) => group.categories.some((groupCategory) => groupCategory.value === category));
 
-  const groupByTitles =
-    titles.length > 0
-      ? groupsByCategory.filter((group) => titles.some((title) => title === group.title))
-      : groupsByCategory;
+    const matchesTitles = titles.length === 0 || titles.some((title) => title === group.title);
 
-  if (groupByTitles.length <= 0) {
+    const matchesMinMembers = minMembers <= group.users.length;
+
+    const hasNoMaxMembersLimit = maxMembers === 50;
+
+    const matchesMaxMembers = hasNoMaxMembersLimit || maxMembers >= group.users.length;
+
+    return matchesCities && matchesCategories && matchesTitles && matchesMinMembers && matchesMaxMembers;
+  });
+
+  if (filteredGroups.length <= 0) {
     return [];
   }
 
-  const filtered = groupByTitles.filter((g) => {
+  const filtered = filteredGroups.filter((g) => {
     let numToValidate = 0;
     let numToValidateCounter = 0;
 
-    g_sponsored && numToValidate++;
-    g_remote && numToValidate++;
-    g_verified && numToValidate++;
+    sponsored && numToValidate++;
+    remote && numToValidate++;
+    verified && numToValidate++;
 
-    g_sponsored && g.sponsored.value && numToValidateCounter++;
-    g_remote && g.remote.value && numToValidateCounter++;
-    g_verified && g.verified.value && numToValidateCounter++;
+    sponsored && g.sponsored.value && numToValidateCounter++;
+    remote && g.remote.value && numToValidateCounter++;
+    verified && g.verified.value && numToValidateCounter++;
 
     return numToValidateCounter === numToValidate;
   });

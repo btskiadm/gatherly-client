@@ -1,19 +1,10 @@
 "use client";
 
+import { ClampTypography } from "@/app/common/components/ClampTypography";
 import { Link } from "@/app/common/components/NextLink";
 import { GroupDetailsDto } from "@/app/mock/mock-api.types";
 import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack } from "@mui/material";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -65,17 +56,7 @@ export function GroupDesktopNavigation({ groupDetails }: Props) {
         }}
       />
       <Stack width="100%" p={3} py={2} gap={2}>
-        <Typography
-          variant="body1"
-          sx={{
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {title}
-        </Typography>
+        <ClampTypography variant="body1">{title}</ClampTypography>
         <Divider />
         <List>
           <ListItem disablePadding>

@@ -108,7 +108,7 @@ export const GroupAndEventAutocomplete = ({
         }
 
         return (
-          <Stack direction="row" width="min-content">
+          <Stack direction="row" width="min-content" maxWidth="60%">
             {tags.map((option, index) => {
               const { key, ...tagProps } = getTagProps({ index });
 
@@ -119,6 +119,9 @@ export const GroupAndEventAutocomplete = ({
               return (
                 <Chip
                   {...tagProps}
+                  sx={{
+                    width: "100%%",
+                  }}
                   key={key}
                   component="div"
                   variant="outlined"

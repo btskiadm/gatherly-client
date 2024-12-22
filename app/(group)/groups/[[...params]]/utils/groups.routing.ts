@@ -1,8 +1,8 @@
 import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
 import { SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
 
-const ALL_LOCATIONS = "all-locations";
-const EMPTY_ROUTE = "";
+export const ALL_LOCATIONS = "all-locations";
+export const EMPTY_ROUTE = "";
 
 export interface ParsedParams {
   locations: string[];
@@ -88,15 +88,11 @@ const createTitlesQuery = (searchItems: SearchItem[]) => {
   return parsedCategories;
 };
 
-const encodeQuery = (query: string) => {
-  const q = encodeURIComponent(query);
-  return q.replaceAll("%20", "+");
-};
-
-export const createGroupsRoute = (searchItems: SearchItem[]) => {
+export const createGroupsRoute = (searchItems: SearchItem[], urlSearchParams: URLSearchParams) => {
   const locations = createLocationsParam(searchItems);
   const categories = createCategoriesParam(searchItems);
   const titles = createTitlesQuery(searchItems);
+  const searchParams = new URLSearchParams(urlSearchParams);
 
   let route = "/groups";
 
@@ -106,13 +102,17 @@ export const createGroupsRoute = (searchItems: SearchItem[]) => {
     route = `/groups/${locations}${categories ? "/" + categories : EMPTY_ROUTE}`;
   }
 
-  let query = "";
-
   if (titles.length > 0) {
-    query += "?titles=" + encodeQuery(titles);
+    searchParams.set("titles", titles);
+  } else {
+    searchParams.delete("titles");
   }
 
-  route += query;
+  searchParams.sort();
+
+  if (searchParams.size > 0) {
+    return route + "?" + searchParams.toString();
+  }
 
   return route;
 };

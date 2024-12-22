@@ -1,3 +1,4 @@
+import { ClampTypography } from "@/app/common/components/ClampTypography";
 import { Link } from "@/app/common/components/NextLink";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { VisibilityOutlined } from "@mui/icons-material";
@@ -20,17 +21,7 @@ export default function Page() {
           }}
         />
         <Stack gap={2} px={{ xs: 2, sm: 3 }} py={{ xs: 2, sm: 2 }}>
-          <Typography
-            variant="body1"
-            sx={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Typography>
+          <ClampTypography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ClampTypography>
           <Grid2 container spacing={1}>
             <Grid2 size={4}>
               <Stack py={1} bgcolor="background.light" alignItems="center" justifyContent="center">

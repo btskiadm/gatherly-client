@@ -2,7 +2,7 @@
 
 import { GroupAndEventAutocomplete, SearchItem } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
 import { SearchCategoryDto, SearchCityDto, SearchGroupDto } from "@/app/mock/mock-api.types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import { createGroupsRoute, uniqueSearchItems } from "../utils/groups.routing";
 
@@ -24,18 +24,24 @@ export const GroupAndEventAutocompleteRouted = ({
   allTitles,
 }: Props) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [searchItems, setSearchItems] = useState<SearchItem[]>(() => {
-    return uniqueSearchItems([...searchCategories, ...searchLocations, ...searchTitles]);
-  });
+  const [searchItems, setSearchItems] = useState<SearchItem[]>([
+    ...searchCategories,
+    ...searchLocations,
+    ...searchTitles,
+  ]);
 
-  const onChange = useCallback((items: SearchItem[]) => {
-    const unique = uniqueSearchItems(items);
+  const onChange = useCallback(
+    (items: SearchItem[]) => {
+      const unique = uniqueSearchItems(items);
 
-    setSearchItems(unique);
+      setSearchItems(unique);
 
-    router.push(createGroupsRoute(unique));
-  }, []);
+      router.push(createGroupsRoute(unique, searchParams));
+    },
+    [searchParams, router]
+  );
 
   const onDelete = useCallback(
     (itemToDelete: SearchItem) => {

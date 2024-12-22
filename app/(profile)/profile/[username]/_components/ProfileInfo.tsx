@@ -1,5 +1,5 @@
+import { ClampTypography } from "@/app/common/components/ClampTypography";
 import { UserDto } from "@/app/mock/mock-api.types";
-import Avatar from "@/app/public/assets/useravatar.webp";
 import { PlaceOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Grid2, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
@@ -37,18 +37,9 @@ export const ProfileInfo = ({
               <Tooltip title="Verified">
                 <VerifiedOutlined color="warning" fontSize="small" />
               </Tooltip>
-              <Typography
-                variant="body1"
-                fontWeight={600}
-                sx={{
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                }}
-              >
+              <ClampTypography variant="body1" fontWeight={600}>
                 {username}
-              </Typography>
+              </ClampTypography>
             </Stack>
             <Stack gap={0.5} direction="row" alignItems="center">
               <PlaceOutlined color="action" fontSize="small" />

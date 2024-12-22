@@ -10,10 +10,24 @@ interface Props {
   categories: string[];
   locations: string[];
   titles: string[];
+  sponsored: boolean;
+  verified: boolean;
+  remote: boolean;
+  minMembers: number;
+  maxMembers: number;
 }
 
-export const GroupsPage = ({ locations, categories, titles }: Props) => {
-  const tiles = getGroupTiles({ locations, categories, titles });
+export const GroupsPage = ({
+  locations,
+  categories,
+  titles,
+  remote,
+  sponsored,
+  verified,
+  minMembers,
+  maxMembers,
+}: Props) => {
+  const tiles = getGroupTiles({ locations, categories, titles, remote, sponsored, verified, minMembers, maxMembers });
   const allLocations = getSearchCities();
   const allCategories = getSearchCategories();
   const allTitles = getSearchGroups().slice(0, 15);
@@ -43,6 +57,11 @@ export const GroupsPage = ({ locations, categories, titles }: Props) => {
         allLocations={allLocations}
         allCategories={allCategories}
         allTitles={allTitles}
+        remote={remote}
+        sponsored={sponsored}
+        verified={verified}
+        minMembers={minMembers}
+        maxMembers={maxMembers}
       />
       <GroupTilesList tiles={tiles} />
     </Stack>
