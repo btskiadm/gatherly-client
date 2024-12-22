@@ -21,13 +21,6 @@ const searchIcon: Record<SearchItemType, ReactNode> = {
   title: <TitleRounded />,
 };
 
-// todo: mock
-// const options: SearchItem[] = [
-//   ...getSearchCategories().slice(0, 25),
-//   ...getSearchCities().slice(0, 25),
-//   ...getSearchGroups().slice(0, 25),
-// ];
-
 const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
   React.forwardRef(function ListboxComponent(
     props: React.HTMLAttributes<HTMLElement>,
@@ -60,9 +53,17 @@ interface Props {
   selected: SearchItem[];
   allLocations: SearchCityDto[];
   allCategories: SearchCategoryDto[];
+  allTitles: SearchGroupDto[];
 }
 
-export const GroupAndEventAutocomplete = ({ selected, onChange, onDelete, allLocations, allCategories }: Props) => {
+export const GroupAndEventAutocomplete = ({
+  selected,
+  onChange,
+  onDelete,
+  allLocations,
+  allCategories,
+  allTitles,
+}: Props) => {
   const handleDelete = useCallback(
     (toDelete: SearchItem) => {
       onDelete(toDelete);
@@ -82,7 +83,7 @@ export const GroupAndEventAutocomplete = ({ selected, onChange, onDelete, allLoc
       multiple
       value={selected}
       onChange={handleChange}
-      options={[...allCategories, ...allLocations]}
+      options={[...allCategories, ...allLocations, ...allTitles]}
       sx={(theme) => ({
         width: "100%",
         ".MuiAutocomplete-tag": {

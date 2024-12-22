@@ -1,26 +1,35 @@
 import { GroupAndEventFilter } from "@/app/common/components/Filter/GroupAndEventFilter";
 import { GroupAndEventSort } from "@/app/common/components/Sort/GroupAndEventSort";
-import { SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
+import { SearchCategoryDto, SearchCityDto, SearchGroupDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { GroupAndEventAutocompleteRouted } from "./GroupAndEventAutocompleteRouted";
 
 interface Props {
-  titles: string[];
   searchLocations: SearchCityDto[];
   searchCategories: SearchCategoryDto[];
+  searchTitles: SearchGroupDto[];
   allLocations: SearchCityDto[];
   allCategories: SearchCategoryDto[];
+  allTitles: SearchGroupDto[];
 }
 
-export const GroupsListing = ({ titles, searchCategories, searchLocations, allCategories, allLocations }: Props) => {
+export const GroupsListing = ({
+  searchCategories,
+  searchLocations,
+  searchTitles,
+  allCategories,
+  allLocations,
+  allTitles,
+}: Props) => {
   return (
     <Stack direction="row" gap={1}>
       <GroupAndEventAutocompleteRouted
-        titles={titles}
         searchCategories={searchCategories}
         searchLocations={searchLocations}
+        searchTitles={searchTitles}
         allCategories={allCategories}
         allLocations={allLocations}
+        allTitles={allTitles}
       />
       <GroupAndEventFilter />
       <GroupAndEventSort />

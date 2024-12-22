@@ -32,7 +32,10 @@ export const resolveParams = (params: string[]): ParsedParams => {
   return create(parseParams(params[0]), parseParams(params[1]));
 };
 
-export const resolveQueries = ({ titles }: { titles: string }) => {
+export const resolveQueries = ({ titles }: { titles?: string }) => {
+  if (!titles) {
+    return { titles: [] };
+  }
   return { titles: parseParams(titles) };
 };
 
@@ -49,33 +52,67 @@ export const filterSearchLocationsByValues = (locationValues: string[], availabl
 };
 
 export const uniqueSearchItems = (items: SearchItem[]) =>
-  items.filter((item, index, array) => array.findIndex((value) => value === item) === index);
+  items.filter((item, index, array) => array.findIndex((arr) => arr.value === item.value) === index);
 
-const searchItemToRouterParams = (searchItems: SearchItem[], type: SearchItemType) =>
+const searchItemToRouterParamsByValue = (searchItems: SearchItem[], type: SearchItemType) =>
   searchItems
     .filter((item) => item.type === type)
     .map(({ value }) => value)
     .join(",");
 
+const searchItemToRouterParamsByLabel = (searchItems: SearchItem[], type: SearchItemType) =>
+  searchItems
+    .filter((item) => item.type === type)
+    .map(({ label }) => label)
+    .join(",");
+
 const createLocationsParam = (searchItems: SearchItem[]) => {
-  const parsedLocations = searchItemToRouterParams(searchItems, "city");
+  const parsedLocations = searchItemToRouterParamsByValue(searchItems, "city");
   const locations = parsedLocations.length <= 0 ? ALL_LOCATIONS : parsedLocations;
   return locations;
 };
 
 const createCategoriesParam = (searchItems: SearchItem[]) => {
-  const parsedCategories = searchItemToRouterParams(searchItems, "category");
+  const parsedCategories = searchItemToRouterParamsByValue(searchItems, "category");
   const categories = parsedCategories.length <= 0 ? EMPTY_ROUTE : parsedCategories;
   return categories;
+};
+
+const createTitlesQuery = (searchItems: SearchItem[]) => {
+  const parsedCategories = searchItemToRouterParamsByLabel(searchItems, "title");
+
+  if (parsedCategories.length <= 0) {
+    return EMPTY_ROUTE;
+  }
+
+  return parsedCategories;
+};
+
+const encodeQuery = (query: string) => {
+  const q = encodeURIComponent(query);
+  return q.replaceAll("%20", "+");
 };
 
 export const createGroupsRoute = (searchItems: SearchItem[]) => {
   const locations = createLocationsParam(searchItems);
   const categories = createCategoriesParam(searchItems);
+  const titles = createTitlesQuery(searchItems);
+
+  let route = "/groups";
 
   if (locations === ALL_LOCATIONS && categories.length <= 0) {
-    return "/groups";
+    // route
+  } else {
+    route = `/groups/${locations}${categories ? "/" + categories : EMPTY_ROUTE}`;
   }
 
-  return `/groups/${locations}${categories ? "/" + categories : EMPTY_ROUTE}`;
+  let query = "";
+
+  if (titles.length > 0) {
+    query += "?titles=" + encodeQuery(titles);
+  }
+
+  route += query;
+
+  return route;
 };

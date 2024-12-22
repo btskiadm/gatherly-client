@@ -18,7 +18,10 @@ Ad reprehenderit elit consectetur id incididunt veniam dolore culpa aute mollit 
 const getLoremIpsumSentenses = (s: number, startAt: number = 0) => {
   let sentences = loremIpsum.split(".");
 
-  return sentences.slice(startAt, startAt + s).join(". ");
+  return sentences
+    .slice(startAt, startAt + s)
+    .join(". ")
+    .trim();
 };
 
 export const DBCategory: Category[] = [

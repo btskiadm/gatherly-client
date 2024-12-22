@@ -6,7 +6,7 @@ export default async function Page({
   searchParams: { titles },
 }: {
   params: { params: string[] };
-  searchParams: { titles: string };
+  searchParams: { titles?: string };
 }) {
   const { categories, locations } = resolveParams(params);
   const { titles: queryTitles } = resolveQueries({ titles });

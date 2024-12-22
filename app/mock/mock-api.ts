@@ -41,7 +41,7 @@ export const getSearchGroups = (): SearchGroupDto[] =>
   DBGroups.map(({ title, id }) => ({
     type: "title",
     label: title,
-    value: id,
+    value: title,
   }));
 
 export const getSeachUsers = (): SearchUserDto[] =>
@@ -81,11 +81,16 @@ export const getGroupTiles = ({
         )
       : groupsByCity;
 
-  if (groupsByCategory.length <= 0) {
+  const groupByTitles =
+    titles.length > 0
+      ? groupsByCategory.filter((group) => titles.some((title) => title === group.title))
+      : groupsByCategory;
+
+  if (groupByTitles.length <= 0) {
     return [];
   }
 
-  const filtered = groupsByCategory.filter((g) => {
+  const filtered = groupByTitles.filter((g) => {
     let numToValidate = 0;
     let numToValidateCounter = 0;
 
