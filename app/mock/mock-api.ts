@@ -5,7 +5,7 @@ import {
   GroupTileDto,
   SearchCategoryDto,
   SearchCityDto,
-  SearchGroupDto,
+  SearchTitleDto,
   SearchUserDto,
   ShortEventDto,
   ShortGroupDto,
@@ -37,12 +37,17 @@ export const getSearchCities = (): SearchCityDto[] =>
     value: value,
   }));
 
-export const getSearchGroups = (): SearchGroupDto[] =>
+export const getSearchGroupTitles = (): SearchTitleDto[] =>
   DBGroups.map(({ title, id }) => ({
     type: "title",
     label: title,
     value: title,
   }));
+
+export const getSearchEventTitles = (): SearchTitleDto[] =>
+  DBGroups.map(({ events }) => events)
+    .flat()
+    .map(({ title }) => ({ label: title, value: title, type: "title" }));
 
 export const getSeachUsers = (): SearchUserDto[] =>
   DBUser.map(({ id, username, thumbnails: { thumb } }) => ({
@@ -180,15 +185,25 @@ export const getShortEventsByUsername = (username: string): ShortEventDto[] => {
   return events.map(toShortEvent);
 };
 
-// const e_city = DBCity[0];
-// const e_category = DBCategory[0];
-const e_city: any = null;
-const e_category: any = null;
-const e_sponsored = false;
-const e_remote = false;
-const e_verified = false;
-
-export const getEventTiles = (): EventTileDto[] => {
+export const getEventTiles = ({
+  locations,
+  categories,
+  titles,
+  sponsored,
+  remote,
+  verified,
+  minMembers,
+  maxMembers,
+}: {
+  locations: string[];
+  categories: string[];
+  titles: string[];
+  sponsored: boolean;
+  verified: boolean;
+  remote: boolean;
+  minMembers: number;
+  maxMembers: number;
+}): EventTileDto[] => {
   const events: EventTileDto[] = [];
 
   DBGroups.forEach((group) => {
@@ -197,29 +212,40 @@ export const getEventTiles = (): EventTileDto[] => {
     });
   });
 
-  const eventsByCity = e_city
-    ? events.filter((event) => event.cities.some((c) => c.value === e_city.value)) ?? []
-    : events;
+  const filteredGroups = events.filter((event) => {
+    const matchesCities =
+      locations.length === 0 || locations.every((location) => event.cities.some(({ value }) => value === location));
 
-  const eventsByCategory = e_category
-    ? eventsByCity.filter((event) => event.categories.some((c) => c.value === e_category.value)) ?? []
-    : eventsByCity;
+    const matchesCategories =
+      categories.length === 0 ||
+      categories.every((category) => event.categories.some(({ value }) => value === category));
 
-  if (eventsByCategory.length <= 0) {
+    const matchesTitles = titles.length === 0 || titles.some((title) => title === event.title);
+
+    const matchesMinMembers = minMembers <= event.userLength;
+
+    const hasNoMaxMembersLimit = maxMembers === 50;
+
+    const matchesMaxMembers = hasNoMaxMembersLimit || maxMembers >= event.userLength;
+
+    return matchesCities && matchesCategories && matchesTitles && matchesMinMembers && matchesMaxMembers;
+  });
+
+  if (filteredGroups.length <= 0) {
     return [];
   }
 
-  return eventsByCategory.filter((e) => {
+  return filteredGroups.filter((e) => {
     let numToValidate = 0;
     let numToValidateCounter = 0;
 
-    e_sponsored && numToValidate++;
-    e_remote && numToValidate++;
-    e_verified && numToValidate++;
+    sponsored && numToValidate++;
+    remote && numToValidate++;
+    verified && numToValidate++;
 
-    e_sponsored && e.groupMeta.sponsored && numToValidateCounter++;
-    e_remote && e.groupMeta.remote && numToValidateCounter++;
-    e_verified && e.groupMeta.verified && numToValidateCounter++;
+    sponsored && e.groupMeta.sponsored && numToValidateCounter++;
+    remote && e.groupMeta.remote && numToValidateCounter++;
+    verified && e.groupMeta.verified && numToValidateCounter++;
 
     return numToValidateCounter === numToValidate;
   });

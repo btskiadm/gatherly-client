@@ -1,10 +1,10 @@
 "use client";
 
+import { createGroupsRoute, uniqueSearchItems } from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
 import { GroupAndEventAutocomplete, SearchItem } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
-import { createGroupsRoute, uniqueSearchItems } from "../utils/groups.routing";
 
 interface Props {
   searchLocations: SearchCityDto[];
@@ -15,7 +15,7 @@ interface Props {
   allTitles: SearchTitleDto[];
 }
 
-export const GroupAndEventAutocompleteRouted = ({
+export const EventAutocompleteRouted = ({
   searchCategories,
   searchLocations,
   searchTitles,

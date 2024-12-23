@@ -1,10 +1,13 @@
-import { getGroupTiles, getSearchCategories, getSearchCities, getSearchGroupTitles } from "@/app/mock/mock-api";
+import {
+  filterSearchCategoriesByValues,
+  filterSearchLocationsByValues,
+} from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
+import { getEventTiles, getSearchCategories, getSearchCities, getSearchEventTitles } from "@/app/mock/mock-api";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { useMemo } from "react";
-import { filterSearchCategoriesByValues, filterSearchLocationsByValues } from "../utils/groups.routing";
-import { GroupTilesList } from "./GroupTilesList";
-import { GroupsListing } from "./GroupsListing";
+import { EventTiles } from "./EventTiles";
+import { EventsListing } from "./EventsListing";
 
 interface Props {
   categories: string[];
@@ -17,7 +20,7 @@ interface Props {
   maxMembers: number;
 }
 
-export const GroupsPage = ({
+export const EventsPage = ({
   locations,
   categories,
   titles,
@@ -27,10 +30,10 @@ export const GroupsPage = ({
   minMembers,
   maxMembers,
 }: Props) => {
-  const tiles = getGroupTiles({ locations, categories, titles, remote, sponsored, verified, minMembers, maxMembers });
+  const tiles = getEventTiles({ locations, categories, titles, remote, sponsored, verified, minMembers, maxMembers });
   const allLocations = getSearchCities();
   const allCategories = getSearchCategories();
-  const allTitles = getSearchGroupTitles().slice(0, 15);
+  const allTitles = getSearchEventTitles().slice(0, 15);
 
   const searchLocations: SearchCityDto[] = useMemo(
     () => filterSearchLocationsByValues(locations, allLocations),
@@ -50,7 +53,7 @@ export const GroupsPage = ({
 
   return (
     <Stack gap={3}>
-      <GroupsListing
+      <EventsListing
         searchLocations={searchLocations}
         searchCategories={searchCategories}
         searchTitles={searchTitles}
@@ -63,7 +66,7 @@ export const GroupsPage = ({
         minMembers={minMembers}
         maxMembers={maxMembers}
       />
-      <GroupTilesList tiles={tiles} />
+      <EventTiles tiles={tiles} />
     </Stack>
   );
 };

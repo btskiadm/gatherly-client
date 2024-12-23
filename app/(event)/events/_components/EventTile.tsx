@@ -233,7 +233,6 @@ export const EventTile = ({
               </Stack>
             </Grid2>
           </Grid2>
-
           {/* actions */}
           <Box height="100%" />
           <Stack justifyContent="space-between" direction="row">

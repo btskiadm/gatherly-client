@@ -1,11 +1,11 @@
 "use client";
 
-import { SearchCategoryDto, SearchCityDto, SearchGroupDto } from "@/app/mock/mock-api.types";
+import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
 import React, { ReactNode, useCallback } from "react";
 
-export type SearchItem = SearchCategoryDto | SearchCityDto | SearchGroupDto;
+export type SearchItem = SearchCategoryDto | SearchCityDto | SearchTitleDto;
 export type SearchItemType = SearchItem["type"];
 
 // todo: translation
@@ -53,7 +53,7 @@ interface Props {
   selected: SearchItem[];
   allLocations: SearchCityDto[];
   allCategories: SearchCategoryDto[];
-  allTitles: SearchGroupDto[];
+  allTitles: SearchTitleDto[];
 }
 
 export const GroupAndEventAutocomplete = ({

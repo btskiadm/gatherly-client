@@ -20,7 +20,7 @@ export interface SearchCityDto extends CityDto {
   type: "city";
 }
 
-export interface SearchGroupDto {
+export interface SearchTitleDto {
   type: "title";
   label: string;
   value: string;
