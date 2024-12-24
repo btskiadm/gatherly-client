@@ -12,7 +12,7 @@ interface Props {
   maxMembers: number;
 }
 
-export const GroupAndEventFilterRouted = ({ remote, sponsored, verified, minMembers, maxMembers }: Props) => {
+export const GroupsFilterRouted = ({ remote, sponsored, verified, minMembers, maxMembers }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

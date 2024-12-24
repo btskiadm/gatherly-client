@@ -1,3 +1,4 @@
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { getGroupTiles, getSearchCategories, getSearchCities, getSearchGroupTitles } from "@/app/mock/mock-api";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
@@ -15,6 +16,8 @@ interface Props {
   remote: boolean;
   minMembers: number;
   maxMembers: number;
+  numberOfMembers: NumberOfMembers;
+  dateOfAdding: DateOfAdding;
 }
 
 export const GroupsPage = ({
@@ -26,8 +29,19 @@ export const GroupsPage = ({
   verified,
   minMembers,
   maxMembers,
+  numberOfMembers,
+  dateOfAdding,
 }: Props) => {
-  const tiles = getGroupTiles({ locations, categories, titles, remote, sponsored, verified, minMembers, maxMembers });
+  const tiles = getGroupTiles({
+    locations,
+    categories,
+    titles,
+    remote,
+    sponsored,
+    verified,
+    minMembers,
+    maxMembers,
+  });
   const allLocations = getSearchCities();
   const allCategories = getSearchCategories();
   const allTitles = getSearchGroupTitles().slice(0, 15);
@@ -62,6 +76,8 @@ export const GroupsPage = ({
         verified={verified}
         minMembers={minMembers}
         maxMembers={maxMembers}
+        numberOfMembers={numberOfMembers}
+        dateOfAdding={dateOfAdding}
       />
       <GroupTilesList tiles={tiles} />
     </Stack>

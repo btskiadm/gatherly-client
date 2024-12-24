@@ -14,10 +14,23 @@ import {
 } from "@mui/material";
 import { useCallback, useState } from "react";
 
-export const GroupAndEventSort = () => {
+export type NumberOfMembers = "ascending" | "decending";
+export type DateOfAdding = "newest" | "oldest";
+
+interface Props {
+  numberOfMembers: NumberOfMembers;
+  dateOfAdding: DateOfAdding;
+  onChange(numberOfMembers: NumberOfMembers, dateOfAdding: DateOfAdding): void;
+}
+
+export const GroupAndEventSort = ({
+  numberOfMembers: _numberOfMembers = "ascending",
+  dateOfAdding: _dateOfAdding = "newest",
+  onChange,
+}: Props) => {
   const [anchor, setAnchor] = useState(null);
-  const [dateOfAdding, setDateOfAdding] = useState("newest");
-  const [numberOfMembers, setNumberOfMembers] = useState("");
+  const [dateOfAdding, setDateOfAdding] = useState(_dateOfAdding);
+  const [numberOfMembers, setNumberOfMembers] = useState(_numberOfMembers);
 
   const handleClick = useCallback((event: any) => {
     setAnchor(event.currentTarget);
@@ -28,11 +41,13 @@ export const GroupAndEventSort = () => {
   }, []);
 
   const handleDateOfAddingChange = useCallback((_: unknown, value: string) => {
-    setDateOfAdding(value);
+    setDateOfAdding(value as DateOfAdding);
+    onChange(numberOfMembers, value as DateOfAdding);
   }, []);
 
   const handleNumberOfMembersChange = useCallback((_: unknown, value: string) => {
-    setNumberOfMembers(value);
+    setNumberOfMembers(value as NumberOfMembers);
+    onChange(value as NumberOfMembers, dateOfAdding);
   }, []);
 
   return (
@@ -57,7 +72,6 @@ export const GroupAndEventSort = () => {
           <FormControl>
             <FormLabel>Ilość osób</FormLabel>
             <RadioGroup value={numberOfMembers} onChange={handleNumberOfMembersChange}>
-              <FormControlLabel value="" control={<Radio size="small" />} label="Default" />
               <FormControlLabel value="ascending" control={<Radio size="small" />} label="Ascending" />
               <FormControlLabel value="decending" control={<Radio size="small" />} label="Decending" />
             </RadioGroup>

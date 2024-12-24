@@ -1,8 +1,9 @@
-import { GroupAndEventSort } from "@/app/common/components/Sort/GroupAndEventSort";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { EventAutocompleteRouted } from "./EventAutocompleteRouted";
 import { EventFilterRouted } from "./EventFilterRouted";
+import { EventsSortRouted } from "./EventsSortRouted";
 
 interface Props {
   searchLocations: SearchCityDto[];
@@ -16,6 +17,8 @@ interface Props {
   remote: boolean;
   minMembers: number;
   maxMembers: number;
+  numberOfMembers: NumberOfMembers;
+  dateOfAdding: DateOfAdding;
 }
 
 export const EventsListing = ({
@@ -30,6 +33,8 @@ export const EventsListing = ({
   verified,
   minMembers,
   maxMembers,
+  numberOfMembers,
+  dateOfAdding,
 }: Props) => {
   return (
     <Stack direction="row" gap={1}>
@@ -48,7 +53,7 @@ export const EventsListing = ({
         minMembers={minMembers}
         maxMembers={maxMembers}
       />
-      <GroupAndEventSort />
+      <EventsSortRouted numberOfMembers={numberOfMembers} dateOfAdding={dateOfAdding} />
     </Stack>
   );
 };

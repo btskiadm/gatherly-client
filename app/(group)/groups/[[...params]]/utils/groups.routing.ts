@@ -1,4 +1,5 @@
 import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
 
 export const ALL_LOCATIONS = "all-locations";
@@ -32,11 +33,20 @@ export const resolveParams = (params: string[]): ParsedParams => {
   return create(parseParams(params[0]), parseParams(params[1]));
 };
 
-export const resolveQueries = ({ titles }: { titles?: string }) => {
-  if (!titles) {
-    return { titles: [] };
-  }
-  return { titles: parseParams(titles) };
+export const resolveQueries = ({
+  titles,
+  numberOfMembers,
+  dateOfAdding,
+}: {
+  titles?: string;
+  numberOfMembers?: string;
+  dateOfAdding?: string;
+}): { titles: string[]; numberOfMembers: NumberOfMembers; dateOfAdding: DateOfAdding } => {
+  return {
+    titles: titles && titles?.length > 0 ? parseParams(titles) : [],
+    numberOfMembers: (numberOfMembers ?? "ascending") as NumberOfMembers,
+    dateOfAdding: (dateOfAdding ?? "newest") as DateOfAdding,
+  };
 };
 
 export const filterSearchCategoriesByValues = (categoryValues: string[], availableCategories: SearchCategoryDto[]) => {

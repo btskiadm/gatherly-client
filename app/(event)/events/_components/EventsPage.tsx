@@ -2,6 +2,7 @@ import {
   filterSearchCategoriesByValues,
   filterSearchLocationsByValues,
 } from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { getEventTiles, getSearchCategories, getSearchCities, getSearchEventTitles } from "@/app/mock/mock-api";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
@@ -18,6 +19,8 @@ interface Props {
   remote: boolean;
   minMembers: number;
   maxMembers: number;
+  numberOfMembers: NumberOfMembers;
+  dateOfAdding: DateOfAdding;
 }
 
 export const EventsPage = ({
@@ -29,8 +32,19 @@ export const EventsPage = ({
   verified,
   minMembers,
   maxMembers,
+  numberOfMembers,
+  dateOfAdding,
 }: Props) => {
-  const tiles = getEventTiles({ locations, categories, titles, remote, sponsored, verified, minMembers, maxMembers });
+  const tiles = getEventTiles({
+    locations,
+    categories,
+    titles,
+    remote,
+    sponsored,
+    verified,
+    minMembers,
+    maxMembers,
+  });
   const allLocations = getSearchCities();
   const allCategories = getSearchCategories();
   const allTitles = getSearchEventTitles().slice(0, 15);
@@ -65,6 +79,8 @@ export const EventsPage = ({
         verified={verified}
         minMembers={minMembers}
         maxMembers={maxMembers}
+        numberOfMembers={numberOfMembers}
+        dateOfAdding={dateOfAdding}
       />
       <EventTiles tiles={tiles} />
     </Stack>

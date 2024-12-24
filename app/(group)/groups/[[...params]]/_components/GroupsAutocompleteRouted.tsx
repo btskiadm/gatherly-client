@@ -15,7 +15,7 @@ interface Props {
   allTitles: SearchTitleDto[];
 }
 
-export const GroupAndEventAutocompleteRouted = ({
+export const GroupsAutocompleteRouted = ({
   searchCategories,
   searchLocations,
   searchTitles,

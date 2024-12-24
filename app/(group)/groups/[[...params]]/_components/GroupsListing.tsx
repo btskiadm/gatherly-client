@@ -1,8 +1,9 @@
-import { GroupAndEventSort } from "@/app/common/components/Sort/GroupAndEventSort";
+import { DateOfAdding, GroupAndEventSort, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
-import { GroupAndEventAutocompleteRouted } from "./GroupAndEventAutocompleteRouted";
-import { GroupAndEventFilterRouted } from "./GroupAndEventFilterRouted";
+import { GroupsAutocompleteRouted } from "./GroupsAutocompleteRouted";
+import { GroupsFilterRouted } from "./GroupsFilterRouted";
+import { GroupsSortRouted } from "./GroupsSortRouted";
 
 interface Props {
   searchLocations: SearchCityDto[];
@@ -16,6 +17,8 @@ interface Props {
   remote: boolean;
   minMembers: number;
   maxMembers: number;
+  numberOfMembers: NumberOfMembers;
+  dateOfAdding: DateOfAdding;
 }
 
 export const GroupsListing = ({
@@ -30,10 +33,12 @@ export const GroupsListing = ({
   verified,
   minMembers,
   maxMembers,
+  numberOfMembers,
+  dateOfAdding,
 }: Props) => {
   return (
     <Stack direction="row" gap={1}>
-      <GroupAndEventAutocompleteRouted
+      <GroupsAutocompleteRouted
         searchCategories={searchCategories}
         searchLocations={searchLocations}
         searchTitles={searchTitles}
@@ -41,14 +46,14 @@ export const GroupsListing = ({
         allLocations={allLocations}
         allTitles={allTitles}
       />
-      <GroupAndEventFilterRouted
+      <GroupsFilterRouted
         remote={remote}
         verified={verified}
         sponsored={sponsored}
         minMembers={minMembers}
         maxMembers={maxMembers}
       />
-      <GroupAndEventSort />
+      <GroupsSortRouted numberOfMembers={numberOfMembers} dateOfAdding={dateOfAdding} />
     </Stack>
   );
 };

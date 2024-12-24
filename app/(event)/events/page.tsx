@@ -1,10 +1,9 @@
 import { resolveParams, resolveQueries } from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
-import { getEventTiles } from "@/app/mock/mock-api";
 import { EventsPage } from "./_components/EventsPage";
 
 export default async function Page({
   params: { params },
-  searchParams: { titles, remote, sponsored, verified, minMembers, maxMembers },
+  searchParams: { titles, remote, sponsored, verified, minMembers, maxMembers, numberOfMembers, dateOfAdding },
 }: {
   params: { params: string[] };
   searchParams: {
@@ -14,6 +13,8 @@ export default async function Page({
     remote?: string;
     minMembers?: string;
     maxMembers?: string;
+    numberOfMembers?: string;
+    dateOfAdding?: string;
   };
 }) {
   const _sponsored = !!sponsored;
@@ -23,7 +24,11 @@ export default async function Page({
   const _maxMembers = maxMembers ? ~~maxMembers : 50;
 
   const { categories, locations } = resolveParams(params);
-  const { titles: queryTitles } = resolveQueries({ titles });
+  const {
+    titles: _titles,
+    numberOfMembers: _numberOfMembers,
+    dateOfAdding: _dateOfAdding,
+  } = resolveQueries({ titles, numberOfMembers, dateOfAdding });
 
   return (
     <EventsPage
@@ -34,7 +39,9 @@ export default async function Page({
       maxMembers={_maxMembers}
       categories={categories}
       locations={locations}
-      titles={queryTitles}
+      titles={_titles}
+      dateOfAdding={_dateOfAdding}
+      numberOfMembers={_numberOfMembers}
     />
   );
 }
