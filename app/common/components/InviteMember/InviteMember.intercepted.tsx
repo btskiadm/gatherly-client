@@ -20,6 +20,7 @@ export const InviteMemberIntercepted = () => {
     return {
       onAction: async () => {
         const data = inviteMemberRef.current?.invite();
+        console.log("[debug]: ", data);
 
         if (!data?.success) {
           toast.error("Validation error. Please check the form.");

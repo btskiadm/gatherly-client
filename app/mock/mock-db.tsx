@@ -474,7 +474,7 @@ iterate(numbOfGroups, (groupIndex) => {
   const totalCitiesCount = Math.floor(groupIndex * 1.77) % maxCitiesPerGroup || 1;
   const totalCategoriesCount = Math.floor(groupIndex * 1.77) % maxCategoriesPerGroup || 1;
   const totalEventsCount = Math.floor(groupIndex * 1.91) % maxEventsPerGroup;
-  const totalCommentsCount = Math.floor(groupIndex & 2.01) % maxCommentsPerGroup;
+  const totalCommentsCount = Math.floor(groupIndex * 2.01) % maxCommentsPerGroup;
 
   const groupId = `group-${groupIndex}`;
 
@@ -616,17 +616,19 @@ iterate(numbOfGroups, (groupIndex) => {
         },
       };
     }),
-    comments: arrayable(totalCommentsCount).map((_, commentIdx) => {
-      const createdAt = new Date(groupCreatedAt);
-      createdAt.setHours(createdAt.getHours() + commentIdx * 12);
+    comments: arrayable(totalCommentsCount)
+      .map((_, commentIdx) => {
+        const createdAt = new Date(groupCreatedAt);
+        createdAt.setHours(createdAt.getHours() + commentIdx * 12);
 
-      return {
-        id: `${groupId}_comment-${commentIdx}`,
-        content: getLoremIpsumSentenses(1, commentIdx),
-        createdAt: createdAt.toISOString(),
-        rate: commentIdx % 6 || 1,
-        user: DBUser[commentIdx % DBUser.length],
-      };
-    }),
+        return {
+          id: `${groupId}_comment-${commentIdx}`,
+          content: getLoremIpsumSentenses(1, commentIdx),
+          createdAt: createdAt.toISOString(),
+          rate: commentIdx % 6 || 1,
+          user: DBUser[commentIdx % DBUser.length],
+        };
+      })
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
   });
 });

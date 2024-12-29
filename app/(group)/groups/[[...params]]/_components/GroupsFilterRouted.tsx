@@ -30,7 +30,7 @@ export const GroupsFilterRouted = ({ remote, sponsored, verified, minMembers, ma
       if (verified) {
         newSearchParams.set("verified", "yes");
       } else {
-        newSearchParams.delete("sponsored");
+        newSearchParams.delete("verified");
       }
 
       if (remote) {

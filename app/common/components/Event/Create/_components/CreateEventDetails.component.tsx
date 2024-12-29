@@ -3,6 +3,7 @@
 import { Textarea } from "@/app/common/components/Textarea";
 import {
   ZodFlattenIssue,
+  createEventDetailsSchema,
   createGroupSchema,
   flattenIssues,
   maxEventCategories,
@@ -44,7 +45,7 @@ export const CreateEventDetails = forwardRef<CreateEventDetailsRef, Props>(
     const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
     const handleNext = useCallback((): CreateEventDetailsData => {
-      const { data, success, error } = createGroupSchema.safeParse({
+      const { data, success, error } = createEventDetailsSchema.safeParse({
         name,
         description,
         categories: categories.map((c) => c.value),

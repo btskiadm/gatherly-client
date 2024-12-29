@@ -1,7 +1,7 @@
 export const GroupEventsLayout = ({
-  page,
+  children,
 }: Readonly<{
-  page: React.ReactNode;
+  children: React.ReactNode;
 }>) => {
-  return <>{page}</>;
+  return <>{children}</>;
 };

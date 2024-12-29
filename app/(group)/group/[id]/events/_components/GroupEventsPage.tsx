@@ -8,9 +8,10 @@ interface Props {
 }
 
 export const GroupEventsPage = ({ groupDetails }: Props) => {
+  const label = groupDetails.eventsLength > 99 ? "(99+)" : `(${groupDetails.eventsLength})`;
   return (
     <Stack gap={{ xs: 2, sm: 3 }}>
-      <GroupHeader primary="Events" subPrimary="(99+)" secondary="See scheduled group eventsevents." />
+      <GroupHeader primary="Events" subPrimary={label} secondary="See scheduled group eventsevents." />
       <GroupEventsTabs groupDetails={groupDetails} />
     </Stack>
   );

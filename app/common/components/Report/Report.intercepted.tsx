@@ -21,6 +21,7 @@ export const ReportIntercepted = () => {
       text: "Send",
       onAction: async () => {
         const data = inviteMemberRef.current?.handleData();
+        console.log("[debug]: ", data);
 
         if (!data?.success) {
           toast.error("Validation error. Please check the form.");

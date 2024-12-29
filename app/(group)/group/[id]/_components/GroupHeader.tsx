@@ -18,7 +18,7 @@ export const GroupHeader = ({ primary, subPrimary, secondary }: Props) => {
             {primary}
           </Typography>
           {subPrimary && (
-            <Typography variant="body1" fontWeight="600" color="text.secondary">
+            <Typography variant="body2" fontWeight="600" color="text.secondary">
               {subPrimary}
             </Typography>
           )}

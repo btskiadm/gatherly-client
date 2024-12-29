@@ -18,11 +18,14 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
     upcomingLength,
     pastLength,
     cancelledLength,
+    rate,
     thumbnails: { thumb },
   } = groupDetails;
 
+  const rateLabel = `${Number.isNaN(rate) ? "-" : rate} `;
+
   return (
-    <Stack gap={{ xs: 2, sm: 3 }}>
+    <Stack gap={{ xs: 2, pnsm: 3 }}>
       <GroupHeader primary="About" secondary="See basic information about group." />
       <Box
         display={{
@@ -54,7 +57,7 @@ export const GroupAboutPage = ({ groupDetails }: Props) => {
           <AboutEventCounterTile primary={`${cancelledLength}`} secondary="Odwołane" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary="4.2" secondary="Ocena" />
+          <AboutEventCounterTile primary={rateLabel} secondary="Ocena" />
         </Grid2>
       </Grid2>
       <Stack gap={1}>

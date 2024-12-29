@@ -1,9 +1,9 @@
 import { GroupEventsLayout } from "./_components/GroupEventsLayout";
 
 export default function Layout({
-  page,
+  children,
 }: Readonly<{
-  page: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-  return <GroupEventsLayout page={page} />;
+  return <GroupEventsLayout>{children}</GroupEventsLayout>;
 }

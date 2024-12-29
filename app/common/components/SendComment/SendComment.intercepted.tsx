@@ -21,6 +21,8 @@ export const SendCommentIntercepted = () => {
       onAction: async () => {
         const data = componentRef.current?.send();
 
+        console.log("[debug]:", data);
+
         if (!data?.success) {
           toast.error("Validation error. Please check the form.");
           return;

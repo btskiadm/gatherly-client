@@ -137,16 +137,29 @@ export const getGroupDetailsApi = (groupId: string): GroupDetailsDto | null => {
 
   const numOfEvents = (dtos: EventStackDto[]) => dtos.reduce((prev, current) => prev + current.events.length, 0);
 
+  const roundToQuarter = (value: number): number => Math.round(value * 4) / 4;
+
+  const cancelledLength = numOfEvents(cancelled);
+  const pastLength = numOfEvents(past);
+  const upcomingLength = numOfEvents(upcoming);
+  const pendingLength = numOfEvents(pending);
+  const eventsLength = cancelledLength + pastLength + upcomingLength + pendingLength;
+  const rate = roundToQuarter(
+    group.comments.reduce((prev, current) => prev + current.rate, 0) / (group.comments.length ?? 1)
+  );
+
   return {
     ...groupDto,
     cancelled,
     past,
     pending,
     upcoming,
-    cancelledLength: numOfEvents(cancelled),
-    pastLength: numOfEvents(past),
-    upcomingLength: numOfEvents(upcoming),
-    pendingLength: numOfEvents(pending),
+    cancelledLength,
+    pastLength,
+    upcomingLength,
+    pendingLength,
+    eventsLength,
+    rate,
   };
 };
 

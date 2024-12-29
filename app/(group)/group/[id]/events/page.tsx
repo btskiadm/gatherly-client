@@ -1,9 +1,9 @@
 import { getGroupDetailsApi } from "@/app/mock/mock-api";
 import { notFound } from "next/navigation";
-import { GroupParams, getGroupId } from "../../GroupParams";
-import { GroupEventsPage } from "../_components/GroupEventsPage";
+import { GroupParams, getGroupId } from "../GroupParams";
+import { GroupEventsPage } from "./_components/GroupEventsPage";
 
-export default function Default(params: GroupParams) {
+export default function Page(params: GroupParams) {
   const id = getGroupId(params);
   const groupDetails = getGroupDetailsApi(id);
 

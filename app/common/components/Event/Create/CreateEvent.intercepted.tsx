@@ -66,6 +66,7 @@ export const CreateEventIntercepted = (props: Props) => {
       return {
         onAction: () => {
           const data = detailsRef.current?.next();
+          console.log("[debug]:", data);
           if (!data?.success) {
             setErrorStep(0);
             return;
@@ -82,6 +83,7 @@ export const CreateEventIntercepted = (props: Props) => {
       return {
         onAction: () => {
           const data = dateAndLocationRef.current?.next();
+          console.log("[debug]:", data);
           if (!data?.success) {
             setErrorStep(1);
             return;
@@ -98,6 +100,7 @@ export const CreateEventIntercepted = (props: Props) => {
       return {
         onAction: async () => {
           const data = dateAndLocationRef.current?.next();
+          console.log("[debug]:", data);
           if (!data?.success) {
             setErrorStep(1);
             return;
@@ -140,7 +143,7 @@ export const CreateEventIntercepted = (props: Props) => {
   return (
     <ModalTemplate
       open
-      title={isEdit ? "Edit event" : "Create a new event"}
+      title={isEdit.current ? "Edit event" : "Create a new event"}
       loading={loading}
       back={back}
       cancel={cancel}

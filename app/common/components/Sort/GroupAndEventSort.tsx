@@ -40,15 +40,21 @@ export const GroupAndEventSort = ({
     setAnchor(null);
   }, []);
 
-  const handleDateOfAddingChange = useCallback((_: unknown, value: string) => {
-    setDateOfAdding(value as DateOfAdding);
-    onChange(numberOfMembers, value as DateOfAdding);
-  }, []);
+  const handleDateOfAddingChange = useCallback(
+    (_: unknown, value: string) => {
+      setDateOfAdding(value as DateOfAdding);
+      onChange(numberOfMembers, value as DateOfAdding);
+    },
+    [onChange, numberOfMembers]
+  );
 
-  const handleNumberOfMembersChange = useCallback((_: unknown, value: string) => {
-    setNumberOfMembers(value as NumberOfMembers);
-    onChange(value as NumberOfMembers, dateOfAdding);
-  }, []);
+  const handleNumberOfMembersChange = useCallback(
+    (_: unknown, value: string) => {
+      setNumberOfMembers(value as NumberOfMembers);
+      onChange(value as NumberOfMembers, dateOfAdding);
+    },
+    [onChange, dateOfAdding]
+  );
 
   return (
     <>

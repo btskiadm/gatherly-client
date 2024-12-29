@@ -1,7 +1,7 @@
 "use client";
 
-import { Login, LoginData } from "@/app/common/components/Auth/Login/Login.component";
 import { useLoginDispatch } from "@/app/common/components/Auth/Login/Login.provider";
+import { SignUp, SignUpData } from "@/app/common/components/Auth/SignUp/SignUp.component";
 import { delay } from "@/app/common/utils/delay";
 import { useCallback, useState } from "react";
 
@@ -14,8 +14,8 @@ export const SignUpPage = () => {
   }, [open]);
 
   const handleSubmit = useCallback(
-    async (data: LoginData) => {
-      //todo: api
+    async (data: SignUpData) => {
+      console.log("[debug]:", data);
       setLoading(true);
       await delay(2000);
       setLoading(false);
@@ -24,5 +24,5 @@ export const SignUpPage = () => {
     [handleClose]
   );
 
-  return <Login loading={loading} onSubmit={handleSubmit} />;
+  return <SignUp loading={loading} onSubmit={handleSubmit} />;
 };

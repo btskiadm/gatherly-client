@@ -30,7 +30,7 @@ export const EventFilterRouted = ({ remote, sponsored, verified, minMembers, max
       if (verified) {
         newSearchParams.set("verified", "yes");
       } else {
-        newSearchParams.delete("sponsored");
+        newSearchParams.delete("verified");
       }
 
       if (remote) {

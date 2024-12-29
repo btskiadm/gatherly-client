@@ -1,11 +1,12 @@
-import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
-import { ProfileParams, getUsernameParam } from "./ProfileParams";
-import { getShortEventsByUsername, getShortGroupsByUsername, getUserApi } from "@/app/mock/mock-api";
-import { notFound } from "next/navigation";
+import { ShortCommonEventTile } from "@/app/common/components/Event/Tile/ShortCommonEventTile";
+import { ShortEventTile } from "@/app/common/components/Event/Tile/ShortEventTile";
 import { ShortCommonGroupTile } from "@/app/common/components/Group/Tile/ShortCommonGroupTile";
 import { ShortGroupTile } from "@/app/common/components/Group/Tile/ShortGroupTile";
-import { ShortEventTile } from "@/app/common/components/Event/Tile/ShortEventTile";
-import { ShortCommonEventTile } from "@/app/common/components/Event/Tile/ShortCommonEventTile";
+import { getShortEventsByUsername, getShortGroupsByUsername, getUserApi } from "@/app/mock/mock-api";
+import { LoadingButton } from "@mui/lab";
+import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { notFound } from "next/navigation";
+import { ProfileParams, getUsernameParam } from "./ProfileParams";
 
 export default function Page(params: ProfileParams) {
   const username = getUsernameParam(params);
@@ -29,11 +30,16 @@ export default function Page(params: ProfileParams) {
           </Box>
         </Paper>
       </Stack>
-      <Stack gap={3}>
+      <Stack gap={2}>
         <Stack gap={1}>
-          <Typography variant="body1" fontWeight={600}>
-            Groups member
-          </Typography>
+          <Stack gap={1} direction="row" alignItems="center">
+            <Typography variant="body1" fontWeight={600}>
+              Groups member
+            </Typography>
+            <Typography variant="caption" color="text.secondary" fontWeight={600}>
+              (99+)
+            </Typography>
+          </Stack>
           <Grid2 container spacing={2}>
             {shortGroups.map((shortGroup) => {
               return (
@@ -46,12 +52,18 @@ export default function Page(params: ProfileParams) {
             })}
           </Grid2>
         </Stack>
+        <LoadingButton variant="outlined">Load more groups..</LoadingButton>
       </Stack>
-      <Stack gap={3}>
+      <Stack gap={2}>
         <Stack gap={1}>
-          <Typography variant="body1" fontWeight={600}>
-            Events member
-          </Typography>
+          <Stack gap={1} direction="row" alignItems="center">
+            <Typography variant="body1" fontWeight={600}>
+              Events member
+            </Typography>
+            <Typography variant="caption" color="text.secondary" fontWeight={600}>
+              (99+)
+            </Typography>
+          </Stack>
           <Grid2 container spacing={2}>
             {shortEvents.map((shortEvent) => {
               return (
@@ -64,6 +76,7 @@ export default function Page(params: ProfileParams) {
             })}
           </Grid2>
         </Stack>
+        <LoadingButton variant="outlined">Load more events..</LoadingButton>
       </Stack>
     </Stack>
   );

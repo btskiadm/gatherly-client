@@ -185,6 +185,8 @@ export type GroupDetailsDto = GroupDto & {
   pendingLength: number;
   pastLength: number;
   cancelledLength: number;
+  eventsLength: number;
+  rate: number;
 };
 
 export interface ShortGroupDto {
