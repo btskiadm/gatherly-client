@@ -9,6 +9,7 @@ export const CommonGroupTile = ({ children }: PropsWithChildren<{}>) => {
       sx={(theme) => ({
         position: "relative",
         width: "100%",
+        minHeight: "14rem",
         height: "min-content",
         [theme.breakpoints.up("sm")]: {
           height: "30rem",

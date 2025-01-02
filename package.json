@@ -1,6 +1,6 @@
 {
-  "name": "gatherly-web",
-  "version": "0.1.0",
+  "name": "gatherly-client",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
