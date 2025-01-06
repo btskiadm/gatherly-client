@@ -4,8 +4,8 @@ import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/moc
 import { Stack } from "@mui/material";
 import { useMemo } from "react";
 import { filterSearchCategoriesByValues, filterSearchLocationsByValues } from "../utils/groups.routing";
-import { GroupTilesList } from "./GroupTilesList";
 import { GroupsListing } from "./GroupsListing";
+import { GroupTilesList } from "./GroupTilesList";
 
 interface Props {
   categories: string[];

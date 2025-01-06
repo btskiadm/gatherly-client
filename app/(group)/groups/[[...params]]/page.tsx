@@ -1,12 +1,14 @@
-import { GroupsPage } from "./_components/GroupsPage";
+import { healthCheckQueryOptions } from "@/app/common/utils/hooks/useHealthCheck";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { resolveParams, resolveQueries } from "./utils/groups.routing";
+import { GroupsPage } from "./_components/GroupsPage";
 
 export default async function Page({
-  params: { params },
-  searchParams: { titles, remote, sponsored, verified, minMembers, maxMembers, numberOfMembers, dateOfAdding },
+  params: promiseParams,
+  searchParams: promiseSearchParams,
 }: {
-  params: { params: string[] };
-  searchParams: {
+  params: Promise<{ params: string[] }>;
+  searchParams: Promise<{
     titles?: string;
     sponsored?: string;
     verified?: string;
@@ -15,8 +17,12 @@ export default async function Page({
     maxMembers?: string;
     numberOfMembers?: string;
     dateOfAdding?: string;
-  };
+  }>;
 }) {
+  const queryClient = new QueryClient();
+  const [{ params }, { dateOfAdding, maxMembers, minMembers, numberOfMembers, remote, sponsored, titles, verified }] =
+    await Promise.all([promiseParams, promiseSearchParams, queryClient.prefetchQuery(healthCheckQueryOptions)]);
+
   const _sponsored = !!sponsored;
   const _remote = !!remote;
   const _verified = !!verified;
@@ -24,6 +30,7 @@ export default async function Page({
   const _maxMembers = maxMembers ? ~~maxMembers : 50;
 
   const { categories, locations } = resolveParams(params);
+
   const {
     titles: _titles,
     numberOfMembers: _numberOfMembers,
@@ -31,17 +38,19 @@ export default async function Page({
   } = resolveQueries({ titles, numberOfMembers, dateOfAdding });
 
   return (
-    <GroupsPage
-      remote={_remote}
-      sponsored={_sponsored}
-      verified={_verified}
-      minMembers={_minMembers}
-      maxMembers={_maxMembers}
-      categories={categories}
-      locations={locations}
-      titles={_titles}
-      dateOfAdding={_dateOfAdding}
-      numberOfMembers={_numberOfMembers}
-    />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <GroupsPage
+        remote={_remote}
+        sponsored={_sponsored}
+        verified={_verified}
+        minMembers={_minMembers}
+        maxMembers={_maxMembers}
+        categories={categories}
+        locations={locations}
+        titles={_titles}
+        dateOfAdding={_dateOfAdding}
+        numberOfMembers={_numberOfMembers}
+      />
+    </HydrationBoundary>
   );
 }
