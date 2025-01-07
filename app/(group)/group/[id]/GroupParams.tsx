@@ -1,9 +1,9 @@
 export interface GroupParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export const getGroupId = ({ params }: GroupParams) => {
-  return params.id;
+export const getGroupId = async ({ params }: GroupParams) => {
+  return (await params).id;
 };

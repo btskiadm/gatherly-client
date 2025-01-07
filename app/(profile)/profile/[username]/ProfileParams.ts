@@ -1,9 +1,9 @@
 export interface ProfileParams {
-  params: {
+  params: Promise<{
     username: string;
-  };
+  }>;
 }
 
-export const getUsernameParam = ({ params }: ProfileParams) => {
-  return params.username;
+export const getUsernameParam = async ({ params }: ProfileParams) => {
+  return (await params).username;
 };

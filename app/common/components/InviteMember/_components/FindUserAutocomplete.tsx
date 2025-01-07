@@ -2,17 +2,16 @@
 
 import { getSeachUsers } from "@/app/mock/mock-api";
 import { SearchUserDto } from "@/app/mock/mock-api.types";
+import { RefObject } from "@fullcalendar/core/preact";
 import { Autocomplete, Chip, CircularProgress, Stack, TextField } from "@mui/material";
 import React, { useCallback } from "react";
 
 const loading = true;
 
-const ListboxComponent = (selected: SearchUserDto[], onDelete: (searchAttribute: SearchUserDto) => void) =>
-  React.forwardRef(function ListboxComponent(
-    props: React.HTMLAttributes<HTMLElement>,
-    ref: React.LegacyRef<HTMLDivElement>
-  ) {
-    const { children, ...other } = props;
+const ListboxComponent =
+  (selected: SearchUserDto[], onDelete: (searchAttribute: SearchUserDto) => void) =>
+  (props: React.HTMLAttributes<HTMLElement> & { ref?: RefObject<HTMLDivElement> }) => {
+    const { children, ref, ...other } = props;
 
     return (
       <div {...other} ref={ref}>
@@ -32,7 +31,7 @@ const ListboxComponent = (selected: SearchUserDto[], onDelete: (searchAttribute:
         {children}
       </div>
     );
-  });
+  };
 
 interface Props {
   users: SearchUserDto[];

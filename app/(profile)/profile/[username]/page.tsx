@@ -8,8 +8,8 @@ import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 import { ProfileParams, getUsernameParam } from "./ProfileParams";
 
-export default function Page(params: ProfileParams) {
-  const username = getUsernameParam(params);
+export default async function Page(params: ProfileParams) {
+  const username = await getUsernameParam(params);
   const user = getUserApi(username);
   const shortGroups = getShortGroupsByUsername(username);
   const shortEvents = getShortEventsByUsername(username);

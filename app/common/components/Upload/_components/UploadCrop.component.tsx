@@ -1,19 +1,14 @@
 "use client";
 
 import getCroppedImg from "@/app/common/utils/file";
+import { RefObject } from "@fullcalendar/core/preact";
 import { RotateLeft, ZoomIn, ZoomOut } from "@mui/icons-material";
 import { Box, IconButton, Slider, Stack, Typography } from "@mui/material";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { useCallback, useImperativeHandle, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 10;
-
-interface Props {
-  img: string;
-  filename: string;
-  aspect?: string;
-}
 
 interface UploadCropData {
   success: boolean;
@@ -26,7 +21,14 @@ export interface UploadCropRef {
   getData(): Promise<UploadCropData>;
 }
 
-export const UploadCrop = forwardRef<UploadCropRef, Props>(({ img, filename, aspect = 1 }, componentRef) => {
+interface Props {
+  img: string;
+  filename: string;
+  aspect?: number;
+  componentRef: RefObject<UploadCropRef | null>;
+}
+
+export const UploadCrop = ({ img, filename, aspect = 1, componentRef }: Props) => {
   const [zoom, setZoom] = useState(MIN_ZOOM);
   const [rotation, setRotation] = useState(0);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -135,4 +137,4 @@ export const UploadCrop = forwardRef<UploadCropRef, Props>(({ img, filename, asp
       </Typography>
     </Stack>
   );
-});
+};

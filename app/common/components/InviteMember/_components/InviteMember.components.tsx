@@ -1,10 +1,10 @@
 "use client";
 
-import { InviteMemberInput, ZodFlattenIssue, flattenIssues, inviteMemberSchema } from "@/app/common/utils/zod";
-import { FormControl, FormHelperText, FormLabel, Stack } from "@mui/material";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
-import { FindUserAutocomplete } from "./FindUserAutocomplete";
+import { flattenIssues, InviteMemberInput, inviteMemberSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
 import { SearchUserDto } from "@/app/mock/mock-api.types";
+import { FormControl, FormHelperText, FormLabel, Stack } from "@mui/material";
+import { RefObject, useCallback, useImperativeHandle, useState } from "react";
+import { FindUserAutocomplete } from "./FindUserAutocomplete";
 import { FindUserAvatars } from "./FindUserAvatars";
 
 export interface InviteMemberData {
@@ -16,9 +16,11 @@ export interface InviteMemberRef {
   invite: () => InviteMemberData;
 }
 
-interface Props {}
+interface Props {
+  ref: RefObject<InviteMemberRef | null>;
+}
 
-export const InviteMember = forwardRef<InviteMemberRef, Props>(({}, ref) => {
+export const InviteMember = ({ ref }: Props) => {
   const [users, setUsers] = useState<SearchUserDto[]>([]);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
@@ -63,4 +65,4 @@ export const InviteMember = forwardRef<InviteMemberRef, Props>(({}, ref) => {
       </Stack>
     </Stack>
   );
-});
+};

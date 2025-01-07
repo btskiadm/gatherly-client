@@ -2,11 +2,11 @@ import { resolveParams, resolveQueries } from "@/app/(group)/groups/[[...params]
 import { EventsPage } from "./_components/EventsPage";
 
 export default async function Page({
-  params: { params },
-  searchParams: { titles, remote, sponsored, verified, minMembers, maxMembers, numberOfMembers, dateOfAdding },
+  params: promiseParams,
+  searchParams: promiseSearchParams,
 }: {
-  params: { params: string[] };
-  searchParams: {
+  params: Promise<{ params: string[] }>;
+  searchParams: Promise<{
     titles?: string;
     sponsored?: string;
     verified?: string;
@@ -15,8 +15,11 @@ export default async function Page({
     maxMembers?: string;
     numberOfMembers?: string;
     dateOfAdding?: string;
-  };
+  }>;
 }) {
+  const [{ params }, { titles, remote, sponsored, verified, minMembers, maxMembers, numberOfMembers, dateOfAdding }] =
+    await Promise.all([promiseParams, promiseSearchParams]);
+
   const _sponsored = !!sponsored;
   const _remote = !!remote;
   const _verified = !!verified;

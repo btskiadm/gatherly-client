@@ -9,7 +9,7 @@ import { Report, ReportRef } from "./_components/Report.components";
 
 export const ReportIntercepted = () => {
   const [loading, setLoading] = useState(false);
-  const inviteMemberRef = useRef<ReportRef>(null);
+  const inviteMemberRef = useRef<ReportRef | null>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {

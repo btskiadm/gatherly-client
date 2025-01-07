@@ -256,7 +256,7 @@ export const GroupTile = ({
             </Tooltip>
 
             {/* created at chip */}
-            <Tooltip title={`Created at ${new Date(createdAt).toLocaleDateString()}`}>
+            <Tooltip title={`Created at ${new Date(createdAt).toISOString()}`}>
               <Chip
                 size="small"
                 variant="outlined"

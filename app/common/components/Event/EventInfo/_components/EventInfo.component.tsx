@@ -1,9 +1,10 @@
 "use client";
 
 import CityMap16x9 from "@/app/public/assets/citymap_16x9.webp";
+import { RefObject } from "@fullcalendar/core/preact";
 import { Grid2, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import { forwardRef, useCallback, useImperativeHandle } from "react";
+import { useCallback, useImperativeHandle } from "react";
 import { toast } from "react-hot-toast";
 import { Event } from "../EventInfo.mock";
 import { EventInfoMember } from "./EventInfoMember.component";
@@ -19,9 +20,10 @@ export interface EventInfoRef {
 
 interface Props {
   event: Event;
+  ref: RefObject<EventInfoRef | null>;
 }
 
-export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
+export const EventInfo = ({ event, ref }: Props) => {
   const { id, title, description, startAt, endAt, city, street, locationId, members } = event;
 
   const handleSubmit = useCallback((): EventInfoData => {
@@ -161,4 +163,4 @@ export const EventInfo = forwardRef<EventInfoRef, Props>(({ event }, ref) => {
       </Stack>
     </Stack>
   );
-});
+};

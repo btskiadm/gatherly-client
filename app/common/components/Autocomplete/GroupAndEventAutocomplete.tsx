@@ -21,12 +21,10 @@ const searchIcon: Record<SearchItemType, ReactNode> = {
   title: <TitleRounded />,
 };
 
-const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
-  React.forwardRef(function ListboxComponent(
-    props: React.HTMLAttributes<HTMLElement>,
-    ref: React.LegacyRef<HTMLDivElement>
-  ) {
-    const { children, ...other } = props;
+const ListboxComponent =
+  (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
+  (props: React.HTMLAttributes<HTMLElement> & { ref?: React.RefObject<HTMLDivElement> }) => {
+    const { children, ref, ...other } = props;
 
     return (
       <div {...other} ref={ref}>
@@ -45,7 +43,7 @@ const ListboxComponent = (selected: SearchItem[], onDelete: (searchAttribute: Se
         {children}
       </div>
     );
-  });
+  };
 
 interface Props {
   onChange(items: SearchItem[]): void;

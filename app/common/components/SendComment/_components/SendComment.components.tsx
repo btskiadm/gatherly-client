@@ -1,14 +1,15 @@
 "use client";
 
 import {
-  SendCommentInput,
-  ZodFlattenIssue,
   flattenIssues,
   maxComment,
+  SendCommentInput,
   sendCommentSchema,
+  ZodFlattenIssue,
 } from "@/app/common/utils/zod";
+import { RefObject } from "@fullcalendar/core/preact";
 import { FormControl, FormLabel, Rating, Stack } from "@mui/material";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { useCallback, useImperativeHandle, useState } from "react";
 import { Textarea } from "../../Textarea";
 import { TruncatedFormHelperText } from "../../TruncatedFormHelperText";
 
@@ -21,9 +22,11 @@ export interface SendCommentRef {
   send: () => SendCommentData;
 }
 
-interface Props {}
+interface Props {
+  ref: RefObject<SendCommentRef | null>;
+}
 
-export const SendComment = forwardRef<SendCommentRef, Props>(({}, ref) => {
+export const SendComment = ({ ref }: Props) => {
   const [comment, setComment] = useState("");
   const [rate, setRate] = useState(5);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
@@ -90,4 +93,4 @@ export const SendComment = forwardRef<SendCommentRef, Props>(({}, ref) => {
       </Stack>
     </Stack>
   );
-});
+};

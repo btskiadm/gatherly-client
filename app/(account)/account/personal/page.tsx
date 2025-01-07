@@ -193,7 +193,6 @@ export default function Page() {
             value={gender}
             notched={false}
             size="small"
-            placeholder="Gender"
             label="Gender"
             onChange={handleGender}
             renderValue={(value: string) =>

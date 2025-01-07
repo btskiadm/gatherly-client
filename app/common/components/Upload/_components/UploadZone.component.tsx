@@ -1,6 +1,7 @@
+import { RefObject } from "@fullcalendar/core/preact";
 import { CloudUploadOutlined } from "@mui/icons-material";
-import { Box, Button, Stack, Typography, styled } from "@mui/material";
-import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from "react";
+import { Box, Button, Stack, styled, Typography } from "@mui/material";
+import { useCallback, useImperativeHandle, useMemo, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { readFile } from "../../../utils/file";
 
@@ -60,9 +61,10 @@ export interface UploadZoneRef {
 
 interface Props {
   onUploaded?(data: UploadZoneData["data"]): void;
+  componentRef: RefObject<UploadZoneRef | null>;
 }
 
-export const UploadZone = forwardRef<UploadZoneRef, Props>(({ onUploaded }, componentRef) => {
+export const UploadZone = ({ onUploaded, componentRef }: Props) => {
   const urlRef = useRef<UploadZoneUrl>(null);
 
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject, acceptedFiles } = useDropzone({
@@ -136,4 +138,4 @@ export const UploadZone = forwardRef<UploadZoneRef, Props>(({ onUploaded }, comp
       </Zone>
     </Box>
   );
-});
+};

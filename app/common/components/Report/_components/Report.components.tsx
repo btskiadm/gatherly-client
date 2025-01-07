@@ -1,8 +1,8 @@
 "use client";
 
-import { ReportInput, ZodFlattenIssue, flattenIssues, maxReportContent, reportSchema } from "@/app/common/utils/zod";
+import { flattenIssues, maxReportContent, ReportInput, reportSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
 import { FormControl, FormLabel, Stack } from "@mui/material";
-import { forwardRef, useCallback, useImperativeHandle, useState } from "react";
+import { RefObject, useCallback, useImperativeHandle, useState } from "react";
 import { Textarea } from "../../Textarea";
 import { TruncatedFormHelperText } from "../../TruncatedFormHelperText";
 
@@ -15,9 +15,11 @@ export interface ReportRef {
   handleData: () => ReportData;
 }
 
-interface Props {}
+interface Props {
+  ref: RefObject<ReportRef | null>;
+}
 
-export const Report = forwardRef<ReportRef, Props>(({}, ref) => {
+export const Report = ({ ref }: Props) => {
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
@@ -63,4 +65,4 @@ export const Report = forwardRef<ReportRef, Props>(({}, ref) => {
       </FormControl>
     </Stack>
   );
-});
+};
