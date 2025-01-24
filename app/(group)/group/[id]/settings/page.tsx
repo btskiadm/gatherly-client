@@ -1,7 +1,7 @@
 import { getGroupDetailsApi } from "@/app/mock/mock-api";
 import { notFound } from "next/navigation";
-import { GroupParams, getGroupId } from "../GroupParams";
-import { GroupSettingsTabs } from "./_components/GroupSettingsTabs";
+import { GroupParams, getGroupId } from "../group-params";
+import { GroupSettingsTabs } from "./_components/group-settings-tabs";
 
 export default async function Page(params: GroupParams) {
   const id = await getGroupId(params);

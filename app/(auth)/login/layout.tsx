@@ -1,4 +1,4 @@
-import { LoginLayout } from "./_components/LoginLayout";
+import { LoginLayout } from "./_components/login-layout";
 
 export default function Layout({
   children,

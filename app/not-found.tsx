@@ -1,5 +1,5 @@
 import { ArrowForward } from "@mui/icons-material";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 
 export default function Custom404() {
   return (

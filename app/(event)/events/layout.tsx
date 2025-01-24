@@ -1,5 +1,5 @@
 import React from "react";
-import { EventsLayout } from "./_components/EventsLayout";
+import { EventsLayout } from "./_components/events-layout";
 
 export default function Layout({
   children,

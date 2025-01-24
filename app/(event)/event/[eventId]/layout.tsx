@@ -1,5 +1,5 @@
 import React from "react";
-import { EventLayout } from "./_component/EventLayout";
+import { EventLayout } from "./_component/event-layout";
 
 export default function Layout({
   group,

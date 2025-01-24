@@ -1,12 +1,12 @@
-import { ShortCommonEventTile } from "@/app/common/components/Event/Tile/ShortCommonEventTile";
-import { ShortEventTile } from "@/app/common/components/Event/Tile/ShortEventTile";
-import { ShortCommonGroupTile } from "@/app/common/components/Group/Tile/ShortCommonGroupTile";
-import { ShortGroupTile } from "@/app/common/components/Group/Tile/ShortGroupTile";
+import { ShortCommonEventTile } from "@/app/common/components/Event/Tile/short-common-event-tile";
+import { ShortEventTile } from "@/app/common/components/Event/Tile/short-event-tile";
+import { ShortCommonGroupTile } from "@/app/common/components/Group/Tile/short-common-group-tile";
+import { ShortGroupTile } from "@/app/common/components/Group/Tile/short-group-tile";
 import { getShortEventsByUsername, getShortGroupsByUsername, getUserApi } from "@/app/mock/mock-api";
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
-import { ProfileParams, getUsernameParam } from "./ProfileParams";
+import { ProfileParams, getUsernameParam } from "./profile-params";
 
 export default async function Page(params: ProfileParams) {
   const username = await getUsernameParam(params);

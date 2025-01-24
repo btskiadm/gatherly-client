@@ -1,5 +1,5 @@
-import { ClampTypography } from "@/app/common/components/ClampTypography";
-import { Link } from "@/app/common/components/NextLink";
+import { ClampTypography } from "@/app/common/components/clamp-typography";
+import { Link } from "@/app/common/components/next-link";
 import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { VisibilityOutlined } from "@mui/icons-material";
 import { Button, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";

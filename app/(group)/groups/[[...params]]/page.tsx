@@ -1,7 +1,7 @@
-import { healthCheckQueryOptions } from "@/app/common/utils/hooks/useHealthCheck";
+import { healthCheckQueryOptions } from "@/app/common/utils/hooks/use-health-check";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { resolveParams, resolveQueries } from "./utils/groups.routing";
-import { GroupsPage } from "./_components/GroupsPage";
+import { GroupsPage } from "./_components/groups-page";
 
 export default async function Page({
   params: promiseParams,

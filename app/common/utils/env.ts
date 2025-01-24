@@ -1,4 +1,4 @@
-import { RuntimeError } from "./errors/RuntimeError";
+import { RuntimeError } from "./errors/runtime-error";
 import { invariant } from "./invariant";
 
 export type NodeEnv = "development" | "production" | "test";

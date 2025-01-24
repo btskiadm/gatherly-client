@@ -1,4 +1,4 @@
-import { CreateGroupIntercepted } from "@/app/common/components/Group/Create/CreateGroup.intercepted";
+import { CreateGroupIntercepted } from "@/app/common/components/Group/Create/create-group-intercepted";
 
 export default function Page() {
   return <CreateGroupIntercepted />;

@@ -1,6 +1,5 @@
 import { Box, Container, Grid2 } from "@mui/material";
 import React from "react";
-import { ProfileInfo } from "./_components/ProfileInfo";
 
 export default function Layout({
   children,

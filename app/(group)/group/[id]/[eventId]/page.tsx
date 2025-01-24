@@ -1,4 +1,4 @@
-import { EventInfoIntercepted } from "@/app/common/components/Event/EventInfo/EventInfo.intercepted";
+import { EventInfoIntercepted } from "@/app/common/components/Event/EventInfo/event-info-intercepted";
 
 export default function Page() {
   return <EventInfoIntercepted />;

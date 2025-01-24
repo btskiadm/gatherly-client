@@ -1,5 +1,5 @@
 import { resolveParams, resolveQueries } from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
-import { EventsPage } from "./_components/EventsPage";
+import { EventsPage } from "./_components/events-page";
 
 export default async function Page({
   params: promiseParams,

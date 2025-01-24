@@ -1,10 +1,9 @@
 "use client";
+
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
-import { LoginProvider } from "../common/components/Auth/Login/Login.provider";
-import { SignUpProvider } from "../common/components/Auth/SignUp/SignUp.provider";
-import { MUIThemeProvider } from "./MUIThemeProvider";
-import { QueryClientProvider } from "./QueryClientProvider";
+import { MUIThemeProvider } from "./mui-theme-provider";
+import { QueryClientProvider } from "./query-client-provider";
 
 export const Providers = ({ children }: PropsWithChildren<{}>) => {
   return (
@@ -29,9 +28,7 @@ export const Providers = ({ children }: PropsWithChildren<{}>) => {
             },
           }}
         />
-        <LoginProvider>
-          <SignUpProvider>{children}</SignUpProvider>
-        </LoginProvider>
+        {children}
       </MUIThemeProvider>
     </QueryClientProvider>
   );

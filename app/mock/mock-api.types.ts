@@ -75,16 +75,6 @@ export type EventTileDto = {
   groupMeta: EventGroupMetaDto;
 };
 
-export interface StackedGroupAttributesDto extends AttributesDto {
-  city: CityDto;
-  category: CategoryDto;
-}
-
-export interface StackedEventAttributesDto extends AttributesDto {
-  city: CityDto;
-  category: CategoryDto;
-}
-
 export interface SponsoredAttributeDto {
   id: string;
   value: boolean;

@@ -1,5 +1,5 @@
-import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
-import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
+import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/group-and-event-autocomplete";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/group-and-event-sort";
 import { SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
 
 export const ALL_LOCATIONS = "all-locations";

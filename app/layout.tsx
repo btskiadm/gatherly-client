@@ -1,4 +1,4 @@
-import { ApplicationNavBar } from "./common/components/ApplicationNavBar";
+import { ApplicationNavBar } from "./common/components/application-nav-bar";
 import { Providers } from "./providers";
 import { Poppins } from "next/font/google";
 

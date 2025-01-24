@@ -1,5 +1,5 @@
 import { Box, Paper } from "@mui/material";
-import { EventPage } from "../_component/EventPage";
+import { EventPage } from "../_component/event-page";
 
 export default function Page() {
   return (

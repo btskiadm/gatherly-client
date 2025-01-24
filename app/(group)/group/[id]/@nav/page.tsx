@@ -1,7 +1,7 @@
 import { getGroupDetailsApi } from "@/app/mock/mock-api";
 import { notFound } from "next/navigation";
-import { GroupParams, getGroupId } from "../GroupParams";
-import { GroupNavigation } from "../_components/GroupNavigation/GroupNavigation";
+import { GroupParams, getGroupId } from "../group-params";
+import { GroupNavigation } from "../_components/GroupNavigation/group-navigation";
 
 export default async function Page(params: GroupParams) {
   const id = await getGroupId(params);

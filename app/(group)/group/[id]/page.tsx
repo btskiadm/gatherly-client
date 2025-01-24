@@ -1,6 +1,6 @@
-import { GroupAboutPage } from "./about/_components/GroupAboutPage";
+import { GroupAboutPage } from "./about/_components/group-about-page";
 import { notFound } from "next/navigation";
-import { GroupParams, getGroupId } from "./GroupParams";
+import { GroupParams, getGroupId } from "./group-params";
 import { getGroupDetailsApi } from "@/app/mock/mock-api";
 
 export default async function Page(params: GroupParams) {

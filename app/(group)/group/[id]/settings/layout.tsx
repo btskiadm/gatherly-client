@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupSettingsLayout } from "./_components/GroupSettingsLayout";
+import { GroupSettingsLayout } from "./_components/group-settings-layout";
 
 export default function Layout({
   children,
