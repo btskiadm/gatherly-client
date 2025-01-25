@@ -16,6 +16,10 @@ export default (phase, { defaultConfig }) => {
       // !! WARN !!
       ignoreBuildErrors: true,
     },
+    experimental: {
+      workerThreads: false,
+      cpus: 1,
+    },
   };
   return nextConfig;
 };
