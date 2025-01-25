@@ -1,4 +1,5 @@
 import { isServer, QueryClient, QueryClientProvider as _QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PropsWithChildren } from "react";
 
 function makeQueryClient() {
@@ -32,5 +33,10 @@ function getQueryClient() {
 export const QueryClientProvider = ({ children }: PropsWithChildren<{}>) => {
   const queryClient = getQueryClient();
 
-  return <_QueryClientProvider client={queryClient}>{children}</_QueryClientProvider>;
+  return (
+    <_QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </_QueryClientProvider>
+  );
 };
