@@ -1,6 +1,5 @@
 "use client";
 
-import { Popover } from "../popover";
 import {
   CloudOutlined,
   ExpandMoreOutlined,
@@ -8,7 +7,7 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Button, Chip, FormControl, FormLabel, Slider, Stack, TextField, ToggleButton } from "@mui/material";
+import { Button, Chip, FormControl, FormLabel, Popover, Slider, Stack, TextField, ToggleButton } from "@mui/material";
 import React, { useCallback, useState } from "react";
 
 const min = 1;
@@ -169,62 +168,70 @@ export const GroupAndEventFilter = ({
         }}
         onClose={handleClose}
       >
-        <Stack width="320px" gap={3}>
-          <FormControl>
-            <FormLabel>Atrybuty</FormLabel>
-            <Stack direction="row" gap={1} mt={1} flexWrap="wrap">
-              <Chip
-                variant="outlined"
-                color={sponsored ? "primary" : "default"}
-                label={filterTagLabel["sponsored"]}
-                icon={<StarBorderRounded fontSize="small" />}
-                onClick={handleSponsored}
-              />
-              <Chip
-                variant="outlined"
-                color={verified ? "primary" : "default"}
-                label={filterTagLabel["verified"]}
-                icon={<VerifiedOutlined fontSize="small" />}
-                onClick={handleVerified}
-              />
-              <Chip
-                variant="outlined"
-                color={remote ? "primary" : "default"}
-                label={filterTagLabel["remote"]}
-                icon={<CloudOutlined fontSize="small" />}
-                onClick={handleRemote}
-              />
-            </Stack>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Ilość uczestników</FormLabel>
-            <Stack gap={1} mt={1} flexWrap="wrap">
-              <Slider min={min} max={max} value={range} valueLabelDisplay="auto" onChange={handleRange} />
-              <Stack direction="row" gap={1}>
-                <TextField
-                  placeholder="min."
-                  size="small"
-                  value={minInput}
-                  onChange={handleMin}
-                  onBlur={handleMinBlur}
+        <Stack
+          sx={{
+            p: 2,
+            boxShadow: 24,
+            bgcolor: "background.paper",
+          }}
+        >
+          <Stack width="320px" gap={3}>
+            <FormControl>
+              <FormLabel>Atrybuty</FormLabel>
+              <Stack direction="row" gap={1} mt={1} flexWrap="wrap">
+                <Chip
+                  variant="outlined"
+                  color={sponsored ? "primary" : "default"}
+                  label={filterTagLabel["sponsored"]}
+                  icon={<StarBorderRounded fontSize="small" />}
+                  onClick={handleSponsored}
                 />
-                <TextField
-                  placeholder="max."
-                  size="small"
-                  value={maxInput}
-                  onChange={handleMax}
-                  onBlur={handleMaxBlur}
+                <Chip
+                  variant="outlined"
+                  color={verified ? "primary" : "default"}
+                  label={filterTagLabel["verified"]}
+                  icon={<VerifiedOutlined fontSize="small" />}
+                  onClick={handleVerified}
+                />
+                <Chip
+                  variant="outlined"
+                  color={remote ? "primary" : "default"}
+                  label={filterTagLabel["remote"]}
+                  icon={<CloudOutlined fontSize="small" />}
+                  onClick={handleRemote}
                 />
               </Stack>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Ilość uczestników</FormLabel>
+              <Stack gap={1} mt={1} flexWrap="wrap">
+                <Slider min={min} max={max} value={range} valueLabelDisplay="auto" onChange={handleRange} />
+                <Stack direction="row" gap={1}>
+                  <TextField
+                    placeholder="min."
+                    size="small"
+                    value={minInput}
+                    onChange={handleMin}
+                    onBlur={handleMinBlur}
+                  />
+                  <TextField
+                    placeholder="max."
+                    size="small"
+                    value={maxInput}
+                    onChange={handleMax}
+                    onBlur={handleMaxBlur}
+                  />
+                </Stack>
+              </Stack>
+            </FormControl>
+            <Stack direction="row" justifyContent="space-between">
+              <Button variant="text" color="error" onClick={handleReset}>
+                Reset
+              </Button>
+              <Button variant="contained" onClick={handleApply}>
+                Apply
+              </Button>
             </Stack>
-          </FormControl>
-          <Stack direction="row" justifyContent="space-between">
-            <Button variant="text" color="error" onClick={handleReset}>
-              Reset
-            </Button>
-            <Button variant="contained" onClick={handleApply}>
-              Apply
-            </Button>
           </Stack>
         </Stack>
       </Popover>

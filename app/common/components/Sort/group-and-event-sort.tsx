@@ -1,12 +1,12 @@
 "use client";
 
-import { Popover } from "@/app/common/components/popover";
 import { ExpandMoreOutlined, SwapVert } from "@mui/icons-material";
 import {
   Button,
   FormControl,
   FormControlLabel,
   FormLabel,
+  Popover,
   Radio,
   RadioGroup,
   Stack,
@@ -67,21 +67,29 @@ export const GroupAndEventSort = ({
         }}
         onClose={handleClose}
       >
-        <Stack width="280px" gap={3}>
-          <FormControl>
-            <FormLabel>Data dodania</FormLabel>
-            <RadioGroup value={dateOfAdding} onChange={handleDateOfAddingChange}>
-              <FormControlLabel value="newest" control={<Radio size="small" />} label="Newest" />
-              <FormControlLabel value="oldest" control={<Radio size="small" />} label="Oldest" />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Ilość osób</FormLabel>
-            <RadioGroup value={numberOfMembers} onChange={handleNumberOfMembersChange}>
-              <FormControlLabel value="ascending" control={<Radio size="small" />} label="Ascending" />
-              <FormControlLabel value="decending" control={<Radio size="small" />} label="Decending" />
-            </RadioGroup>
-          </FormControl>
+        <Stack
+          sx={{
+            p: 2,
+            boxShadow: 24,
+            bgcolor: "background.paper",
+          }}
+        >
+          <Stack width="280px" gap={3}>
+            <FormControl>
+              <FormLabel>Data dodania</FormLabel>
+              <RadioGroup value={dateOfAdding} onChange={handleDateOfAddingChange}>
+                <FormControlLabel value="newest" control={<Radio size="small" />} label="Newest" />
+                <FormControlLabel value="oldest" control={<Radio size="small" />} label="Oldest" />
+              </RadioGroup>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Ilość osób</FormLabel>
+              <RadioGroup value={numberOfMembers} onChange={handleNumberOfMembersChange}>
+                <FormControlLabel value="ascending" control={<Radio size="small" />} label="Ascending" />
+                <FormControlLabel value="decending" control={<Radio size="small" />} label="Decending" />
+              </RadioGroup>
+            </FormControl>
+          </Stack>
         </Stack>
       </Popover>
       <Button
