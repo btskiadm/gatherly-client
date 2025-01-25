@@ -1,3 +1,5 @@
+"use client";
+
 import { TextareaAutosize, styled } from "@mui/material";
 import { blue, grey } from "@mui/material/colors";
 
