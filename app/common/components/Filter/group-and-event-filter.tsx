@@ -1,6 +1,6 @@
 "use client";
 
-import { Popover } from "@/app/common/components/popover";
+import { Popover } from "../popover";
 import {
   CloudOutlined,
   ExpandMoreOutlined,
