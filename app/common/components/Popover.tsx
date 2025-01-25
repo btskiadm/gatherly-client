@@ -1,3 +1,5 @@
+"use client";
+
 import { Popover as MUIPopover, PopoverProps, Stack } from "@mui/material";
 
 export const Popover = (props: PopoverProps) => {
