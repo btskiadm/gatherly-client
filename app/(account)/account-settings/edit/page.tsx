@@ -18,7 +18,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 
 export default function Page() {
