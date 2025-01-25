@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, IconButton, Stack } from "@mui/material";
+import { Button, IconButton, Stack, TextField } from "@mui/material";
 import { useCallback, useState } from "react";
 import { EmojiIcon } from "../Icons/emoji-icon";
-import { Textarea } from "../textarea";
 
 export const CommentInput = () => {
   const [value, setValue] = useState("");
@@ -26,9 +25,10 @@ export const CommentInput = () => {
       >
         <EmojiIcon />
       </IconButton>
-      <Textarea
+      <TextField
         placeholder="Type a comment.."
         value={value}
+        multiline
         sx={{
           width: "100%",
         }}

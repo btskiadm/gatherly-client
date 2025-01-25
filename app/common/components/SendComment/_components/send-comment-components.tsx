@@ -8,9 +8,8 @@ import {
   ZodFlattenIssue,
 } from "@/app/common/utils/zod";
 import { RefObject } from "@fullcalendar/core/preact";
-import { FormControl, FormLabel, Rating, Stack } from "@mui/material";
+import { FormControl, FormLabel, Rating, Stack, TextField } from "@mui/material";
 import { useCallback, useImperativeHandle, useState } from "react";
-import { Textarea } from "../../textarea";
 import { TruncatedFormHelperText } from "../../truncated-form-helper-text";
 
 export interface SendCommentData {
@@ -71,8 +70,9 @@ export const SendComment = ({ ref }: Props) => {
         </FormControl>
         <FormControl error={!!commentError} fullWidth required>
           <FormLabel>Komentarz</FormLabel>
-          <Textarea
+          <TextField
             minRows={6}
+            multiline
             placeholder="Type a comment.."
             value={comment}
             sx={{

@@ -1,9 +1,8 @@
 "use client";
 
 import { flattenIssues, maxReportContent, ReportInput, reportSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
-import { FormControl, FormLabel, Stack } from "@mui/material";
+import { FormControl, FormLabel, Stack, TextField } from "@mui/material";
 import { RefObject, useCallback, useImperativeHandle, useState } from "react";
-import { Textarea } from "../../textarea";
 import { TruncatedFormHelperText } from "../../truncated-form-helper-text";
 
 export interface ReportData {
@@ -52,7 +51,7 @@ export const Report = ({ ref }: Props) => {
     <Stack width="100%">
       <FormControl error={!!contentError} fullWidth>
         <FormLabel>Report</FormLabel>
-        <Textarea placeholder="Description.." minRows={6} value={content} onChange={handleContent} />
+        <TextField placeholder="Description.." multiline minRows={6} value={content} onChange={handleContent} />
         <TruncatedFormHelperText>
           {!contentError ? (
             <>

@@ -1,6 +1,5 @@
 "use client";
 
-import { Textarea } from "@/app/common/components/textarea";
 import {
   createEventDetailsSchema,
   flattenIssues,
@@ -179,7 +178,7 @@ export const CreateEventDetails = ({
       </FormControl>
       <FormControl error={!!descriptionError} fullWidth>
         <FormLabel required>Description</FormLabel>
-        <Textarea placeholder="Opis" minRows={6} value={description} onChange={handleDescription} />
+        <TextField placeholder="Opis" multiline minRows={6} value={description} onChange={handleDescription} />
         <TruncatedFormHelperText>
           {!descriptionError ? (
             <>

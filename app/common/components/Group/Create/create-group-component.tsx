@@ -1,6 +1,5 @@
 "use client";
 
-import { Textarea } from "@/app/common/components/textarea";
 import { categoryDtoToSearchCategoryDto, cityDtoToSearchCityDto } from "@/app/common/utils/dto-helpers";
 import {
   CreateGroupInput,
@@ -293,7 +292,7 @@ export const CreateGroup = ({
       </Grid2>
       <FormControl error={!!descriptionError}>
         <FormLabel required>Description</FormLabel>
-        <Textarea placeholder="Opis" minRows={6} value={description} onChange={handleDescription} />
+        <TextField placeholder="Opis" multiline minRows={6} value={description} onChange={handleDescription} />
         <FormHelperText>
           {!descriptionError ? (
             <>

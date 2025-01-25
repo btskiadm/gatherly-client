@@ -1,7 +1,6 @@
 "use client";
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
-import { Textarea } from "@/app/common/components/textarea";
 import { TruncatedFormHelperText } from "@/app/common/components/truncated-form-helper-text";
 import { UploadIntercepted } from "@/app/common/components/Upload/upload-intercepted";
 import { ZodFlattenIssue } from "@/app/common/utils/zod";
@@ -144,7 +143,7 @@ export default function Page() {
 
           <FormControl error={!!bioError} fullWidth>
             <FormLabel>Bio</FormLabel>
-            <Textarea placeholder="Bio..." minRows={6} value={bio} onChange={handleBioChange} />
+            <TextField placeholder="Bio..." multiline minRows={6} value={bio} onChange={handleBioChange} />
             <TruncatedFormHelperText>{bioError?.message || null}</TruncatedFormHelperText>
           </FormControl>
 
