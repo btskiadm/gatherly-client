@@ -1,6 +1,6 @@
 import { ApplicationNavBar } from "./common/components/application-nav-bar";
 import { Poppins } from "next/font/google";
-import { Providers } from "./providers/providers";
+import { Providers } from "./providers/Providers";
 
 const roboto = Poppins({
   weight: ["300", "400", "500", "700"],

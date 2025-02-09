@@ -1,4 +1,4 @@
-import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/group-and-event-sort";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";
 import { EventAutocompleteRouted } from "./event-autocomplete-routed";

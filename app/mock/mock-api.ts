@@ -60,7 +60,7 @@ export const getSeachUsers = (): SearchUserDto[] =>
   }));
 
 export const getGroupTiles = ({
-  locations,
+  cities,
   categories,
   titles,
   sponsored,
@@ -69,7 +69,7 @@ export const getGroupTiles = ({
   minMembers,
   maxMembers,
 }: {
-  locations: string[];
+  cities: string[];
   categories: string[];
   titles: string[];
   sponsored: boolean;
@@ -80,8 +80,7 @@ export const getGroupTiles = ({
 }): GroupTileDto[] => {
   const filteredGroups = DBGroups.filter((group) => {
     const matchesCities =
-      locations.length === 0 ||
-      locations.every((location) => group.cities.some((groupCity) => groupCity.value === location));
+      cities.length === 0 || cities.every((city) => group.cities.some((groupCity) => groupCity.value === city));
 
     const matchesCategories =
       categories.length === 0 ||

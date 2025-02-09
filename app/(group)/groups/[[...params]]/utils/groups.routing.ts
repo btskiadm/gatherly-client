@@ -1,36 +1,26 @@
-import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/group-and-event-autocomplete";
-import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/group-and-event-sort";
-import { SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
+import { SearchItem, SearchItemType } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
+import { CategoryDto, CityDto } from "@/app/common/graphql/dto";
 
-export const ALL_LOCATIONS = "all-locations";
+export const ALL_CITIES = "all-cities";
 export const EMPTY_ROUTE = "";
 
 export interface ParsedParams {
-  locations: string[];
+  cities: string[];
   categories: string[];
 }
 
-const create = (locations: string[] = [], categories: string[] = []): ParsedParams => ({ locations, categories });
-
-const parseParams = (param: string) => Array.from(new Set(decodeURIComponent(param).split(",")));
+const createParams = (cities: string[] = [], categories: string[] = []): ParsedParams => ({ cities, categories });
+const parseParams = (param: string) => [...new Set(decodeURIComponent(param).split(","))];
 
 export const resolveParams = (params: string[]): ParsedParams => {
-  // empty
-  if (!params || (params && params.length === 0)) {
-    return create();
-  }
+  if (!params?.length) return createParams();
 
-  // lodz,warsaw,cracow
-  if (params[0] !== ALL_LOCATIONS && params.length === 1) {
-    return create(parseParams(params[0]));
-  }
+  const [first, second] = params;
+  if (first !== ALL_CITIES && params.length === 1) return createParams(parseParams(first));
+  if (first === ALL_CITIES) return createParams([], second ? parseParams(second) : []);
 
-  // all-locations/football,basketball,dance
-  if (params[0] === ALL_LOCATIONS && params.length >= 2) {
-    return create([], parseParams(params[1]));
-  }
-
-  return create(parseParams(params[0]), parseParams(params[1]));
+  return createParams(parseParams(first), parseParams(second));
 };
 
 export const resolveQueries = ({
@@ -41,78 +31,49 @@ export const resolveQueries = ({
   titles?: string;
   numberOfMembers?: string;
   dateOfAdding?: string;
-}): { titles: string[]; numberOfMembers: NumberOfMembers; dateOfAdding: DateOfAdding } => {
-  return {
-    titles: titles && titles?.length > 0 ? parseParams(titles) : [],
-    numberOfMembers: (numberOfMembers ?? "ascending") as NumberOfMembers,
-    dateOfAdding: (dateOfAdding ?? "newest") as DateOfAdding,
-  };
+}): { titles: string[]; numberOfMembers: NumberOfMembers; dateOfAdding: DateOfAdding } => ({
+  titles: titles ? parseParams(titles) : [],
+  numberOfMembers: (numberOfMembers ?? "ascending") as NumberOfMembers,
+  dateOfAdding: (dateOfAdding ?? "newest") as DateOfAdding,
+});
+
+const filterSearchByValues = <T extends { value: string }>(values: string[], availableItems: T[]) => {
+  const searchSet = new Set(values);
+  return availableItems.filter((item) => searchSet.has(item.value));
 };
 
-export const filterSearchCategoriesByValues = (categoryValues: string[], availableCategories: SearchCategoryDto[]) => {
-  const searchValues = Array.from(new Set(categoryValues));
+export const filterSearchCategoriesByValues = (categoryValues: string[], availableCategories: CategoryDto[]) =>
+  filterSearchByValues(categoryValues, availableCategories);
 
-  return availableCategories.filter((c) => c.type === "category" && searchValues.some((value) => value === c.value));
-};
-
-export const filterSearchLocationsByValues = (locationValues: string[], availableLocations: SearchCityDto[]) => {
-  const searchValues = Array.from(new Set(locationValues));
-
-  return availableLocations.filter((l) => l.type === "city" && searchValues.some((value) => value === l.value));
-};
+export const filterSearchLocationsByValues = (locationValues: string[], availableLocations: CityDto[]) =>
+  filterSearchByValues(locationValues, availableLocations);
 
 export const uniqueSearchItems = (items: SearchItem[]) =>
-  items.filter((item, index, array) => array.findIndex((arr) => arr.value === item.value) === index);
+  items.filter((item, index, array) => array.findIndex(({ value }) => value === item.value) === index);
 
-const searchItemToRouterParamsByValue = (searchItems: SearchItem[], type: SearchItemType) =>
+const searchItemToRouterParams = (searchItems: SearchItem[], type: SearchItemType, key: "value" | "label") =>
   searchItems
-    .filter((item) => item.type === type)
-    .map(({ value }) => value)
+    .filter((item) => item.__typename === type)
+    .map((item) => item[key])
     .join(",");
 
-const searchItemToRouterParamsByLabel = (searchItems: SearchItem[], type: SearchItemType) =>
-  searchItems
-    .filter((item) => item.type === type)
-    .map(({ label }) => label)
-    .join(",");
-
-const createLocationsParam = (searchItems: SearchItem[]) => {
-  const parsedLocations = searchItemToRouterParamsByValue(searchItems, "city");
-  const locations = parsedLocations.length <= 0 ? ALL_LOCATIONS : parsedLocations;
-  return locations;
-};
-
-const createCategoriesParam = (searchItems: SearchItem[]) => {
-  const parsedCategories = searchItemToRouterParamsByValue(searchItems, "category");
-  const categories = parsedCategories.length <= 0 ? EMPTY_ROUTE : parsedCategories;
-  return categories;
-};
-
-const createTitlesQuery = (searchItems: SearchItem[]) => {
-  const parsedCategories = searchItemToRouterParamsByLabel(searchItems, "title");
-
-  if (parsedCategories.length <= 0) {
-    return EMPTY_ROUTE;
-  }
-
-  return parsedCategories;
+const createParam = (searchItems: SearchItem[], type: SearchItemType, defaultValue: string) => {
+  const parsedValues = searchItemToRouterParams(searchItems, type, "value");
+  return parsedValues.length ? parsedValues : defaultValue;
 };
 
 export const createGroupsRoute = (searchItems: SearchItem[], urlSearchParams: URLSearchParams) => {
-  const locations = createLocationsParam(searchItems);
-  const categories = createCategoriesParam(searchItems);
-  const titles = createTitlesQuery(searchItems);
+  const locations = createParam(searchItems, "City", ALL_CITIES);
+  const categories = createParam(searchItems, "Category", EMPTY_ROUTE);
+  const titles = searchItemToRouterParams(searchItems, "Title", "label");
   const searchParams = new URLSearchParams(urlSearchParams);
 
   let route = "/groups";
-
-  if (locations === ALL_LOCATIONS && categories.length <= 0) {
-    // route
-  } else {
-    route = `/groups/${locations}${categories ? "/" + categories : EMPTY_ROUTE}`;
+  if (!(locations === ALL_CITIES && !categories)) {
+    route = `/groups/${locations}${categories ? "/" + categories : ""}`;
   }
 
-  if (titles.length > 0) {
+  if (titles) {
     searchParams.set("titles", titles);
   } else {
     searchParams.delete("titles");
@@ -120,9 +81,5 @@ export const createGroupsRoute = (searchItems: SearchItem[], urlSearchParams: UR
 
   searchParams.sort();
 
-  if (searchParams.size > 0) {
-    return route + "?" + searchParams.toString();
-  }
-
-  return route;
+  return searchParams.size > 0 ? `${route}?${searchParams.toString()}` : route;
 };

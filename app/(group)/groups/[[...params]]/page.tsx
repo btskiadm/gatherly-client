@@ -1,7 +1,14 @@
-import { healthCheckQueryOptions } from "@/app/common/utils/hooks/use-health-check";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
+import {
+  getGroupTilesQueryOptions,
+  getGroupTitlesQueryOptions,
+  getUsedCategoriesQueryOptions,
+  getUsedCitiesQueryOptions,
+} from "@/app/common/graphql/options/query";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { resolveParams, resolveQueries } from "./utils/groups.routing";
-import { GroupsPage } from "./_components/groups-page";
+import { decodeAndParseUniqueParams } from "./utils/decodeAndParseUniqueParams";
+import { resolveCityAndCategoryParams } from "./utils/resolveCityAndCategoryParams";
+import { GroupsPage } from "./_components/GroupsPage";
 
 export default async function Page({
   params: promiseParams,
@@ -20,36 +27,64 @@ export default async function Page({
   }>;
 }) {
   const queryClient = new QueryClient();
-  const [{ params }, { dateOfAdding, maxMembers, minMembers, numberOfMembers, remote, sponsored, titles, verified }] =
-    await Promise.all([promiseParams, promiseSearchParams, queryClient.prefetchQuery(healthCheckQueryOptions)]);
 
-  const _sponsored = !!sponsored;
-  const _remote = !!remote;
-  const _verified = !!verified;
-  const _minMembers = minMembers ? ~~minMembers : 1;
-  const _maxMembers = maxMembers ? ~~maxMembers : 50;
-
-  const { categories, locations } = resolveParams(params);
-
+  const [params, searchParams] = await Promise.all([promiseParams, promiseSearchParams]);
   const {
-    titles: _titles,
-    numberOfMembers: _numberOfMembers,
-    dateOfAdding: _dateOfAdding,
-  } = resolveQueries({ titles, numberOfMembers, dateOfAdding });
+    dateOfAdding,
+    maxMembers,
+    minMembers,
+    numberOfMembers: numberOfMembersParam,
+    remote,
+    sponsored,
+    titles: titlesParam,
+    verified,
+  } = searchParams;
+
+  const _sponsored = Boolean(sponsored);
+  const _remote = Boolean(remote);
+  const _verified = Boolean(verified);
+  const _minMembers = minMembers ? parseInt(minMembers, 10) : 1;
+  const _maxMembers = maxMembers ? parseInt(maxMembers, 10) : 50;
+
+  const { categories, cities } = resolveCityAndCategoryParams(params.params);
+
+  const titles = titlesParam ? decodeAndParseUniqueParams(titlesParam) : [];
+  const numberOfMembers = (numberOfMembersParam ?? "ascending") as NumberOfMembers;
+  const decoredDateOfAdding = (dateOfAdding ?? "newest") as DateOfAdding;
+
+  await Promise.all([
+    queryClient.prefetchQuery(getUsedCategoriesQueryOptions()),
+    queryClient.prefetchQuery(getUsedCitiesQueryOptions()),
+    queryClient.prefetchQuery(getGroupTitlesQueryOptions()),
+    queryClient.prefetchQuery(
+      getGroupTilesQueryOptions({
+        categories: categories,
+        cities: cities,
+        titles: titles,
+        minMembers: _minMembers,
+        maxMembers: _maxMembers,
+        remote: _remote,
+        sponsored: _sponsored,
+        verified: _verified,
+        numberOfMembers: numberOfMembers,
+        dateOfAdding: decoredDateOfAdding,
+      })
+    ),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <GroupsPage
+        categories={categories}
+        cities={cities}
+        titles={titles}
         remote={_remote}
         sponsored={_sponsored}
         verified={_verified}
         minMembers={_minMembers}
         maxMembers={_maxMembers}
-        categories={categories}
-        locations={locations}
-        titles={_titles}
-        dateOfAdding={_dateOfAdding}
-        numberOfMembers={_numberOfMembers}
+        dateOfAdding={decoredDateOfAdding}
+        numberOfMembers={numberOfMembers}
       />
     </HydrationBoundary>
   );

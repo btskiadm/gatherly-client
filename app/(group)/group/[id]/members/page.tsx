@@ -1,15 +1,17 @@
-import { getGroupDetailsApi } from "@/app/mock/mock-api";
-import { notFound } from "next/navigation";
-import { GroupParams, getGroupId } from "../group-params";
-import { GroupMembersPage } from "./_components/group-members-page";
+import { getGroupDetailsQueryOptions } from "@/app/common/graphql/options/query";
+import { QueryClient } from "@tanstack/react-query";
+import { GroupParams } from "../groupParams";
+import { GroupMembersPage } from "./_components/GroupMembersPage";
 
-export default async function Page(params: GroupParams) {
-  const id = await getGroupId(params);
-  const groupDetails = getGroupDetailsApi(id);
+export default async function Page({ params: promiseParams }: { params: GroupParams }) {
+  const queryClient = new QueryClient();
+  const { id } = await promiseParams;
 
-  if (!groupDetails) {
-    return notFound();
-  }
+  await queryClient.prefetchQuery(
+    getGroupDetailsQueryOptions({
+      groupId: id,
+    })
+  );
 
-  return <GroupMembersPage groupDetails={groupDetails} />;
+  return <GroupMembersPage groupId={id} />;
 }

@@ -30,10 +30,11 @@ import React, { useCallback, useImperativeHandle, useState } from "react";
 
 const loading = false;
 
-export interface CreateGroupData {
-  success: boolean;
-  data?: CreateGroupInput;
-}
+export type CreateGroupData =
+  | {
+      success: false;
+    }
+  | { success: true; data: CreateGroupInput };
 
 export interface CreateGroupRef {
   reset: () => void;
@@ -46,7 +47,7 @@ interface Props {
   city?: CityDto | null;
   categories?: CategoryDto[];
   remote?: boolean;
-  ref: React.RefObject<CreateGroupRef>;
+  ref: React.RefObject<CreateGroupRef | null>;
 }
 
 const ListboxComponent =
@@ -106,12 +107,15 @@ export const CreateGroup = ({
       remote,
     });
 
-    if (error) {
+    if (error || !success) {
       setErrors(flattenIssues(error?.issues));
+      return {
+        success: false,
+      };
     }
 
     return {
-      success,
+      success: true,
       data,
     };
   }, [name, description, city, categories, remote]);

@@ -1,4 +1,4 @@
-import { GroupEventsLayout } from "./_components/group-events-layout";
+import { GroupEventsLayout } from "./_components/GroupEventsLayout";
 
 export default function Layout({
   children,

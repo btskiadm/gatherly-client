@@ -1,4 +1,4 @@
-import { GroupLayout } from "./_components/group-layout";
+import { GroupLayout } from "./_components/GroupLayout";
 
 export default function Layout({
   children,

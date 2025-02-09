@@ -1,6 +1,6 @@
 "use client";
 
-import { DateOfAdding, GroupAndEventSort, NumberOfMembers } from "@/app/common/components/Sort/group-and-event-sort";
+import { DateOfAdding, GroupAndEventSort, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 

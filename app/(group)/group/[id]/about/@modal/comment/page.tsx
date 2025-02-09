@@ -1,5 +1,6 @@
-import { SendCommentIntercepted } from "@/app/common/components/SendComment/send-comment-intercepted";
+import { AddGroupCommentModal } from "./_components/AddGroupCommentModal";
 
-export default function CreateEventModal() {
-  return <SendCommentIntercepted />;
+export default async function Page({ params: promiseParams }: { params: Promise<{ id: string }> }) {
+  const params = await promiseParams;
+  return <AddGroupCommentModal groupId={params.id} />;
 }

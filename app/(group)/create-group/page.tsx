@@ -1,5 +1,5 @@
-import { CreateGroupPageContainer } from "./_components/create-group-page";
+import { CreateGroupPage } from "./_components/CreateGroupPage";
 
 export default function Page() {
-  return <CreateGroupPageContainer />;
+  return <CreateGroupPage />;
 }

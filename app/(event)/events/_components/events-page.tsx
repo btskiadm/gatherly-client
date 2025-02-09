@@ -2,7 +2,7 @@ import {
   filterSearchCategoriesByValues,
   filterSearchLocationsByValues,
 } from "@/app/(group)/groups/[[...params]]/utils/groups.routing";
-import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/group-and-event-sort";
+import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import { getEventTiles, getSearchCategories, getSearchCities, getSearchEventTitles } from "@/app/mock/mock-api";
 import { SearchCategoryDto, SearchCityDto, SearchTitleDto } from "@/app/mock/mock-api.types";
 import { Stack } from "@mui/material";

@@ -2,12 +2,12 @@
 
 import { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
-import { MUIThemeProvider } from "./mui-theme-provider";
-import { QueryClientProvider } from "./query-client-provider";
+import { MUIThemeProvider } from "./MUIThemeProvider";
+import { ReactQueryProvider } from "./ReactQueryProvider";
 
 export const Providers = ({ children }: PropsWithChildren<{}>) => {
   return (
-    <QueryClientProvider>
+    <ReactQueryProvider>
       <MUIThemeProvider>
         <Toaster
           position="top-right"
@@ -30,6 +30,6 @@ export const Providers = ({ children }: PropsWithChildren<{}>) => {
         />
         {children}
       </MUIThemeProvider>
-    </QueryClientProvider>
+    </ReactQueryProvider>
   );
 };
