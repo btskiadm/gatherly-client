@@ -9,9 +9,14 @@ import Image from "next/image";
 import { GroupHeader } from "../../_components/GroupHeader";
 import { AboutCommentsList } from "./AboutCommentsList";
 import { AboutEventCounterTile } from "./AboutEventCounterTile";
+import { notFound } from "next/navigation";
 
 export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
   const { data } = useSuspenseQuery(getGroupDetailsQueryOptions({ groupId }));
+
+  if (!data) {
+    return notFound();
+  }
 
   const {
     title,
@@ -20,8 +25,9 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
     pastLength,
     cancelledLength,
     rate,
-    thumbnail: { thumb },
-  } = data.getGroupDetails;
+    mediumPhoto,
+    comments = [],
+  } = data.getGroupDetails ?? {};
 
   const rateLabel = `${Number.isNaN(rate) ? "-" : rate} `;
 
@@ -34,7 +40,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
         }}
       >
         <Image
-          src={thumb}
+          src={mediumPhoto ?? ""}
           alt="group logo"
           sizes="100vw"
           width={0}
@@ -92,8 +98,8 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
         </Stack>
         <Paper>
           <Box p={{ xs: 2, sm: 3 }}>
-            {data.getGroupDetails.comments.length > 0 && <AboutCommentsList comments={data.getGroupDetails.comments} />}
-            {data.getGroupDetails.comments.length === 0 && (
+            {comments.length > 0 && <AboutCommentsList comments={comments} />}
+            {comments.length === 0 && (
               <Typography color="error" variant="body1">
                 No comments
               </Typography>

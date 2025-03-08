@@ -2,14 +2,14 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { UploadIntercepted } from "@/app/common/components/Upload/upload-intercepted";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import { DeleteOutlined, UploadFileRounded } from "@mui/icons-material";
 import { Avatar, Button, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
@@ -68,7 +68,7 @@ export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
             >
               <Image
                 fill
-                src={groupDetails.thumbnail.thumb}
+                src={groupDetails.mediumPhoto}
                 alt="logo"
                 style={{
                   objectFit: "cover",

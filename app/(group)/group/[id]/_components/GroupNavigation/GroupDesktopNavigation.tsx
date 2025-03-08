@@ -2,9 +2,19 @@
 
 import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { Link } from "@/app/common/components/next-link";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import { CalendarMonth, Chat, Event, Group, InfoOutlined, SettingsOutlined } from "@mui/icons-material";
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Stack } from "@mui/material";
+import {
+  Avatar,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Stack,
+} from "@mui/material";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -16,7 +26,7 @@ const chat = "chat";
 const settings = "settings";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export function GroupDesktopNavigation({ groupDetails }: Props) {
@@ -34,27 +44,22 @@ export function GroupDesktopNavigation({ groupDetails }: Props) {
     subPath.includes(`${settings}`),
   ];
 
-  const {
-    thumbnail: { thumb },
-    title,
-  } = groupDetails;
+  const { mediumPhoto, title } = groupDetails;
 
   return (
     <Paper>
       {/* todo: width */}
-      <Image
-        src={thumb}
-        width="0"
-        height="0"
-        alt="group logo"
+      <Avatar
+        alt="logo"
+        variant="rounded"
         sizes="100vw"
-        style={{
+        src={mediumPhoto ?? ""}
+        sx={{
           width: "100%",
-          height: "100%",
-          cursor: "pointer",
-          objectFit: "cover",
+          height: "13rem",
         }}
       />
+
       <Stack width="100%" p={3} py={2} gap={2}>
         <ClampTypography variant="body1">{title}</ClampTypography>
         <Divider />

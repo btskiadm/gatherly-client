@@ -22,7 +22,7 @@ const searchIcon: Record<SearchItemType, ReactNode> = {
 };
 
 const ListboxComponent =
-  (selected: SearchItem[], onDelete: (searchAttribute: SearchItem) => void) =>
+  (selected: SearchItem[], onDelete: (item: SearchItem) => void) =>
   (props: React.HTMLAttributes<HTMLElement> & { ref?: React.RefObject<HTMLDivElement> }) => {
     const { children, ref, ...other } = props;
 
@@ -75,6 +75,13 @@ export const GroupAndEventAutocomplete = ({ selected, cities, categories, titles
       value={selected}
       onChange={handleChange}
       options={[...categories, ...cities, ...titles]}
+      groupBy={({ __typename }) => __typename}
+      getOptionLabel={({ label }) => label}
+      slotProps={{
+        listbox: {
+          component: ListboxComponent(selected, handleDelete),
+        },
+      }}
       sx={(theme) => ({
         width: "100%",
         ".MuiAutocomplete-tag": {
@@ -88,9 +95,6 @@ export const GroupAndEventAutocomplete = ({ selected, cities, categories, titles
           maxWidth: "360px",
         },
       })}
-      groupBy={({ __typename }) => __typename}
-      getOptionLabel={({ label }) => label}
-      ListboxComponent={ListboxComponent(selected, handleDelete)}
       renderTags={(value, getTagProps) => {
         const tags = value.slice(0, 2);
 
@@ -125,24 +129,7 @@ export const GroupAndEventAutocomplete = ({ selected, cities, categories, titles
           </Stack>
         );
       }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          size="small"
-          label="Search"
-          slotProps={{
-            input: {
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  <CircularProgress color="inherit" size={20} />
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
-            },
-          }}
-        />
-      )}
+      renderInput={(params) => <TextField {...params} size="small" label="Search" />}
       renderGroup={(params) => (
         <Stack key={params.key} px={2} gap={0.5}>
           <Typography variant="body1">{searchLabel[params.group as SearchItemType]}</Typography>

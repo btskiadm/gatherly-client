@@ -1,11 +1,11 @@
 import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { GroupUserDto } from "@/app/common/graphql/dto";
 import { stringToColor } from "@/app/common/utils/string-to-color";
+import { GroupUser } from "@/app/model/model";
 import { Verified } from "@mui/icons-material";
 import { Avatar, Box, Grid2, Paper, Stack, type TypographyOwnProps } from "@mui/material";
 
-const usernameColor = (groupUser: GroupUserDto): TypographyOwnProps["color"] => {
+const usernameColor = (groupUser: GroupUser): TypographyOwnProps["color"] => {
   if (groupUser.isHost) {
     return "primary";
   }
@@ -18,18 +18,18 @@ const usernameColor = (groupUser: GroupUserDto): TypographyOwnProps["color"] => 
 };
 
 interface Props {
-  groupUser: GroupUserDto;
+  member: GroupUser;
 }
 
-export const GroupMemberTile = ({ groupUser }: Props) => {
+export const GroupMemberTile = ({ member }: Props) => {
   const {
-    user: { thumbnail, username, verifiedAt },
-  } = groupUser;
+    user: { username, smallPhoto, verifiedAt },
+  } = member;
 
   return (
     <Box position="relative">
       <Link
-        href={`/profile/${groupUser.user.username}`}
+        href={`/profile/${username}`}
         sx={{
           height: 0,
           width: 0,
@@ -54,13 +54,13 @@ export const GroupMemberTile = ({ groupUser }: Props) => {
                 width: "3.6rem",
                 height: "3.6rem",
               }}
-              src={thumbnail.thumb}
+              src={smallPhoto}
             >
               {username[0]}
             </Avatar>
             <Stack alignItems="center">
               <Stack direction="row" gap={0.5} alignItems="center">
-                <TruncatedTypography variant="body1" color={usernameColor(groupUser)}>
+                <TruncatedTypography variant="body1" color={usernameColor(member)}>
                   {username}
                 </TruncatedTypography>
                 {verifiedAt && <Verified sx={{ fontSize: "1rem", color: "text.secondary" }} />}

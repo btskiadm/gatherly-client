@@ -8,6 +8,7 @@ import { GroupSettingsAboutTab } from "./GroupSettingsAboutTab";
 import { GroupSettingsAvatarTab } from "./GroupSettingsAvatarTab";
 import { GroupSettingsManagmentTab } from "./GroupSettingsManagmentTab";
 import { GroupSettingsMembersTab } from "./GroupSettingsMembersTab";
+import { GroupDetails } from "@/app/model/model";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,16 +46,16 @@ export const GroupSettingsTabs = ({ groupId }: { groupId: string }) => {
         </Tabs>
       </Box>
       <CustomTabPanel value={tab} index={0}>
-        <GroupSettingsAboutTab groupDetails={data.getGroupDetails} />
+        <GroupSettingsAboutTab groupDetails={data.getGroupDetails as GroupDetails} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
-        <GroupSettingsMembersTab groupDetails={data.getGroupDetails} />
+        <GroupSettingsMembersTab groupDetails={data.getGroupDetails as GroupDetails} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={2}>
-        <GroupSettingsAvatarTab groupDetails={data.getGroupDetails} />
+        <GroupSettingsAvatarTab groupDetails={data.getGroupDetails as GroupDetails} />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={3}>
-        <GroupSettingsManagmentTab groupDetails={data.getGroupDetails} />
+        <GroupSettingsManagmentTab groupDetails={data.getGroupDetails as GroupDetails} />
       </CustomTabPanel>
     </Box>
   );

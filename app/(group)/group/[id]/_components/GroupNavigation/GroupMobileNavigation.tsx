@@ -1,12 +1,12 @@
 "use client";
 
 import { Link } from "@/app/common/components/next-link";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import { Tab, Tabs } from "@mui/material";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export function GroupMobileNavigation({ groupDetails }: Props) {

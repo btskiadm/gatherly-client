@@ -1,0 +1,8 @@
+query GetCategories {
+  getCategories {
+    __typename
+    id
+    value
+    label
+  }
+}

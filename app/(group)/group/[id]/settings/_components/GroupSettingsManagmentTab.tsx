@@ -1,16 +1,16 @@
 "use client";
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
 import { deleteGroupMutationFn } from "@/app/common/graphql/options/mutation/deleteGroupMutationFn";
+import { GroupDetails } from "@/app/model/model";
 import { LoadingButton } from "@mui/lab";
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export const GroupSettingsManagmentTab = ({ groupDetails }: Props) => {

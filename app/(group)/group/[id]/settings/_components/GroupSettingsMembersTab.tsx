@@ -2,7 +2,7 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import {
   DeleteOutline,
   GppGoodOutlined,
@@ -30,10 +30,10 @@ import {
 import { useCallback, useMemo, useRef, useState } from "react";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
-export const GroupSettingsMembersTab = ({ groupDetails: { users } }: Props) => {
+export const GroupSettingsMembersTab = ({ groupDetails: { members } }: Props) => {
   const moreContext = useRef({ username: "", id: "" });
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
   const [openDelete, setOpenDelete] = useState(false);
@@ -123,7 +123,7 @@ export const GroupSettingsMembersTab = ({ groupDetails: { users } }: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map(({ user, isHost, isModerator }, index) => (
+            {members.map(({ user, isHost, isModerator }, index) => (
               <TableRow key={user.username} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   {user.username}

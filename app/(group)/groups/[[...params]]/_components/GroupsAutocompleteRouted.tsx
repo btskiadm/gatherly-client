@@ -1,11 +1,7 @@
 "use client";
 
 import { GroupAndEventAutocomplete, SearchItem } from "@/app/common/components/Autocomplete/GroupAndEventAutocomplete";
-import {
-  getGroupTitlesQueryOptions,
-  getUsedCategoriesQueryOptions,
-  getUsedCitiesQueryOptions,
-} from "@/app/common/graphql/options/query";
+import { getUsedCategoriesQueryOptions, getUsedCitiesQueryOptions } from "@/app/common/graphql/options/query";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -26,9 +22,9 @@ export const GroupsAutocompleteRouted = ({ cities, categories, titles }: Props) 
   const {
     data: { getUsedCities = [] },
   } = useSuspenseQuery(getUsedCitiesQueryOptions());
-  const {
-    data: { getGroupTitles = [] },
-  } = useSuspenseQuery(getGroupTitlesQueryOptions());
+  // const {
+  //   data: { getGroupTitles = [] },
+  // } = useSuspenseQuery(getGroupTitlesQueryOptions());
 
   const searchItems = useMemo(() => {
     const categorySet = new Set(categories);
@@ -38,9 +34,9 @@ export const GroupsAutocompleteRouted = ({ cities, categories, titles }: Props) 
     return [
       ...getUsedCategories.filter(({ value }) => categorySet.has(value)),
       ...getUsedCities.filter(({ value }) => citySet.has(value)),
-      ...getGroupTitles.filter(({ value }) => titleSet.has(value)),
+      // ...getGroupTitles.filter(({ value }) => titleSet.has(value)),
     ];
-  }, [getUsedCategories, getUsedCities, getGroupTitles, categories, cities, titles]);
+  }, [getUsedCategories, getUsedCities, categories, cities, titles]);
 
   const onChange = useCallback(
     (items: SearchItem[]) => {
@@ -63,7 +59,8 @@ export const GroupsAutocompleteRouted = ({ cities, categories, titles }: Props) 
       selected={searchItems}
       categories={getUsedCategories}
       cities={getUsedCities}
-      titles={getGroupTitles}
+      // titles={getGroupTitles}
+      titles={[]}
       onChange={onChange}
       onDelete={onDelete}
     />

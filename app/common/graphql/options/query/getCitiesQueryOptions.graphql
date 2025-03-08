@@ -1,0 +1,8 @@
+query GetCities {
+  getCities {
+    __typename
+    id
+    value
+    label
+  }
+}

@@ -1,0 +1,49 @@
+query GetGroupTiles(
+  $categories: [String!]!
+  $cities: [String!]!
+  $titles: [String!]!
+  $minMembers: Int!
+  $maxMembers: Int!
+  $remote: Boolean!
+  $sponsored: Boolean!
+  $verified: Boolean!
+  $numberOfMembers: String!
+  $dateOfAdding: String!
+) {
+  getGroupTiles(
+    categories: $categories
+    cities: $cities
+    titles: $titles
+    minMembers: $minMembers
+    maxMembers: $maxMembers
+    remote: $remote
+    sponsored: $sponsored
+    verified: $verified
+    numberOfMembers: $numberOfMembers
+    dateOfAdding: $dateOfAdding
+  ) {
+    id
+    title
+    description
+    createdAt
+    updatedAt
+    isVerified
+    isSponsored
+    sponsoredUntil
+    eventsCount
+    membersCount
+    smallPhoto
+    mediumPhoto
+    largePhoto
+    cities {
+      id
+      value
+      label
+    }
+    categories {
+      id
+      value
+      label
+    }
+  }
+}

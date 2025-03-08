@@ -7,7 +7,10 @@
     "dev:turbo": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:schema": "pnpm --package=@graphql-codegen/cli@5.0.4 dlx graphql-codegen -r dotenv/config -c codegen.schema.yml --debug --verbose",
+    "generate:model": "pnpm --package=@graphql-codegen/cli@5.0.4 dlx graphql-codegen -r dotenv/config -c codegen.model.yml --debug --verbose",
+    "generate": "pnpm run generate:schema && pnpm run generate:model"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -17,30 +20,32 @@
     "@fullcalendar/daygrid": "^6.1.15",
     "@fullcalendar/react": "^6.1.15",
     "@fullcalendar/timegrid": "^6.1.15",
-    "@mui/icons-material": "^6.4.1",
+    "@mui/icons-material": "^6.4.5",
     "@mui/lab": "6.0.0-beta.22",
-    "@mui/material": "^6.4.1",
-    "@mui/material-nextjs": "^6.3.1",
-    "@tanstack/react-query": "^5.64.2",
-    "@tanstack/react-query-devtools": "^5.64.2",
+    "@mui/material": "^6.4.5",
+    "@mui/material-nextjs": "^6.4.3",
+    "@tanstack/react-query": "^5.66.9",
+    "@tanstack/react-query-devtools": "^5.66.9",
     "clsx": "^2.1.1",
     "graphql-request": "^7.1.2",
-    "next": "^15.1.6",
+    "next": "^15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-dropzone": "^14.3.5",
+    "react-dropzone": "^14.3.8",
     "react-easy-crop": "^5.2.0",
-    "react-hot-toast": "^2.5.1",
-    "sass": "^1.83.4",
+    "react-hot-toast": "^2.5.2",
+    "sass": "^1.85.0",
     "scss": "^0.2.4",
-    "zod": "^3.24.1"
+    "use-debounce": "^10.0.4",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/node": "^22.10.10",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^15.1.6",
+    "eslint-config-next": "^15.1.7",
     "typescript": "^5.7.3"
   }
 }

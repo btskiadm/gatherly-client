@@ -2,14 +2,14 @@
 
 import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { CommentDto } from "@/app/common/graphql/dto";
 import { stringToColor } from "@/app/common/utils/string-to-color";
+import { Comment } from "@/app/model/model";
 import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 
 interface Props {
-  comment: CommentDto;
+  comment: Comment;
 }
 
 export const AboutComment = ({ comment }: Props) => {
@@ -19,7 +19,7 @@ export const AboutComment = ({ comment }: Props) => {
     content,
     createdAt,
     rate,
-    user: { thumbnail, username, verifiedAt },
+    user: { smallPhoto, username, verifiedAt },
   } = comment;
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +42,7 @@ export const AboutComment = ({ comment }: Props) => {
               sx={{
                 bgcolor: stringToColor(username),
               }}
-              src={thumbnail.thumb}
+              src={smallPhoto ?? ""}
             >
               {username[0]}
             </Avatar>

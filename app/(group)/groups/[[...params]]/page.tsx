@@ -1,7 +1,6 @@
 import { DateOfAdding, NumberOfMembers } from "@/app/common/components/Sort/GroupAndEventSort";
 import {
   getGroupTilesQueryOptions,
-  getGroupTitlesQueryOptions,
   getUsedCategoriesQueryOptions,
   getUsedCitiesQueryOptions,
 } from "@/app/common/graphql/options/query";
@@ -55,7 +54,7 @@ export default async function Page({
   await Promise.all([
     queryClient.prefetchQuery(getUsedCategoriesQueryOptions()),
     queryClient.prefetchQuery(getUsedCitiesQueryOptions()),
-    queryClient.prefetchQuery(getGroupTitlesQueryOptions()),
+    // queryClient.prefetchQuery(getGroupTitlesQueryOptions({})),
     queryClient.prefetchQuery(
       getGroupTilesQueryOptions({
         categories: categories,

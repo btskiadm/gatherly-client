@@ -6,7 +6,7 @@ import { SearchCategoryDto } from "@/app/mock/mock-api.types";
 import { Box, Stack } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { InviteMember, InviteMemberRef } from "../../InviteMember/_components/invite-member-components";
+import { InviteMember, InviteMemberRef } from "../../InviteMember/_components/InviteMember";
 import { ModalTemplate } from "../../Modal/modal-template";
 import {
   CreateEventDateAndLocation,

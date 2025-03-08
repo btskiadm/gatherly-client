@@ -11,15 +11,25 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { Button, ButtonGroup, Divider, Menu, MenuItem } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
+import { LogoutOutlined } from "@mui/icons-material";
+import { useMutation } from "@tanstack/react-query";
+import { leaveGroupMutationFn } from "@/app/common/graphql/options/mutation/leaveGroupMutationFn";
+import { useParams } from "next/navigation";
 
 const isMember = false;
-const isModerator = false;
-const isHost = true;
+const isModerator = true;
+const isHost = false;
 const loading = false;
 
 const isNotMember = !isMember && !isModerator && !isHost;
 
 export const GroupHeaderButton = () => {
+  const { id }: { id: string } = useParams();
+
+  const mutation = useMutation({
+    mutationFn: leaveGroupMutationFn,
+  });
+
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -54,6 +64,25 @@ export const GroupHeaderButton = () => {
     // toast(reason);
     handleClose();
   };
+
+  const handleLeave = useCallback(async () => {
+    handleClose();
+
+    // todo: confirm modal
+    const confirmed = confirm("Are you sure you want to leave this group ?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    await mutation.mutateAsync({
+      groupId: id,
+    });
+  }, [id]);
+
+  const showLeave = !isHost && (isMember || isModerator);
+  const showManagmentPanel = isModerator || isHost;
+  const showNewEvent = isModerator || isHost;
 
   return (
     <>
@@ -95,15 +124,26 @@ export const GroupHeaderButton = () => {
             Report
           </MenuItem>
         </Link>
+        {showLeave && (
+          <MenuItem disableRipple sx={{ color: "error.main" }} onClick={handleLeave}>
+            <LogoutOutlined color="error" />
+            Leave
+          </MenuItem>
+        )}
 
-        {(isHost || isModerator) && <Divider />}
-        {(isHost || isModerator) && (
-          <Link href="createEvent" underline="none">
-            <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseReason("close")}>
-              <InsertInvitationOutlined color="action" />
-              New event
-            </MenuItem>
-          </Link>
+        {showManagmentPanel && (
+          <>
+            <Divider />
+
+            {showNewEvent && (
+              <Link href="createEvent" underline="none">
+                <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseReason("close")}>
+                  <InsertInvitationOutlined color="action" />
+                  New event
+                </MenuItem>
+              </Link>
+            )}
+          </>
         )}
       </Menu>
 

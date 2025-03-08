@@ -96,8 +96,8 @@ export const Link = ({
   };
 
   if (noLinkStyle) {
-    return <NextLinkComposed className={className} ref={ref} {...nextjsProps} {...other} />;
+    return <NextLinkComposed className={className} {...nextjsProps} {...other} />;
   }
 
-  return <MuiLink component={NextLinkComposed} className={className} ref={ref} {...nextjsProps} {...other} />;
+  return <MuiLink component={NextLinkComposed} className={className} {...nextjsProps} {...other} />;
 };

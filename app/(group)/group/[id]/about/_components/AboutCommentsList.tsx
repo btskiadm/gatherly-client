@@ -1,10 +1,10 @@
-import { CommentDto } from "@/app/common/graphql/dto";
+import { Comment } from "@/app/model/model";
 import { Divider, Stack } from "@mui/material";
 import { Fragment } from "react";
 import { AboutComment } from "./AboutComment";
 
 interface Props {
-  comments: CommentDto[];
+  comments: Comment[];
 }
 
 export const AboutCommentsList = ({ comments }: Props) => {

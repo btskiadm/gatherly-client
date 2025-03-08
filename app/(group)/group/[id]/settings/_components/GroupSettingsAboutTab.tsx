@@ -1,15 +1,15 @@
 "use client";
 
 import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/create-group-component";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
 import { delay } from "@/app/common/utils/delay";
+import { GroupDetails } from "@/app/model/model";
 import { LoadingButton } from "@mui/lab";
 import { Button, Paper, Stack } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {

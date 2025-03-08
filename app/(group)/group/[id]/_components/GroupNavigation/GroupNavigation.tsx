@@ -2,6 +2,7 @@
 import { getGroupDetailsQueryOptions } from "@/app/common/graphql/options/query";
 import { Box } from "@mui/material";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { notFound } from "next/navigation";
 import { GroupDesktopNavigation } from "./GroupDesktopNavigation";
 import { GroupMobileNavigation } from "./GroupMobileNavigation";
 
@@ -11,6 +12,10 @@ interface Props {
 
 export function GroupNavigation({ groupId }: Props) {
   const { data } = useSuspenseQuery(getGroupDetailsQueryOptions({ groupId }));
+
+  if (!data.getGroupDetails) {
+    return notFound();
+  }
 
   return (
     <>

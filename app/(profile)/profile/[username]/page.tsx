@@ -39,7 +39,7 @@ export default async function Page(params: ProfileParams) {
             <Typography variant="caption" color="text.secondary" fontWeight={600}>
               (99+)
             </Typography>
-          </Stack>
+          </Stack> 
           <Grid2 container spacing={2}>
             {shortGroups.map((shortGroup) => {
               return (

@@ -7,13 +7,17 @@ interface Data {
   getGroupTitles: TitleDto[];
 }
 
-export const getGroupTitlesQueryOptions = () =>
+interface Variables {
+  title: string;
+}
+
+export const getGroupTitlesQueryOptions = (variables: Variables) =>
   queryOptions<Data>({
     queryKey: ["GetGroupTitles"],
     queryFn: () => {
       const query = gql`
-        query GetGroupTitles {
-          getGroupTitles {
+        query GetGroupTitles($title: String!) {
+          getGroupTitles(title: $title) {
             __typename
             value
             label

@@ -1,0 +1,118 @@
+fragment userFragment on User {
+  id
+  createdAt
+  email
+  role
+  username
+  verifiedAt
+  smallPhoto
+  mediumPhoto
+  largePhoto
+}
+
+fragment eventGroupFragment on EventGroup {
+  canceled
+  categories {
+    id
+    label
+    value
+  }
+  cities {
+    id
+    label
+    value
+  }
+  createdAt
+  startAt
+  endAt
+  description
+  id
+  remote
+  sponsored
+  title
+  users {
+    id
+    isHost
+    isModerator
+    user {
+      ...userFragment
+    }
+  }
+  verified
+}
+
+query GetGroupDetails($groupId: String!) {
+  getGroupDetails(groupId: $groupId) {
+    cancelledLength
+    categories {
+      id
+      label
+      value
+    }
+    cities {
+      id
+      label
+      value
+    }
+    comments {
+      id
+      rate
+      content
+      createdAt
+      user {
+        ...userFragment
+      }
+    }
+    createdAt
+    description
+
+    eventsLength
+    id
+    largePhoto
+    mediumPhoto
+    members {
+      id
+      isHost
+      isModerator
+      user {
+        ...userFragment
+      }
+    }
+    pastLength
+    pendingLength
+    rate
+    remote
+    smallPhoto
+    sponsored
+    title
+    cancelled {
+      monthReference
+      events {
+        ...eventGroupFragment
+      }
+    }
+    events {
+      ...eventGroupFragment
+    }
+    past {
+      monthReference
+      events {
+        ...eventGroupFragment
+      }
+    }
+    pending {
+      monthReference
+      events {
+        ...eventGroupFragment
+      }
+    }
+    upcoming {
+      monthReference
+      events {
+        ...eventGroupFragment
+      }
+    }
+    upcomingLength
+    verified
+  }
+}

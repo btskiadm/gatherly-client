@@ -1,22 +1,21 @@
 import { env } from "@/app/common/utils/env";
 import { queryOptions } from "@tanstack/react-query";
 import request, { gql } from "graphql-request";
-import { CityDto } from "../../dto";
+import { City } from "../../contracts/city.types";
+import { citySchema } from "../schemas/city.schemas";
 
 interface Data {
-  getAllCities: CityDto[];
+  getCities: City[];
 }
 
-export const getAllCitiesQueryOptions = () =>
+export const getCitiesQueryOptions = () =>
   queryOptions<Data>({
-    queryKey: ["GetAllCities"],
+    queryKey: ["GetCities"],
     queryFn: () => {
       const query = gql`
-        query GetAllCities {
-          getAllCities {
-            __typename
-            value
-            label
+        query GetCities {
+          getCities {
+            ${citySchema}
           }
         }
       `;

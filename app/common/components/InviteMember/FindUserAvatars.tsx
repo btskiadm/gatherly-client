@@ -1,7 +1,7 @@
 "use client";
 
+import { UserDto } from "@/app/common/graphql/dto";
 import { stringToColor } from "@/app/common/utils/string-to-color";
-import { SearchUserDto } from "@/app/mock/mock-api.types";
 import { Close } from "@mui/icons-material";
 import { Avatar, Badge, IconButton, Stack, Tooltip } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -10,11 +10,11 @@ import { useCallback } from "react";
 const avatarCounts = 6;
 
 interface Props {
-  users: SearchUserDto[];
-  onDelete: (user: SearchUserDto) => void;
+  users: UserDto[];
+  onDelete: (user: UserDto) => void;
 }
 
-const DeletableUserAvatar = ({ user, onDelete }: { user: SearchUserDto; onDelete: (user: SearchUserDto) => void }) => {
+const DeletableUserAvatar = ({ user, onDelete }: { user: UserDto; onDelete: (user: UserDto) => void }) => {
   const handleDelete = useCallback(() => {
     onDelete(user);
   }, [onDelete, user]);
@@ -50,7 +50,7 @@ const DeletableUserAvatar = ({ user, onDelete }: { user: SearchUserDto; onDelete
             sx={{
               bgcolor: stringToColor(user.username),
             }}
-            src={user.thumbnails.thumb}
+            src={user.thumbnail.thumb}
           >
             {user.username[0]}
           </Avatar>
@@ -73,7 +73,7 @@ export const FindUserAvatars = ({ users, onDelete }: Props) => {
           <Avatar
             alt={`${userCountRest} more members`}
             sx={{
-              fontSize: "1rem",
+              fontSize: "1em",
             }}
           >
             +{userCountRest}

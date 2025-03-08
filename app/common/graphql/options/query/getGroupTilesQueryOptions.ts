@@ -1,11 +1,7 @@
 import { env } from "@/app/common/utils/env";
+import { GetGroupTilesDocument } from "@/app/model/docNodes";
 import { queryOptions } from "@tanstack/react-query";
-import request, { gql } from "graphql-request";
-import { GroupTileDto } from "../../dto";
-
-interface Data {
-  getGroupTiles: GroupTileDto[];
-}
+import request from "graphql-request";
 
 interface Variables {
   cities: string[];
@@ -21,63 +17,7 @@ interface Variables {
 }
 
 export const getGroupTilesQueryOptions = (variables: Variables) =>
-  queryOptions<Data>({
+  queryOptions({
     queryKey: ["GetGroupTiles"],
-    queryFn: () => {
-      const query = gql`
-        query GetGroupTiles(
-          $categories: [String!]!
-          $cities: [String!]!
-          $titles: [String!]!
-          $minMembers: Int!
-          $maxMembers: Int!
-          $remote: Boolean!
-          $sponsored: Boolean!
-          $verified: Boolean!
-          $numberOfMembers: String!
-          $dateOfAdding: String!
-        ) {
-          getGroupTiles(
-            categories: $categories
-            cities: $cities
-            titles: $titles
-            minMembers: $minMembers
-            maxMembers: $maxMembers
-            remote: $remote
-            sponsored: $sponsored
-            verified: $verified
-            numberOfMembers: $numberOfMembers
-            dateOfAdding: $dateOfAdding
-          ) {
-            __typename
-            id
-            title
-            description
-            createdAt
-            cities {
-              __typename
-              label
-              value
-            }
-            categories {
-              __typename
-              label
-              value
-            }
-            thumbnail {
-              __typename
-              id
-              thumb
-            }
-            eventsLength
-            usersLength
-            sponsored
-            verified
-            remote
-          }
-        }
-      `;
-
-      return request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, query, variables);
-    },
+    queryFn: () => request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, GetGroupTilesDocument, variables),
   });

@@ -86,12 +86,9 @@ export const GroupEventsTabs = ({ groupDetails }: Props) => {
         <GroupEventsList events={groupDetails.pending} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <GroupEventsList events={[]} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
         <GroupEventsList events={groupDetails.past} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
+      <CustomTabPanel value={value} index={3}>
         <GroupEventsList events={groupDetails.cancelled} />
       </CustomTabPanel>
     </Box>

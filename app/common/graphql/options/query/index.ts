@@ -1,5 +1,5 @@
-export * from "./getAllCategoriesQueryOptions";
-export * from "./getAllCitiesQueryOptions";
+export * from "./getCategoriesQueryOptions";
+export * from "./getCitiesQueryOptions";
 export * from "./getGroupDetailsQueryOptions";
 export * from "./getGroupTilesQueryOptions";
 export * from "./getGroupTitlesQueryOptions";
