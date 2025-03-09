@@ -1,14 +1,11 @@
 import { env } from "@/app/common/utils/env";
 import { GetGroupDetailsDocument } from "@/app/model/docNodes";
+import { GetGroupDetailsQueryVariables } from "@/app/model/operations";
 import { queryOptions } from "@tanstack/react-query";
 import request from "graphql-request";
 
-interface Variables {
-  groupId: string;
-}
-
-export const getGroupDetailsQueryOptions = (variables: Variables) =>
+export const getGroupDetailsQueryOptions = (variables: GetGroupDetailsQueryVariables) =>
   queryOptions({
-    queryKey: ["GroupDetailsQuery"],
+    queryKey: ["GroupDetailsQuery", variables.groupId],
     queryFn: () => request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, GetGroupDetailsDocument, variables),
   });

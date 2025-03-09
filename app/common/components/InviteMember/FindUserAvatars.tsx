@@ -1,7 +1,7 @@
 "use client";
 
-import { UserDto } from "@/app/common/graphql/dto";
 import { stringToColor } from "@/app/common/utils/string-to-color";
+import { User } from "@/app/model/model";
 import { Close } from "@mui/icons-material";
 import { Avatar, Badge, IconButton, Stack, Tooltip } from "@mui/material";
 import { grey } from "@mui/material/colors";
@@ -10,11 +10,11 @@ import { useCallback } from "react";
 const avatarCounts = 6;
 
 interface Props {
-  users: UserDto[];
-  onDelete: (user: UserDto) => void;
+  users: User[];
+  onDelete: (user: User) => void;
 }
 
-const DeletableUserAvatar = ({ user, onDelete }: { user: UserDto; onDelete: (user: UserDto) => void }) => {
+const DeletableUserAvatar = ({ user, onDelete }: { user: User; onDelete: (user: User) => void }) => {
   const handleDelete = useCallback(() => {
     onDelete(user);
   }, [onDelete, user]);
@@ -50,7 +50,7 @@ const DeletableUserAvatar = ({ user, onDelete }: { user: UserDto; onDelete: (use
             sx={{
               bgcolor: stringToColor(user.username),
             }}
-            src={user.thumbnail.thumb}
+            src={user.smallPhoto}
           >
             {user.username[0]}
           </Avatar>

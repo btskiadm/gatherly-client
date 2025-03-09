@@ -1,20 +1,20 @@
 "use client";
 
-import { UserDto } from "@/app/common/graphql/dto";
-import { Autocomplete, AutocompleteInputChangeReason, Chip, CircularProgress, Stack, TextField } from "@mui/material";
+import { User } from "@/app/model/model";
+import { Autocomplete, AutocompleteInputChangeReason, CircularProgress, TextField } from "@mui/material";
 import React, { useCallback } from "react";
 
 interface Props {
   loading: boolean;
-  users: UserDto[];
-  selectedUsers: UserDto[];
-  onChange: (users: UserDto[]) => void;
+  users: User[];
+  selectedUsers: User[];
+  onChange: (users: User[]) => void;
   inputValue: string;
   onInputChange: (value: string) => void;
 }
 
 export const FindUserAutocomplete = ({ loading, users, selectedUsers, onChange, inputValue, onInputChange }: Props) => {
-  const handleUsers = useCallback((e: unknown, users: UserDto[]) => {
+  const handleUsers = useCallback((e: unknown, users: User[]) => {
     onChange(users);
   }, []);
 
@@ -28,7 +28,7 @@ export const FindUserAutocomplete = ({ loading, users, selectedUsers, onChange, 
   );
 
   return (
-    <Autocomplete<UserDto, true, false, false>
+    <Autocomplete<User, true, false, false>
       multiple
       loading={loading}
       value={selectedUsers}

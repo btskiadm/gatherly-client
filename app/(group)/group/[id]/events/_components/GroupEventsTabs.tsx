@@ -1,6 +1,6 @@
 "use client";
 
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import { Box, Stack, Tab, Tabs, Typography } from "@mui/material";
 import React from "react";
 import { GroupEventsList } from "./GroupEventsList";
@@ -22,7 +22,7 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export const GroupEventsTabs = ({ groupDetails }: Props) => {

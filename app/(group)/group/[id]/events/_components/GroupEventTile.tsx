@@ -1,12 +1,12 @@
 import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { EventGroupDto } from "@/app/common/graphql/dto";
+import { EventGroup } from "@/app/model/model";
 import { AccessTime, Group, Place } from "@mui/icons-material";
 import { Box, Chip, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { GroupEventTileMenu } from "./GroupEventTileMenu";
 
 interface Props {
-  event: EventGroupDto;
+  event: EventGroup;
 }
 
 const shortMonth = (iso: string) =>
@@ -29,13 +29,7 @@ const time = (isoStart: string, isoEnd: string) =>
   }).format(new Date(isoEnd))}`;
 
 export const GroupEventTile = ({ event }: Props) => {
-  const {
-    id,
-    title,
-    date: { startAt, endAt },
-    users,
-    cities,
-  } = event;
+  const { id, title, startAt, endAt, users, cities } = event;
 
   const usersLength = users.length > 99 ? "99+" : users.length;
 

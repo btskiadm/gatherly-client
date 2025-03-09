@@ -1,7 +1,7 @@
 "use client";
 
-import { Check, Close, InfoOutlined, PersonAddAltOutlined, PlaceOutlined } from "@mui/icons-material";
-import { Stack, Step, StepConnector, StepLabel, Stepper, Typography, stepConnectorClasses } from "@mui/material";
+import { InfoOutlined, PersonAddAltOutlined, PlaceOutlined } from "@mui/icons-material";
+import { Stack, Step, StepConnector, StepLabel, Stepper, stepConnectorClasses } from "@mui/material";
 import { StepIconProps } from "@mui/material/StepIcon";
 import { green, red } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
@@ -23,42 +23,30 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
-    borderColor: "#eaeaf0",
+    borderColor: theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
     borderTopWidth: 3,
     borderRadius: 1,
-    ...theme.applyStyles("dark", {
-      borderColor: theme.palette.grey[800],
-    }),
   },
 }));
 
 const ColorlibStepIconRoot = styled("div")<{
   ownerState: { completed?: boolean; active?: boolean; error?: boolean };
-}>(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  zIndex: 1,
-  display: "flex",
-  borderRadius: "50%",
-  justifyContent: "center",
-  alignItems: "center",
-  ...theme.applyStyles("dark", {
-    color: theme.palette.grey[700],
-  }),
-  variants: [
-    {
-      props: ({ ownerState }: any) => ownerState.active || ownerState.completed,
-      style: {
-        color: green[400],
-      },
-    },
-    {
-      props: ({ ownerState }: any) => ownerState.error,
-      style: {
-        color: red[400],
-      },
-    },
-  ],
-}));
+}>(({ theme, ownerState }) => {
+  let color = theme.palette.mode === "dark" ? theme.palette.grey[700] : theme.palette.text.secondary;
+  if (ownerState.error) {
+    color = red[400];
+  } else if (ownerState.active || ownerState.completed) {
+    color = green[400];
+  }
+  return {
+    color,
+    zIndex: 1,
+    display: "flex",
+    borderRadius: "50%",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+});
 
 function ColorlibStepIcon(props: StepIconProps) {
   const { active, completed, className, error } = props;
@@ -94,7 +82,9 @@ export const CreateEventStep = ({
           <Step key={label}>
             <StepLabel
               error={index === errorStep}
-              StepIconComponent={ColorlibStepIcon}
+              slots={{
+                stepIcon: ColorlibStepIcon,
+              }}
               sx={{
                 "& .MuiStepLabel-label": {
                   display: {

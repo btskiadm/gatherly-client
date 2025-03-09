@@ -1,0 +1,6 @@
+mutation JoinGroup($groupId: String!) {
+  joinGroup(groupId: $groupId) {
+    __typename
+    success
+  }
+}

@@ -1,9 +1,8 @@
 "use client";
 
-import { ClampTypography } from "@/app/common/components/clamp-typography";
-import { Link } from "@/app/common/components/next-link";
-import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { GroupTile as GroupTileType } from "@/app/model/model";
+import React, { PropsWithChildren, useCallback, useState } from "react";
+import { toast } from "react-hot-toast";
+import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Popover, Stack, Tooltip } from "@mui/material";
 import {
   AccessTime,
   ArrowDropDown,
@@ -19,25 +18,24 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Popover, Stack, Tooltip } from "@mui/material";
-import { PropsWithChildren, useCallback, useState } from "react";
-import { toast } from "react-hot-toast";
 
-// todo: translation
+import { ClampTypography } from "@/app/common/components/clamp-typography";
+import { Link } from "@/app/common/components/next-link";
+import { TruncatedTypography } from "@/app/common/components/truncated-typography";
+import { GroupTile as GroupTileType } from "@/app/model/model";
+
+/**
+ * Formatuje różnicę dat do czytelnego formatu.
+ */
 function formatDateDifference(dateInput: Date) {
   const now = new Date();
-  const differenceInMilliseconds = now.getTime() - dateInput.getTime();
-  const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
-  const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+  const diffMs = now.getTime() - dateInput.getTime();
+  const diffHours = diffMs / (1000 * 60 * 60);
+  const diffDays = diffMs / (1000 * 60 * 60 * 24);
 
-  if (differenceInHours < 24) {
-    return "new";
-  } else if (differenceInDays < 7) {
-    return `${Math.floor(differenceInDays)} d.`;
-  } else {
-    const differenceInWeeks = Math.floor(differenceInDays / 7);
-    return `${differenceInWeeks} w.`;
-  }
+  if (diffHours < 24) return "new";
+  if (diffDays < 7) return `${Math.floor(diffDays)} d.`;
+  return `${Math.floor(diffDays / 7)} w.`;
 }
 
 export const GroupTile = ({
@@ -55,33 +53,28 @@ export const GroupTile = ({
     categories,
   },
 }: PropsWithChildren<{ tile: GroupTileType }>) => {
-  const [moreMenuElement, setMoreMenuElement] = useState<HTMLElement | null>(null);
-  const [citiesMoreElement, setCitiesMoreElement] = useState<HTMLElement | null>(null);
-  const [categoriesMoreElement, setCategoriesMoreElement] = useState<HTMLElement | null>(null);
+  // State dla menu i popoverów
+  const [moreMenuEl, setMoreMenuEl] = useState<HTMLElement | null>(null);
+  const [citiesPopoverEl, setCitiesPopoverEl] = useState<HTMLElement | null>(null);
+  const [categoriesPopoverEl, setCategoriesPopoverEl] = useState<HTMLElement | null>(null);
 
-  const handleOpenMenuMore = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setMoreMenuElement(event.currentTarget);
+  // Handlery dla menu "więcej"
+  const openMoreMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setMoreMenuEl(event.currentTarget);
   }, []);
+  const closeMoreMenu = useCallback(() => setMoreMenuEl(null), []);
 
-  const handleOpenCities = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    setCitiesMoreElement(event.currentTarget);
+  // Handlery dla popoverów miast
+  const openCitiesPopover = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    setCitiesPopoverEl(event.currentTarget);
   }, []);
+  const closeCitiesPopover = useCallback(() => setCitiesPopoverEl(null), []);
 
-  const handleOpenCategories = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    setCategoriesMoreElement(event.currentTarget);
+  // Handlery dla popoverów kategorii
+  const openCategoriesPopover = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    setCategoriesPopoverEl(event.currentTarget);
   }, []);
-
-  const handleCloseCities = useCallback(() => {
-    setCitiesMoreElement(null);
-  }, []);
-
-  const handleCloseCategories = useCallback(() => {
-    setCategoriesMoreElement(null);
-  }, []);
-
-  const handleCloseMenuMore = useCallback(() => {
-    setMoreMenuElement(null);
-  }, []);
+  const closeCategoriesPopover = useCallback(() => setCategoriesPopoverEl(null), []);
 
   const handleJoin = useCallback(() => {
     toast.success("You have just joined the group. Congrats!");
@@ -91,23 +84,25 @@ export const GroupTile = ({
 
   return (
     <>
+      {/* Link pokrywający całą kartę */}
       <Link
         href={`/group/${id}/about`}
         sx={{
           height: 0,
           width: 0,
           "&:after": {
-            zIndex: 1,
-            bottom: 0,
             content: "''",
-            left: 0,
             position: "absolute",
-            right: 0,
             top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            zIndex: 1,
           },
         }}
       />
       <Stack height="100%">
+        {/* Obrazek */}
         <Avatar
           alt="logo"
           variant="rounded"
@@ -118,9 +113,8 @@ export const GroupTile = ({
             height: "13rem",
           }}
         />
-
         <Stack gap={1} p={2} height="100%">
-          {/* Title */}
+          {/* Tytuł */}
           <Stack direction="row">
             <Tooltip title={title}>
               <TruncatedTypography variant="subtitle1" minWidth="0px">
@@ -128,17 +122,16 @@ export const GroupTile = ({
               </TruncatedTypography>
             </Tooltip>
           </Stack>
-          {/* Chips */}
+
+          {/* Chipsy */}
           <Stack
-            gap={0.5}
             direction="row"
+            gap={0.5}
             flexShrink={0}
-            width="min-content"
             sx={{
               flexWrap: "wrap",
-              overflowY: "hidden",
-              overflowX: "auto",
               width: "100%",
+              overflowX: "auto",
               padding: 0,
               "::-webkit-scrollbar": {
                 background: "transparent",
@@ -147,18 +140,14 @@ export const GroupTile = ({
               },
             }}
           >
+            {/* Miasta */}
             {cities.length === 0 && (
               <Tooltip title="Remote group">
                 <Chip
                   size="small"
                   variant="outlined"
-                  sx={{
-                    zIndex: 1,
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
-                  }}
                   icon={<CloudOutlined fontSize="small" />}
+                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
                 />
               </Tooltip>
             )}
@@ -168,10 +157,8 @@ export const GroupTile = ({
                   size="small"
                   variant="outlined"
                   label={cities[0].label}
-                  sx={{
-                    zIndex: 1,
-                  }}
                   icon={<PlaceOutlined />}
+                  sx={{ zIndex: 1 }}
                 />
               </Tooltip>
             )}
@@ -182,27 +169,24 @@ export const GroupTile = ({
                   size="small"
                   variant="outlined"
                   label={`${cities[0].label} +${cities.length - 1}`}
-                  sx={{
-                    zIndex: 1,
-                  }}
                   icon={<PlaceOutlined />}
                   deleteIcon={<ArrowDropDown fontSize="small" />}
-                  onClick={handleOpenCities}
-                  onDelete={handleOpenCities}
+                  onClick={openCitiesPopover}
+                  onDelete={openCitiesPopover}
+                  sx={{ zIndex: 1 }}
                 />
               </Tooltip>
             )}
 
+            {/* Kategorie */}
             {categories.length === 1 && (
               <Tooltip title={`${categories[0].label} category`}>
                 <Chip
                   size="small"
                   variant="outlined"
                   label={categories[0].label}
-                  sx={{
-                    zIndex: 1,
-                  }}
                   icon={<InterestsOutlined />}
+                  sx={{ zIndex: 1 }}
                 />
               </Tooltip>
             )}
@@ -213,101 +197,79 @@ export const GroupTile = ({
                   size="small"
                   variant="outlined"
                   label={`${categories[0].label} +${categories.length - 1}`}
-                  sx={{
-                    zIndex: 1,
-                  }}
                   icon={<InterestsOutlined />}
                   deleteIcon={<ArrowDropDown fontSize="small" />}
-                  onClick={handleOpenCategories}
-                  onDelete={handleOpenCategories}
+                  onClick={openCategoriesPopover}
+                  onDelete={openCategoriesPopover}
+                  sx={{ zIndex: 1 }}
                 />
               </Tooltip>
             )}
 
+            {/* Liczba członków */}
             <Tooltip title={`${membersCount} members`}>
-              <Chip
-                size="small"
-                variant="outlined"
-                label={membersCount}
-                sx={{
-                  zIndex: 1,
-                }}
-                icon={<Group />}
-              />
+              <Chip size="small" variant="outlined" label={membersCount} icon={<Group />} sx={{ zIndex: 1 }} />
             </Tooltip>
 
+            {/* Liczba wydarzeń */}
             <Tooltip title={`${eventsCount} events`}>
               <Chip
                 size="small"
                 variant="outlined"
                 label={eventsCount}
-                sx={{ zIndex: 1 }}
                 icon={<CalendarMonthOutlined />}
+                sx={{ zIndex: 1 }}
               />
             </Tooltip>
 
+            {/* Data utworzenia */}
             {createdAt && (
               <Tooltip title={`Created at ${createdAtDate.toISOString()}`}>
                 <Chip
                   size="small"
                   variant="outlined"
                   label={formatDateDifference(createdAtDate)}
-                  sx={{ zIndex: 1 }}
                   icon={<AccessTime />}
+                  sx={{ zIndex: 1 }}
                 />
               </Tooltip>
             )}
 
+            {/* Weryfikacja */}
             {isVerified && (
               <Tooltip title="Group verified">
                 <Chip
                   size="small"
                   variant="outlined"
-                  sx={{
-                    zIndex: 1,
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
-                  }}
                   icon={<VerifiedOutlined fontSize="small" />}
+                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
                 />
               </Tooltip>
             )}
 
+            {/* Sponsorowane */}
             {isSponsored && (
               <Tooltip title="Group sponsored">
                 <Chip
                   size="small"
                   variant="outlined"
-                  sx={{
-                    zIndex: 1,
-                    ".MuiChip-label": {
-                      px: "4px",
-                    },
-                  }}
                   icon={<StarBorderRounded fontSize="small" />}
+                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
                 />
               </Tooltip>
             )}
           </Stack>
 
-          {/* Description */}
+          {/* Opis */}
           <Box height="100%">
             <ClampTypography variant="body2" clamp={3} color="text.secondary">
               {description}
             </ClampTypography>
           </Box>
 
-          {/* Actions */}
-          <Box height="100%" />
-          <Stack justifyContent="space-between" direction="row">
-            <IconButton
-              size="small"
-              onClick={handleOpenMenuMore}
-              sx={{
-                zIndex: 2,
-              }}
-            >
+          {/* Akcje */}
+          <Stack direction="row" justifyContent="space-between">
+            <IconButton size="small" onClick={openMoreMenu} sx={{ zIndex: 2 }}>
               <MoreVert />
             </IconButton>
             <Button
@@ -315,9 +277,7 @@ export const GroupTile = ({
               variant="outlined"
               startIcon={<GroupAdd fontSize="small" />}
               onClick={handleJoin}
-              sx={{
-                zIndex: 2,
-              }}
+              sx={{ zIndex: 2 }}
             >
               Join
             </Button>
@@ -325,14 +285,12 @@ export const GroupTile = ({
         </Stack>
       </Stack>
 
+      {/* Popover - dodatkowe miasta */}
       <Popover
-        open={!!citiesMoreElement}
-        anchorEl={citiesMoreElement}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        onClose={handleCloseCities}
+        open={Boolean(citiesPopoverEl)}
+        anchorEl={citiesPopoverEl}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        onClose={closeCitiesPopover}
       >
         <Stack direction="column" gap={1} px={1} py={2}>
           {cities.slice(1).map((city) => (
@@ -341,14 +299,12 @@ export const GroupTile = ({
         </Stack>
       </Popover>
 
+      {/* Popover - dodatkowe kategorie */}
       <Popover
-        open={!!categoriesMoreElement}
-        anchorEl={categoriesMoreElement}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        onClose={handleCloseCategories}
+        open={Boolean(categoriesPopoverEl)}
+        anchorEl={categoriesPopoverEl}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        onClose={closeCategoriesPopover}
       >
         <Stack direction="column" gap={1} px={1} py={2}>
           {categories.slice(1).map((category) => (
@@ -363,10 +319,11 @@ export const GroupTile = ({
         </Stack>
       </Popover>
 
+      {/* Menu "więcej" */}
       <Menu
-        open={!!moreMenuElement}
-        anchorEl={moreMenuElement}
-        onClose={handleCloseMenuMore}
+        open={Boolean(moreMenuEl)}
+        anchorEl={moreMenuEl}
+        onClose={closeMoreMenu}
         sx={{
           "& .MuiPaper-root": {
             "& .MuiMenuItem-root": {
@@ -377,27 +334,18 @@ export const GroupTile = ({
           },
         }}
       >
-        <MenuItem onClick={handleCloseMenuMore} disableRipple>
+        <MenuItem onClick={closeMoreMenu} disableRipple>
           <FavoriteBorderOutlined color="action" />
           Favorite
         </MenuItem>
         <Link
           href={{
             pathname: "/report",
-            query: {
-              type: "group",
-              id: id,
-            },
+            query: { type: "group", id },
           }}
           underline="none"
         >
-          <MenuItem
-            disableRipple
-            sx={{
-              color: "text.primary",
-            }}
-            onClick={handleCloseMenuMore}
-          >
+          <MenuItem onClick={closeMoreMenu} disableRipple sx={{ color: "text.primary" }}>
             <ReportGmailerrorredOutlined color="action" />
             Report
           </MenuItem>

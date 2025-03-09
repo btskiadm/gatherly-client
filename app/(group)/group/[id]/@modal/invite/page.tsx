@@ -32,6 +32,7 @@ export default function InviteUsersToGroupModalPage() {
         }
 
         setLoading(true);
+
         await mutation.mutateAsync(
           {
             groupId: id,

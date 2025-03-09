@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/create-group-component";
+import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup";
 import { delay } from "@/app/common/utils/delay";
 import { GroupDetails } from "@/app/model/model";
 import { LoadingButton } from "@mui/lab";
@@ -38,14 +38,7 @@ export const GroupSettingsAboutTab = ({ groupDetails }: Props) => {
   return (
     <Paper>
       <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-        <CreateGroup
-          ref={ref}
-          name={title}
-          description={description}
-          categories={categories}
-          city={cities[0]}
-          remote={remote}
-        />
+        <CreateGroup ref={ref} name={title} description={description} categories={categories} city={cities[0]} />
         <Stack direction="row" justifyContent="space-between">
           <Button disabled={loading} variant="text" color="error" onClick={handleReset}>
             Reset

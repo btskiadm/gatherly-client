@@ -1,5 +1,6 @@
 "use client";
 
+import { getCategoriesQueryOptions, getCitiesQueryOptions } from "@/app/common/graphql/options/query";
 import { categoryDtoToSearchCategoryDto, cityDtoToSearchCityDto } from "@/app/common/utils/dto-helpers";
 import {
   CreateGroupInput,
@@ -10,8 +11,7 @@ import {
   maxGroupName,
   ZodFlattenIssue,
 } from "@/app/common/utils/zod";
-import { getSearchCategories, getSearchCities } from "@/app/mock/mock-api";
-import { CategoryDto, CityDto, SearchCategoryDto, SearchCityDto } from "@/app/mock/mock-api.types";
+import { Category, City } from "@/app/model/model";
 import {
   Autocomplete,
   Checkbox,
@@ -26,6 +26,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import React, { useCallback, useImperativeHandle, useState } from "react";
 
 const loading = false;
@@ -44,14 +45,13 @@ export interface CreateGroupRef {
 interface Props {
   name?: string;
   description?: string;
-  city?: CityDto | null;
-  categories?: CategoryDto[];
-  remote?: boolean;
+  city?: City | null;
+  categories?: Category[];
   ref: React.RefObject<CreateGroupRef | null>;
 }
 
 const ListboxComponent =
-  (selected: SearchCategoryDto[], onDelete: (toDelete: SearchCategoryDto) => void) =>
+  (selected: Category[], onDelete: (toDelete: Category) => void) =>
   (props: React.HTMLAttributes<HTMLElement> & { ref?: React.RefObject<HTMLDivElement> }) => {
     const { children, ref, ...other } = props;
 
@@ -80,14 +80,20 @@ export const CreateGroup = ({
   description: _description = "",
   city: _city = null,
   categories: _categories = [],
-  remote: _remote = false,
   ref,
 }: Props) => {
+  const {
+    data: { getCategories },
+  } = useSuspenseQuery(getCategoriesQueryOptions());
+
+  const {
+    data: { getCities },
+  } = useSuspenseQuery(getCitiesQueryOptions());
+
   const [name, setName] = useState(_name);
   const [description, setDescription] = useState(_description);
-  const [city, setCity] = useState<SearchCityDto | null>(_city ? cityDtoToSearchCityDto(_city) : null);
-  const [categories, setCategories] = useState<SearchCategoryDto[]>(_categories.map(categoryDtoToSearchCategoryDto));
-  const [remote, setRemote] = useState(_remote);
+  const [city, setCity] = useState<City | null>(_city ? cityDtoToSearchCityDto(_city) : null);
+  const [categories, setCategories] = useState<Category[]>(_categories.map(categoryDtoToSearchCategoryDto));
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
 
   const handleReset = useCallback(() => {
@@ -95,7 +101,6 @@ export const CreateGroup = ({
     setDescription("");
     setCity(null);
     setCategories([]);
-    setRemote(false);
   }, []);
 
   const handleSave = useCallback((): CreateGroupData => {
@@ -104,7 +109,6 @@ export const CreateGroup = ({
       description,
       city: city?.value,
       categories: categories.map(({ value }) => value),
-      remote,
     });
 
     if (error || !success) {
@@ -118,25 +122,25 @@ export const CreateGroup = ({
       success: true,
       data,
     };
-  }, [name, description, city, categories, remote]);
+  }, [name, description, city, categories]);
 
   useImperativeHandle(ref, () => ({
     save: handleSave,
     reset: handleReset,
   }));
 
-  const handleCategories = useCallback((e: unknown, categories: SearchCategoryDto[]) => {
+  const handleCategories = useCallback((e: unknown, categories: Category[]) => {
     setCategories(categories);
   }, []);
 
   const handleDeleteCategories = useCallback(
-    (toDelete: SearchCategoryDto) => {
+    (toDelete: Category) => {
       setCategories((prevCategories) => prevCategories.filter((p) => p.value !== toDelete.value));
     },
     [setCategories]
   );
 
-  const handleCity = useCallback((e: unknown, value: SearchCityDto | null) => {
+  const handleCity = useCallback((e: unknown, value: City | null) => {
     setCity(value);
   }, []);
 
@@ -146,10 +150,6 @@ export const CreateGroup = ({
 
   const handleDescription = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
-  }, []);
-
-  const handleRemote = useCallback((event: unknown, checked: boolean) => {
-    setRemote(checked);
   }, []);
 
   const nameError = errors["name"];
@@ -174,11 +174,11 @@ export const CreateGroup = ({
       </FormControl>
       <FormControl error={!!categoriesError}>
         <FormLabel required>Kategorie</FormLabel>
-        <Autocomplete<SearchCategoryDto, true>
+        <Autocomplete<Category, true>
           multiple
           value={categories}
           onChange={handleCategories}
-          options={getSearchCategories()}
+          options={getCategories ?? []}
           sx={{
             ".MuiAutocomplete-tag": {
               my: 0, // fix problem with chip inside autocomplete
@@ -187,7 +187,11 @@ export const CreateGroup = ({
               my: 0, // fix problem with chip inside autocomplete
             },
           }}
-          ListboxComponent={ListboxComponent(categories, handleDeleteCategories)}
+          slotProps={{
+            listbox: {
+              component: ListboxComponent(categories, handleDeleteCategories),
+            },
+          }}
           getOptionLabel={(option) => option.label}
           renderInput={(params) => (
             <TextField
@@ -249,50 +253,35 @@ export const CreateGroup = ({
           )}
         </FormHelperText>
       </FormControl>
-      <Grid2 container spacing={{ xs: 0.5, sm: 2 }}>
-        <Grid2 size={{ xs: 12, sm: 8 }}>
-          <FormControl error={!!cityError} fullWidth>
-            <FormLabel required>Miasto</FormLabel>
-            <Autocomplete<SearchCityDto>
-              value={city}
-              defaultValue={city}
-              onChange={handleCity}
-              options={getSearchCities()}
-              getOptionLabel={({ label }) => label}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  size="small"
-                  slotProps={{
-                    input: {
-                      ...params.InputProps,
-                      placeholder: "Miasto",
-                      endAdornment: (
-                        <React.Fragment>
-                          {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                        </React.Fragment>
-                      ),
-                    },
-                  }}
-                />
-              )}
-            />
-          </FormControl>
-        </Grid2>
-        <Grid2
-          size={{ xs: 12, sm: 4 }}
-          display="flex"
-          alignItems="flex-end"
-          justifyContent={{ xs: "flex-start", sm: "center" }}
-        >
-          <FormControl>
-            <FormControlLabel
-              control={<Checkbox value={remote} onChange={handleRemote} />}
-              label={<FormLabel>Remote</FormLabel>}
-            />
-          </FormControl>
-        </Grid2>
+      <Grid2 size={{ xs: 12, sm: 8 }}>
+        <FormControl error={!!cityError} fullWidth>
+          <FormLabel required>Miasto</FormLabel>
+          <Autocomplete<City>
+            value={city}
+            defaultValue={city}
+            onChange={handleCity}
+            options={getCities ?? []}
+            getOptionLabel={({ label }) => label}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                size="small"
+                slotProps={{
+                  input: {
+                    ...params.InputProps,
+                    placeholder: "Miasto",
+                    endAdornment: (
+                      <React.Fragment>
+                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                      </React.Fragment>
+                    ),
+                  },
+                }}
+              />
+            )}
+          />
+        </FormControl>
       </Grid2>
       <FormControl error={!!descriptionError}>
         <FormLabel required>Description</FormLabel>

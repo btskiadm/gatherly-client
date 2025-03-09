@@ -1,26 +1,12 @@
 import { env } from "@/app/common/utils/env";
+import { GetUsedCitiesDocument } from "@/app/model/docNodes";
 import { queryOptions } from "@tanstack/react-query";
-import request, { gql } from "graphql-request";
-import { CityDto } from "../../dto";
-
-interface GetUsedCitiesData {
-  getUsedCities: CityDto[];
-}
+import request from "graphql-request";
 
 export const getUsedCitiesQueryOptions = () =>
-  queryOptions<GetUsedCitiesData>({
+  queryOptions({
     queryKey: ["GetUsedCities"],
     queryFn: () => {
-      const query = gql`
-        query GetUsedCities {
-          getUsedCities {
-            __typename
-            value
-            label
-          }
-        }
-      `;
-
-      return request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, query);
+      return request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, GetUsedCitiesDocument);
     },
   });

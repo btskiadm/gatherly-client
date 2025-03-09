@@ -5,9 +5,9 @@ import {
   getUsedCitiesQueryOptions,
 } from "@/app/common/graphql/options/query";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { GroupsPage } from "./_components/GroupsPage";
 import { decodeAndParseUniqueParams } from "./utils/decodeAndParseUniqueParams";
 import { resolveCityAndCategoryParams } from "./utils/resolveCityAndCategoryParams";
-import { GroupsPage } from "./_components/GroupsPage";
 
 export default async function Page({
   params: promiseParams,

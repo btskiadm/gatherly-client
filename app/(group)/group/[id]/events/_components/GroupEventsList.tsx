@@ -1,10 +1,10 @@
-import { GroupedEventsDto } from "@/app/common/graphql/dto";
+import { GroupedEvents } from "@/app/model/model";
 import { SentimentVeryDissatisfied } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
 import { GroupEventTile } from "./GroupEventTile";
 
 interface Props {
-  events: GroupedEventsDto[];
+  events: GroupedEvents[];
 }
 
 const formatMonth = (iso: string) =>

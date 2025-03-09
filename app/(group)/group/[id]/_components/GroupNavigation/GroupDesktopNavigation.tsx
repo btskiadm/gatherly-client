@@ -15,7 +15,6 @@ import {
   Paper,
   Stack,
 } from "@mui/material";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const about = "about";
@@ -56,7 +55,7 @@ export function GroupDesktopNavigation({ groupDetails }: Props) {
         src={mediumPhoto ?? ""}
         sx={{
           width: "100%",
-          height: "13rem",
+          height: "16rem",
         }}
       />
 

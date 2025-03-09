@@ -1,25 +1,8 @@
 import { env } from "@/app/common/utils/env";
-import request, { gql } from "graphql-request";
+import { LeaveGroupDocument } from "@/app/model/docNodes";
+import { LeaveGroupMutationVariables } from "@/app/model/operations";
+import request from "graphql-request";
 
-interface Variables {
-  groupId: string;
-}
-
-interface Response {
-  leaveGroup: {
-    success: boolean;
-  };
-}
-
-export const leaveGroupMutationFn = (variables: Variables) => {
-  const query = gql`
-    mutation LeaveGroup($groupId: String!) {
-      leaveGroup(groupId: $groupId) {
-        __typename
-        success
-      }
-    }
-  `;
-
-  return request<Response>(env.NEXT_PUBLIC_BACKEND_GRAPHQL, query, variables);
+export const leaveGroupMutationFn = (variables: LeaveGroupMutationVariables) => {
+  return request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, LeaveGroupDocument, variables);
 };

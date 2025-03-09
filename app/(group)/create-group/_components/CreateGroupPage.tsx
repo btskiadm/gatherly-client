@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/create-group-component";
+import { CreateGroup, CreateGroupRef } from "@/app/common/components/Group/Create/CreateGroup";
 import { createGroupMutationFn } from "@/app/common/graphql/options/mutation/createGroupMutationFn";
 import { LoadingButton } from "@mui/lab";
 import { useMutation } from "@tanstack/react-query";
@@ -28,7 +28,6 @@ export const CreateGroupPage = () => {
         createGroupInput: {
           title: data.data.name,
           description: data.data.description,
-          remote: data.data.remote,
           categories: data.data.categories,
           cities: [data.data.city],
         },

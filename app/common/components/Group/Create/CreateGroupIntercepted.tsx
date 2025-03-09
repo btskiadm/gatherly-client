@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ModalTemplate } from "../../Modal/modal-template";
-import { CreateGroup, CreateGroupRef } from "./create-group-component";
+import { CreateGroup, CreateGroupRef } from "./CreateGroup";
 
 export const CreateGroupIntercepted = () => {
   const mutation = useMutation({
@@ -42,7 +42,6 @@ export const CreateGroupIntercepted = () => {
             createGroupInput: {
               title: data.data.name,
               description: data.data.description,
-              remote: data.data.remote,
               categories: data.data.categories,
               cities: [data.data.city],
             },

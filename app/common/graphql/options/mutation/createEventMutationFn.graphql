@@ -1,0 +1,6 @@
+mutation CreateEvent($groupId: String!, $createEventInput: CreateEventInput!) {
+  createEvent(groupId: $groupId, createEventInput: $createEventInput) {
+    success
+    eventId
+  }
+}

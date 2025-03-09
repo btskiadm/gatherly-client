@@ -1,0 +1,13 @@
+query GetUsersByUsername($username: String!) {
+  getUsersByUsername(username: $username) {
+    id
+    username
+    email
+    createdAt
+    role
+    verifiedAt
+    smallPhoto
+    mediumPhoto
+    largePhoto
+  }
+}

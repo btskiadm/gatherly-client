@@ -1,0 +1,7 @@
+query GetUsedCities {
+  getUsedCities {
+    __typename
+    value
+    label
+  }
+}

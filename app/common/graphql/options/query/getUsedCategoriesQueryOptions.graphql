@@ -1,0 +1,7 @@
+query GetUsedCategories {
+  getUsedCategories {
+    __typename
+    value
+    label
+  }
+}

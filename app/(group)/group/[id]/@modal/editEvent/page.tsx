@@ -1,12 +1,11 @@
-import { CreateEventIntercepted } from "@/app/common/components/Event/Create/create-event-intercepted";
-import { getSearchCategories } from "@/app/mock/mock-api";
+import { CreateEventInterceptedModal } from "@/app/common/components/Event/Create/CreateEventInterceptedModal";
 
 export default function Page() {
   return (
-    <CreateEventIntercepted
+    <CreateEventInterceptedModal
       type="edit"
       details={{
-        categories: getSearchCategories(),
+        categories: [],
         description: "Irure eu ad non tempor nisi commodo elit ad laborum ea Lorem commodo eu aute.",
         name: "Ea ea do laborum duis excepteur voluptate qui.",
       }}

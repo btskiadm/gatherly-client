@@ -1,7 +1,7 @@
 "use client";
 
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { GroupDetailsDto } from "@/app/common/graphql/dto";
+import { GroupDetails } from "@/app/model/model";
 import {
   AllDayContentArg,
   DayCellContentArg,
@@ -72,7 +72,7 @@ export const CalendarWrapper = styled("div")(
 );
 
 interface Props {
-  groupDetails: GroupDetailsDto;
+  groupDetails: GroupDetails;
 }
 
 export const GroupCalendar = ({ groupDetails }: Props) => {
@@ -162,8 +162,8 @@ export const GroupCalendar = ({ groupDetails }: Props) => {
       groupDetails.events.map((e) => ({
         id: e.id,
         title: e.title,
-        start: e.date.startAt,
-        end: e.date.endAt,
+        start: e.startAt,
+        end: e.endAt,
       })),
     [groupDetails]
   );

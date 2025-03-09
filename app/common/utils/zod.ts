@@ -29,7 +29,6 @@ export const createGroupSchema = z.object({
   description: groupDescriptionSchema,
   city: groupCitySchema,
   categories: z.array(groupCategorySchema).min(minGroupCategories).max(maxGroupCategories),
-  remote: z.boolean(),
 });
 
 export type CreateGroupInput = z.infer<typeof createGroupSchema>;
@@ -45,9 +44,10 @@ export const maxEventCategories = 5;
 const eventNameSchema = z.string().min(minEventName).max(maxEventName);
 const eventDescriptionSchema = z.string().min(minEventDescription).max(maxEventDescription);
 const eventCategorySchema = z.string().min(2).max(25);
-const eventDateSchema = z.string().date();
-const eventFromSchema = z.string().time();
-const eventToSchema = z.string().time();
+const eventDateFromSchema = z.string().date();
+const eventDateToSchema = z.string().date();
+const eventTimeFromSchema = z.string().time();
+const eventTimeToSchema = z.string().time();
 
 export const createEventDetailsSchema = z.object({
   name: eventNameSchema,
@@ -56,9 +56,11 @@ export const createEventDetailsSchema = z.object({
 });
 
 export const createEventDateAndLocationSchema = z.object({
-  date: eventDateSchema,
-  from: eventFromSchema,
-  to: eventToSchema,
+  dateFrom: eventDateFromSchema,
+  dateTo: eventDateToSchema,
+  timeFrom: eventTimeFromSchema,
+  timeTo: eventTimeToSchema,
+  city: z.string(),
 });
 
 export type CreateEventDetailsInput = z.infer<typeof createEventDetailsSchema>;

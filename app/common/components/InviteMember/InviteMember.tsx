@@ -1,14 +1,14 @@
 "use client";
 
-import { UserDto } from "@/app/common/graphql/dto";
 import { getUsersByUsernameQueryOptions } from "@/app/common/graphql/options/query/getUsersByUsernameQueryOptions";
 import { flattenIssues, InviteMemberInput, inviteMemberSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
+import { User } from "@/app/model/model";
 import { FormControl, FormHelperText, FormLabel, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { RefObject, useCallback, useImperativeHandle, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { FindUserAvatars } from "./FindUserAvatars";
 import { FindUserAutocomplete } from "./FindUserAutocomplete";
+import { FindUserAvatars } from "./FindUserAvatars";
 
 export type InviteMemberData =
   | {
@@ -29,7 +29,7 @@ interface Props {
 
 export const InviteMember = ({ ref }: Props) => {
   const [inputText, setInputText] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<UserDto[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
   const [debouncedSearch] = useDebounce(inputText, 500);
   const { data, isLoading } = useQuery(getUsersByUsernameQueryOptions({ username: debouncedSearch }));
@@ -56,11 +56,11 @@ export const InviteMember = ({ ref }: Props) => {
     invite: handleInvite,
   }));
 
-  const handleSelectedUsers = useCallback((selectedUsers: UserDto[]) => {
+  const handleSelectedUsers = useCallback((selectedUsers: User[]) => {
     setSelectedUsers(selectedUsers);
   }, []);
 
-  const handleDelete = (toDelete: UserDto) => {
+  const handleDelete = (toDelete: User) => {
     setSelectedUsers((prev) => prev.filter((p) => p.id !== toDelete.id));
   };
 

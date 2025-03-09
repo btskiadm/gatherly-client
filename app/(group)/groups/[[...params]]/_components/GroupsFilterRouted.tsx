@@ -1,6 +1,6 @@
 "use client";
 
-import { GroupAndEventFilter } from "@/app/common/components/Filter/group-and-event-filter";
+import { GroupAndEventFilter } from "@/app/common/components/Filter/GroupAndEventFilter";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 

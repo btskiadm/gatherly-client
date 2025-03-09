@@ -25,6 +25,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
     pastLength,
     cancelledLength,
     rate,
+    members,
     mediumPhoto,
     comments = [],
   } = data.getGroupDetails ?? {};
@@ -55,13 +56,13 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
       </Box>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary={`${upcomingLength}`} secondary="Upcoming" />
+          <AboutEventCounterTile primary={`${upcomingLength}`} secondary="Nadchodzące" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary={`${pastLength}`} secondary="Zakończone" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
-          <AboutEventCounterTile primary={`${cancelledLength}`} secondary="Odwołane" />
+          <AboutEventCounterTile primary={`${members?.length ?? 0}`} secondary="Członkowie" />
         </Grid2>
         <Grid2 size={{ xs: 6, sm: 3 }}>
           <AboutEventCounterTile primary={rateLabel} secondary="Ocena" />
