@@ -1,9 +1,11 @@
 "use client";
 
+import { createEventMutationFn } from "@/app/common/graphql/options/mutation/createEventMutationFn";
 import { delay } from "@/app/common/utils/delay";
 import { XOR } from "@/app/common/utils/essentials";
 import { Category } from "@/app/model/model";
 import { Box, Stack } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { InviteMember, InviteMemberRef } from "../../InviteMember/InviteMember";
@@ -11,8 +13,6 @@ import { ModalTemplate } from "../../Modal/modal-template";
 import CreateEventDateAndLocation, { CreateEventDateAndLocationRef } from "./_components/CreateEventDateAndLocation";
 import CreateEventDetails, { CreateEventDetailsRef } from "./_components/CreateEventDetails";
 import { CreateEventStep, CreateEventSteps } from "./_components/CreateEventStep";
-import { useMutation } from "@tanstack/react-query";
-import { createEventMutationFn } from "@/app/common/graphql/options/mutation/createEventMutationFn";
 
 export interface CreateEventInit {
   type: "edit";

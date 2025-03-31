@@ -62,9 +62,9 @@ export default async function Page({
         titles: titles,
         minMembers: _minMembers,
         maxMembers: _maxMembers,
-        remote: _remote,
-        sponsored: _sponsored,
-        verified: _verified,
+        // remote: _remote,
+        // sponsored: _sponsored,
+        // verified: _verified,
         numberOfMembers: numberOfMembers,
         dateOfAdding: decoredDateOfAdding,
       })

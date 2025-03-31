@@ -1,16 +1,15 @@
 import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
 import { stringToColor } from "@/app/common/utils/string-to-color";
-import { GroupUser } from "@/app/model/model";
-import { Verified } from "@mui/icons-material";
+import { GroupUser, Role } from "@/app/model/model";
 import { Avatar, Box, Grid2, Paper, Stack, type TypographyOwnProps } from "@mui/material";
 
 const usernameColor = (groupUser: GroupUser): TypographyOwnProps["color"] => {
-  if (groupUser.isHost) {
+  if (groupUser.role === Role.Host) {
     return "primary";
   }
 
-  if (groupUser.isModerator) {
+  if (groupUser.role === Role.Moderator) {
     return "secondary";
   }
 
@@ -23,7 +22,7 @@ interface Props {
 
 export const GroupMemberTile = ({ member }: Props) => {
   const {
-    user: { username, smallPhoto, verifiedAt },
+    user: { username, smallPhoto },
   } = member;
 
   return (
@@ -63,7 +62,6 @@ export const GroupMemberTile = ({ member }: Props) => {
                 <TruncatedTypography variant="body1" color={usernameColor(member)}>
                   {username}
                 </TruncatedTypography>
-                {verifiedAt && <Verified sx={{ fontSize: "1rem", color: "text.secondary" }} />}
               </Stack>
               <TruncatedTypography variant="body2" color="text.secondary">
                 Łódź

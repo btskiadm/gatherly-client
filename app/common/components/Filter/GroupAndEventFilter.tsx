@@ -7,7 +7,19 @@ import {
   StarBorderRounded,
   VerifiedOutlined,
 } from "@mui/icons-material";
-import { Button, Chip, FormControl, FormLabel, Popover, Slider, Stack, TextField, ToggleButton } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  FormLabel,
+  Popover,
+  Slider,
+  Stack,
+  TextField,
+  ToggleButton,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
 
 const min = 1;
@@ -235,6 +247,7 @@ export const GroupAndEventFilter = ({
           </Stack>
         </Stack>
       </Popover>
+
       <Button
         variant="outlined"
         size="small"
@@ -247,7 +260,7 @@ export const GroupAndEventFilter = ({
         startIcon={<FilterAltOutlined fontSize="small" />}
         endIcon={<ExpandMoreOutlined fontSize="small" />}
       >
-        Filter
+        +3 Filter
       </Button>
       <ToggleButton
         color="primary"
@@ -261,6 +274,7 @@ export const GroupAndEventFilter = ({
         })}
         onClick={handleClick}
       >
+        +3
         <FilterAltOutlined fontSize="small" />
       </ToggleButton>
     </>

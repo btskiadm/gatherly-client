@@ -1,12 +1,12 @@
 "use client";
 
+import { Category, City, Title } from "@/app/model/model";
 import { FmdGoodOutlined, InterestsOutlined, TitleRounded } from "@mui/icons-material";
-import { Autocomplete, Chip, CircularProgress, Stack, TextField, Typography } from "@mui/material";
+import { Autocomplete, Chip, Stack, TextField, Typography } from "@mui/material";
 import React, { ReactNode, useCallback } from "react";
-import { CategoryDto, CityDto, TitleDto } from "../../graphql/dto";
 
-export type SearchItem = CategoryDto | CityDto | TitleDto;
-export type SearchItemType = SearchItem["__typename"];
+export type SearchItem = Category | City | Title;
+export type SearchItemType = Exclude<SearchItem["__typename"], undefined>;
 
 // todo: translation
 const searchLabel: Record<SearchItemType, string> = {
@@ -47,9 +47,9 @@ const ListboxComponent =
 
 interface Props {
   selected: SearchItem[];
-  cities: CityDto[];
-  categories: CategoryDto[];
-  titles: TitleDto[];
+  cities: City[];
+  categories: Category[];
+  titles: Title[];
   onChange(items: SearchItem[]): void;
   onDelete(items: SearchItem): void;
 }
@@ -75,7 +75,7 @@ export const GroupAndEventAutocomplete = ({ selected, cities, categories, titles
       value={selected}
       onChange={handleChange}
       options={[...categories, ...cities, ...titles]}
-      groupBy={({ __typename }) => __typename}
+      groupBy={({ __typename }) => __typename as SearchItemType}
       getOptionLabel={({ label }) => label}
       slotProps={{
         listbox: {
@@ -129,7 +129,7 @@ export const GroupAndEventAutocomplete = ({ selected, cities, categories, titles
           </Stack>
         );
       }}
-      renderInput={(params) => <TextField {...params} size="small" label="Search" />}
+      renderInput={(params) => <TextField {...params} variant="outlined" size="small" label="Szukaj" />}
       renderGroup={(params) => (
         <Stack key={params.key} px={2} gap={0.5}>
           <Typography variant="body1">{searchLabel[params.group as SearchItemType]}</Typography>

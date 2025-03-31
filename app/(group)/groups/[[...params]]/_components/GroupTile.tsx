@@ -1,23 +1,16 @@
 "use client";
 
-import React, { PropsWithChildren, useCallback, useState } from "react";
-import { toast } from "react-hot-toast";
-import { Avatar, Box, Button, Chip, IconButton, Menu, MenuItem, Popover, Stack, Tooltip } from "@mui/material";
 import {
   AccessTime,
   ArrowDropDown,
   CalendarMonthOutlined,
   CloudOutlined,
-  FavoriteBorderOutlined,
   Group,
-  GroupAdd,
   InterestsOutlined,
-  MoreVert,
   PlaceOutlined,
-  ReportGmailerrorredOutlined,
-  StarBorderRounded,
-  VerifiedOutlined,
 } from "@mui/icons-material";
+import { Avatar, Box, Chip, Popover, Stack, Tooltip, Typography } from "@mui/material";
+import React, { PropsWithChildren, useCallback, useState } from "react";
 
 import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { Link } from "@/app/common/components/next-link";
@@ -39,30 +32,10 @@ function formatDateDifference(dateInput: Date) {
 }
 
 export const GroupTile = ({
-  tile: {
-    id,
-    title,
-    description,
-    createdAt,
-    membersCount,
-    isSponsored,
-    isVerified,
-    mediumPhoto,
-    eventsCount,
-    cities,
-    categories,
-  },
+  tile: { id, title, description, createdAt, usersCount, largePhoto, eventsCount, cities, categories },
 }: PropsWithChildren<{ tile: GroupTileType }>) => {
-  // State dla menu i popoverów
-  const [moreMenuEl, setMoreMenuEl] = useState<HTMLElement | null>(null);
   const [citiesPopoverEl, setCitiesPopoverEl] = useState<HTMLElement | null>(null);
   const [categoriesPopoverEl, setCategoriesPopoverEl] = useState<HTMLElement | null>(null);
-
-  // Handlery dla menu "więcej"
-  const openMoreMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setMoreMenuEl(event.currentTarget);
-  }, []);
-  const closeMoreMenu = useCallback(() => setMoreMenuEl(null), []);
 
   // Handlery dla popoverów miast
   const openCitiesPopover = useCallback((event: React.MouseEvent<HTMLElement>) => {
@@ -75,10 +48,6 @@ export const GroupTile = ({
     setCategoriesPopoverEl(event.currentTarget);
   }, []);
   const closeCategoriesPopover = useCallback(() => setCategoriesPopoverEl(null), []);
-
-  const handleJoin = useCallback(() => {
-    toast.success("You have just joined the group. Congrats!");
-  }, []);
 
   const createdAtDate = new Date(createdAt);
 
@@ -107,181 +76,28 @@ export const GroupTile = ({
           alt="logo"
           variant="rounded"
           sizes="100vw"
-          src={mediumPhoto}
+          src={largePhoto}
           sx={{
             width: "100%",
-            height: "13rem",
+            height: "18rem",
+            borderEndEndRadius: 0,
+            borderEndStartRadius: 0,
           }}
         />
-        <Stack gap={1} p={2} height="100%">
+        <Stack gap={1.5} py={2} px={3} height="100%">
           {/* Tytuł */}
           <Stack direction="row">
             <Tooltip title={title}>
-              <TruncatedTypography variant="subtitle1" minWidth="0px">
-                {title}
-              </TruncatedTypography>
+              <TruncatedTypography variant="h5">{title}</TruncatedTypography>
             </Tooltip>
           </Stack>
-
-          {/* Chipsy */}
-          <Stack
-            direction="row"
-            gap={0.5}
-            flexShrink={0}
-            sx={{
-              flexWrap: "wrap",
-              width: "100%",
-              overflowX: "auto",
-              padding: 0,
-              "::-webkit-scrollbar": {
-                background: "transparent",
-                width: 0,
-                height: 0,
-              },
-            }}
-          >
-            {/* Miasta */}
-            {cities.length === 0 && (
-              <Tooltip title="Remote group">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  icon={<CloudOutlined fontSize="small" />}
-                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
-                />
-              </Tooltip>
-            )}
-            {cities.length === 1 && (
-              <Tooltip title={`${cities[0].label} location`}>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  label={cities[0].label}
-                  icon={<PlaceOutlined />}
-                  sx={{ zIndex: 1 }}
-                />
-              </Tooltip>
-            )}
-            {cities.length > 1 && (
-              <Tooltip title={`${cities[0].label} and ${cities.length - 1} more locations`}>
-                <Chip
-                  clickable
-                  size="small"
-                  variant="outlined"
-                  label={`${cities[0].label} +${cities.length - 1}`}
-                  icon={<PlaceOutlined />}
-                  deleteIcon={<ArrowDropDown fontSize="small" />}
-                  onClick={openCitiesPopover}
-                  onDelete={openCitiesPopover}
-                  sx={{ zIndex: 1 }}
-                />
-              </Tooltip>
-            )}
-
-            {/* Kategorie */}
-            {categories.length === 1 && (
-              <Tooltip title={`${categories[0].label} category`}>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  label={categories[0].label}
-                  icon={<InterestsOutlined />}
-                  sx={{ zIndex: 1 }}
-                />
-              </Tooltip>
-            )}
-            {categories.length > 1 && (
-              <Tooltip title={`${categories[0].label} and ${categories.length - 1} more categories`}>
-                <Chip
-                  clickable
-                  size="small"
-                  variant="outlined"
-                  label={`${categories[0].label} +${categories.length - 1}`}
-                  icon={<InterestsOutlined />}
-                  deleteIcon={<ArrowDropDown fontSize="small" />}
-                  onClick={openCategoriesPopover}
-                  onDelete={openCategoriesPopover}
-                  sx={{ zIndex: 1 }}
-                />
-              </Tooltip>
-            )}
-
-            {/* Liczba członków */}
-            <Tooltip title={`${membersCount} members`}>
-              <Chip size="small" variant="outlined" label={membersCount} icon={<Group />} sx={{ zIndex: 1 }} />
-            </Tooltip>
-
-            {/* Liczba wydarzeń */}
-            <Tooltip title={`${eventsCount} events`}>
-              <Chip
-                size="small"
-                variant="outlined"
-                label={eventsCount}
-                icon={<CalendarMonthOutlined />}
-                sx={{ zIndex: 1 }}
-              />
-            </Tooltip>
-
-            {/* Data utworzenia */}
-            {createdAt && (
-              <Tooltip title={`Created at ${createdAtDate.toISOString()}`}>
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  label={formatDateDifference(createdAtDate)}
-                  icon={<AccessTime />}
-                  sx={{ zIndex: 1 }}
-                />
-              </Tooltip>
-            )}
-
-            {/* Weryfikacja */}
-            {isVerified && (
-              <Tooltip title="Group verified">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  icon={<VerifiedOutlined fontSize="small" />}
-                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
-                />
-              </Tooltip>
-            )}
-
-            {/* Sponsorowane */}
-            {isSponsored && (
-              <Tooltip title="Group sponsored">
-                <Chip
-                  size="small"
-                  variant="outlined"
-                  icon={<StarBorderRounded fontSize="small" />}
-                  sx={{ zIndex: 1, ".MuiChip-label": { px: "4px" } }}
-                />
-              </Tooltip>
-            )}
-          </Stack>
-
+  3
           {/* Opis */}
           <Box height="100%">
-            <ClampTypography variant="body2" clamp={3} color="text.secondary">
+            <ClampTypography variant="body2" clamp={2} color="text.secondary">
               {description}
             </ClampTypography>
           </Box>
-
-          {/* Akcje */}
-          <Stack direction="row" justifyContent="space-between">
-            <IconButton size="small" onClick={openMoreMenu} sx={{ zIndex: 2 }}>
-              <MoreVert />
-            </IconButton>
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<GroupAdd fontSize="small" />}
-              onClick={handleJoin}
-              sx={{ zIndex: 2 }}
-            >
-              Join
-            </Button>
-          </Stack>
         </Stack>
       </Stack>
 
@@ -318,39 +134,6 @@ export const GroupTile = ({
           ))}
         </Stack>
       </Popover>
-
-      {/* Menu "więcej" */}
-      <Menu
-        open={Boolean(moreMenuEl)}
-        anchorEl={moreMenuEl}
-        onClose={closeMoreMenu}
-        sx={{
-          "& .MuiPaper-root": {
-            "& .MuiMenuItem-root": {
-              "& .MuiSvgIcon-root": {
-                marginRight: (theme) => theme.spacing(1),
-              },
-            },
-          },
-        }}
-      >
-        <MenuItem onClick={closeMoreMenu} disableRipple>
-          <FavoriteBorderOutlined color="action" />
-          Favorite
-        </MenuItem>
-        <Link
-          href={{
-            pathname: "/report",
-            query: { type: "group", id },
-          }}
-          underline="none"
-        >
-          <MenuItem onClick={closeMoreMenu} disableRipple sx={{ color: "text.primary" }}>
-            <ReportGmailerrorredOutlined color="action" />
-            Report
-          </MenuItem>
-        </Link>
-      </Menu>
     </>
   );
 };

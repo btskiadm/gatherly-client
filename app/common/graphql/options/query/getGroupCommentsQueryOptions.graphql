@@ -1,0 +1,20 @@
+query GetGroupComments($groupId: String!) {
+  getGroupComments(groupId: $groupId) {
+    comments {
+      id
+      rate
+      content
+      createdAt
+      user {
+        id
+        createdAt
+        email
+        role
+        username
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+    }
+  }
+}

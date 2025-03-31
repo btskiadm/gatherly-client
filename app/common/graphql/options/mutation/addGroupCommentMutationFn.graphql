@@ -1,0 +1,21 @@
+mutation AddGroupComment($groupId: String!, $addGroupCommentInput: AddGroupCommentInput!) {
+  addGroupComment(groupId: $groupId, addGroupCommentInput: $addGroupCommentInput) {
+    success
+    comment {
+      id
+      rate
+      content
+      createdAt
+      user {
+        id
+        createdAt
+        email
+        role
+        username
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+    }
+  }
+}

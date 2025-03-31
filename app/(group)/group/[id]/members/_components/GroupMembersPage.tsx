@@ -20,10 +20,10 @@ export const GroupMembersPage = ({ groupId }: Props) => {
     <Stack gap={{ xs: 2, sm: 3 }}>
       <GroupHeader
         primary="Members"
-        subPrimary={formatLabel(data.getGroupDetails?.members.length ?? 0)}
+        subPrimary={formatLabel(data.getGroupDetails?.users.length ?? 0)}
         secondary="See group members."
       />
-      <GroupMembersList members={(data.getGroupDetails?.members as GroupUser[]) ?? []} />
+      <GroupMembersList users={(data.getGroupDetails?.users as GroupUser[]) ?? []} />
     </Stack>
   );
 };

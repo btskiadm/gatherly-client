@@ -1,0 +1,61 @@
+query GetUserWithProfile($userId: String!) {
+  getUserWithProfile(userId: $userId) {
+    __typename
+    id
+    username
+    email
+    role
+    createdAt
+    smallPhoto
+    largePhoto
+    mediumPhoto
+    profile {
+      bio
+      categories {
+        category {
+          id
+          label
+          value
+        }
+      }
+      cities {
+        city {
+          id
+          label
+          value
+        }
+      }
+      facebook
+      phoneNumber
+      tiktok
+      twitter
+      instagram
+      youtube
+    }
+  }
+  getGroupTilesByUserId(userId: $userId) {
+    count
+    groups {
+      id
+      title
+      description
+      createdAt
+      updatedAt
+      eventsCount
+      usersCount
+      smallPhoto
+      mediumPhoto
+      largePhoto
+      cities {
+        id
+        value
+        label
+      }
+      categories {
+        id
+        value
+        label
+      }
+    }
+  }
+}

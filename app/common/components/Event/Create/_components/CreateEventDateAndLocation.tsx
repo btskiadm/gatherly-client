@@ -18,6 +18,7 @@ import { TruncatedTypography } from "../../../truncated-typography";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getCitiesQueryOptions } from "@/app/common/graphql/options/query";
 import { City } from "@/app/model/model";
+import { env } from "@/app/common/utils/env";
 
 export interface CreateEventDateAndLocationData {
   success: boolean;
@@ -44,6 +45,11 @@ interface Props {
   ref: RefObject<CreateEventDateAndLocationRef | null>;
 }
 
+const dateFromMock = new Date().toISOString().split("T")[0];
+const dateToMock = new Date().toISOString().split("T")[0];
+const timeFromMock = "10:00:00";
+const timeToMock = "12:00:00";
+
 const CreateEventDateAndLocation = ({
   dateFrom: _dateFrom = "",
   dateTo: _dateTo = "",
@@ -56,11 +62,11 @@ const CreateEventDateAndLocation = ({
     data: { getCities },
   } = useSuspenseQuery(getCitiesQueryOptions());
 
-  const [dateFrom, setDateFrom] = useState(_dateFrom);
-  const [dateTo, setDateTo] = useState(_dateTo);
-  const [timeFrom, setTimeFrom] = useState(_timeFrom);
-  const [timeTo, setTimeTo] = useState(_timeTo);
-  const [allDay, setAllDay] = useState(_allDay);
+  const [dateFrom, setDateFrom] = useState(_dateFrom || env.NODE_ENV === "development" ? dateFromMock : "");
+  const [dateTo, setDateTo] = useState(_dateTo || env.NODE_ENV === "development" ? dateToMock : "");
+  const [timeFrom, setTimeFrom] = useState(_timeFrom || env.NODE_ENV === "development" ? timeFromMock : "");
+  const [timeTo, setTimeTo] = useState(_timeTo || env.NODE_ENV === "development" ? timeToMock : "");
+  const [allDay, setAllDay] = useState(_allDay ?? _allDay);
   const [city, setCity] = useState<City | null>();
 
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
@@ -159,17 +165,22 @@ const CreateEventDateAndLocation = ({
             </TruncatedFormHelperText>
           </FormControl>
         </Grid2>
-        {!allDay && (
-          <Grid2 size={{ xs: 4 }}>
-            <FormControl error={!!timeFromError} fullWidth>
-              <FormLabel required>From</FormLabel>
-              <TextField placeholder="HH:MM:SS" size="small" value={timeFrom} onChange={handleTimeFrom} />
-              <TruncatedFormHelperText>
-                {!timeFromError ? <>Godzina rozpoczęcia</> : timeFromError.message}
-              </TruncatedFormHelperText>
-            </FormControl>
-          </Grid2>
-        )}
+
+        <Grid2 size={{ xs: 4 }}>
+          <FormControl error={!!timeFromError} fullWidth disabled={allDay}>
+            <FormLabel required>From</FormLabel>
+            <TextField
+              placeholder="HH:MM:SS"
+              size="small"
+              value={timeFrom}
+              onChange={handleTimeFrom}
+              disabled={allDay}
+            />
+            <TruncatedFormHelperText>
+              {!timeFromError ? <>Godzina rozpoczęcia</> : timeFromError.message}
+            </TruncatedFormHelperText>
+          </FormControl>
+        </Grid2>
       </Grid2>
       <Grid2 container spacing={2}>
         <Grid2 size={{ xs: 8 }}>
@@ -182,17 +193,15 @@ const CreateEventDateAndLocation = ({
           </FormControl>
         </Grid2>
 
-        {!allDay && (
-          <Grid2 size={{ xs: 4 }}>
-            <FormControl error={!!timeToError} fullWidth>
-              <FormLabel required>To</FormLabel>
-              <TextField placeholder="HH:MM:SS" size="small" value={timeTo} onChange={handleTimeTo} />
-              <TruncatedFormHelperText>
-                {!timeToError ? <>Godzina zakończenia</> : timeToError.message}
-              </TruncatedFormHelperText>
-            </FormControl>
-          </Grid2>
-        )}
+        <Grid2 size={{ xs: 4 }}>
+          <FormControl error={!!timeToError} fullWidth disabled={allDay}>
+            <FormLabel required>To</FormLabel>
+            <TextField placeholder="HH:MM:SS" size="small" value={timeTo} onChange={handleTimeTo} disabled={allDay} />
+            <TruncatedFormHelperText>
+              {!timeToError ? <>Godzina zakończenia</> : timeToError.message}
+            </TruncatedFormHelperText>
+          </FormControl>
+        </Grid2>
       </Grid2>
     </Stack>
   );

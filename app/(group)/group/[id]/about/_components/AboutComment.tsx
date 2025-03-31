@@ -4,7 +4,7 @@ import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
 import { stringToColor } from "@/app/common/utils/string-to-color";
 import { Comment } from "@/app/model/model";
-import { MoreVert, ReportGmailerrorredOutlined, VerifiedOutlined } from "@mui/icons-material";
+import { MoreVert, ReportGmailerrorredOutlined } from "@mui/icons-material";
 import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 
@@ -19,7 +19,7 @@ export const AboutComment = ({ comment }: Props) => {
     content,
     createdAt,
     rate,
-    user: { smallPhoto, username, verifiedAt },
+    user: { smallPhoto, username },
   } = comment;
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,7 +60,6 @@ export const AboutComment = ({ comment }: Props) => {
                 >
                   {username}
                 </Link>
-                {!!verifiedAt && <VerifiedOutlined fontSize="small" color="info" />}
               </Stack>
               <Stack direction="row" gap={0.5}>
                 <TruncatedTypography variant="body2" color="text.secondary">

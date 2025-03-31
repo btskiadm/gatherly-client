@@ -5,6 +5,13 @@ import { GroupDetails } from "@/app/model/model";
 import { Tab, Tabs } from "@mui/material";
 import { usePathname } from "next/navigation";
 
+const about = "about";
+const events = "events";
+const calendar = "calendar";
+const members = "members";
+const chat = "chat";
+const settings = "settings";
+
 interface Props {
   groupDetails: GroupDetails;
 }
@@ -12,23 +19,16 @@ interface Props {
 export function GroupMobileNavigation({ groupDetails }: Props) {
   const pathName = usePathname();
 
-  const about = "about";
-  const events = "events";
-  const calendar = "calendar";
-  const members = "members";
-  const chat = "chat";
-  const settings = "settings";
-
   const [aboutSected, eventsSelected, calendarSelected, membersSelected, chatSelected, settingsSelected] = [
-    pathName.includes(`/${about}`),
-    pathName.includes(`/${events}`),
-    pathName.includes(`/${calendar}`),
-    pathName.includes(`/${members}`),
-    pathName.includes(`/${chat}`),
-    pathName.includes(`/${settings}`),
+    pathName.includes(`${about}`),
+    pathName.includes(`${events}`),
+    pathName.includes(`${calendar}`),
+    pathName.includes(`${members}`),
+    pathName.includes(`${chat}`),
+    pathName.includes(`${settings}`),
   ];
 
-  let value = "unknown";
+  let value = about;
   if (aboutSected) {
     value = about;
   } else if (eventsSelected) {

@@ -6,8 +6,8 @@ import {
   CloseOutlined,
   EditOutlined,
   FavoriteBorderOutlined,
-  Login,
-  Logout,
+  LoginOutlined,
+  LogoutOutlined,
   MoreVert,
   PreviewOutlined,
   ReportGmailerrorredOutlined,
@@ -142,26 +142,26 @@ export const GroupEventTileMenu = () => {
         }}
       >
         {canJoin && (
-          <MenuItem onClick={handleJoinEventOpen} disableRipple>
-            <Login color="action" />
+          <MenuItem onClick={handleJoinEventOpen} sx={{ color: "text.secondary", fontSize: "small" }}>
+            <LoginOutlined fontSize="small" sx={{ color: "text.primary" }} />
             Join
           </MenuItem>
         )}
 
         {canLeave && (
-          <MenuItem onClick={handleLeaveEventOpen} disableRipple>
-            <Logout color="action" />
+          <MenuItem onClick={handleLeaveEventOpen} sx={{ color: "text.secondary", fontSize: "small" }}>
+            <LogoutOutlined fontSize="small" sx={{ color: "text.primary" }} />
             Leave
           </MenuItem>
         )}
         <Link href="123-456-789" underline="none">
-          <MenuItem disableRipple sx={{ color: "text.primary" }}>
-            <PreviewOutlined color="action" />
+          <MenuItem disableRipple sx={{ color: "text.secondary", fontSize: "small" }}>
+            <PreviewOutlined fontSize="small" sx={{ color: "text.primary" }} />
             Preview
           </MenuItem>
         </Link>
-        <MenuItem onClick={handleCloseMore} disableRipple>
-          <FavoriteBorderOutlined color="action" />
+        <MenuItem onClick={handleCloseMore} disableRipple sx={{ color: "text.secondary", fontSize: "small" }}>
+          <FavoriteBorderOutlined fontSize="small" sx={{ color: "text.primary" }} />
           Favorite
         </MenuItem>
         <Link
@@ -174,23 +174,23 @@ export const GroupEventTileMenu = () => {
           }}
           underline="none"
         >
-          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
-            <ReportGmailerrorredOutlined color="action" />
+          <MenuItem disableRipple sx={{ color: "text.secondary", fontSize: "small" }} onClick={handleCloseMore}>
+            <ReportGmailerrorredOutlined fontSize="small" sx={{ color: "text.primary" }} />
             Report
           </MenuItem>
         </Link>
         {(canEdit || canCancel) && <Divider />}
         {canEdit && (
           <Link href="editEvent" underline="none">
-            <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCloseMore}>
-              <EditOutlined color="action" />
+            <MenuItem disableRipple sx={{ color: "text.secondary", fontSize: "small" }} onClick={handleCloseMore}>
+              <EditOutlined fontSize="small" sx={{ color: "text.primary" }} />
               Edit
             </MenuItem>
           </Link>
         )}
         {canCancel && (
-          <MenuItem disableRipple sx={{ color: "text.primary" }} onClick={handleCancelEventOpen}>
-            <CloseOutlined color="action" />
+          <MenuItem disableRipple sx={{ color: "text.secondary", fontSize: "small" }} onClick={handleCancelEventOpen}>
+            <CloseOutlined fontSize="small" sx={{ color: "text.primary" }} />
             Cancel
           </MenuItem>
         )}

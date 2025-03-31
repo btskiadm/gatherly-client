@@ -1,0 +1,5 @@
+query CheckUserGroupPermissions($groupId: String!) {
+  checkUserGroupPermissions(groupId: $groupId) {
+    role
+  }
+}

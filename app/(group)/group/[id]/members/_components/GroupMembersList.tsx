@@ -3,15 +3,15 @@ import { Grid2 } from "@mui/material";
 import { GroupMemberTile } from "./GroupMemberTile";
 
 interface Props {
-  members: GroupUser[];
+  users: GroupUser[];
 }
 
-export const GroupMembersList = ({ members }: Props) => {
+export const GroupMembersList = ({ user }: Props) => {
   return (
     <Grid2 container spacing={2}>
-      {members.map((member) => (
-        <Grid2 key={member.user.id} size={{ xs: 6, sm: 6, md: 4 }}>
-          <GroupMemberTile member={member} />
+      {users.map((user) => (
+        <Grid2 key={user.user.id} size={{ xs: 6, sm: 6, md: 4 }}>
+          <GroupMemberTile member={user} />
         </Grid2>
       ))}
     </Grid2>

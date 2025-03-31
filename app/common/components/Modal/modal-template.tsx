@@ -53,11 +53,7 @@ export const ModalTemplate = ({ open, loading, title, action, cancel, confirm, b
       >
         <Close />
       </IconButton>
-      <DialogContent dividers>
-        <Box minWidth="280px" width="clamp(280px, 50vw, 560px)" maxWidth="560px">
-          {children}
-        </Box>
-      </DialogContent>
+      <DialogContent dividers>{children}</DialogContent>
       <BootstrapDialogActions>
         <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
           <Stack direction="row" gap={1}>

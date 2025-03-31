@@ -14,6 +14,14 @@ export default (phase, { defaultConfig }) => {
           search: "",
           // https://placehold.co/300x200
         },
+        {
+          protocol: "https",
+          hostname: "picsum.photos",
+          port: "",
+          pathname: "/**",
+          search: "",
+          // https://placehold.co/300x200
+        },
       ],
     },
     eslint: {

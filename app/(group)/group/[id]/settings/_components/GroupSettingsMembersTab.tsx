@@ -2,7 +2,7 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
-import { GroupDetails } from "@/app/model/model";
+import { GroupDetails, Role } from "@/app/model/model";
 import {
   DeleteOutline,
   GppGoodOutlined,
@@ -33,7 +33,7 @@ interface Props {
   groupDetails: GroupDetails;
 }
 
-export const GroupSettingsMembersTab = ({ groupDetails: { members } }: Props) => {
+export const GroupSettingsMembersTab = ({ groupDetails: { user } }: Props) => {
   const moreContext = useRef({ username: "", id: "" });
   const [moreElement, setMoreElement] = useState<null | HTMLElement>(null);
   const [openDelete, setOpenDelete] = useState(false);
@@ -123,15 +123,15 @@ export const GroupSettingsMembersTab = ({ groupDetails: { members } }: Props) =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {members.map(({ user, isHost, isModerator }, index) => (
+            {user.map(({ user, role }, index) => (
               <TableRow key={user.username} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   {user.username}
                 </TableCell>
                 <TableCell component="th" scope="row">
-                  {isHost && "Host"}
-                  {isModerator && "Moderator"}
-                  {!isHost && !isModerator && "Member"}
+                  {role === Role.Host && "Host"}
+                  {role === Role.Moderator && "Moderator"}
+                  {role === Role.Member && "Member"}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton onClick={handleOpenMore({ id: user.id, username: user.username })}>

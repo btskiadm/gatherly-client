@@ -1,0 +1,13 @@
+query Users {
+  users {
+    id
+    username
+    email
+    createdAt
+    role
+    status
+    smallPhoto
+    mediumPhoto
+    largePhoto
+  }
+}

@@ -3,5 +3,6 @@ query GetUsedCategories {
     __typename
     value
     label
+    id
   }
 }

@@ -1,6 +1,14 @@
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { Stack, Typography } from "@mui/material";
-import { GroupHeaderButton } from "./GroupHeaderButton";
+import { CircularProgress, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
+
+const GroupHeaderButton = dynamic(
+  () => import("./GroupHeaderButton").then((component) => component.GroupHeaderButton),
+  {
+    ssr: false,
+    loading: () => <CircularProgress size={36} />, // size=36 button small
+  }
+);
 
 interface Props {
   primary: string;

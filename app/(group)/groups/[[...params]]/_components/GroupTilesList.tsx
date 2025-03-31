@@ -43,9 +43,9 @@ export const GroupTilesList = ({
       titles: titles,
       minMembers: minMembers,
       maxMembers: maxMembers,
-      remote: remote,
-      sponsored: sponsored,
-      verified: verified,
+      // remote: remote,
+      // sponsored: sponsored,
+      // verified: verified,
       numberOfMembers: numberOfMembers,
       dateOfAdding: dateOfAdding,
     })
@@ -53,23 +53,23 @@ export const GroupTilesList = ({
 
   return (
     <Grid2 container spacing={2}>
-      <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-        <CommonGroupTile>
-          <GroupTileSkeleton />
-        </CommonGroupTile>
-      </Grid2>
-      <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-        <CommonGroupTile>
-          <GroupTileLoadMore />
-        </CommonGroupTile>
-      </Grid2>
       {getGroupTiles.map((tile) => (
-        <Grid2 key={tile.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+        <Grid2 key={tile.id} size={{ xs: 12, sm: 6, md: 4 }}>
           <CommonGroupTile>
             <GroupTile tile={tile} />
           </CommonGroupTile>
         </Grid2>
       ))}
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+        <CommonGroupTile>
+          <GroupTileSkeleton />
+        </CommonGroupTile>
+      </Grid2>
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+        <CommonGroupTile>
+          <GroupTileLoadMore />
+        </CommonGroupTile>
+      </Grid2>
     </Grid2>
   );
 };

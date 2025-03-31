@@ -1,12 +1,16 @@
 import { env } from "@/app/common/utils/env";
 import { GetUsedCitiesDocument } from "@/app/model/docNodes";
 import { queryOptions } from "@tanstack/react-query";
-import request from "graphql-request";
+import { GraphQLClient } from "graphql-request";
+
+const client = new GraphQLClient(env.NEXT_PUBLIC_BACKEND_GRAPHQL, {
+  credentials: "include",
+});
 
 export const getUsedCitiesQueryOptions = () =>
   queryOptions({
     queryKey: ["GetUsedCities"],
     queryFn: () => {
-      return request(env.NEXT_PUBLIC_BACKEND_GRAPHQL, GetUsedCitiesDocument);
+      return client.request(GetUsedCitiesDocument);
     },
   });

@@ -5,13 +5,17 @@ export const BootstrapDialogTitle = styled(DialogTitle)(({ theme }) => ({}));
 
 export const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
-    margin: theme.spacing(1),
+    width: "100%",
+    margin: theme.spacing(4),
+  },
+  "& .MuiDialogTitle-root": {
+    padding: theme.spacing(2, 3),
   },
   "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2, 3),
   },
   "& .MuiDialogActions-root": {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2, 3),
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",

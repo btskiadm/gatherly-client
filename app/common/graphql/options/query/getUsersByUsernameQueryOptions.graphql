@@ -5,7 +5,6 @@ query GetUsersByUsername($username: String!) {
     email
     createdAt
     role
-    verifiedAt
     smallPhoto
     mediumPhoto
     largePhoto

@@ -4,9 +4,6 @@ query GetGroupTiles(
   $titles: [String!]!
   $minMembers: Int!
   $maxMembers: Int!
-  $remote: Boolean!
-  $sponsored: Boolean!
-  $verified: Boolean!
   $numberOfMembers: String!
   $dateOfAdding: String!
 ) {
@@ -16,9 +13,6 @@ query GetGroupTiles(
     titles: $titles
     minMembers: $minMembers
     maxMembers: $maxMembers
-    remote: $remote
-    sponsored: $sponsored
-    verified: $verified
     numberOfMembers: $numberOfMembers
     dateOfAdding: $dateOfAdding
   ) {
@@ -27,11 +21,8 @@ query GetGroupTiles(
     description
     createdAt
     updatedAt
-    isVerified
-    isSponsored
-    sponsoredUntil
     eventsCount
-    membersCount
+    usersCount
     smallPhoto
     mediumPhoto
     largePhoto
