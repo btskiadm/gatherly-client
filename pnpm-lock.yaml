@@ -62,6 +62,9 @@ dependencies:
   react:
     specifier: ^19.0.0
     version: registry.npmjs.org/react@19.0.0
+  react-custom-scrollbars:
+    specifier: ^4.2.1
+    version: registry.npmjs.org/react-custom-scrollbars@4.2.1(react-dom@19.0.0)(react@19.0.0)
   react-dom:
     specifier: ^19.0.0
     version: registry.npmjs.org/react-dom@19.0.0(react@19.0.0)
@@ -80,9 +83,6 @@ dependencies:
   scss:
     specifier: ^0.2.4
     version: registry.npmjs.org/scss@0.2.4
-  simplebar-react:
-    specifier: ^3.3.0
-    version: registry.npmjs.org/simplebar-react@3.3.0(react@19.0.0)
   use-debounce:
     specifier: ^10.0.4
     version: registry.npmjs.org/use-debounce@10.0.4(react@19.0.0)
@@ -1855,6 +1855,12 @@ packages:
     hasBin: true
     dev: true
 
+  registry.npmjs.org/add-px-to-style@1.0.0:
+    resolution: {integrity: sha512-YMyxSlXpPjD8uWekCQGuN40lV4bnZagUwqa2m/uFv1z/tNImSk9fnXVMUI5qwME/zzI3MMQRvjZ+69zyfSSyew==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/add-px-to-style/-/add-px-to-style-1.0.0.tgz}
+    name: add-px-to-style
+    version: 1.0.0
+    dev: false
+
   registry.npmjs.org/ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ajv/-/ajv-6.12.6.tgz}
     name: ajv
@@ -2372,6 +2378,16 @@ packages:
     dependencies:
       esutils: registry.npmjs.org/esutils@2.0.3
     dev: true
+
+  registry.npmjs.org/dom-css@2.1.0:
+    resolution: {integrity: sha512-w9kU7FAbaSh3QKijL6n59ofAhkkmMJ31GclJIz/vyQdjogfyxcB6Zf8CZyibOERI5o0Hxz30VmJS7+7r5fEj2Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/dom-css/-/dom-css-2.1.0.tgz}
+    name: dom-css
+    version: 2.1.0
+    dependencies:
+      add-px-to-style: registry.npmjs.org/add-px-to-style@1.0.0
+      prefix-style: registry.npmjs.org/prefix-style@2.0.1
+      to-camel-case: registry.npmjs.org/to-camel-case@1.0.0
+    dev: false
 
   registry.npmjs.org/dom-helpers@5.2.1:
     resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz}
@@ -3708,12 +3724,6 @@ packages:
     version: 4.6.2
     dev: true
 
-  registry.npmjs.org/lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz}
-    name: lodash
-    version: 4.17.21
-    dev: false
-
   registry.npmjs.org/loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz}
     name: loose-envify
@@ -4048,6 +4058,12 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  registry.npmjs.org/performance-now@2.1.0:
+    resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/performance-now/-/performance-now-2.1.0.tgz}
+    name: performance-now
+    version: 2.1.0
+    dev: false
+
   registry.npmjs.org/picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz}
     name: picocolors
@@ -4091,6 +4107,12 @@ packages:
     version: 10.12.1
     dev: false
 
+  registry.npmjs.org/prefix-style@2.0.1:
+    resolution: {integrity: sha512-gdr1MBNVT0drzTq95CbSNdsrBDoHGlb2aDJP/FoY+1e+jSDPOb1Cv554gH2MGiSr2WTcXi/zu+NaFzfcHQkfBQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/prefix-style/-/prefix-style-2.0.1.tgz}
+    name: prefix-style
+    version: 2.0.1
+    dev: false
+
   registry.npmjs.org/prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz}
     name: prelude-ls
@@ -4119,6 +4141,30 @@ packages:
     name: queue-microtask
     version: 1.2.3
     dev: true
+
+  registry.npmjs.org/raf@3.4.1:
+    resolution: {integrity: sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/raf/-/raf-3.4.1.tgz}
+    name: raf
+    version: 3.4.1
+    dependencies:
+      performance-now: registry.npmjs.org/performance-now@2.1.0
+    dev: false
+
+  registry.npmjs.org/react-custom-scrollbars@4.2.1(react-dom@19.0.0)(react@19.0.0):
+    resolution: {integrity: sha512-VtJTUvZ7kPh/auZWIbBRceGPkE30XBYe+HktFxuMWBR2eVQQ+Ur6yFJMoaYcNpyGq22uYJ9Wx4UAEcC0K+LNPQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react-custom-scrollbars/-/react-custom-scrollbars-4.2.1.tgz}
+    id: registry.npmjs.org/react-custom-scrollbars/4.2.1
+    name: react-custom-scrollbars
+    version: 4.2.1
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0
+      react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      dom-css: registry.npmjs.org/dom-css@2.1.0
+      prop-types: registry.npmjs.org/prop-types@15.8.1
+      raf: registry.npmjs.org/raf@3.4.1
+      react: registry.npmjs.org/react@19.0.0
+      react-dom: registry.npmjs.org/react-dom@19.0.0(react@19.0.0)
+    dev: false
 
   registry.npmjs.org/react-dom@19.0.0(react@19.0.0):
     resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/react-dom/-/react-dom-19.0.0.tgz}
@@ -4553,26 +4599,6 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/simplebar-core@1.3.0:
-    resolution: {integrity: sha512-LpWl3w0caz0bl322E68qsrRPpIn+rWBGAaEJ0lUJA7Xpr2sw92AkIhg6VWj988IefLXYh50ILatfAnbNoCFrlA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/simplebar-core/-/simplebar-core-1.3.0.tgz}
-    name: simplebar-core
-    version: 1.3.0
-    dependencies:
-      lodash: registry.npmjs.org/lodash@4.17.21
-    dev: false
-
-  registry.npmjs.org/simplebar-react@3.3.0(react@19.0.0):
-    resolution: {integrity: sha512-sxzy+xRuU41He4tT4QLGYutchtOuye/xxVeq7xhyOiwMiHNK1ZpvbOTyy+7P0i7gfpXLGTJ8Bep8+4Mhdgtz/g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/simplebar-react/-/simplebar-react-3.3.0.tgz}
-    id: registry.npmjs.org/simplebar-react/3.3.0
-    name: simplebar-react
-    version: 3.3.0
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: registry.npmjs.org/react@19.0.0
-      simplebar-core: registry.npmjs.org/simplebar-core@1.3.0
-    dev: false
-
   registry.npmjs.org/source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz}
     name: source-map-js
@@ -4759,6 +4785,20 @@ packages:
       picomatch: registry.npmjs.org/picomatch@4.0.2
     dev: true
 
+  registry.npmjs.org/to-camel-case@1.0.0:
+    resolution: {integrity: sha512-nD8pQi5H34kyu1QDMFjzEIYqk0xa9Alt6ZfrdEMuHCFOfTLhDG5pgTu/aAM9Wt9lXILwlXmWP43b8sav0GNE8Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/to-camel-case/-/to-camel-case-1.0.0.tgz}
+    name: to-camel-case
+    version: 1.0.0
+    dependencies:
+      to-space-case: registry.npmjs.org/to-space-case@1.0.0
+    dev: false
+
+  registry.npmjs.org/to-no-case@1.0.2:
+    resolution: {integrity: sha512-Z3g735FxuZY8rodxV4gH7LxClE4H0hTIyHNIHdk+vpQxjLm0cwnKXq/OFVZ76SOQmto7txVcwSCwkU5kqp+FKg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/to-no-case/-/to-no-case-1.0.2.tgz}
+    name: to-no-case
+    version: 1.0.2
+    dev: false
+
   registry.npmjs.org/to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz}
     name: to-regex-range
@@ -4766,6 +4806,14 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: registry.npmjs.org/is-number@7.0.0
+
+  registry.npmjs.org/to-space-case@1.0.0:
+    resolution: {integrity: sha512-rLdvwXZ39VOn1IxGL3V6ZstoTbwLRckQmn/U8ZDLuWwIXNpuZDhQ3AiRUlhTbOXFVE9C+dR51wM0CBDhk31VcA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/to-space-case/-/to-space-case-1.0.0.tgz}
+    name: to-space-case
+    version: 1.0.0
+    dependencies:
+      to-no-case: registry.npmjs.org/to-no-case@1.0.2
+    dev: false
 
   registry.npmjs.org/ts-api-utils@2.0.1(typescript@5.8.2):
     resolution: {integrity: sha512-dnlgjFSVetynI8nzgJ+qF62efpglpWRk8isUEWZGWlJYySCTD6aKvbUDu+zbPeDakk3bg5H4XpitHukgfL1m9w==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.0.1.tgz}

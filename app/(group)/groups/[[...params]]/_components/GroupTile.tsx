@@ -91,7 +91,6 @@ export const GroupTile = ({
               <TruncatedTypography variant="h5">{title}</TruncatedTypography>
             </Tooltip>
           </Stack>
-  3
           {/* Opis */}
           <Box height="100%">
             <ClampTypography variant="body2" clamp={2} color="text.secondary">

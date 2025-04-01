@@ -103,7 +103,7 @@ export const LoginButton = () => {
               textDecoration: "none",
               verticalAlign: "center",
             }}
-            href={`/profile/${me?.username ?? ""}`}
+            href={`/profile/${me?.id ?? ""}`}
           >
             <PersonOutline fontSize="small" sx={{ color: "text.primary" }} />
             Mój profil

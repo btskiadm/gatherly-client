@@ -22,6 +22,7 @@ declare module "@mui/material/styles" {
 
   interface TypographyVariantsOptions {
     body3?: React.CSSProperties;
+    body4?: React.CSSProperties;
   }
 }
 
@@ -75,6 +76,9 @@ const customTheme: Parameters<typeof createTheme>[0] = {
     },
     body3: {
       fontSize: "0.75rem",
+    },
+    body4: {
+      fontSize: "0.625rem",
     },
   },
   components: {

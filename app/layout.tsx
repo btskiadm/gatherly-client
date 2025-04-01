@@ -20,15 +20,34 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning>
-      <body className={roboto.variable}>
-        <InitColorSchemeScript attribute="class" />
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <Providers>
-            <ApplicationNavBar />
-            {children}
-            {modal}
-          </Providers>
-        </AppRouterCacheProvider>
+      <body
+        className={roboto.variable}
+        style={{
+          display: "flex",
+          minWidth: 0,
+          minHeight: "100vh",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <div
+          id="root"
+          style={{
+            display: "flex",
+            flex: "1 1 0%",
+            minWidth: 0,
+            flexDirection: "column",
+          }}
+        >
+          <InitColorSchemeScript attribute="class" />
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <Providers>
+              <ApplicationNavBar />
+              {children}
+              {modal}
+            </Providers>
+          </AppRouterCacheProvider>
+        </div>
       </body>
     </html>
   );
