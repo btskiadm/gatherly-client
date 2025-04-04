@@ -7,6 +7,7 @@ import {
   AddOutlined,
   ArrowRightAltOutlined,
   CalendarMonthOutlined,
+  CategoryOutlined,
   EmailOutlined,
   ExpandMoreOutlined,
   Facebook,
@@ -758,77 +759,53 @@ export default function Page() {
                           </ListItemAvatar>
                           <Stack
                             gap={1}
+                            pt={0.5}
                             direction="column"
                             justifyContent="flex-start"
                             alignItems="flex-start"
                             width="100%"
                           >
-                            {categories.length === 1 && (
-                              <Chip
-                                clickable
-                                onClick={() => alert("Not implemented.")}
+                            {categories.length > 0 && (
+                              <Button
                                 size="small"
-                                label={categories[0].label}
-                                sx={{
-                                  flexDirection: "row-reverse",
-                                  "& .MuiSvgIcon-root": {
-                                    mr: 0.5,
-                                    ml: -0.5,
-                                  },
-                                }}
-                              />
-                            )}
-
-                            {cities.length > 1 && (
-                              <Chip
-                                clickable
+                                color="success"
+                                variant="contained"
+                                startIcon={<CategoryOutlined />}
+                                endIcon={categories.length > 1 && <ExpandMoreOutlined />}
                                 onClick={() => alert("Not implemented.")}
-                                size="small"
-                                label={`${categories[0].label}, + ${categories.length - 1} kategorie`}
-                                icon={<ExpandMoreOutlined />}
                                 sx={{
-                                  flexDirection: "row-reverse",
-                                  "& .MuiSvgIcon-root": {
-                                    mr: 0.5,
-                                    ml: -0.5,
-                                  },
+                                  fontWeight: "400",
+                                  borderRadius: 0.5,
+                                  py: "2px",
+                                  px: 0.5,
+                                  fontSize: "0.75rem",
                                 }}
-                              />
+                              >
+                                {categories.length > 1
+                                  ? `${categories[0].label}, + ${categories.length - 1} kategorii`
+                                  : categories[0].label}
+                              </Button>
                             )}
 
                             <ClampTypography variant="h4" clamp={1}>
                               {title}
                             </ClampTypography>
-                            {cities.length === 1 && (
-                              <Button
-                                sx={{
-                                  color: "text.secondary",
-                                  "&:hover": {
-                                    background: "unset",
-                                  },
-                                }}
-                                variant="text"
-                                startIcon={<PlaceOutlined />}
-                                endIcon={<ExpandMoreOutlined fontSize="small" />}
-                                onClick={() => alert("Not implemented.")}
-                              >
-                                {cities[0].label}
-                              </Button>
-                            )}
+
                             {cities.length > 1 && (
                               <Button
+                                size="small"
+                                variant="text"
+                                onClick={() => alert("Not implemented.")}
+                                endIcon={<ExpandMoreOutlined />}
+                                startIcon={<PlaceOutlined />}
                                 sx={{
                                   color: "text.secondary",
-                                  "&:hover": {
-                                    background: "unset",
-                                  },
+                                  fontWeight: "400",
                                 }}
-                                variant="text"
-                                startIcon={<PlaceOutlined />}
-                                endIcon={<ExpandMoreOutlined fontSize="small" />}
-                                onClick={() => alert("Not implemented.")}
                               >
-                                {cities[0].label}, + {cities.length - 1} lokalizacje
+                                {cities.length > 1
+                                  ? `${cities[0].label}, + ${cities.length - 1} miast`
+                                  : cities[0].label}
                               </Button>
                             )}
                           </Stack>

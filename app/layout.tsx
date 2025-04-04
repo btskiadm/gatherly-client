@@ -1,16 +1,45 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
-import { Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import { ApplicationNavBar } from "./common/components/ApplicationNavBar/ApplicationNavBar";
 import { Providers } from "./providers/Providers";
 
-const roboto = Poppins({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
+const NoirPro = localFont({
   display: "swap",
-  variable: "--font-poppins",
+  adjustFontFallback: "Arial",
+  src: [
+    {
+      path: "public/fonts/NoirPro-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "public/fonts/NoirPro-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "public/fonts/NoirPro-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "public/fonts/NoirPro-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "public/fonts/NoirPro-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "public/fonts/NoirPro-Heavy.woff2",
+      weight: "900",
+      style: "normal",
+    },
+  ],
 });
-
 export default function RootLayout({
   children,
   modal,
@@ -21,7 +50,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <body
-        className={roboto.variable}
+        className={NoirPro.className}
         style={{
           display: "flex",
           minWidth: 0,

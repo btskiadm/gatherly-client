@@ -24,7 +24,7 @@ export default function Custom404() {
           <Typography variant="h6" fontSize="6rem">
             404
           </Typography>
-          <Typography variant="h1">Paage not found</Typography>
+          <Typography variant="h1">Page not found</Typography>
           <Typography variant="body1" color="text.secondary">
             Oops, an error has occurred. Page not found!
           </Typography>

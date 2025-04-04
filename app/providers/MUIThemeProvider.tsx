@@ -18,6 +18,7 @@ declare module "@mui/material/styles" {
 
   interface TypographyVariants {
     body3: React.CSSProperties;
+    body4: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -29,6 +30,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     body3: unknown; // fix variant issue is Typography component
+    body4: unknown; // fix variant issue is Typography component
   }
 }
 
@@ -49,7 +51,7 @@ const customTheme: Parameters<typeof createTheme>[0] = {
     },
   },
   typography: {
-    fontFamily: "var(--font-poppins)",
+    fontFamily: "NoirPro, Arial, sans-serif",
     h1: {
       fontSize: "1.25rem",
     },

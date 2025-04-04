@@ -89,7 +89,7 @@ export type GetGroupCommentsQueryVariables = Model.Exact<{
 }>;
 
 
-export type GetGroupCommentsQuery = { __typename?: 'Query', getGroupComments: { __typename?: 'GetGroupCommentsResponse', comments: Array<{ __typename?: 'Comment', id: string, rate: number, content: string, createdAt: any, user: { __typename?: 'User', id: string, createdAt: any, email: string, role: Model.AppRole, username: string, smallPhoto: string, mediumPhoto: string, largePhoto: string } }> } };
+export type GetGroupCommentsQuery = { __typename?: 'Query', getGroupComments: { __typename?: 'GetGroupCommentsResponse', comments: Array<{ __typename?: 'Comment', id: string, rate: number, content: string, createdAt: any, user: { __typename?: 'User', createdAt: any, email: string, id: string, largePhoto: string, mediumPhoto: string, role: Model.AppRole, smallPhoto: string, status: Model.AccountStatus, username: string } }> } };
 
 export type UserFragmentFragment = { __typename?: 'User', id: string, createdAt: any, email: string, role: Model.AppRole, username: string, smallPhoto: string, mediumPhoto: string, largePhoto: string };
 

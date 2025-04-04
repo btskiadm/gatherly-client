@@ -2,11 +2,15 @@
 
 import {
   Avatar,
+  AvatarGroup,
+  Badge,
   Box,
   Chip,
+  IconButton,
   List,
   ListItemAvatar,
   ListItemButton,
+  OutlinedInput,
   Paper,
   Stack,
   styled,
@@ -17,6 +21,7 @@ import {
 import { useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { TruncatedTypography } from "../truncated-typography";
+import { MoreHorizOutlined, SendOutlined } from "@mui/icons-material";
 
 const StyledList = styled(List)(({ theme }) => ({
   "& > .MuiListItemButton-root": {
@@ -47,18 +52,95 @@ export const Chat = () => {
     setValue(newValue);
   };
 
-  const item = (
+  const ChatItem = ({ index }: any) => (
     <Stack gap={2} direction="row" minWidth="0">
       <ListItemAvatar
         sx={{
           minWidth: "0",
         }}
       >
-        <Avatar sx={{ width: "40px", height: "40px" }} alt="test" src="#" />
+        <Badge
+          slotProps={{
+            badge: {
+              style: {
+                borderColor: "white",
+                borderWidth: "2px",
+                borderStyle: "solid",
+                borderRadius: "50%",
+                backgroundColor: "rgb(114, 214, 58)",
+                right: "4px",
+                top: "4px",
+                width: "10px",
+                height: "10px",
+              },
+            },
+          }}
+          color="success"
+          variant="dot"
+          anchorOrigin={{
+            horizontal: "right",
+            vertical: "top",
+          }}
+        >
+          <Avatar sx={{ width: "36px", height: "36px" }} alt="test" src={`https://picsum.photos/id/${index}/200/300`} />
+        </Badge>
       </ListItemAvatar>
       <Stack direction="column" minWidth="0">
-        <Typography variant="h5" fontSize="0.875rem">
+        <TruncatedTypography variant="h5" fontSize="0.75rem">
           Adam Adam
+        </TruncatedTypography>
+        <TruncatedTypography variant="body3" color="text.secondary">
+          Ipsum quis pariatur cupidatat reprehenderit duis qui excepteur sunt. Minim nulla do eu adipisicing consequat
+          aliquip nostrud amet labore velit id excepteur. Est aliqua cupidatat est culpa Lorem. Occaecat esse nostrud
+          elit eu elit commodo.
+        </TruncatedTypography>
+      </Stack>
+    </Stack>
+  );
+
+  const MultiChatItem = ({ index }: any) => (
+    <Stack gap={2} direction="row" minWidth="0">
+      <ListItemAvatar
+        sx={{
+          minWidth: "0",
+        }}
+      >
+        <AvatarGroup
+          max={1}
+          spacing="small"
+          sx={{
+            width: "36px",
+            position: "relative",
+          }}
+        >
+          <Avatar
+            sx={{
+              width: "28px",
+              height: "28px",
+              marginLeft: "-16px",
+              position: "relative",
+              left: "5px",
+              bottom: "-5px",
+            }}
+            alt="test"
+            src={`https://picsum.photos/id/${index}/200/300`}
+          />
+          <Avatar
+            sx={{
+              width: "28px",
+              height: "28px",
+              position: "relative",
+              right: "-5px",
+              top: "-5px",
+            }}
+            alt="test"
+            src={`https://picsum.photos/id/${index + 1}/200/300`}
+          />
+        </AvatarGroup>
+      </ListItemAvatar>
+      <Stack direction="column" minWidth="0">
+        <Typography variant="h5" fontSize="0.75rem">
+          seoquesto, <small>+10 more</small>
         </Typography>
         <TruncatedTypography variant="body3" color="text.secondary">
           Ipsum quis pariatur cupidatat reprehenderit duis qui excepteur sunt. Minim nulla do eu adipisicing consequat
@@ -66,6 +148,69 @@ export const Chat = () => {
           elit eu elit commodo.
         </TruncatedTypography>
       </Stack>
+    </Stack>
+  );
+
+  const MessagesHead = () => (
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      p={2}
+      minWidth="0"
+      sx={{
+        borderBottom: "1px solid transparent",
+        borderBottomColor: "divider",
+      }}
+    >
+      <Stack direction="row" minWidth="0" gap={2} alignItems="center">
+        <Avatar sx={{ width: "36px", height: "36px" }} alt="test" src={`https://picsum.photos/id/${66 + 1}/200/300`} />
+        <Typography variant="h4" fontSize="1rem">
+          Adam Adam
+        </Typography>
+      </Stack>
+      <IconButton
+        size="small"
+        sx={{
+          height: "min-content",
+        }}
+        onClick={() => alert("not impl.")}
+      >
+        <MoreHorizOutlined fontSize="small" />
+      </IconButton>
+    </Stack>
+  );
+
+  const FeedHeader = () => (
+    <Stack direction="row" gap={2} p={2} alignItems="center">
+      <Badge
+        slotProps={{
+          badge: {
+            style: {
+              borderColor: "white",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              borderRadius: "50%",
+              backgroundColor: "rgb(114, 214, 58)",
+              right: "6px",
+              top: "6px",
+              width: "12px",
+              height: "12px",
+            },
+          },
+        }}
+        color="success"
+        variant="dot"
+        anchorOrigin={{
+          horizontal: "right",
+          vertical: "top",
+        }}
+      >
+        <Avatar sx={{ width: "40px", height: "40px" }} alt="test" src={`https://picsum.photos/id/${66 + 7}/200/300`} />
+      </Badge>
+      <TruncatedTypography variant="h5" fontSize="0.875rem">
+        Adam Adam
+      </TruncatedTypography>
     </Stack>
   );
 
@@ -91,19 +236,7 @@ export const Chat = () => {
             borderTop: 0,
           }}
         >
-          <Stack direction="row" gap={2} p={2} alignItems="center">
-            <Avatar sx={{ width: "48px", height: "48px" }} alt="test" src="#" />
-            <Stack direction="column" minWidth="0" gap={0.5}>
-              <Typography variant="h5" fontSize="1rem">
-                Adam Adam
-              </Typography>
-              <TruncatedTypography variant="body2" color="text.secondary">
-                Ipsum quis pariatur cupidatat reprehenderit duis qui excepteur sunt. Minim nulla do eu adipisicing
-                consequat aliquip nostrud amet labore velit id excepteur. Est aliqua cupidatat est culpa Lorem. Occaecat
-                esse nostrud elit eu elit commodo.
-              </TruncatedTypography>
-            </Stack>
-          </Stack>
+          <FeedHeader />
           <Tabs
             value={value}
             onChange={handleChange}
@@ -162,42 +295,37 @@ export const Chat = () => {
           >
             <CustomTabPanel value={value} index="messages">
               <StyledList>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
-                <ListItemButton>{item}</ListItemButton>
+                <ListItemButton>
+                  <ChatItem index={111} />
+                </ListItemButton>
+                <ListItemButton>
+                  <MultiChatItem index={1} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ChatItem index={121} />
+                </ListItemButton>
+                <ListItemButton>
+                  <MultiChatItem index={1} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ChatItem index={41} />
+                </ListItemButton>
+                <ListItemButton>
+                  <MultiChatItem index={1} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ChatItem index={411} />
+                </ListItemButton>
+                <ListItemButton>
+                  <MultiChatItem index={15} />
+                </ListItemButton>
               </StyledList>
             </CustomTabPanel>
             <CustomTabPanel value={value} index="groups"></CustomTabPanel>
           </Scrollbars>
         </Stack>
-        <Stack direction="column" minWidth="0">
-          <Stack
-            direction="row"
-            gap={2}
-            p={2}
-            minWidth="0"
-            sx={{
-              borderBottom: "1px solid transparent",
-              borderBottomColor: "divider",
-            }}
-          >
-            <Avatar sx={{ width: "40px", height: "40px" }} alt="test" src="#" />
-            <Stack direction="column" minWidth="0" gap={0.5}>
-              <Typography variant="h5" fontSize="1rem">
-                Adam Adam
-              </Typography>
-              <TruncatedTypography variant="body2" color="text.secondary">
-                Ipsum quis pariatur cupidatat reprehenderit duis qui excepteur sunt. Minim nulla do eu adipisicing
-                consequat aliquip nostrud amet labore velit id excepteur. Est aliqua cupidatat est culpa Lorem. Occaecat
-                esse nostrud elit eu elit commodo.
-              </TruncatedTypography>
-            </Stack>
-          </Stack>
+        <Stack direction="column" minWidth="0" width="100%">
+          <MessagesHead />
           <Scrollbars
             style={{
               position: "relative",
@@ -229,9 +357,9 @@ export const Chat = () => {
             )}
           >
             <Stack direction="row" gap={2} p={2} minWidth="0">
-              <Avatar sx={{ width: "40px", height: "40px" }} alt="test" src="#" />
+              <Avatar sx={{ width: "36px", height: "36px" }} alt="test" src="#" />
               <Stack direction="column" minWidth="0" gap={0.5}>
-                <Typography variant="body3" color="text.secondary">
+                <Typography variant="body4" color="text.secondary">
                   Adam Adam - 2:00 AM
                 </Typography>
                 <Paper
@@ -271,6 +399,7 @@ export const Chat = () => {
               }}
             >
               <Chip
+                size="small"
                 label="20 April"
                 variant="outlined"
                 sx={{ zIndex: 1, position: "relative", background: "white", borderColor: "divider" }}
@@ -278,7 +407,7 @@ export const Chat = () => {
             </Box>
             <Stack direction="row" p={2} minWidth="0" justifyContent="flex-end">
               <Stack direction="column" minWidth="0" gap={0.5} justifyContent="flex-end">
-                <Typography variant="body3" color="text.secondary" textAlign="end">
+                <Typography variant="body4" color="text.secondary" textAlign="end">
                   2:00 AM
                 </Typography>
                 <Paper
@@ -297,6 +426,30 @@ export const Chat = () => {
               </Stack>
             </Stack>
           </Scrollbars>
+          <Stack
+            direction="row"
+            gap={0.5}
+            p={1}
+            alignItems="center"
+            bgcolor="background.default"
+            sx={{
+              borderTop: "1px solid transparent",
+              borderTopColor: "divider",
+            }}
+          >
+            <OutlinedInput
+              fullWidth
+              size="small"
+              placeholder="Type a messsage.."
+              sx={{
+                bgcolor: "background.paper",
+                fontSize: "0.875rem",
+              }}
+            />
+            <IconButton size="small" color="primary">
+              <SendOutlined fontSize="medium" />
+            </IconButton>
+          </Stack>
         </Stack>
       </Stack>
     </Paper>

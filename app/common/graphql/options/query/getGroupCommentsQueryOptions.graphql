@@ -5,15 +5,17 @@ query GetGroupComments($groupId: String!) {
       rate
       content
       createdAt
+      rate
       user {
-        id
         createdAt
         email
-        role
-        username
-        smallPhoto
-        mediumPhoto
+        id
         largePhoto
+        mediumPhoto
+        role
+        smallPhoto
+        status
+        username
       }
     }
   }
