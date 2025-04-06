@@ -132,25 +132,56 @@ export type Event = {
   users: Array<EventUser>;
 };
 
-export type EventGroup = {
-  __typename?: 'EventGroup';
+export type EventBase = {
+  canceled: Scalars['Boolean']['output'];
+  createdAt: Scalars['Date']['output'];
+  description: Scalars['String']['output'];
+  endAt: Scalars['Date']['output'];
+  eventType: EventType;
+  id: Scalars['String']['output'];
+  largePhoto: Scalars['String']['output'];
+  mediumPhoto: Scalars['String']['output'];
+  smallPhoto: Scalars['String']['output'];
+  startAt: Scalars['Date']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+};
+
+export type EventTile = EventBase & {
+  __typename?: 'EventTile';
   canceled: Scalars['Boolean']['output'];
   categories: Array<Category>;
   cities: Array<City>;
   createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
   endAt: Scalars['Date']['output'];
+  eventType: EventType;
   id: Scalars['String']['output'];
+  largePhoto: Scalars['String']['output'];
+  mediumPhoto: Scalars['String']['output'];
+  smallPhoto: Scalars['String']['output'];
   startAt: Scalars['Date']['output'];
   title: Scalars['String']['output'];
-  users: Array<EventUser>;
+  updatedAt: Scalars['Date']['output'];
+  usersCount: Scalars['Int']['output'];
 };
+
+export enum EventType {
+  Group = 'GROUP',
+  Standalone = 'STANDALONE'
+}
 
 export type EventUser = {
   __typename?: 'EventUser';
   id: Scalars['String']['output'];
   role: Role;
   user: User;
+};
+
+export type GetEventTilesByUserIdReponse = {
+  __typename?: 'GetEventTilesByUserIdReponse';
+  count: Scalars['Int']['output'];
+  events: Array<EventTile>;
 };
 
 export type GetGroupCommentsResponse = {
@@ -184,7 +215,7 @@ export type GroupDetails = GroupBase & {
   comments: Array<Comment>;
   createdAt: Scalars['Date']['output'];
   description: Scalars['String']['output'];
-  events: Array<EventGroup>;
+  events: Array<EventTile>;
   eventsLength: Scalars['Int']['output'];
   id: Scalars['String']['output'];
   largePhoto: Scalars['String']['output'];
@@ -252,7 +283,7 @@ export type GroupWithStatus = GroupBase & {
 
 export type GroupedEvents = {
   __typename?: 'GroupedEvents';
-  events: Array<EventGroup>;
+  events: Array<EventTile>;
   monthReference: Scalars['String']['output'];
 };
 
@@ -341,6 +372,7 @@ export type Query = {
   checkUserGroupPermissions: CheckUserGroupPermission;
   getCategories: Array<Category>;
   getCities: Array<City>;
+  getEventTilesByUserId: GetEventTilesByUserIdReponse;
   getGroupComments: GetGroupCommentsResponse;
   getGroupDetails?: Maybe<GroupDetails>;
   getGroupTiles: Array<GroupTile>;
@@ -359,6 +391,13 @@ export type Query = {
 
 export type QueryCheckUserGroupPermissionsArgs = {
   groupId: Scalars['String']['input'];
+};
+
+
+export type QueryGetEventTilesByUserIdArgs = {
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  userId: Scalars['String']['input'];
 };
 
 

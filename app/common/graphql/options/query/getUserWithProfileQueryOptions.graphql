@@ -1,14 +1,14 @@
 query GetUserWithProfile($userId: String!) {
   getUserWithProfile(userId: $userId) {
-    __typename
     id
     username
     email
-    role
     createdAt
+    role
+    status
     smallPhoto
-    largePhoto
     mediumPhoto
+    largePhoto
     profile {
       bio
       categories {
@@ -46,6 +46,34 @@ query GetUserWithProfile($userId: String!) {
       smallPhoto
       mediumPhoto
       largePhoto
+      cities {
+        id
+        value
+        label
+      }
+      categories {
+        id
+        value
+        label
+      }
+    }
+  }
+  getEventTilesByUserId(userId: $userId) {
+    count
+    events {
+      id
+      title
+      description
+      createdAt
+      canceled
+      updatedAt
+      usersCount
+      smallPhoto
+      mediumPhoto
+      largePhoto
+      startAt
+      endAt
+      eventType
       cities {
         id
         value

@@ -1,16 +1,29 @@
 fragment userFragment on User {
   id
-  createdAt
-  email
-  role
   username
+  email
+  createdAt
+  role
+  status
   smallPhoto
   mediumPhoto
   largePhoto
 }
 
-fragment eventGroupFragment on EventGroup {
+fragment eventTileFragment on EventTile {
+  id
+  title
+  description
   canceled
+  createdAt
+  updatedAt
+  smallPhoto
+  mediumPhoto
+  largePhoto
+  startAt
+  endAt
+  eventType
+  usersCount
   categories {
     id
     label
@@ -20,19 +33,6 @@ fragment eventGroupFragment on EventGroup {
     id
     label
     value
-  }
-  createdAt
-  startAt
-  endAt
-  description
-  id
-  title
-  users {
-    id
-    role
-    user {
-      ...userFragment
-    }
   }
 }
 
@@ -79,28 +79,28 @@ query GetGroupDetails($groupId: String!) {
     cancelled {
       monthReference
       events {
-        ...eventGroupFragment
+        ...eventTileFragment
       }
     }
     events {
-      ...eventGroupFragment
+      ...eventTileFragment
     }
     past {
       monthReference
       events {
-        ...eventGroupFragment
+        ...eventTileFragment
       }
     }
     pending {
       monthReference
       events {
-        ...eventGroupFragment
+        ...eventTileFragment
       }
     }
     upcoming {
       monthReference
       events {
-        ...eventGroupFragment
+        ...eventTileFragment
       }
     }
     upcomingLength

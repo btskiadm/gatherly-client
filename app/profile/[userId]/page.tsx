@@ -1,6 +1,7 @@
 "use client";
 
 import { ClampTypography } from "@/app/common/components/clamp-typography";
+import { LocalTime } from "@/app/common/components/LocalTime/LocalTime";
 import { Link } from "@/app/common/components/next-link";
 import { getUserWithProfileQueryOptions } from "@/app/common/graphql/options/query/getUserWithProfileQueryOptions";
 import {
@@ -8,6 +9,7 @@ import {
   ArrowRightAltOutlined,
   CalendarMonthOutlined,
   CategoryOutlined,
+  ComputerOutlined,
   EmailOutlined,
   ExpandMoreOutlined,
   Facebook,
@@ -15,6 +17,7 @@ import {
   Instagram,
   MoreHorizOutlined,
   MusicNote,
+  PeopleOutline,
   Phone,
   PlaceOutlined,
   SendOutlined,
@@ -44,6 +47,7 @@ import {
 } from "@mui/material";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { notFound, useParams } from "next/navigation";
+import { Suspense } from "react";
 
 export default function Page() {
   const { userId: _userId }: { userId: string } = useParams();
@@ -66,177 +70,9 @@ export default function Page() {
       username,
       profile: { bio, categories, cities, facebook, phoneNumber, tiktok, twitter, youtube, instagram },
     },
-    getGroupTilesByUserId: { count, groups },
+    getGroupTilesByUserId: { count: groupsCount, groups },
+    getEventTilesByUserId: { count: eventsCount, events },
   } = data;
-
-  const group = (
-    <ListItem
-      sx={{
-        gap: 3,
-        px: "24px",
-        py: "16px",
-        alignItems: "flex-start",
-        borderBottomWidth: "1px",
-        borderBottomStyle: "solid",
-        borderBottomColor: "divider",
-      }}
-    >
-      <ListItemAvatar>
-        <Avatar
-          variant="rounded"
-          src={smallPhoto}
-          sx={{
-            width: "128px",
-            height: "128px",
-          }}
-        />
-      </ListItemAvatar>
-      <Stack direction="row" justifyContent="space-between">
-        <Stack gap={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
-          <Chip
-            clickable
-            onClick={() => alert("Not implemented.")}
-            size="small"
-            label="Zlot motocyklowy, +3 kategorie"
-            icon={<ExpandMoreOutlined />}
-            sx={{
-              flexDirection: "row-reverse",
-              "& .MuiSvgIcon-root": {
-                mr: 0.5,
-                ml: -0.5,
-              },
-            }}
-          />
-          <ClampTypography variant="h4" clamp={1}>
-            {bio}
-          </ClampTypography>
-          {cities.length === 1 && (
-            <Button
-              sx={{
-                color: "text.secondary",
-                "&:hover": {
-                  background: "unset",
-                },
-              }}
-              variant="text"
-              startIcon={<PlaceOutlined />}
-              endIcon={<ExpandMoreOutlined fontSize="small" />}
-              onClick={() => alert("Not implemented.")}
-            >
-              {cities[0].city.label}
-            </Button>
-          )}
-          {cities.length > 1 && (
-            <Button
-              sx={{
-                color: "text.secondary",
-                "&:hover": {
-                  background: "unset",
-                },
-              }}
-              variant="text"
-              startIcon={<PlaceOutlined />}
-              endIcon={<ExpandMoreOutlined fontSize="small" />}
-              onClick={() => alert("Not implemented.")}
-            >
-              {cities[0].city.label}, + {cities.length - 2} lokalizacje
-            </Button>
-          )}
-        </Stack>
-      </Stack>
-      <Stack gap={2} alignItems="center" alignSelf="center">
-        <Button
-          size="large"
-          color="secondary"
-          endIcon={<ArrowRightAltOutlined fontSize="large" />}
-          sx={{
-            textWrap: "nowrap",
-            alignSelf: "center",
-          }}
-        >
-          Zobacz grupę
-        </Button>
-      </Stack>
-    </ListItem>
-  );
-
-  const event = (
-    <ListItem
-      sx={{
-        gap: 3,
-        px: "24px",
-        py: "16px",
-        alignItems: "flex-start",
-        borderBottomWidth: "1px",
-        borderBottomStyle: "solid",
-        borderBottomColor: "divider",
-      }}
-    >
-      <ListItemAvatar>
-        <Avatar
-          variant="rounded"
-          src={smallPhoto}
-          sx={{
-            width: "128px",
-            height: "128px",
-          }}
-        />
-      </ListItemAvatar>
-      <Stack direction="row" justifyContent="space-between">
-        <Stack gap={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
-          <Chip
-            clickable
-            onClick={() => alert("Not implemented.")}
-            size="small"
-            label="Zlot motocyklowy, +3 kategorie"
-            icon={<ExpandMoreOutlined />}
-            sx={{
-              flexDirection: "row-reverse",
-              "& .MuiSvgIcon-root": {
-                mr: 0.5,
-                ml: -0.5,
-              },
-            }}
-          />
-          <ClampTypography variant="h4" clamp={1}>
-            Anim labore nostrud ut sit culpa exercitation officia deserunt aliquip quis duis.
-          </ClampTypography>
-          <Button
-            sx={{
-              color: "text.secondary",
-              "&:hover": {
-                background: "unset",
-              },
-            }}
-            variant="text"
-            startIcon={<PlaceOutlined />}
-            endIcon={<ExpandMoreOutlined fontSize="small" />}
-            onClick={() => alert("Not implemented.")}
-          >
-            Łódź, Poland, +3 lokalizacje
-          </Button>
-        </Stack>
-      </Stack>
-      <Stack gap={2}>
-        <Stack direction="row" gap={2} alignItems="center">
-          <CalendarMonthOutlined color="secondary" />
-          <Typography variant="h4" color="secondary" noWrap fontWeight="500">
-            12 Okt. 2025
-          </Typography>
-        </Stack>
-        <Button
-          size="large"
-          color="secondary"
-          endIcon={<ArrowRightAltOutlined fontSize="large" />}
-          sx={{
-            textWrap: "nowrap",
-          }}
-        >
-          Zobacz wydarzenie
-        </Button>
-      </Stack>
-    </ListItem>
-  );
 
   const comment = (
     <ListItem
@@ -404,6 +240,7 @@ export default function Page() {
               >
                 O mnie
               </Typography>
+              x
               <Divider
                 orientation="vertical"
                 sx={{
@@ -639,13 +476,18 @@ export default function Page() {
                         padding: "18px 24px",
                       }}
                       title={<Typography variant="h5">Lokalizacja</Typography>}
+                      subheader={
+                        <Typography variant="body2" color="text.secondary">
+                          Lokalizację, którymi jestem zainteresowana-y
+                        </Typography>
+                      }
                     />
                     <CardContent
                       sx={{
                         p: "0 24px 24px",
                       }}
                     >
-                      <Stack direction="row" gap={1} flexWrap="wrap">
+                      <Stack direction="row" gap={2} flexWrap="wrap">
                         {cities.map(({ city }, index) => {
                           return (
                             <Chip
@@ -671,13 +513,18 @@ export default function Page() {
                         padding: "18px 24px",
                       }}
                       title={<Typography variant="h5">Zainteresowania</Typography>}
+                      subheader={
+                        <Typography variant="body2" color="text.secondary">
+                          Kategorie, którymi jestem zainteresowana-y
+                        </Typography>
+                      }
                     />
                     <CardContent
                       sx={{
                         p: "0 24px 24px",
                       }}
                     >
-                      <Stack direction="row" gap={1} flexWrap="wrap">
+                      <Stack direction="row" gap={2} flexWrap="wrap">
                         {categories.map(({ category }) => (
                           <Chip label={category.label} />
                         ))}
@@ -701,6 +548,11 @@ export default function Page() {
                         padding: "18px 24px",
                       }}
                       title={<Typography variant="h5">O mnie</Typography>}
+                      subheader={
+                        <Typography variant="body2" color="text.secondary">
+                          Kilka słów o mnie
+                        </Typography>
+                      }
                     />
                     <CardContent
                       sx={{
@@ -725,7 +577,24 @@ export default function Page() {
                       borderBottomStyle: "solid",
                       borderBottomColor: "divider",
                     }}
-                    title={<Typography variant="h5">Wszystkie grupy</Typography>}
+                    title={
+                      <Typography variant="h5">
+                        Wszystkie grupy
+                        <small
+                          style={{
+                            marginLeft: "6px",
+                            fontSize: "0.625rem",
+                          }}
+                        >
+                          ({groupsCount})
+                        </small>
+                      </Typography>
+                    }
+                    subheader={
+                      <Typography variant="body2" color="text.secondary">
+                        Grupy do których przynależę
+                      </Typography>
+                    }
                   />
                   <CardContent
                     sx={{
@@ -735,8 +604,9 @@ export default function Page() {
                     }}
                   >
                     <List disablePadding>
-                      {groups.map(({ smallPhoto, categories, cities, title }) => (
+                      {groups.map(({ id, smallPhoto, categories, cities, title, usersCount }) => (
                         <ListItem
+                          key={id}
                           sx={{
                             gap: 3,
                             px: "24px",
@@ -757,70 +627,100 @@ export default function Page() {
                               }}
                             />
                           </ListItemAvatar>
-                          <Stack
-                            gap={1}
-                            pt={0.5}
-                            direction="column"
-                            justifyContent="flex-start"
-                            alignItems="flex-start"
-                            width="100%"
-                          >
-                            {categories.length > 0 && (
+                          <Stack pt={0.5} direction="row" justifyContent="space-between" width="100%">
+                            <Stack gap={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
+                              {categories.length > 0 && (
+                                <Button
+                                  size="small"
+                                  color="secondary"
+                                  variant="contained"
+                                  startIcon={<CategoryOutlined />}
+                                  endIcon={categories.length > 1 && <ExpandMoreOutlined />}
+                                  onClick={() => alert("Not implemented.")}
+                                  sx={{
+                                    fontWeight: "400",
+                                    borderRadius: 0.5,
+                                    py: "2px",
+                                    px: 1,
+                                    fontSize: "0.75rem",
+                                  }}
+                                >
+                                  {categories.length > 1
+                                    ? `${categories[0].label}, +${categories.length - 1} inne`
+                                    : categories[0].label}
+                                </Button>
+                              )}
+
+                              <ClampTypography variant="h4" clamp={1}>
+                                {title}
+                              </ClampTypography>
+
+                              <Stack direction="row" gap={0.5} alignItems="center">
+                                {cities.length > 0 && (
+                                  <Button
+                                    variant="text"
+                                    onClick={() => alert("Not implemented.")}
+                                    endIcon={cities.length > 1 ? <ExpandMoreOutlined /> : undefined}
+                                    startIcon={<PlaceOutlined />}
+                                    sx={{
+                                      color: "text.secondary",
+                                      fontWeight: "400",
+                                    }}
+                                  >
+                                    {cities.length > 1
+                                      ? `${cities[0].label}, +${cities.length - 1} inne`
+                                      : cities[0].label}
+                                  </Button>
+                                )}
+                                {cities.length === 0 && (
+                                  <Stack
+                                    direction="row"
+                                    gap={1}
+                                    mr={1}
+                                    alignItems="center"
+                                    sx={{
+                                      color: "text.secondary",
+                                      fontWeight: "400",
+                                    }}
+                                  >
+                                    <ComputerOutlined fontSize="small" />
+                                    <Typography variant="body2">Online</Typography>
+                                  </Stack>
+                                )}
+                                <Divider
+                                  orientation="vertical"
+                                  sx={{
+                                    height: "45%",
+                                  }}
+                                />
+                                <Stack
+                                  direction="row"
+                                  gap={1}
+                                  ml={1}
+                                  alignItems="center"
+                                  sx={{
+                                    color: "text.secondary",
+                                    fontWeight: "400",
+                                  }}
+                                >
+                                  <PeopleOutline fontSize="small" />
+                                  <Typography variant="body2"> {usersCount} members</Typography>
+                                </Stack>
+                              </Stack>
+                            </Stack>
+                            <Stack gap={2} alignItems="center" alignSelf="center">
                               <Button
-                                size="small"
-                                color="success"
-                                variant="contained"
-                                startIcon={<CategoryOutlined />}
-                                endIcon={categories.length > 1 && <ExpandMoreOutlined />}
-                                onClick={() => alert("Not implemented.")}
+                                size="large"
+                                color="secondary"
+                                endIcon={<ArrowRightAltOutlined fontSize="large" />}
                                 sx={{
-                                  fontWeight: "400",
-                                  borderRadius: 0.5,
-                                  py: "2px",
-                                  px: 0.5,
-                                  fontSize: "0.75rem",
+                                  textWrap: "nowrap",
+                                  alignSelf: "center",
                                 }}
                               >
-                                {categories.length > 1
-                                  ? `${categories[0].label}, + ${categories.length - 1} kategorii`
-                                  : categories[0].label}
+                                Zobacz grupę
                               </Button>
-                            )}
-
-                            <ClampTypography variant="h4" clamp={1}>
-                              {title}
-                            </ClampTypography>
-
-                            {cities.length > 1 && (
-                              <Button
-                                size="small"
-                                variant="text"
-                                onClick={() => alert("Not implemented.")}
-                                endIcon={<ExpandMoreOutlined />}
-                                startIcon={<PlaceOutlined />}
-                                sx={{
-                                  color: "text.secondary",
-                                  fontWeight: "400",
-                                }}
-                              >
-                                {cities.length > 1
-                                  ? `${cities[0].label}, + ${cities.length - 1} miast`
-                                  : cities[0].label}
-                              </Button>
-                            )}
-                          </Stack>
-                          <Stack gap={2} alignItems="center" alignSelf="center">
-                            <Button
-                              size="large"
-                              color="secondary"
-                              endIcon={<ArrowRightAltOutlined fontSize="large" />}
-                              sx={{
-                                textWrap: "nowrap",
-                                alignSelf: "center",
-                              }}
-                            >
-                              Zobacz grupę
-                            </Button>
+                            </Stack>
                           </Stack>
                         </ListItem>
                       ))}
@@ -848,7 +748,24 @@ export default function Page() {
                       borderBottomStyle: "solid",
                       borderBottomColor: "divider",
                     }}
-                    title={<Typography variant="h5">Wszystkie wydarzenia</Typography>}
+                    title={
+                      <Typography variant="h5">
+                        Wszystkie wydarzenia
+                        <small
+                          style={{
+                            marginLeft: "6px",
+                            fontSize: "0.625rem",
+                          }}
+                        >
+                          ({eventsCount})
+                        </small>
+                      </Typography>
+                    }
+                    subheader={
+                      <Typography variant="body2" color="text.secondary">
+                        Wydarzenia do których przynależę
+                      </Typography>
+                    }
                   />
                   <CardContent
                     sx={{
@@ -858,13 +775,142 @@ export default function Page() {
                     }}
                   >
                     <List disablePadding>
-                      {event}
-                      {event}
-                      {event}
-                      {event}
-                      {event}
-                      {event}
-                      {event}
+                      {events.map(
+                        ({
+                          id,
+                          canceled,
+                          categories,
+                          cities,
+
+                          smallPhoto,
+                          startAt,
+                          title,
+                          usersCount,
+                        }) => (
+                          <ListItem
+                            key={id}
+                            sx={{
+                              gap: 3,
+                              px: "24px",
+                              py: "16px",
+                              alignItems: "flex-start",
+                              borderBottomWidth: "1px",
+                              borderBottomStyle: "solid",
+                              borderBottomColor: "divider",
+                            }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                variant="rounded"
+                                src={smallPhoto}
+                                sx={{
+                                  width: "128px",
+                                  height: "128px",
+                                }}
+                              />
+                            </ListItemAvatar>
+                            <Stack pt={0.5} direction="row" justifyContent="space-between" width="100%">
+                              <Stack gap={1} direction="column" justifyContent="flex-start" alignItems="flex-start">
+                                {categories.length > 0 && (
+                                  <Button
+                                    size="small"
+                                    variant="contained"
+                                    color="secondary"
+                                    startIcon={<CategoryOutlined />}
+                                    endIcon={categories.length > 1 && <ExpandMoreOutlined />}
+                                    onClick={() => alert("Not implemented.")}
+                                    sx={{
+                                      fontWeight: "400",
+                                      borderRadius: 0.5,
+                                      py: "2px",
+                                      px: 1,
+                                      fontSize: "0.75rem",
+                                    }}
+                                  >
+                                    {categories.length > 1
+                                      ? `${categories[0].label}, +${categories.length - 1} inne`
+                                      : categories[0].label}
+                                  </Button>
+                                )}
+                                <ClampTypography variant="h4" clamp={1}>
+                                  {title}
+                                </ClampTypography>
+                                <Stack direction="row" gap={0.5} alignItems="center">
+                                  {cities.length > 0 && (
+                                    <Button
+                                      variant="text"
+                                      onClick={() => alert("Not implemented.")}
+                                      endIcon={cities.length > 1 ? <ExpandMoreOutlined /> : undefined}
+                                      startIcon={<PlaceOutlined />}
+                                      sx={{
+                                        color: "text.secondary",
+                                        fontWeight: "400",
+                                      }}
+                                    >
+                                      {cities.length > 1
+                                        ? `${cities[0].label}, +${cities.length - 1} inne`
+                                        : cities[0].label}
+                                    </Button>
+                                  )}
+                                  {cities.length === 0 && (
+                                    <Stack
+                                      direction="row"
+                                      gap={1}
+                                      mr={1}
+                                      alignItems="center"
+                                      sx={{
+                                        color: "text.secondary",
+                                        fontWeight: "400",
+                                      }}
+                                    >
+                                      <ComputerOutlined fontSize="small" />
+                                      <Typography variant="body2">Online</Typography>
+                                    </Stack>
+                                  )}
+                                  <Divider
+                                    orientation="vertical"
+                                    sx={{
+                                      height: "45%",
+                                    }}
+                                  />
+                                  <Stack
+                                    direction="row"
+                                    gap={1}
+                                    ml={1}
+                                    alignItems="center"
+                                    sx={{
+                                      color: "text.secondary",
+                                      fontWeight: "400",
+                                    }}
+                                  >
+                                    <PeopleOutline fontSize="small" />
+                                    <Typography variant="body2"> {usersCount} members</Typography>
+                                  </Stack>
+                                </Stack>
+                              </Stack>
+                            </Stack>
+                            <Stack gap={2} pt={1} alignItems="flex-end">
+                              <Stack direction="row" gap={2} alignItems="center">
+                                <CalendarMonthOutlined color="secondary" />
+                                <Typography variant="h4" color="secondary" noWrap fontWeight="500">
+                                  <LocalTime date={startAt} formatter={(d) => d.toLocaleDateString()} />
+                                </Typography>
+                              </Stack>
+                              <Button
+                                size="large"
+                                color="secondary"
+                                endIcon={<ArrowRightAltOutlined fontSize="large" />}
+                                sx={{
+                                  textWrap: "nowrap",
+                                  width: "min-content",
+                                }}
+                              >
+                                Zobacz wydarzenie
+                              </Button>
+                            </Stack>
+                          </ListItem>
+                        )
+                      )}
                     </List>
                   </CardContent>
                   <CardActions
