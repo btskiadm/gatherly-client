@@ -1,5 +1,6 @@
 "use client";
 
+import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
 import { GroupDetails } from "@/app/model/model";
 import {
@@ -21,9 +22,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 
 export const CalendarWrapper = styled("div")(
   ({ theme }) => `
-  min-height: 520px;
-  max-height: 800px;
-  height: clamp(520px, 50vh, 800px);
+  flex: 1;
 
   .fc-header-toolbar {
     display: none !important;
@@ -169,7 +168,7 @@ export const GroupCalendar = ({ groupDetails }: Props) => {
   );
 
   return (
-    <Stack gap={1}>
+    <Stack gap={1} flex={1}>
       <Stack direction="row" justifyContent="space-between" gap={1}>
         <ButtonGroup size="small">
           <Button onClick={handleDayGridMonth}>Month</Button>
@@ -218,22 +217,32 @@ export const GroupCalendar = ({ groupDetails }: Props) => {
 };
 
 function renderDayHeaderContent(args: DayHeaderContentArg) {
-  return (
-    <TruncatedTypography variant="caption" fontWeight={600}>
-      {args.view.type === "dayGridMonth" && args.text}
-      {args.view.type === "timeGridWeek" &&
-        new Intl.DateTimeFormat("pl-PL", {
-          day: "2-digit",
-          month: "2-digit",
-        }).format(args.date)}
-
-      {args.view.type == "timeGridDay" &&
-        new Intl.DateTimeFormat("pl-PL", {
+  if (args.view.type == "timeGridDay") {
+    return (
+      <TruncatedTypography variant="body3" fontWeight={600} color="text.secondary">
+        {new Intl.DateTimeFormat("pl-PL", {
           day: "2-digit",
           month: "2-digit",
           weekday: "long",
         }).format(args.date)}
-    </TruncatedTypography>
+      </TruncatedTypography>
+    );
+  }
+
+  return (
+    <Stack direction="column" justifyContent="center">
+      <TruncatedTypography variant="body3" fontWeight={600} color="text.secondary">
+        {new Intl.DateTimeFormat("pl-PL", {
+          day: "2-digit",
+          month: "2-digit",
+        }).format(args.date)}
+      </TruncatedTypography>
+      <TruncatedTypography variant="body3" fontWeight={600} color="text.secondary">
+        {new Intl.DateTimeFormat("pl-PL", {
+          weekday: "short",
+        }).format(args.date)}
+      </TruncatedTypography>
+    </Stack>
   );
 }
 
@@ -278,7 +287,7 @@ function renderEventContent(eventInfo: EventContentArg) {
           <Tooltip title={eventInfo.event.title}>
             <Stack direction={{ sm: "column" }} gap={0} minWidth={0}>
               {eventInfo.timeText && (
-                <Typography variant="body1" display={{ xs: "none", sm: "block" }}>
+                <Typography variant="body2">
                   {eventInfo.event.start &&
                     new Intl.DateTimeFormat("pl-PL", {
                       hour: "numeric",
@@ -286,32 +295,22 @@ function renderEventContent(eventInfo: EventContentArg) {
                     }).format(new Date(eventInfo.event.start))}
                 </Typography>
               )}
-              {eventInfo.timeText && (
-                <Typography variant="caption" display={{ xs: "block", sm: "none" }}>
-                  {eventInfo.event.start &&
-                    new Intl.DateTimeFormat("pl-PL", {
-                      hour: "numeric",
-                      minute: "numeric",
-                    }).format(new Date(eventInfo.event.start))}
-                </Typography>
-              )}
-              <TruncatedTypography display={{ xs: "none", sm: "block" }} variant="body1">
-                {eventInfo.event.title}
-              </TruncatedTypography>
-              <TruncatedTypography display={{ xs: "block", sm: "none" }} variant="caption">
-                {eventInfo.event.title}
-              </TruncatedTypography>
+              <TruncatedTypography variant="body3">{eventInfo.event.title}</TruncatedTypography>
             </Stack>
           </Tooltip>
         </>
       )}
       {eventInfo.view.type === "timeGridWeek" && (
         <Tooltip title={eventInfo.event.title}>
-          <TruncatedTypography variant="body2">{eventInfo.event.title}</TruncatedTypography>
+          <ClampTypography clamp={4} variant="body3">
+            {eventInfo.event.title}
+          </ClampTypography>
         </Tooltip>
       )}
       {eventInfo.view.type === "timeGridDay" && (
-        <TruncatedTypography variant="body2">{eventInfo.event.title}</TruncatedTypography>
+        <ClampTypography clamp={4} variant="body2">
+          {eventInfo.event.title}
+        </ClampTypography>
       )}
     </>
   );

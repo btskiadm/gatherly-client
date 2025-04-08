@@ -9,8 +9,14 @@ export default function Layout({
   nav: React.ReactNode;
 }>) {
   return (
-    <Container maxWidth="xl">
-      <Stack direction="row" py={4} gap={4}>
+    <Container
+      maxWidth="xl"
+      sx={{
+        display: "flex",
+        flex: 1,
+      }}
+    >
+      <Stack direction="row" py={4} gap={4} flex={1}>
         <Box width="100%" maxWidth="360px" flexShrink={0}>
           {nav}
         </Box>

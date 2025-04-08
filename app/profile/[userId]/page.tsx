@@ -240,7 +240,6 @@ export default function Page() {
               >
                 O mnie
               </Typography>
-              x
               <Divider
                 orientation="vertical"
                 sx={{

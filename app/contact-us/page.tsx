@@ -1,8 +1,8 @@
-import { Button, Container, FormControl, IconButton, OutlinedInput, Paper, Stack, Typography } from "@mui/material";
+import { Button, Container, FormControl, IconButton, Paper, Stack, TextField, Typography } from "@mui/material";
 
-import ContactUsImg from "../public/assets/contact-us.jpg";
-import Image from "next/image";
 import { Facebook, Instagram, LinkedIn, Pinterest, SendOutlined, Twitter, YouTube } from "@mui/icons-material";
+import Image from "next/image";
+import ContactUsImg from "../public/assets/contact-us.jpg";
 
 export default function Page() {
   return (
@@ -20,22 +20,22 @@ export default function Page() {
               </Stack>
               <Stack direction="row" gap={2}>
                 <FormControl sx={{ width: "50%" }}>
-                  <OutlinedInput placeholder="First Name"></OutlinedInput>
+                  <TextField label="First Name" variant="outlined" />
                 </FormControl>
                 <FormControl sx={{ width: "50%" }}>
-                  <OutlinedInput placeholder="Second Name"></OutlinedInput>
+                  <TextField label="Second Name" variant="outlined" />
                 </FormControl>
               </Stack>
               <Stack direction="row" gap={2}>
                 <FormControl sx={{ width: "50%" }}>
-                  <OutlinedInput placeholder="Email"></OutlinedInput>
+                  <TextField label="Email" variant="outlined" />
                 </FormControl>
                 <FormControl sx={{ width: "50%" }}>
-                  <OutlinedInput placeholder="Phone No."></OutlinedInput>
+                  <TextField label="Phone No." variant="outlined" />
                 </FormControl>
               </Stack>
               <FormControl>
-                <OutlinedInput multiline minRows={6} placeholder="How can we help you?"></OutlinedInput>
+                <TextField multiline minRows={6} label="How can we help you?" />
               </FormControl>
               <Button variant="contained" sx={{ width: "min-content" }} endIcon={<SendOutlined />}>
                 Send

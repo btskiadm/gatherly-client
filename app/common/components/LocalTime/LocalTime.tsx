@@ -3,13 +3,21 @@
 import { Suspense } from "react";
 import { useHydration } from "../../utils/hooks/useHydration";
 
-export function LocalTime({ date, formatter }: { date: number | string | Date; formatter: (date: Date) => string }) {
+export function LocalTime<T extends number | string | Date>({
+  date,
+  formatter,
+}: {
+  date: T;
+  formatter: (date: Date) => string;
+}) {
   const hydrated = useHydration();
+
+  const d = new Date(date);
 
   return (
     <Suspense key={hydrated ? "local" : "utc"}>
       <time dateTime={new Date(date).toISOString()}>
-        {formatter(new Date(date))}
+        {formatter(d)}
         {hydrated ? "" : " (UTC)"}
       </time>
     </Suspense>

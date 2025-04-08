@@ -4,6 +4,7 @@ query Me {
     username
     email
     createdAt
+    status
     role
     smallPhoto
     mediumPhoto

@@ -4,15 +4,20 @@ import Logo from "@/app/public/assets/logo.webp";
 import {
   AddCircleOutlineRounded,
   CalendarMonthOutlined,
+  ChatOutlined,
   Close,
+  ContactSupportOutlined,
   CookieOutlined,
   Groups2Outlined,
   HelpOutline,
   MenuOutlined,
+  NotificationsOutlined,
   PrivacyTipOutlined,
 } from "@mui/icons-material";
 import {
+  alpha,
   AppBar,
+  Badge,
   Box,
   Button,
   Container,
@@ -28,7 +33,6 @@ import {
   Stack,
   Toolbar,
   Typography,
-  alpha,
   useScrollTrigger,
 } from "@mui/material";
 import dynamic from "next/dynamic";
@@ -147,11 +151,11 @@ export const ApplicationNavBar = (props: Props) => {
           <Divider />
           <List dense>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
-              <ListItemButton href="/" LinkComponent={Link}>
+              <ListItemButton href="/contact-us" LinkComponent={Link}>
                 <ListItemIcon>
                   <HelpOutline />
                 </ListItemIcon>
-                <ListItemText primary="Pomoc" />
+                <ListItemText primary="Kontakt" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding onClick={handleCloseNavMenu}>
@@ -216,7 +220,7 @@ export const ApplicationNavBar = (props: Props) => {
                 sx={(theme) => ({
                   gap: 1,
                   [theme.breakpoints.up("sm")]: {
-                    gap: 2,
+                    gap: 4,
                   },
                 })}
               >
@@ -236,6 +240,91 @@ export const ApplicationNavBar = (props: Props) => {
                 >
                   Utwórz nowe
                 </Button>
+                <Stack direction="row" gap={0.5}>
+                  <Badge
+                    slotProps={{
+                      badge: {
+                        style: {
+                          borderRadius: "50%",
+                          borderColor: "white",
+                          borderWidth: "2px",
+                          borderStyle: "solid",
+                          right: "6px",
+                          top: "6px",
+                          width: "12px",
+                          height: "12px",
+                        },
+                      },
+                    }}
+                    color="warning"
+                    variant="dot"
+                    anchorOrigin={{
+                      horizontal: "right",
+                      vertical: "top",
+                    }}
+                  >
+                    <IconButton
+                      size="medium"
+                      sx={{
+                        flexShrink: 0,
+                        width: "40px",
+                        height: "40px",
+                        bgcolor: "background.paper",
+                        boxShadow: "rgba(0, 0, 0, 0.086) 0px 5px 10px",
+                        "&:hover": {
+                          "& .MuiSvgIcon-root": {
+                            color: "text.primary",
+                          },
+                          bgcolor: "background.paper",
+                        },
+                      }}
+                    >
+                      <NotificationsOutlined fontSize="small" />
+                    </IconButton>
+                  </Badge>
+                  <Badge
+                    slotProps={{
+                      badge: {
+                        style: {
+                          borderRadius: "50%",
+                          borderColor: "white",
+                          borderWidth: "2px",
+                          borderStyle: "solid",
+                          right: "6px",
+                          top: "6px",
+                          width: "12px",
+                          height: "12px",
+                        },
+                      },
+                    }}
+                    color="warning"
+                    variant="dot"
+                    anchorOrigin={{
+                      horizontal: "right",
+                      vertical: "top",
+                    }}
+                  >
+                    <IconButton
+                      size="medium"
+                      sx={{
+                        flexShrink: 0,
+                        width: "40px",
+                        height: "40px",
+                        bgcolor: "background.paper",
+                        boxShadow: "rgba(0, 0, 0, 0.086) 0px 5px 10px",
+                        "&:hover": {
+                          "& .MuiSvgIcon-root": {
+                            color: "text.primary",
+                          },
+                          bgcolor: "background.paper",
+                        },
+                      }}
+                    >
+                      <ChatOutlined fontSize="small" />
+                    </IconButton>
+                  </Badge>
+                </Stack>
+
                 <LoginButton />
                 <Box sx={{ flexGrow: 1, display: "flex" }}>
                   <IconButton color="inherit" onClick={handleOpenNavMenu}>

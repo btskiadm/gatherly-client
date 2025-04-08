@@ -142,4 +142,4 @@ export type GetUsersByUsernameQuery = { __typename?: 'Query', getUsersByUsername
 export type MeQueryVariables = Model.Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string } | null };

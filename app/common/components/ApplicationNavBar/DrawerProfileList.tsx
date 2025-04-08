@@ -46,7 +46,7 @@ export const DrawerProfileList = ({ bottomChildren }: Props) => {
     <>
       <List dense>
         <ListItem disablePadding>
-          <ListItemButton href="/profile/123-456-789">
+          <ListItemButton href={`/profile/${me.id}`}>
             <ListItemIcon>
               <PersonOutline />
             </ListItemIcon>

@@ -80,7 +80,7 @@ export const GroupHeaderButton = () => {
     // todo: fix confirm
     const confirmed = confirm("Are you sure you want to leave this group ?");
 
-    if (confirmed) {
+    if (!confirmed) {
       return;
     }
 

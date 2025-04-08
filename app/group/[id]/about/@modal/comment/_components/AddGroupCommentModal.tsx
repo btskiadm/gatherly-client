@@ -3,9 +3,10 @@
 import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
 import { SendComment, SendCommentRef } from "@/app/common/components/SendComment/SendComment";
 import { addCommentMutationFn } from "@/app/common/graphql/options/mutation/addGroupCommentMutationFn";
+import { getGroupCommentsQueryKey } from "@/app/common/graphql/options/query/getGroupCommentsQueryOptions";
 import { meQueryOptions } from "@/app/common/graphql/options/query/meQueryOptions";
-import { AppRole } from "@/app/model/model";
-import { AddGroupCommentMutationVariables, GetGroupDetailsQuery } from "@/app/model/operations";
+import { AccountStatus, AppRole } from "@/app/model/model";
+import { AddGroupCommentMutationVariables, GetGroupCommentsQuery, GetGroupDetailsQuery } from "@/app/model/operations";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { create } from "mutative";
 import { useRouter } from "next/navigation";
@@ -13,8 +14,10 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 
 export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const queryClient = useQueryClient();
+  const componentRef = useRef<SendCommentRef>(null);
+  const [loading, setLoading] = useState(false);
   const { data } = useSuspenseQuery(meQueryOptions());
 
   const mutation = useMutation<
@@ -22,29 +25,30 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
     Error,
     AddGroupCommentMutationVariables,
     {
-      prevDetails: GetGroupDetailsQuery;
-      newDetails: GetGroupDetailsQuery;
+      prevComments: GetGroupDetailsQuery;
+      newComments: GetGroupDetailsQuery;
     } | null
   >({
     mutationFn: addCommentMutationFn,
     onMutate: (args) => {
-      const prevDetails = queryClient.getQueryData<GetGroupDetailsQuery>(["GroupDetailsQuery", groupId]);
+      const prevComments = queryClient.getQueryData<GetGroupCommentsQuery>(getGroupCommentsQueryKey(groupId));
 
-      if (!prevDetails) {
-        console.warn("Cannot mutate group details because it does not exist.");
+      if (!prevComments) {
+        console.warn("Cannot mutate group comments because query data does not exist.");
         return null;
       }
 
       const { me } = data;
 
-      const newDetails = create(prevDetails, (draft) => {
-        draft.getGroupDetails?.comments.push({
+      const newComments = create(prevComments, (draft) => {
+        draft.getGroupComments?.comments.unshift({
           id: "",
           content: args.addGroupCommentInput.content,
           rate: args.addGroupCommentInput.rate,
           createdAt: new Date(),
           user: {
             id: me?.id ?? "",
+            status: me?.status ?? AccountStatus.Active,
             email: me?.email ?? "",
             largePhoto: me?.largePhoto ?? "",
             smallPhoto: me?.smallPhoto ?? "",
@@ -56,25 +60,22 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
         });
       });
 
-      queryClient.setQueryData(["GroupDetailsQuery", groupId], newDetails);
+      queryClient.setQueryData(getGroupCommentsQueryKey(groupId), newComments);
 
       return {
-        prevDetails,
-        newDetails,
+        prevComments,
+        newComments,
       };
     },
     onError: (error, variables, context) => {
-      if (context?.prevDetails) {
-        queryClient.setQueryData(["GroupDetailsQuery", groupId], context.prevDetails);
+      if (context?.prevComments) {
+        queryClient.setQueryData(getGroupCommentsQueryKey(groupId), context.prevComments);
       }
     },
     onSettled: (data, error, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["GroupDetailsQuery", groupId] });
+      queryClient.invalidateQueries({ queryKey: getGroupCommentsQueryKey(groupId) });
     },
   });
-
-  const componentRef = useRef<SendCommentRef>(null);
-  const router = useRouter();
 
   const handleCancel = useCallback(() => {
     router.back();

@@ -19,7 +19,7 @@ export const GroupCalendarPage = ({ groupId }: Props) => {
   }
 
   return (
-    <Stack gap={{ xs: 2, sm: 3 }} width="100%">
+    <Stack gap={{ xs: 2, sm: 3 }} width="100%" flex={1}>
       <GroupHeader primary="Calendar" secondary="See group events on calendar." />
       <GroupCalendar groupDetails={data.getGroupDetails} />
     </Stack>

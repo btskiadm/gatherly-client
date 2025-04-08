@@ -113,6 +113,7 @@ export const GroupEventsList = ({ events }: Props) => {
                               py: "2px",
                               px: 1,
                               fontSize: "0.75rem",
+                              textWrap: "nowrap",
                             }}
                           >
                             {categories.length > 1
@@ -133,6 +134,7 @@ export const GroupEventsList = ({ events }: Props) => {
                               sx={{
                                 color: "text.secondary",
                                 fontWeight: "400",
+                                textWrap: "nowrap",
                               }}
                             >
                               {cities.length > 1 ? `${cities[0].label}, +${cities.length - 1} inne` : cities[0].label}
@@ -167,6 +169,7 @@ export const GroupEventsList = ({ events }: Props) => {
                             sx={{
                               color: "text.secondary",
                               fontWeight: "400",
+                              textWrap: "nowrap",
                             }}
                           >
                             <PeopleOutlined fontSize="small" />

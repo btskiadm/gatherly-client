@@ -1,6 +1,6 @@
-import { ArrowBack, Close } from "@mui/icons-material";
+import { ArrowBack, CloseOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, DialogContent, IconButton, Stack } from "@mui/material";
+import { Button, DialogContent, IconButton, Stack } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { BootstrapDialog, BootstrapDialogActions, BootstrapDialogTitle } from "../bootstrap-dialog";
 
@@ -40,7 +40,7 @@ export const ModalTemplate = ({ open, loading, title, action, cancel, confirm, b
 
   return (
     <BootstrapDialog onClose={onCancel} open={open}>
-      <BootstrapDialogTitle>{title}</BootstrapDialogTitle>
+      <BootstrapDialogTitle variant="h5">{title}</BootstrapDialogTitle>
       <IconButton
         aria-label="close"
         onClick={onCancel}
@@ -51,7 +51,7 @@ export const ModalTemplate = ({ open, loading, title, action, cancel, confirm, b
           color: theme.palette.grey[500],
         })}
       >
-        <Close />
+        <CloseOutlined />
       </IconButton>
       <DialogContent dividers>{children}</DialogContent>
       <BootstrapDialogActions>
