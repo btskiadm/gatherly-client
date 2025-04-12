@@ -3,6 +3,7 @@
 import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { LocalTime } from "@/app/common/components/LocalTime/LocalTime";
 import { Link } from "@/app/common/components/next-link";
+import { sendFriendRequestMutationFn } from "@/app/common/graphql/options/mutation/sendFriendRequestMutationFn";
 import { getUserWithProfileQueryOptions } from "@/app/common/graphql/options/query/getUserWithProfileQueryOptions";
 import {
   AddOutlined,
@@ -18,6 +19,7 @@ import {
   MoreHorizOutlined,
   MusicNote,
   PeopleOutline,
+  PersonAddOutlined,
   Phone,
   PlaceOutlined,
   SendOutlined,
@@ -41,18 +43,46 @@ import {
   List,
   ListItem,
   ListItemAvatar,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Pagination,
+  Popover,
   Stack,
+  styled,
   Typography,
 } from "@mui/material";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { notFound, useParams } from "next/navigation";
-import { Suspense } from "react";
+import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
+
+const StyledList = styled(List)(({ theme }) => ({
+  "& .MuiListItemButton-root": {
+    width: "100%",
+  },
+
+  "& .MuiListItemIcon-root": {
+    minWidth: theme.spacing(4),
+  },
+}));
 
 export default function Page() {
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+
   const { userId: _userId }: { userId: string } = useParams();
 
   const { data } = useSuspenseQuery(getUserWithProfileQueryOptions({ userId: _userId }));
+
+  const sendFriendRequestMutation = useMutation({
+    mutationFn: sendFriendRequestMutationFn,
+    onSuccess(data, variables, context) {
+      toast.success("Zaproszenie wysłane!");
+    },
+    onError() {
+      toast.error("Wystąpił błąd. Spróbuj ponownie później.");
+    },
+  });
 
   if (!data?.getUserWithProfile) {
     return notFound();
@@ -72,7 +102,21 @@ export default function Page() {
     },
     getGroupTilesByUserId: { count: groupsCount, groups },
     getEventTilesByUserId: { count: eventsCount, events },
+    getFriendsList: { friends, count },
   } = data;
+
+  const handleMenuClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    setMenuAnchor(e.currentTarget);
+  }, []);
+
+  const handleMenuClose = useCallback(() => {
+    setMenuAnchor(null);
+  }, []);
+
+  const handleSendFriendRequest = useCallback(async () => {
+    const receiverId = _userId;
+    await sendFriendRequestMutation.mutateAsync({ receiverId });
+  }, [_userId]);
 
   const comment = (
     <ListItem
@@ -96,28 +140,36 @@ export default function Page() {
           }}
         />
       </ListItemAvatar>
-      <Stack direction="row" gap={1} justifyContent="space-between" width="100%" alignItems="flex-start">
-        <Stack direction="column" gap={1} justifyContent="flex-start" alignItems="flex-start">
-          <ClampTypography variant="body1" clamp={1} color="secondary">
-            seoquesto
-          </ClampTypography>
-          <Typography variant="body2" color="text.secondary">
-            Minim fugiat quis est ullamco est consequat nostrud ut fugiat qui ullamco ea enim. Reprehenderit id dolore
-            deserunt nulla ullamco qui pariatur commodo reprehenderit pariatur occaecat amet. Ut dolor anim enim anim
-            amet aliquip deserunt do duis exercitation in reprehenderit sunt. Pariatur veniam reprehenderit consequat
-            laborum amet. Esse commodo qui commodo incididunt enim laborum consectetur fugiat sint ea velit. Adipisicing
-            nostrud voluptate consectetur ipsum nostrud ea amet occaecat consectetur consectetur nulla ex consectetur.
-            Minim nostrud ullamco do sunt laboris culpa ea qui aliqua eiusmod incididunt. Fugiat dolor non cillum anim.
-          </Typography>
+      <Stack direction="column" gap={1}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%">
+          <Link
+            href={`/profile/${id}`}
+            sx={{
+              textDecoration: "none",
+            }}
+          >
+            <ClampTypography variant="body1" clamp={1} color="secondary">
+              {username}
+            </ClampTypography>
+          </Link>
+          <Stack direction="row" gap={0.5} alignItems="center">
+            <Typography noWrap variant="body3" color="text.secondary">
+              {/* <LocalTime date={comment.createdAt} formatter={(d) => d.toLocaleString()} /> */}
+              March 15, 2024
+            </Typography>
+            <IconButton size="small" onClick={() => alert("Not implemented.")}>
+              <MoreHorizOutlined fontSize="small" />
+            </IconButton>
+          </Stack>
         </Stack>
-        <Stack direction="row" gap={0.5} alignItems="center">
-          <Typography noWrap variant="body3" color="text.secondary">
-            March 15, 2024
-          </Typography>
-          <IconButton size="small" onClick={() => alert("Not implemented.")}>
-            <MoreHorizOutlined fontSize="small" />
-          </IconButton>
-        </Stack>
+        <Typography variant="body2" color="text.secondary">
+          Minim fugiat quis est ullamco est consequat nostrud ut fugiat qui ullamco ea enim. Reprehenderit id dolore
+          deserunt nulla ullamco qui pariatur commodo reprehenderit pariatur occaecat amet. Ut dolor anim enim anim amet
+          aliquip deserunt do duis exercitation in reprehenderit sunt. Pariatur veniam reprehenderit consequat laborum
+          amet. Esse commodo qui commodo incididunt enim laborum consectetur fugiat sint ea velit. Adipisicing nostrud
+          voluptate consectetur ipsum nostrud ea amet occaecat consectetur consectetur nulla ex consectetur. Minim
+          nostrud ullamco do sunt laboris culpa ea qui aliqua eiusmod incididunt. Fugiat dolor non cillum anim.
+        </Typography>
       </Stack>
     </ListItem>
   );
@@ -220,7 +272,7 @@ export default function Page() {
                     width: "min-content",
                     height: "min-content",
                   }}
-                  onClick={() => alert("Not implemented.")}
+                  onClick={handleMenuClick}
                 >
                   <MoreHorizOutlined fontSize="small" />
                 </IconButton>
@@ -531,6 +583,99 @@ export default function Page() {
                     </CardContent>
                   </Card>
                 )}
+
+                <Card
+                  elevation={1}
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <CardHeader
+                    sx={{
+                      padding: "18px 24px",
+                    }}
+                    title={<Typography variant="h5">Znajomi - {count}</Typography>}
+                    subheader={
+                      <Typography variant="body2" color="text.secondary">
+                        Moi znajomi
+                      </Typography>
+                    }
+                  />
+                  <CardContent
+                    sx={{
+                      p: "0 24px 24px",
+                    }}
+                  >
+                    <Grid2 container spacing={2}>
+                      {friends.map((friend) => (
+                        <Grid2
+                          key={friend.id}
+                          size={{
+                            sm: 4,
+                          }}
+                        >
+                          <Badge
+                            sx={{
+                              display: "flex",
+                              paddingBottom: "75%",
+                              position: "relative",
+                              verticalAlign: "middle",
+                            }}
+                            variant="dot"
+                            color="success"
+                            slotProps={{
+                              badge: {
+                                style: {
+                                  borderRadius: "50%",
+                                  backgroundColor: "rgb(114, 214, 58)",
+                                  right: "12px",
+                                  top: "12px",
+                                  width: "10px",
+                                  height: "10px",
+                                  borderColor: "white",
+                                  borderWidth: "1px",
+                                  borderStyle: "solid",
+                                },
+                              },
+                            }}
+                          >
+                            <Avatar
+                              src={friend.user.smallPhoto}
+                              alt="username"
+                              variant="rounded"
+                              sx={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                                textAlign: "center",
+                                objectFit: "cover",
+                                "&:after": {
+                                  content: "''",
+                                  position: "absolute",
+                                  display: "inline-block",
+                                  inset: "0px",
+                                  background: "linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.95))",
+                                },
+                              }}
+                            />
+                            <Typography
+                              position="absolute"
+                              variant="body1"
+                              color="primary.contrastText"
+                              sx={{
+                                bottom: 0,
+                                left: "10px",
+                                right: "10px",
+                              }}
+                            >
+                              {friend.user.username}
+                            </Typography>
+                          </Badge>
+                        </Grid2>
+                      ))}
+                    </Grid2>
+                  </CardContent>
+                </Card>
               </Stack>
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 8 }}>
@@ -980,6 +1125,30 @@ export default function Page() {
           </Grid2>
         </Stack>
       </Container>
+      <Popover
+        anchorEl={menuAnchor}
+        open={!!menuAnchor}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <StyledList dense disablePadding>
+          <ListItem disablePadding onClick={handleMenuClose}>
+            <ListItemButton onClick={handleSendFriendRequest} disabled={sendFriendRequestMutation.isPending}>
+              <ListItemIcon>
+                <PersonAddOutlined fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Zaproś do znajomych" />
+            </ListItemButton>
+          </ListItem>
+        </StyledList>
+      </Popover>
     </>
   );
 }

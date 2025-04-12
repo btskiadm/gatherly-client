@@ -16,7 +16,6 @@ import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { Link } from "@/app/common/components/next-link";
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
 import { GroupTile as GroupTileType } from "@/app/model/model";
-import { LocalTime } from "@/app/common/components/LocalTime/LocalTime";
 
 /**
  * Formats the date difference into a human-readable format.
@@ -103,7 +102,7 @@ export const GroupTile = ({
           <Stack direction="row" gap={0.5} flexShrink={0} flexWrap="wrap" maxHeight="56px" overflow="hidden">
             {/* Cities */}
             {cities.length > 0 && (
-              <Tooltip title={`Available cities: ${cities.map(({ label }) => label).join(", ")}`}>
+              <Tooltip title={`Dostępne miasta: ${cities.map(({ label }) => label).join(", ")}`}>
                 <Button
                   variant="outlined"
                   size="small"
@@ -120,19 +119,19 @@ export const GroupTile = ({
                     "& .MuiButton-startIcon": { color: "text.secondary", marginLeft: 0, marginRight: "3px" },
                     "& .MuiButton-endIcon": { color: "text.secondary", marginLeft: "3px", marginRight: 0 },
                   }}
-                  onClick={openCitiesPopover}
+                  onClick={cities.length > 0 ? openCitiesPopover : () => {}}
                 >
                   {cities.length > 1
                     ? `${cities[0].label} +${cities.length - 1}`
                     : cities.length === 1
                     ? cities[0].label
-                    : "Remote Group"}
+                    : "Grupa zdalna"}
                 </Button>
               </Tooltip>
             )}
 
             {cities.length === 0 && (
-              <Tooltip title="Remote Group">
+              <Tooltip title="Grupa zdalna">
                 <Chip
                   size="small"
                   variant="outlined"
@@ -144,7 +143,7 @@ export const GroupTile = ({
 
             {/* Categories */}
             {categories.length > 0 && (
-              <Tooltip title={`Available categories: ${categories.map(({ label }) => label).join(", ")}`}>
+              <Tooltip title={`Dostępne kategorie: ${categories.map(({ label }) => label).join(", ")}`}>
                 <Button
                   variant="outlined"
                   size="small"
@@ -161,24 +160,24 @@ export const GroupTile = ({
                     "& .MuiButton-startIcon": { color: "text.secondary", marginLeft: 0, marginRight: "3px" },
                     "& .MuiButton-endIcon": { color: "text.secondary", marginLeft: "3px", marginRight: 0 },
                   }}
-                  onClick={openCategoriesPopover}
+                  onClick={categories.length > 0 ? openCategoriesPopover : () => {}}
                 >
                   {categories.length > 1
                     ? `${categories[0].label} +${categories.length - 1}`
                     : categories.length === 1
                     ? categories[0].label
-                    : "No Categories"}
+                    : "Brak kateogrii"}
                 </Button>
               </Tooltip>
             )}
 
             {/* Members Count */}
-            <Tooltip title={`${usersCount} members`}>
+            <Tooltip title={`${usersCount} członków`}>
               <Chip size="small" variant="outlined" label={usersCount} icon={<Group />} sx={{ zIndex: 1 }} />
             </Tooltip>
 
             {/* Events Count */}
-            <Tooltip title={`${eventsCount} events`}>
+            <Tooltip title={`${eventsCount} wydarzeń`}>
               <Chip
                 size="small"
                 variant="outlined"
@@ -190,7 +189,7 @@ export const GroupTile = ({
 
             {/* Creation Date */}
             {createdAt && (
-              <Tooltip title={`Created at ${createdAtDate.toISOString()}`}>
+              <Tooltip title={`Utworzono ${createdAtDate.toISOString()}`}>
                 <Chip
                   size="small"
                   variant="outlined"
@@ -232,7 +231,7 @@ export const GroupTile = ({
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         onClose={closeCategoriesPopover}
       >
-        <Stack direction="column" gap={1} px={1} py={2}>
+        <Stack direction="column" gap={1} px={3} py={2}>
           {categories.slice(1).map((category) => (
             <Chip
               key={category.id}

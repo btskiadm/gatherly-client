@@ -4,6 +4,7 @@ import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 import { ClientError, GraphQLClient } from "graphql-request";
 import { RequestConfig } from "graphql-request/build/legacy/helpers/types";
 import { env } from "../utils/env";
+import { resetWsClient } from "./wsClient";
 
 const timeout = 25000; // 25 sekund
 
@@ -38,7 +39,7 @@ const fetchWithAuthentication: RequestConfig["fetch"] = (input, init) => {
   });
 };
 
-const graphQLClient = new GraphQLClient(env.NEXT_PUBLIC_BACKEND_GRAPHQL, {
+export const graphQLClient = new GraphQLClient(env.NEXT_PUBLIC_BACKEND_GRAPHQL, {
   credentials: "include",
   keepalive: true,
   fetch: fetchWithAuthentication,
@@ -57,6 +58,8 @@ async function refreshAccessToken(): Promise<void> {
 
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("user", JSON.stringify(user));
+
+    resetWsClient();
   } catch (error) {
     console.error("Refresh access token failed.", error);
     throw error;

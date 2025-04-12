@@ -1,5 +1,5 @@
 "use client";
-import { CommentInput } from "@/app/common/components/CommentInput/comment-input";
+// import { CommentInput } from "@/app/common/components/CommentInput/comment-input";
 import { Link } from "@/app/common/components/next-link";
 import { stringToColor } from "@/app/common/utils/string-to-color";
 import { MoreVert, ReportGmailerrorredOutlined } from "@mui/icons-material";
@@ -99,7 +99,7 @@ export const GroupChatFeed = () => {
               mx: -2,
             }}
           />
-          <CommentInput />
+          {/* <CommentInput /> */}
         </Stack>
       </Paper>
       <Menu

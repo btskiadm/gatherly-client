@@ -1,6 +1,6 @@
 import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { Link } from "@/app/common/components/next-link";
-import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
+// import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { VisibilityOutlined } from "@mui/icons-material";
 import { Button, Divider, Grid2, Paper, Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <Paper>
       <Stack>
-        <Image
+        {/* <Image
           src={GroupImage4x3}
           alt="city map"
           sizes="100vw"
@@ -19,7 +19,7 @@ export default function Page() {
             cursor: "pointer",
             objectFit: "cover",
           }}
-        />
+        /> */}
         <Stack gap={2} px={{ xs: 2, sm: 3 }} py={{ xs: 2, sm: 2 }}>
           <ClampTypography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ClampTypography>
           <Grid2 container spacing={1}>

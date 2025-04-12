@@ -86,4 +86,22 @@ query GetUserWithProfile($userId: String!) {
       }
     }
   }
+  getFriendsList(userId: $userId, skip: 0, take: 6) {
+    friends {
+      id
+      createdAt
+      user {
+        id
+        username
+        email
+        createdAt
+        role
+        status
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+    }
+    count
+  }
 }

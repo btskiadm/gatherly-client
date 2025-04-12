@@ -1,0 +1,30 @@
+mutation CancelFriendRequest($requestId: String!) {
+  cancelFriendRequest(requestId: $requestId) {
+    id
+    status
+    createdAt
+    updatedAt
+    sender {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    receiver {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+  }
+}

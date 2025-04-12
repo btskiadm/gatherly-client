@@ -1,0 +1,33 @@
+query GetReceivedFriendRequests($skip: Int!, $take: Int!) {
+  getReceivedFriendRequests(skip: $skip, take: $take) {
+    friendRequests {
+      id
+      status
+      createdAt
+      updatedAt
+      sender {
+        id
+        username
+        email
+        createdAt
+        role
+        status
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+      receiver {
+        id
+        username
+        email
+        createdAt
+        role
+        status
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+    }
+    count
+  }
+}

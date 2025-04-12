@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 const GroupHeaderButton = dynamic(
   () => import("./GroupHeaderButton").then((component) => component.GroupHeaderButton),
   {
-    ssr: false,
+    ssr: !!false,
     loading: () => <CircularProgress size={36} />, // size=36 button small
   }
 );

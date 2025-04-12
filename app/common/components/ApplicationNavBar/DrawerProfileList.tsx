@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  AdminPanelSettingsOutlined,
   ChatBubbleOutline,
   Diversity1Outlined,
   EventOutlined,
@@ -15,6 +16,8 @@ import { useCallback } from "react";
 import { logoutMutationFn } from "../../graphql/options/mutation/logoutMutationFn";
 import { meQueryOptions } from "../../graphql/options/query/meQueryOptions";
 import { Link } from "../next-link";
+import toast from "react-hot-toast";
+import { AppRole } from "@/app/model/model";
 
 interface Props {
   bottomChildren?: React.ReactElement;
@@ -23,14 +26,17 @@ interface Props {
 export const DrawerProfileList = ({ bottomChildren }: Props) => {
   const {
     data: { me },
-    isLoading,
   } = useSuspenseQuery(meQueryOptions());
 
   const logoutMutation = useMutation({
     mutationFn: logoutMutationFn,
     onSuccess(data, variables, context) {
       localStorage.removeItem("accessToken");
+      toast.success("Zostałeś wylogowany!");
       window.location.replace("/groups");
+    },
+    onError() {
+      toast.error("Wystąpił błąd w trakcie próby wylogowania. Spróbuj ponownie później.");
     },
   });
 
@@ -38,7 +44,7 @@ export const DrawerProfileList = ({ bottomChildren }: Props) => {
     await logoutMutation.mutateAsync();
   }, [logoutMutation]);
 
-  if (isLoading || !me) {
+  if (!me) {
     return null;
   }
 
@@ -46,13 +52,14 @@ export const DrawerProfileList = ({ bottomChildren }: Props) => {
     <>
       <List dense>
         <ListItem disablePadding>
-          <ListItemButton href={`/profile/${me.id}`}>
+          <ListItemButton href={`/profile/${me.id}`} LinkComponent={Link}>
             <ListItemIcon>
               <PersonOutline />
             </ListItemIcon>
             <ListItemText primary="Mój profil" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
           <ListItemButton href="/" LinkComponent={Link}>
             <ListItemIcon>
@@ -61,38 +68,54 @@ export const DrawerProfileList = ({ bottomChildren }: Props) => {
             <ListItemText primary="Wiadomości" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
-          <ListItemButton href="/" LinkComponent={Link}>
+          <ListItemButton href="/account/settings/events" LinkComponent={Link}>
             <ListItemIcon>
               <EventOutlined />
             </ListItemIcon>
             <ListItemText primary="Twoje wydarzenia" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
-          <ListItemButton href="/" LinkComponent={Link}>
+          <ListItemButton href="/account/settings/groups" LinkComponent={Link}>
             <ListItemIcon>
               <Diversity1Outlined />
             </ListItemIcon>
             <ListItemText primary="Twoje grupy" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
-          <ListItemButton href="/" LinkComponent={Link}>
+          <ListItemButton href="/account/settings/notifications" LinkComponent={Link}>
             <ListItemIcon>
               <NotificationsOutlined />
             </ListItemIcon>
             <ListItemText primary="Powiadomienia" />
           </ListItemButton>
         </ListItem>
+
         <ListItem disablePadding>
-          <ListItemButton href="/account-settings/edit" LinkComponent={Link}>
+          <ListItemButton href="/account/settings/profile" LinkComponent={Link}>
             <ListItemIcon>
               <TuneOutlined />
             </ListItemIcon>
             <ListItemText primary="Ustawienia" />
           </ListItemButton>
         </ListItem>
+
+        {(me?.role === AppRole.Admin || me?.role === AppRole.Moderator) && (
+          <ListItem disablePadding>
+            <ListItemButton href="/admin/dashboard/users" LinkComponent={Link}>
+              <ListItemIcon>
+                <AdminPanelSettingsOutlined />
+              </ListItemIcon>
+              <ListItemText primary="Admin panel" />
+            </ListItemButton>
+          </ListItem>
+        )}
+
         <ListItem disablePadding>
           <ListItemButton onClick={handleLogout}>
             <ListItemIcon>
@@ -102,6 +125,7 @@ export const DrawerProfileList = ({ bottomChildren }: Props) => {
           </ListItemButton>
         </ListItem>
       </List>
+
       {bottomChildren}
     </>
   );

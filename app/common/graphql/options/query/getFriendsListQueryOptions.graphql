@@ -1,0 +1,20 @@
+query GetFriendsList($userId: String, $skip: Int!, $take: Int!) {
+  getFriendsList(userId: $userId, skip: $skip, take: $take) {
+    friends {
+      id
+      createdAt
+      user {
+        id
+        username
+        email
+        createdAt
+        role
+        status
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
+    }
+    count
+  }
+}

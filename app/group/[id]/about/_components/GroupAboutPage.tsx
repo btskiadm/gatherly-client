@@ -2,13 +2,13 @@
 
 import { Link } from "@/app/common/components/next-link";
 import { getGroupDetailsQueryOptions } from "@/app/common/graphql/options/query";
+import { getGroupCommentsQueryOptions } from "@/app/common/graphql/options/query/getGroupCommentsQueryOptions";
 import {
   AddOutlined,
   CancelOutlined,
   EventAvailableOutlined,
   PeopleOutline,
   PlaceOutlined,
-  RateReviewOutlined,
   ScheduleOutlined,
   StarOutlineRounded,
 } from "@mui/icons-material";
@@ -19,22 +19,18 @@ import {
   CardContent,
   CardHeader,
   Chip,
-  CircularProgress,
   Grid2,
   Paper,
+  Rating,
   Stack,
   Typography,
 } from "@mui/material";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { GroupHeader } from "../../_components/GroupHeader";
-import { AboutCommentsListClient } from "./AboutCommentsList.client";
-
-// dyskusja + oceny
-// zdjęcia
-// share social media
+import { commentsItemsPerPage } from "../config";
+import { AboutCommentsContent } from "./AboutCommentsContent";
 
 const insertLeadingZero = (val: number) => {
   if (val <= 9) {
@@ -46,6 +42,11 @@ const insertLeadingZero = (val: number) => {
 
 export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
   const { data } = useSuspenseQuery(getGroupDetailsQueryOptions({ groupId }));
+  const {
+    data: {
+      getGroupComments: { count: commentsCount },
+    },
+  } = useSuspenseQuery(getGroupCommentsQueryOptions({ groupId, skip: 0, take: commentsItemsPerPage }));
 
   if (!data) {
     return notFound();
@@ -55,13 +56,12 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
     description,
     upcomingLength,
     pastLength,
-    cancelledLength,
-    rate,
-    users,
+    canceledLength,
+    commentsData,
+    usersData,
     mediumPhoto,
     categories,
     cities,
-    comments = [],
   } = data.getGroupDetails ?? {};
 
   return (
@@ -181,7 +181,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
                 />
                 <Stack direction="column">
                   <Typography variant="h5" color="inherit">
-                    {insertLeadingZero(cancelledLength ?? 0)}
+                    {insertLeadingZero(canceledLength ?? 0)}
                   </Typography>
                   <Typography variant="body3" color="inherit">
                     Anulowane
@@ -216,7 +216,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
                 />
                 <Stack direction="column">
                   <Typography variant="h5" color="inherit">
-                    {insertLeadingZero(users?.length ?? 0)}
+                    {insertLeadingZero(usersData?.count ?? 0)}
                   </Typography>
                   <Typography variant="body3" color="inherit">
                     Członkowie
@@ -251,7 +251,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
                 />
                 <Stack direction="column">
                   <Typography variant="h5" color="inherit">
-                    {insertLeadingZero(users?.length ?? 0)}
+                    {commentsData?.rate ?? 0}
                   </Typography>
                   <Typography variant="body3" color="inherit">
                     Ocena
@@ -303,7 +303,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
             >
               <Stack direction="row" flexWrap="wrap" gap={2}>
                 {categories.map((c) => (
-                  <Chip label={c.label} />
+                  <Chip key={c.id} label={c.label} />
                 ))}
               </Stack>
             </CardContent>
@@ -330,7 +330,7 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
             >
               <Stack direction="row" flexWrap="wrap" gap={2}>
                 {cities.map((c, idx) => (
-                  <Chip label={c.label} icon={idx === 0 ? <PlaceOutlined fontSize="small" /> : undefined} />
+                  <Chip key={c.id} label={c.label} icon={idx === 0 ? <PlaceOutlined fontSize="small" /> : undefined} />
                 ))}
               </Stack>
             </CardContent>
@@ -350,7 +350,29 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
               borderBottomStyle: "solid",
               borderBottomColor: "divider",
             }}
-            title={<Typography variant="h5">Komentarze</Typography>}
+            title={
+              <Stack direction="row" alignItems="center" gap={2}>
+                <Typography variant="h5">Opinie</Typography>
+                <Stack direction="row" gap={0.5}>
+                  <Rating
+                    readOnly
+                    defaultValue={4.75}
+                    precision={0.25}
+                    size="small"
+                    slotProps={{
+                      icon: {
+                        style: {
+                          fontSize: "0.875rem",
+                        },
+                      },
+                    }}
+                  />
+                  <Typography variant="body3" color="text.secondary" textAlign="start">
+                    {data.getGroupDetails?.commentsData.rate}/5 <small>({commentsCount})</small>
+                  </Typography>
+                </Stack>
+              </Stack>
+            }
             action={
               <Button
                 href="about/comment"
@@ -363,15 +385,12 @@ export const GroupAboutPage = ({ groupId }: { groupId: string }) => {
               </Button>
             }
           />
-          <CardContent
-            sx={{
-              p: "0 0 24px",
+          <AboutCommentsContent
+            groupId={groupId}
+            initialData={{
+              rate: data.getGroupDetails?.commentsData.rate ?? 0,
             }}
-          >
-            <Suspense fallback={<CircularProgress />}>
-              <AboutCommentsListClient groupId={groupId} />
-            </Suspense>
-          </CardContent>
+          />
         </Card>
       </Stack>
     </Stack>

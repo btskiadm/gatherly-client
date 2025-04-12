@@ -16,6 +16,7 @@ import {
   Brightness4Outlined,
   LanguageOutlined,
   ExitToAppOutlined,
+  Diversity3Outlined,
 } from "@mui/icons-material";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
@@ -73,6 +74,11 @@ const navigationGroups = [
         href: "/account/settings/events",
         icon: <EventOutlined fontSize="small" />,
         text: "Wydarzenia",
+      },
+      {
+        href: "/account/settings/friends",
+        icon: <Diversity3Outlined fontSize="small" />,
+        text: "Znajomi",
       },
     ],
   },

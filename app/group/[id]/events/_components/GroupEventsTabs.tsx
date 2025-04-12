@@ -73,7 +73,7 @@ export const GroupEventsTabs = ({ groupDetails }: Props) => {
             label={
               <Stack direction="row" flexWrap="nowrap" alignItems="center" gap={0.5}>
                 <Typography variant="button">Anulowane</Typography>
-                <Typography variant="caption">({groupDetails.cancelledLength})</Typography>
+                <Typography variant="caption">({groupDetails.canceledLength})</Typography>
               </Stack>
             }
           />
@@ -89,7 +89,7 @@ export const GroupEventsTabs = ({ groupDetails }: Props) => {
         <GroupEventsList events={groupDetails.past} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <GroupEventsList events={groupDetails.cancelled} />
+        <GroupEventsList events={groupDetails.canceled} />
       </CustomTabPanel>
     </Box>
   );

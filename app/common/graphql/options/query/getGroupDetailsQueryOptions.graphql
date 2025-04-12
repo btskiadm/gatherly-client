@@ -38,7 +38,7 @@ fragment eventTileFragment on EventTile {
 
 query GetGroupDetails($groupId: String!) {
   getGroupDetails(groupId: $groupId) {
-    cancelledLength
+    canceledLength
     categories {
       id
       label
@@ -49,14 +49,8 @@ query GetGroupDetails($groupId: String!) {
       label
       value
     }
-    comments {
-      id
+    commentsData {
       rate
-      content
-      createdAt
-      user {
-        ...userFragment
-      }
     }
     createdAt
     description
@@ -64,19 +58,14 @@ query GetGroupDetails($groupId: String!) {
     id
     largePhoto
     mediumPhoto
-    users {
-      id
-      role
-      user {
-        ...userFragment
-      }
+    usersData {
+      count
     }
     pastLength
     pendingLength
-    rate
     smallPhoto
     title
-    cancelled {
+    canceled {
       monthReference
       events {
         ...eventTileFragment

@@ -1,11 +1,12 @@
 "use client";
 
+import { ClampTypography } from "@/app/common/components/clamp-typography";
+import { LocalTime } from "@/app/common/components/LocalTime/LocalTime";
 import { Link } from "@/app/common/components/next-link";
-import { TruncatedTypography } from "@/app/common/components/truncated-typography";
 import { stringToColor } from "@/app/common/utils/string-to-color";
 import { Comment } from "@/app/model/model";
-import { MoreVert, ReportGmailerrorredOutlined } from "@mui/icons-material";
-import { Avatar, IconButton, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
+import { MoreHorizOutlined, ReportGmailerrorredOutlined } from "@mui/icons-material";
+import { Avatar, IconButton, ListItem, ListItemAvatar, Menu, MenuItem, Rating, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
 
 interface Props {
@@ -19,7 +20,7 @@ export const AboutComment = ({ comment }: Props) => {
     content,
     createdAt,
     rate,
-    user: { smallPhoto, username },
+    user: { id, smallPhoto, username },
   } = comment;
 
   const handleOpenMore = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,53 +35,72 @@ export const AboutComment = ({ comment }: Props) => {
 
   return (
     <>
-      <Stack gap={2} px={3} py={2}>
-        <Stack justifyContent="space-between" direction="row" height="min-content" alignItems="center">
-          <Stack gap={1} direction="row" alignItems="center" minWidth={0}>
-            <Avatar
-              alt={username}
-              sx={{
-                bgcolor: stringToColor(username),
-              }}
-              src={smallPhoto ?? ""}
-            >
-              {username[0]}
-            </Avatar>
-            <Stack minWidth={0}>
-              <Stack direction="row" gap={{ xs: 0.5, sm: 1 }}>
-                <Link
-                  underline="none"
-                  href={`/profile/${username}`}
-                  variant="body1"
-                  color="text.primary"
-                  minWidth="0px"
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
+      <ListItem
+        sx={{
+          gap: 1,
+          px: "24px",
+          py: "16px",
+          alignItems: "flex-start",
+          borderBottomWidth: "1px",
+          borderBottomStyle: "solid",
+          borderBottomColor: "divider",
+        }}
+      >
+        <ListItemAvatar>
+          <Avatar
+            variant="rounded"
+            alt={`${username} avatar`}
+            src={smallPhoto}
+            sx={{
+              bgcolor: stringToColor(username),
+              width: "48px",
+              height: "48px",
+            }}
+          >
+            {username[0]}
+          </Avatar>
+        </ListItemAvatar>
+        <Stack direction="column" gap={1} width="100%">
+          <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%">
+            <Stack direction="row" gap={0.5} alignItems="center">
+              <Link
+                href={`/profile/${id}`}
+                sx={{
+                  textDecoration: "none",
+                }}
+              >
+                <ClampTypography variant="body1" clamp={1} color="secondary">
                   {username}
-                </Link>
-              </Stack>
-              <Stack direction="row" gap={0.5}>
-                <TruncatedTypography variant="body2" color="text.secondary">
-                  {new Intl.DateTimeFormat("pl-PL", {
-                    year: "numeric",
-                    month: "2-digit",
-                    day: "2-digit",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }).format(new Date(createdAt))}
-                </TruncatedTypography>
-                <Rating name="size-small" defaultValue={rate} size="small" readOnly />
-              </Stack>
+                </ClampTypography>
+              </Link>
+              <Rating
+                defaultValue={rate}
+                size="small"
+                readOnly
+                slotProps={{
+                  icon: {
+                    style: {
+                      fontSize: "0.875rem",
+                    },
+                  },
+                }}
+              />
+            </Stack>
+            <Stack direction="row" gap={0.5} alignItems="center">
+              <Typography noWrap variant="body3" color="text.secondary">
+                <LocalTime date={createdAt} formatter={(d) => d.toLocaleString()} />
+              </Typography>
+              <IconButton size="small" onClick={handleOpenMore} sx={{ height: "min-content" }}>
+                <MoreHorizOutlined fontSize="small" />
+              </IconButton>
             </Stack>
           </Stack>
-          <IconButton size="small" onClick={handleOpenMore} sx={{ height: "min-content" }}>
-            <MoreVert fontSize="small" />
-          </IconButton>
+
+          <Typography variant="body2" color="text.secondary">
+            {content}
+          </Typography>
         </Stack>
-        <Typography variant="body1">{content}</Typography>
-      </Stack>
+      </ListItem>
       <Menu
         anchorEl={moreElement}
         open={open}

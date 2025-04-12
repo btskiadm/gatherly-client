@@ -4,7 +4,7 @@ import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { TruncatedFormHelperText } from "@/app/common/components/truncated-form-helper-text";
 import { UploadIntercepted } from "@/app/common/components/Upload/upload-intercepted";
 import { ZodFlattenIssue } from "@/app/common/utils/zod";
-import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
+// import GroupImage4x3 from "@/app/public/assets/group_4x3.webp";
 import { DeleteOutlined, UploadFileRounded } from "@mui/icons-material";
 import {
   Autocomplete,
@@ -102,12 +102,12 @@ export default function Page() {
           <FormControl error={!!avatarError} fullWidth>
             <FormLabel>User Picture</FormLabel>
             <Stack direction="row" gap={2} alignItems="center">
-              <Avatar
+              {/* <Avatar
                 alt="User Avatar"
                 variant="rounded"
                 src={avatar || GroupImage4x3.src}
                 sx={{ width: 128, height: 128 }}
-              />
+              /> */}
 
               <Stack
                 width={{ xs: "100%", sm: "unset" }}

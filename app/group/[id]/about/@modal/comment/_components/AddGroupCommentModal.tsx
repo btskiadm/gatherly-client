@@ -31,7 +31,7 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
   >({
     mutationFn: addCommentMutationFn,
     onMutate: (args) => {
-      const prevComments = queryClient.getQueryData<GetGroupCommentsQuery>(getGroupCommentsQueryKey(groupId));
+      const prevComments = queryClient.getQueryData<GetGroupCommentsQuery>(getGroupCommentsQueryKey(groupId, 0, 10));
 
       if (!prevComments) {
         console.warn("Cannot mutate group comments because query data does not exist.");
@@ -58,9 +58,10 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
             createdAt: me?.createdAt ?? "",
           },
         });
+        draft.getGroupComments?.comments.slice(0, 10);
       });
 
-      queryClient.setQueryData(getGroupCommentsQueryKey(groupId), newComments);
+      queryClient.setQueryData(getGroupCommentsQueryKey(groupId, 0, 10), newComments);
 
       return {
         prevComments,
@@ -69,11 +70,11 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
     },
     onError: (error, variables, context) => {
       if (context?.prevComments) {
-        queryClient.setQueryData(getGroupCommentsQueryKey(groupId), context.prevComments);
+        queryClient.setQueryData(getGroupCommentsQueryKey(groupId, 0, 10), context.prevComments);
       }
     },
     onSettled: (data, error, variables) => {
-      queryClient.invalidateQueries({ queryKey: getGroupCommentsQueryKey(groupId) });
+      queryClient.invalidateQueries({ queryKey: getGroupCommentsQueryKey(groupId, 0, 10) });
     },
   });
 
@@ -91,7 +92,6 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
           return;
         }
 
-        setLoading(true);
         await mutation.mutateAsync(
           {
             groupId: groupId,
@@ -102,15 +102,14 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
           },
           {
             onSuccess: () => {
-              toast.success("Comment added.");
+              toast.success("Nowa opinia została dodana.");
             },
             onError: () => {
-              toast.error("Internal error. Please try again later");
+              toast.error("Błąd serwera. Proszę, spróbuj ponownie później.");
             },
           }
         );
 
-        setLoading(false);
         handleCancel();
       },
       text: "Send",
@@ -125,7 +124,7 @@ export const AddGroupCommentModal = ({ groupId }: { groupId: string }) => {
   );
 
   return (
-    <ModalTemplate title="Send comment" open={true} loading={loading} cancel={cancel} confirm={send}>
+    <ModalTemplate title="Send comment" open={true} loading={mutation.isPending} cancel={cancel} confirm={send}>
       <SendComment ref={componentRef} />
     </ModalTemplate>
   );

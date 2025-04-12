@@ -1,6 +1,6 @@
 "use client";
 
-import CityMap16x9 from "@/app/public/assets/citymap_16x9.webp";
+// import CityMap16x9 from "@/app/public/assets/citymap_16x9.webp";
 import { RefObject } from "@fullcalendar/core/preact";
 import { Grid2, Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -128,7 +128,7 @@ export const EventInfo = ({ event, ref }: Props) => {
           <Typography variant="subtitle2" color="text.secondary">
             Map
           </Typography>
-          <Image
+          {/* <Image
             src={CityMap16x9}
             alt="city map"
             sizes="100vw"
@@ -141,7 +141,7 @@ export const EventInfo = ({ event, ref }: Props) => {
               cursor: "pointer",
               objectFit: "cover",
             }}
-          />
+          /> */}
         </Stack>
       </Stack>
       <Stack bgcolor="background.light" p={{ xs: 1, sm: 2 }} gap={1}>

@@ -1,0 +1,30 @@
+mutation SendFriendRequest($receiverId: String!) {
+  sendFriendRequest(receiverId: $receiverId) {
+    id
+    sender {
+      id
+      username
+      email
+      createdAt
+      status
+      role
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    receiver {
+      id
+      username
+      email
+      createdAt
+      status
+      role
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    status
+    createdAt
+    updatedAt
+  }
+}

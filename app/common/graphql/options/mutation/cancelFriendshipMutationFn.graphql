@@ -1,0 +1,28 @@
+mutation CancelFriendship($friendshipId: String!) {
+  cancelFriendship(friendshipId: $friendshipId) {
+    id
+    user1 {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    user2 {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    createdAt
+  }
+}
