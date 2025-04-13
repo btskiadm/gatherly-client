@@ -92,6 +92,11 @@ export type CommentsData = {
   rate: Scalars['Float']['output'];
 };
 
+export type Config = {
+  __typename?: 'Config';
+  photoBucketUrl: Scalars['String']['output'];
+};
+
 export type CreateEventInput = {
   categories: Array<Scalars['String']['input']>;
   cities: Array<Scalars['String']['input']>;
@@ -374,7 +379,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   acceptFriendRequest: Friendship;
   addGroupComment: AddGroupCommentResponse;
-  addNotification: Scalars['Boolean']['output'];
   cancelFriendRequest: FriendRequest;
   cancelFriendship: Friendship;
   createEvent: CreateEventReponse;
@@ -398,11 +402,6 @@ export type MutationAcceptFriendRequestArgs = {
 export type MutationAddGroupCommentArgs = {
   addGroupCommentInput: AddGroupCommentInput;
   groupId: Scalars['String']['input'];
-};
-
-
-export type MutationAddNotificationArgs = {
-  recipientId: Scalars['String']['input'];
 };
 
 
@@ -461,7 +460,7 @@ export type Notification = {
   __typename?: 'Notification';
   createdAt: Scalars['Date']['output'];
   data?: Maybe<Scalars['JSON']['output']>;
-  id: Scalars['ID']['output'];
+  id: Scalars['String']['output'];
   read: Scalars['Boolean']['output'];
   type: NotificationType;
 };
@@ -496,6 +495,7 @@ export type Profile = {
 export type Query = {
   __typename?: 'Query';
   checkUserGroupPermissions: CheckUserGroupPermission;
+  config: Config;
   getCategories: Array<Category>;
   getCities: Array<City>;
   getEventTilesByUserId: GetEventTilesByUserIdReponse;
@@ -515,7 +515,7 @@ export type Query = {
   getUsersByUsername: Array<User>;
   groups: Array<GroupWithStatus>;
   me?: Maybe<User>;
-  notifications: Scalars['Int']['output'];
+  notifications: NotificationsResponse;
   users: Array<User>;
 };
 

@@ -1,3 +1,0 @@
-mutation AddNotification($recipientId: String!) {
-  addNotification(recipientId: $recipientId)
-}

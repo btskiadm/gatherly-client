@@ -1,0 +1,12 @@
+query Notifications($skip: Int!, $take: Int!) {
+  notifications(skip: $skip, take: $take) {
+    notifications {
+      id
+      type
+      data
+      read
+      createdAt
+    }
+    count
+  }
+}

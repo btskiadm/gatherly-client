@@ -36,6 +36,76 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
+import { InviteMember, InviteMemberRef } from "@/app/common/components/InviteMember/InviteMember";
+import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
+import { inviteUsersToGroupMutationFn } from "@/app/common/graphql/options/mutation/inviteUsersToGroupMutationFn";
+import { useMutation } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
+import { useCallback, useMemo, useRef, useState } from "react";
+import toast from "react-hot-toast";
+
+const InviteFriends = () => {
+  const { id }: { id: string } = useParams();
+  const mutation = useMutation({
+    mutationFn: inviteUsersToGroupMutationFn,
+  });
+  const [loading, setLoading] = useState(false);
+  const inviteMemberRef = useRef<InviteMemberRef>(null);
+  const router = useRouter();
+
+  const handleCancel = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  const invite = useMemo(() => {
+    return {
+      onAction: async () => {
+        const data = inviteMemberRef.current?.invite();
+
+        if (!data?.success) {
+          toast.error("Validation error. Please check the form.");
+          return;
+        }
+
+        setLoading(true);
+
+        await mutation.mutateAsync(
+          {
+            groupId: id,
+            userIds: data.data.inviteIds,
+          },
+          {
+            onError: () => {
+              toast.error("Internal server error. Please try again later.");
+            },
+            onSuccess: () => {
+              toast.error("Invitation sent.");
+            },
+          }
+        );
+
+        setLoading(false);
+
+        handleCancel();
+      },
+      text: "Invite",
+    };
+  }, [handleCancel, id]);
+
+  const cancel = useMemo(
+    () => ({
+      onAction: handleCancel,
+    }),
+    [handleCancel]
+  );
+
+  return (
+    <ModalTemplate title="Wyślij zaproszenie" open={true} loading={loading} cancel={cancel} confirm={invite}>
+      <InviteMember ref={inviteMemberRef} />
+    </ModalTemplate>
+  );
+};
+
 const navigationItems = [
   {
     href: "/account/settings/friends",
@@ -86,119 +156,122 @@ export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <Stack gap={4}>
-      <Stack direction="column" gap={2}>
-        <Stack direction="row" position="relative">
-          <Typography variant="h3">Znajomi</Typography>
-        </Stack>
-        <Divider variant="fullWidth" />
-      </Stack>
-
-      <Stack direction="row" gap={3}>
-        <Stack
-          direction="column"
-          gap={3}
-          sx={{
-            minWidth: "240px",
-            maxWidth: "240px",
-          }}
-        >
-          <Stack direction="row" gap={2}>
-            <Avatar
-              src={data.me?.smallPhoto}
-              sx={{
-                height: "60px",
-                width: "60px",
-              }}
-              alt="avatar"
-            >
-              {data.me?.username?.[0]}
-            </Avatar>
-            <Stack direction="column" justifyContent="center" minWidth={0}>
-              <TruncatedTypography variant="body1">{data.me?.username}</TruncatedTypography>
-            </Stack>
+    <>
+      <InviteFriends />
+      <Stack gap={4}>
+        <Stack direction="column" gap={2}>
+          <Stack direction="row" position="relative">
+            <Typography variant="h3">Znajomi</Typography>
           </Stack>
-          <Button variant="contained" startIcon={<PersonAddOutlined />}>
-            Dodaj znajomego
-          </Button>
-          <StyledList dense disablePadding>
-            {navigationItems.map((item, groupIndex) => (
-              <ListItem key={item.href} disablePadding>
-                <ListItemButton LinkComponent={Link} href={item.href} selected={pathname === item.href}>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </StyledList>
+          <Divider variant="fullWidth" />
         </Stack>
 
-        <Stack direction="column" gap={2} width="100%">
-          <Card
-            elevation={1}
+        <Stack direction="row" gap={3}>
+          <Stack
+            direction="column"
+            gap={3}
             sx={{
-              width: "100%",
+              minWidth: "240px",
+              maxWidth: "240px",
             }}
           >
-            <CardHeader
+            <Stack direction="row" gap={2}>
+              <Avatar
+                src={data.me?.smallPhoto}
+                sx={{
+                  height: "60px",
+                  width: "60px",
+                }}
+                alt="avatar"
+              >
+                {data.me?.username?.[0]}
+              </Avatar>
+              <Stack direction="column" justifyContent="center" minWidth={0}>
+                <TruncatedTypography variant="body1">{data.me?.username}</TruncatedTypography>
+              </Stack>
+            </Stack>
+            <Button variant="contained" startIcon={<PersonAddOutlined />}>
+              Dodaj znajomego
+            </Button>
+            <StyledList dense disablePadding>
+              {navigationItems.map((item, groupIndex) => (
+                <ListItem key={item.href} disablePadding>
+                  <ListItemButton LinkComponent={Link} href={item.href} selected={pathname === item.href}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={<Typography variant="body2">{item.text}</Typography>} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </StyledList>
+          </Stack>
+
+          <Stack direction="column" gap={2} width="100%">
+            <Card
+              elevation={1}
               sx={{
-                padding: "18px 24px",
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "divider",
-                "& > .MuiCardHeader-action": {
-                  alignSelf: "center",
-                  m: 0,
-                },
+                width: "100%",
               }}
-              title={
-                <FormControl
-                  sx={{
-                    width: "100%",
-                    maxWidth: "320px",
-                  }}
-                >
-                  <TextField
-                    placeholder="Wyszukaj użytkownika"
-                    slotProps={{
-                      input: {
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <SearchOutlined />
-                          </InputAdornment>
-                        ),
-                      },
+            >
+              <CardHeader
+                sx={{
+                  padding: "18px 24px",
+                  borderBottomWidth: "1px",
+                  borderBottomStyle: "solid",
+                  borderBottomColor: "divider",
+                  "& > .MuiCardHeader-action": {
+                    alignSelf: "center",
+                    m: 0,
+                  },
+                }}
+                title={
+                  <FormControl
+                    sx={{
+                      width: "100%",
+                      maxWidth: "320px",
                     }}
-                    size="small"
-                    variant="outlined"
-                  />
-                </FormControl>
-              }
-              action={
-                <Stack direction="row" justifyContent="space-between" width="100%" gap={2}>
-                  <Stack direction="row" justifyContent="flex-end" gap={1}>
-                    <Button
+                  >
+                    <TextField
+                      placeholder="Wyszukaj użytkownika"
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <SearchOutlined />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                      size="small"
                       variant="outlined"
-                      startIcon={<FilterAltOutlined fontSize="small" />}
-                      endIcon={<ExpandMoreOutlined fontSize="small" />}
-                    >
-                      Filter
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<SwapVert fontSize="small" />}
-                      endIcon={<ExpandMoreOutlined fontSize="small" />}
-                    >
-                      Sort
-                    </Button>
+                    />
+                  </FormControl>
+                }
+                action={
+                  <Stack direction="row" justifyContent="space-between" width="100%" gap={2}>
+                    <Stack direction="row" justifyContent="flex-end" gap={1}>
+                      <Button
+                        variant="outlined"
+                        startIcon={<FilterAltOutlined fontSize="small" />}
+                        endIcon={<ExpandMoreOutlined fontSize="small" />}
+                      >
+                        Filter
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        startIcon={<SwapVert fontSize="small" />}
+                        endIcon={<ExpandMoreOutlined fontSize="small" />}
+                      >
+                        Sort
+                      </Button>
+                    </Stack>
                   </Stack>
-                </Stack>
-              }
-            />
-            {children}
-          </Card>
+                }
+              />
+              {children}
+            </Card>
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 }

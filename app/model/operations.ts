@@ -22,13 +22,6 @@ export type AddGroupCommentMutationVariables = Model.Exact<{
 
 export type AddGroupCommentMutation = { __typename?: 'Mutation', addGroupComment: { __typename?: 'AddGroupCommentResponse', success: boolean, comment?: { __typename?: 'Comment', id: string, rate: number, content: string, createdAt: any, user: { __typename?: 'User', id: string, createdAt: any, email: string, role: Model.AppRole, username: string, smallPhoto: string, mediumPhoto: string, largePhoto: string } } | null } };
 
-export type AddNotificationMutationVariables = Model.Exact<{
-  recipientId: Model.Scalars['String']['input'];
-}>;
-
-
-export type AddNotificationMutation = { __typename?: 'Mutation', addNotification: boolean };
-
 export type CancelFriendRequestMutationVariables = Model.Exact<{
   requestId: Model.Scalars['String']['input'];
 }>;
@@ -115,6 +108,11 @@ export type CheckUserGroupPermissionsQueryVariables = Model.Exact<{
 
 
 export type CheckUserGroupPermissionsQuery = { __typename?: 'Query', checkUserGroupPermissions: { __typename?: 'CheckUserGroupPermission', role?: Model.Role | null } };
+
+export type ConfigQueryVariables = Model.Exact<{ [key: string]: never; }>;
+
+
+export type ConfigQuery = { __typename?: 'Query', config: { __typename?: 'Config', photoBucketUrl: string } };
 
 export type GetCategoriesQueryVariables = Model.Exact<{ [key: string]: never; }>;
 
@@ -216,9 +214,17 @@ export type GetUsersByUsernameQueryVariables = Model.Exact<{
 }>;
 
 
-export type GetUsersByUsernameQuery = { __typename?: 'Query', getUsersByUsername: Array<{ __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string }> };
+export type GetUsersByUsernameQuery = { __typename?: 'Query', getUsersByUsername: Array<{ __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }> };
 
 export type MeQueryVariables = Model.Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string } | null };
+
+export type NotificationsQueryVariables = Model.Exact<{
+  skip: Model.Scalars['Int']['input'];
+  take: Model.Scalars['Int']['input'];
+}>;
+
+
+export type NotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationsResponse', count: number, notifications: Array<{ __typename?: 'Notification', id: string, type: Model.NotificationType, data?: any | null, read: boolean, createdAt: any }> } };

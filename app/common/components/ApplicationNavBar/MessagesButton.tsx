@@ -1,7 +1,14 @@
 "use client";
 
-import { User } from "@/app/model/model";
-import { ArrowForwardOutlined, ChatOutlined, MarkUnreadChatAltOutlined, MoreHoriz } from "@mui/icons-material";
+import { FriendRequest, Friendship, Notification, NotificationType, User } from "@/app/model/model";
+import {
+  ArrowForwardOutlined,
+  ChatOutlined,
+  MarkUnreadChatAltOutlined,
+  MoreHoriz,
+  PersonAdd,
+  PersonAddOutlined,
+} from "@mui/icons-material";
 import {
   Avatar,
   Badge,
@@ -20,8 +27,33 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { Link } from "../next-link";
+import { useNotificationSubscription } from "../../graphql/hooks/useNotificationSubscription";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { NotificationsQuery } from "@/app/model/operations";
+import {
+  notificationsQueryKey,
+  notificationsQueryOptions,
+} from "../../graphql/options/query/notificationsQueryOptions";
+import { create } from "mutative";
+import { configQueryOptions } from "../../graphql/options/query/configQueryOptions";
+
+const getNotificationData = (notification: Notification) => {
+  switch (notification.type) {
+    case NotificationType.FriendAccepted: {
+      return notification.data as Friendship;
+    }
+    case NotificationType.FriendRequest: {
+      return notification.data as FriendRequest;
+    }
+  }
+  return notification.data;
+};
+
+const getNotificationDataFriendRequest = (notification: Notification) => {
+  return notification.data as FriendRequest;
+};
 
 const StyledList = styled(List)(({ theme }) => ({
   "&": {
@@ -38,7 +70,29 @@ interface Props {
 }
 
 export const MessagesButton = ({ me }: Props) => {
+  const queryClient = useQueryClient();
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const { data, isFetching } = useQuery(notificationsQueryOptions({ skip: 0, take: 6 }));
+  const { data: configData } = useQuery(configQueryOptions({}));
+
+  const notificationSubscriptionHandler = useCallback((notification: Notification) => {
+    const notifications = queryClient.getQueryData<NotificationsQuery>(notificationsQueryKey(0, 6));
+
+    if (!notifications) {
+      console.warn("Cannot mutate notifications requests because query data does not exist.");
+      return null;
+    }
+
+    const newNotifications = create(notifications, (draft) => {
+      draft.notifications.count += 1;
+      draft.notifications.notifications.unshift(notification);
+      draft.notifications.notifications.splice(0, 6);
+    });
+
+    queryClient.setQueryData(notificationsQueryKey(0, 6), newNotifications);
+  }, []);
+
+  useNotificationSubscription(me.id, notificationSubscriptionHandler);
 
   const handleMenuClick = useCallback((e: React.MouseEvent<HTMLElement>) => {
     setMenuAnchor(e.currentTarget);
@@ -47,6 +101,8 @@ export const MessagesButton = ({ me }: Props) => {
   const handleMenuClose = useCallback(() => {
     setMenuAnchor(null);
   }, []);
+
+  const notifications = data?.notifications.notifications ?? [];
 
   return (
     <>
@@ -132,50 +188,62 @@ export const MessagesButton = ({ me }: Props) => {
             }}
           >
             <StyledList dense disablePadding>
-              <ListItemButton
-                sx={{
-                  gap: 1,
-                  py: 1,
-                  alignItems: "flex-start",
-                  borderBottomWidth: "1px",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "divider",
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar variant="rounded" alt={`username avatar`} src={""}>
-                    A{/* {username[0]} */}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  slotProps={{
-                    primary: {
-                      color: "text.secondary",
-                    },
-                  }}
-                  primary={
-                    <>
-                      <Typography
-                        variant="body2"
-                        color="secondary"
-                        component={Link}
-                        href={`/profile/123-456-789`}
-                        sx={{
-                          mr: 1,
-                          textDecoration: "unset",
+              {notifications.map((notification) => (
+                <Fragment key={notification.id}>
+                  {notification.type === NotificationType.FriendRequest && (
+                    <ListItemButton
+                      sx={{
+                        gap: 1,
+                        py: 1,
+                        alignItems: "flex-start",
+                        borderBottomWidth: "1px",
+                        borderBottomStyle: "solid",
+                        borderBottomColor: "divider",
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          variant="rounded"
+                          alt={`username avatar`}
+                          src={getNotificationDataFriendRequest(notification).sender.smallPhoto}
+                        >
+                          {getNotificationDataFriendRequest(notification).sender.username[0]}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        slotProps={{
+                          primary: {
+                            color: "text.secondary",
+                          },
                         }}
-                      >
-                        seoseo123
-                      </Typography>
-                      in consequat fugiat id sit deserunt dolor culpa et adipisicing dolor dolor eu.
-                      <Stack direction="row" gap={0.5} mt={0.5} alignItems="center">
-                        <MarkUnreadChatAltOutlined sx={{ fontSize: "1.25rem", color: "success.light" }} />
-                        <Typography variant="body3">9:00 am</Typography>
-                      </Stack>
-                    </>
-                  }
-                />
-              </ListItemButton>
+                        primary={
+                          <>
+                            <Typography
+                              variant="body2"
+                              color="secondary"
+                              component={Link}
+                              href={`/profile/123-456-789`}
+                              sx={{
+                                mr: 0.5,
+                                textDecoration: "unset",
+                              }}
+                            >
+                              {getNotificationDataFriendRequest(notification).sender.username}
+                            </Typography>
+                            wysłał Tobie zaproszenie do grona znajomych.
+                            <Stack direction="row" gap={0.5} mt={0.5} alignItems="center">
+                              <PersonAddOutlined sx={{ fontSize: "1.25rem", color: "info.light" }} />
+                              <Typography variant="body3">
+                                {new Date(notification.createdAt).toLocaleString()}
+                              </Typography>
+                            </Stack>
+                          </>
+                        }
+                      />
+                    </ListItemButton>
+                  )}
+                </Fragment>
+              ))}
             </StyledList>
           </CardContent>
           <CardActions>
