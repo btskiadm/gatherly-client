@@ -119,7 +119,23 @@ export default function CreateNewPage() {
                     <CheckOutlined />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography variant="body1">Ograniczony limit uczestników (do 100) i eventów</Typography>
+                    <Typography variant="body1">Możliwość utworzenia jednej grupy</Typography>
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Do trzech wydarzeń miesięcznie</Typography>
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Ograniczony limit uczestników (do 50)</Typography>
                   </ListItemText>
                 </ListItem>
                 <ListItem>
@@ -310,6 +326,30 @@ export default function CreateNewPage() {
                   </ListItemIcon>
                   <ListItemText>
                     <Typography variant="body1">Priorytetowe wsparcie techniczne</Typography>
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Płatne wydarzenia</Typography>
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Generowanie kodów QR</Typography>
+                  </ListItemText>
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckOutlined />
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography variant="body1">Grupy prywatne</Typography>
                   </ListItemText>
                 </ListItem>
               </List>

@@ -3,17 +3,16 @@
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { deleteGroupMutationFn } from "@/app/common/graphql/options/mutation/deleteGroupMutationFn";
 import { GroupDetails } from "@/app/model/model";
+import { EditOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
-interface Props {
-  groupDetails: GroupDetails;
-}
+interface Props {}
 
-export const GroupSettingsManagmentTab = ({ groupDetails }: Props) => {
+export const GroupSettingsManage = ({}: Props) => {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const mutation = useMutation({
@@ -24,7 +23,8 @@ export const GroupSettingsManagmentTab = ({ groupDetails }: Props) => {
     setLoading(true);
     await mutation.mutateAsync(
       {
-        groupId: groupDetails.id,
+        // groupId: groupDetails.id,
+        groupId: "",
       },
       {
         onSuccess: ({ deleteGroup: { success } }) => {
@@ -70,35 +70,65 @@ export const GroupSettingsManagmentTab = ({ groupDetails }: Props) => {
 
   return (
     <>
-      <Paper>
-        <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-          <Stack gap={1}>
-            <Typography variant="body1">Delete group</Typography>
-            <Typography variant="body2">
+      <Card
+        elevation={1}
+        sx={{
+          width: "100%",
+        }}
+      >
+        <CardHeader
+          sx={{
+            padding: "18px 24px",
+          }}
+          title={<Typography variant="h5">Usuń grupę</Typography>}
+          subheader={
+            <Typography variant="body2" color="text.secondary">
               When you delete a group, the information will still be visible, but no actions can be performed.
             </Typography>
-            <LoadingButton
-              onClick={handleOpenConfirm}
-              loading={loading}
-              variant="contained"
+          }
+          action={
+            <IconButton
+              color="secondary"
+              size="small"
               sx={{
-                width: "min-content",
-                whiteSpace: "nowrap",
+                borderWidth: 1,
+                borderStyle: "solid",
               }}
+              onClick={() => alert("Not implemented.")}
             >
-              Delete group
-            </LoadingButton>
-          </Stack>
-        </Stack>
-      </Paper>
+              <EditOutlined fontSize="small" />
+            </IconButton>
+          }
+        />
+        <CardContent
+          sx={{
+            p: "0 24px 24px",
+          }}
+        >
+          <LoadingButton
+            onClick={handleOpenConfirm}
+            loading={loading}
+            variant="contained"
+            sx={{
+              width: "min-content",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Delete group
+          </LoadingButton>
+        </CardContent>
+      </Card>
+
       <ConfirmModal
         open={openConfirmModal}
-        title={`Delete group: ${groupDetails.title}`}
+        // title={`Delete group: ${groupDetails.title}`}
+        title=""
         confirm={handleConfirm}
         cancel={handleCancel}
       >
         <Typography variant="body1">
-          Are you sure you want to delete <b>{groupDetails.title}</b> group ?
+          {/* Are you sure you want to delete <b>{groupDetails.title}</b> group ? */}
+          Are you sure you want to delete <b>{"1234"}</b> group ?
         </Typography>
       </ConfirmModal>
     </>

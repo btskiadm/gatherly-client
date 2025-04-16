@@ -114,8 +114,7 @@ export default function Page() {
   }, []);
 
   const handleSendFriendRequest = useCallback(async () => {
-    const receiverId = _userId;
-    await sendFriendRequestMutation.mutateAsync({ receiverId });
+    await sendFriendRequestMutation.mutateAsync({ receiverIds: [_userId] });
   }, [_userId]);
 
   const comment = (

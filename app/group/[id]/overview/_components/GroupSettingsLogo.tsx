@@ -2,17 +2,14 @@
 
 import { ConfirmModal } from "@/app/common/components/Modal/confirm-modal";
 import { UploadIntercepted } from "@/app/common/components/Upload/upload-intercepted";
-import { GroupDetails } from "@/app/model/model";
-import { DeleteOutlined, UploadFileRounded } from "@mui/icons-material";
-import { Avatar, Button, Paper, Stack, Typography } from "@mui/material";
+import { DeleteOutlined, EditOutlined, UploadFileRounded } from "@mui/icons-material";
+import { Avatar, Button, Card, CardContent, CardHeader, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useCallback, useMemo, useState } from "react";
 
-interface Props {
-  groupDetails: GroupDetails;
-}
+interface Props {}
 
-export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
+export const GroupSettingsLogo = ({}: Props) => {
   const [openUpload, setOpenUpoad] = useState(false);
   const [openDeleteAvatar, setOpenDeleteAvatar] = useState(false);
 
@@ -54,9 +51,42 @@ export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
 
   return (
     <>
-      <Paper>
-        <Stack p={{ xs: 2, sm: 3 }} gap={{ xs: 2, sm: 3 }}>
-          <Stack direction="row" gap={2} alignItems="center">
+      <Card
+        elevation={1}
+        sx={{
+          width: "100%",
+        }}
+      >
+        <CardHeader
+          sx={{
+            padding: "18px 24px",
+          }}
+          title={<Typography variant="h5">Logo</Typography>}
+          subheader={
+            <Typography variant="body2" color="text.secondary">
+              Główny obrazek grupy
+            </Typography>
+          }
+          action={
+            <IconButton
+              color="secondary"
+              size="small"
+              sx={{
+                borderWidth: 1,
+                borderStyle: "solid",
+              }}
+              onClick={() => alert("Not implemented.")}
+            >
+              <EditOutlined fontSize="small" />
+            </IconButton>
+          }
+        />
+        <CardContent
+          sx={{
+            p: "0 24px 24px",
+          }}
+        >
+          <Stack direction="row" gap={{ xs: 2, lg: 3 }} alignItems="center">
             <Avatar
               alt="logo"
               variant="rounded"
@@ -68,7 +98,8 @@ export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
             >
               <Image
                 fill
-                src={groupDetails.mediumPhoto}
+                src=""
+                // src={groupDetails.mediumPhoto}
                 alt="logo"
                 style={{
                   objectFit: "cover",
@@ -104,8 +135,9 @@ export const GroupSettingsAvatarTab = ({ groupDetails }: Props) => {
               </Button>
             </Stack>
           </Stack>
-        </Stack>
-      </Paper>
+        </CardContent>
+      </Card>
+
       {openUpload && (
         <UploadIntercepted open={openUpload} onClose={handleUploadClose} onConfirm={handleUploadConfirm} />
       )}

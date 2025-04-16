@@ -1,0 +1,30 @@
+query GetGroupJoinInvitationRequests($groupId: String!, $status: [GroupJoinRequestStatus!]) {
+  getGroupJoinInvitationRequests(groupId: $groupId, status: $status) {
+    id
+    createdAt
+    updatedAt
+    status
+    user {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+    sender {
+      id
+      username
+      email
+      createdAt
+      role
+      status
+      smallPhoto
+      mediumPhoto
+      largePhoto
+    }
+  }
+}

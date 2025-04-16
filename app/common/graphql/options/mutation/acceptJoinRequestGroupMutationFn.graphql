@@ -1,0 +1,3 @@
+mutation AcceptJoinRequestGroup($groupId: String!, $userId: String!) {
+  acceptJoinRequestGroup(groupId: $groupId, userId: $userId)
+}

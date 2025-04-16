@@ -8,7 +8,7 @@ import { Box, Stack } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { InviteMember, InviteMemberRef } from "../../InviteMember/InviteMember";
+import { InviteUser, inviteUserRef } from "../../InviteUser/InviteUser";
 import { ModalTemplate } from "../../Modal/modal-template";
 import CreateEventDateAndLocation, { CreateEventDateAndLocationRef } from "./_components/CreateEventDateAndLocation";
 import CreateEventDetails, { CreateEventDetailsRef } from "./_components/CreateEventDetails";
@@ -48,7 +48,7 @@ export const CreateEventInterceptedModal = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const detailsRef = useRef<CreateEventDetailsRef>(null);
   const dateAndLocationRef = useRef<CreateEventDateAndLocationRef>(null);
-  const inviteRef = useRef<InviteMemberRef>(null);
+  const inviteRef = useRef<inviteUserRef>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {
@@ -177,7 +177,7 @@ export const CreateEventInterceptedModal = (props: Props) => {
         </Box>
         {!isEdit.current && (
           <Box sx={{ display: step === 2 ? "block" : "none" }}>
-            <InviteMember ref={inviteRef} />
+            <InviteUser ref={inviteRef} />
           </Box>
         )}
       </Stack>

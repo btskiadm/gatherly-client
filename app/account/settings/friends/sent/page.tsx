@@ -1,7 +1,6 @@
 "use client";
 
 import { TruncatedTypography } from "@/app/common/components/truncated-typography";
-import { acceptFriendRequestMutationFn } from "@/app/common/graphql/options/mutation/acceptFriendRequestMutationFn";
 import { cancelFriendRequestMutationFn } from "@/app/common/graphql/options/mutation/cancelFriendRequestMutationFn";
 import { getFriendListQueryKey } from "@/app/common/graphql/options/query/getFriendsListQueryOptions";
 import { getReceivedFriendRequestsQueryKey } from "@/app/common/graphql/options/query/getReceivedFriendRequestsQueryOptions";
@@ -11,7 +10,7 @@ import {
 } from "@/app/common/graphql/options/query/getSentFriendRequestsQueryOptions";
 import { FriendRequest, FriendRequestStatus } from "@/app/model/model";
 import { GetSentFriendRequestsQuery } from "@/app/model/operations";
-import { CheckOutlined, CloseOutlined, MoreHoriz } from "@mui/icons-material";
+import { CloseOutlined, MoreHoriz } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -100,53 +99,6 @@ export default function Page() {
     },
   });
 
-  const acceptFriendRequestMutation = useMutation({
-    mutationFn: acceptFriendRequestMutationFn,
-    onMutate: (args) => {
-      const prevSentFriendRequests = queryClient.getQueryData<GetSentFriendRequestsQuery>(
-        getSentFriendRequestsQueryKey(skip, sentItemsPerPage)
-      );
-
-      if (!prevSentFriendRequests) {
-        console.warn("Cannot mutate sent friend requests because query data does not exist.");
-        return null;
-      }
-
-      const newSentFriendRequests = create(prevSentFriendRequests, (draft) => {
-        const index = draft.getSentFriendRequests.friendRequests.findIndex((rq) => rq.id === args.requestId);
-        if (index >= 0) {
-          draft.getSentFriendRequests.friendRequests[index].status = FriendRequestStatus.Accepted;
-        }
-      });
-
-      queryClient.setQueryData(getReceivedFriendRequestsQueryKey(skip, sentItemsPerPage), newSentFriendRequests);
-
-      return {
-        prevSentFriendRequests,
-        newSentFriendRequests,
-      };
-    },
-    onError: (error, variables, context) => {
-      if (context?.prevSentFriendRequests) {
-        queryClient.setQueryData(
-          getReceivedFriendRequestsQueryKey(skip, sentItemsPerPage),
-          context.prevSentFriendRequests
-        );
-      }
-      toast.error("Akceptacja zaproszenia nie powiodła się. Spróbuj ponownie później.");
-    },
-    onSettled: async (data, error, variables) => {
-      await queryClient.invalidateQueries({
-        predicate: (query) =>
-          // query.queryKey[0] === getReceivedFriendRequestsQueryKey(-1, -1)[0] ||
-          query.queryKey[0] === getFriendListQueryKey(-1, -1)[0],
-      });
-    },
-    onSuccess: async () => {
-      toast.success("Zaproszenie zostało zaakceptowane.");
-    },
-  });
-
   const { friendRequests, count } = data?.getSentFriendRequests ?? { friendRequests: [], count: 0 };
   const totalPages = Math.ceil(count / sentItemsPerPage);
 
@@ -163,26 +115,16 @@ export default function Page() {
 
   const handleCancelFriendRequest = useCallback(async () => {
     const requestId = selectedFriendRequestRef.current?.id;
+    const isPending = selectedFriendRequestRef.current?.status === FriendRequestStatus.Pending;
     handleMenuClose();
-    if (requestId) {
+    if (requestId && isPending) {
       await cancelFriendRequestMutation.mutateAsync({
         requestId: requestId,
       });
     }
   }, []);
 
-  const handleAcceptFriendRequest = useCallback(async () => {
-    const requestId = selectedFriendRequestRef.current?.id;
-    handleMenuClose();
-
-    if (requestId) {
-      await acceptFriendRequestMutation.mutateAsync({
-        requestId: requestId,
-      });
-    }
-  }, []);
-
-  const isLoading = isFetching || acceptFriendRequestMutation.isPending || cancelFriendRequestMutation.isPending;
+  const isLoading = isFetching || cancelFriendRequestMutation.isPending;
 
   return (
     <>
@@ -421,14 +363,6 @@ export default function Page() {
         }}
       >
         <StyledList dense disablePadding>
-          <ListItem disablePadding onClick={handleMenuClose}>
-            <ListItemButton onClick={handleAcceptFriendRequest}>
-              <ListItemIcon sx={{ color: "success.main" }}>
-                <CheckOutlined fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary="Zaakceptuj" />
-            </ListItemButton>
-          </ListItem>
           <ListItemButton onClick={handleCancelFriendRequest}>
             <ListItemIcon sx={{ color: "error.main" }}>
               <CloseOutlined fontSize="small" />

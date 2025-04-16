@@ -9,7 +9,7 @@ import { Report, ReportRef } from "./_components/report-components";
 
 export const ReportIntercepted = () => {
   const [loading, setLoading] = useState(false);
-  const inviteMemberRef = useRef<ReportRef | null>(null);
+  const inviteUserRef = useRef<ReportRef | null>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {
@@ -20,7 +20,7 @@ export const ReportIntercepted = () => {
     return {
       text: "Send",
       onAction: async () => {
-        const data = inviteMemberRef.current?.handleData();
+        const data = inviteUserRef.current?.handleData();
         console.log("[debug]: ", data);
 
         if (!data?.success) {
@@ -46,7 +46,7 @@ export const ReportIntercepted = () => {
 
   return (
     <ModalTemplate title="Report" open={true} loading={loading} cancel={cancel} confirm={send}>
-      <Report ref={inviteMemberRef} />
+      <Report ref={inviteUserRef} />
     </ModalTemplate>
   );
 };

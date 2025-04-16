@@ -1,0 +1,3 @@
+mutation CancelJoinRequestGroup($groupId: String!, $userId: String!) {
+  cancelJoinRequestGroup(groupId: $groupId, userId: $userId)
+}

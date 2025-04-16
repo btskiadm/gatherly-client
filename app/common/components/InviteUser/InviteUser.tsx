@@ -1,7 +1,7 @@
 "use client";
 
 import { getUsersByUsernameQueryOptions } from "@/app/common/graphql/options/query/getUsersByUsernameQueryOptions";
-import { flattenIssues, InviteMemberInput, inviteMemberSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
+import { flattenIssues, InviteUserInput, inviteUserSchema, ZodFlattenIssue } from "@/app/common/utils/zod";
 import { User } from "@/app/model/model";
 import { FormControl, FormHelperText, FormLabel, Stack } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -10,32 +10,32 @@ import { useDebounce } from "use-debounce";
 import { FindUserAutocomplete } from "./FindUserAutocomplete";
 import { FindUserAvatars } from "./FindUserAvatars";
 
-export type InviteMemberData =
+export type InviteUserData =
   | {
       success: false;
     }
   | {
       success: true;
-      data: InviteMemberInput;
+      data: InviteUserInput;
     };
 
-export interface InviteMemberRef {
-  invite: () => InviteMemberData;
+export interface inviteUserRef {
+  invite: () => InviteUserData;
 }
 
 interface Props {
-  ref: RefObject<InviteMemberRef | null>;
+  ref: RefObject<inviteUserRef | null>;
 }
 
-export const InviteMember = ({ ref }: Props) => {
+export const InviteUser = ({ ref }: Props) => {
   const [inputText, setInputText] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [errors, setErrors] = useState<ZodFlattenIssue>({});
   const [debouncedSearch] = useDebounce(inputText, 500);
   const { data, isLoading } = useQuery(getUsersByUsernameQueryOptions({ username: debouncedSearch }));
 
-  const handleInvite = useCallback((): InviteMemberData => {
-    const { data, success, error } = inviteMemberSchema.safeParse({
+  const handleInvite = useCallback((): InviteUserData => {
+    const { data, success, error } = inviteUserSchema.safeParse({
       inviteIds: selectedUsers.map((invite) => invite.id),
     });
 
@@ -73,7 +73,7 @@ export const InviteMember = ({ ref }: Props) => {
   const usersData = data?.getUsersByUsername ?? [];
 
   return (
-    <Stack gap={2} width="100%">
+    <Stack gap={3} width="100%">
       <FormControl error={!!usersError} fullWidth>
         <FormLabel>Lista użytkowników</FormLabel>
         <FindUserAutocomplete

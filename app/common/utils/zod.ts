@@ -83,13 +83,13 @@ export const sendCommentSchema = z.object({
 export type SendCommentInput = z.infer<typeof sendCommentSchema>;
 
 // invite
-const inviteMemberIdSchema = z.string().min(1);
+const inviteUserIdSchema = z.string().min(1);
 
-export const inviteMemberSchema = z.object({
-  inviteIds: z.array(inviteMemberIdSchema),
+export const inviteUserSchema = z.object({
+  inviteIds: z.array(inviteUserIdSchema),
 });
 
-export type InviteMemberInput = z.infer<typeof inviteMemberSchema>;
+export type InviteUserInput = z.infer<typeof inviteUserSchema>;
 
 // report
 export const minReportContent = 5;

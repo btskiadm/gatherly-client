@@ -4,11 +4,17 @@ import { ClampTypography } from "@/app/common/components/clamp-typography";
 import { Link } from "@/app/common/components/next-link";
 import { GroupDetails } from "@/app/model/model";
 import {
+  AssistantOutlined,
   CalendarMonthOutlined,
   ChatOutlined,
   EventOutlined,
+  GavelOutlined,
   GroupOutlined,
   InfoOutlined,
+  LayersOutlined,
+  PersonAddAlt1Outlined,
+  PolicyOutlined,
+  ReportOutlined,
   SettingsOutlined,
 } from "@mui/icons-material";
 import {
@@ -24,33 +30,42 @@ import {
 } from "@mui/material";
 import { usePathname } from "next/navigation";
 
-const about = "about";
-const events = "events";
-const calendar = "calendar";
-const members = "members";
-const chat = "chat";
-const settings = "settings";
-
 interface Props {
   groupDetails: GroupDetails;
 }
 
+const navItems = [
+  { href: "about", label: "O grupie", icon: <InfoOutlined />, group: "main" },
+  { href: "events", label: "Wydarzenia", icon: <EventOutlined />, group: "main" },
+  { href: "calendar", label: "Kalendarz", icon: <CalendarMonthOutlined />, group: "main" },
+  { href: "members", label: "Członkowie", icon: <GroupOutlined />, group: "main" },
+  { href: "chat", label: "Chat", icon: <ChatOutlined />, group: "main" },
+  { href: "overview", label: "Przegląd", icon: <LayersOutlined />, group: "secondary" },
+  { href: "assistant", label: "Asystent", icon: <AssistantOutlined />, group: "secondary" },
+  { href: "requests", label: "Prośby o dołączenie", icon: <PersonAddAlt1Outlined />, group: "secondary" },
+  { href: "reports", label: "Zgłoszenia", icon: <ReportOutlined />, group: "secondary" },
+  { href: "status", label: "Status grupy", icon: <PolicyOutlined />, group: "secondary" },
+  { href: "roles", label: "Role użytkowników", icon: <GavelOutlined />, group: "secondary" },
+  { href: "settings", label: "Ustawienia", icon: <SettingsOutlined />, group: "secondary" },
+];
+
 export function GroupDesktopNavigation({ groupDetails }: Props) {
   const pathname = usePathname();
-
-  // "/group/123-456-789/settings/avatar"
   const subPath = pathname.split("/")?.[3] ?? "";
 
-  const [aboutSected, eventsSelected, calendarSelected, membersSelected, chatSelected, settingsSelected] = [
-    subPath.includes(`${about}`),
-    subPath.includes(`${events}`),
-    subPath.includes(`${calendar}`),
-    subPath.includes(`${members}`),
-    subPath.includes(`${chat}`),
-    subPath.includes(`${settings}`),
-  ];
-
   const { largePhoto, title } = groupDetails;
+
+  const renderNavItems = (group: string) =>
+    navItems
+      .filter((item) => item.group === group)
+      .map(({ href, label, icon }) => (
+        <ListItem disablePadding key={href}>
+          <ListItemButton href={href} LinkComponent={Link} selected={subPath.includes(href)}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText primary={label} />
+          </ListItemButton>
+        </ListItem>
+      ));
 
   return (
     <Paper elevation={1}>
@@ -68,56 +83,9 @@ export function GroupDesktopNavigation({ groupDetails }: Props) {
       <Stack width="100%" p={3} py={2} gap={2}>
         <ClampTypography variant="h5">{title}</ClampTypography>
         <Divider />
-        <List disablePadding>
-          <ListItem disablePadding>
-            <ListItemButton href="about" LinkComponent={Link} selected={aboutSected}>
-              <ListItemIcon>
-                <InfoOutlined />
-              </ListItemIcon>
-              <ListItemText primary="O grupie" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton href="events" LinkComponent={Link} selected={eventsSelected}>
-              <ListItemIcon>
-                <EventOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Wydarzenia" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton href="calendar" LinkComponent={Link} selected={calendarSelected}>
-              <ListItemIcon>
-                <CalendarMonthOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Kalendarz" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton href="members" LinkComponent={Link} selected={membersSelected}>
-              <ListItemIcon>
-                <GroupOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Członkowie" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton href="chat" LinkComponent={Link} selected={chatSelected}>
-              <ListItemIcon>
-                <ChatOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Chat" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton href="settings" LinkComponent={Link} selected={settingsSelected}>
-              <ListItemIcon>
-                <SettingsOutlined />
-              </ListItemIcon>
-              <ListItemText primary="Ustawienia" />
-            </ListItemButton>
-          </ListItem>
-        </List>
+        <List disablePadding>{renderNavItems("main")}</List>
+        <Divider sx={{ my: 1 }} />
+        <List disablePadding>{renderNavItems("secondary")}</List>
       </Stack>
     </Paper>
   );

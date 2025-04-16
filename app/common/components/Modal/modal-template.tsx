@@ -39,7 +39,7 @@ export const ModalTemplate = ({ open, loading, title, action, cancel, confirm, b
   const { onAction: onConfirm, text: confirmText = "Confirm" } = confirm ?? {};
 
   return (
-    <BootstrapDialog onClose={onCancel} open={open}>
+    <BootstrapDialog maxWidth="xs" onClose={onCancel} open={open}>
       <BootstrapDialogTitle variant="h5">{title}</BootstrapDialogTitle>
       <IconButton
         aria-label="close"

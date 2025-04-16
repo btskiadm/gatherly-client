@@ -31,77 +31,76 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
-import { InviteMember, InviteMemberRef } from "@/app/common/components/InviteMember/InviteMember";
+import { InviteUser, inviteUserRef } from "@/app/common/components/InviteUser/InviteUser";
 import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
-import { inviteUsersToGroupMutationFn } from "@/app/common/graphql/options/mutation/inviteUsersToGroupMutationFn";
+import { sendFriendRequestMutationFn } from "@/app/common/graphql/options/mutation/sendFriendRequestMutationFn";
+import { getSentFriendRequestsRootQueryKey } from "@/app/common/graphql/options/query/getSentFriendRequestsQueryOptions";
+import { FriendRequest } from "@/app/model/model";
 import { useMutation } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
 import { useCallback, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-const InviteFriends = () => {
-  const { id }: { id: string } = useParams();
+const InviteFriends = ({ onClose }: { onClose: (friendRequests: FriendRequest[]) => void }) => {
   const mutation = useMutation({
-    mutationFn: inviteUsersToGroupMutationFn,
+    mutationFn: sendFriendRequestMutationFn,
   });
   const [loading, setLoading] = useState(false);
-  const inviteMemberRef = useRef<InviteMemberRef>(null);
-  const router = useRouter();
-
-  const handleCancel = useCallback(() => {
-    router.back();
-  }, [router]);
+  const inviteUserRef = useRef<inviteUserRef>(null);
 
   const invite = useMemo(() => {
     return {
       onAction: async () => {
-        const data = inviteMemberRef.current?.invite();
+        const data = inviteUserRef.current?.invite();
 
         if (!data?.success) {
           toast.error("Validation error. Please check the form.");
           return;
         }
 
-        setLoading(true);
-
-        await mutation.mutateAsync(
-          {
-            groupId: id,
-            userIds: data.data.inviteIds,
-          },
-          {
-            onError: () => {
-              toast.error("Internal server error. Please try again later.");
+        try {
+          setLoading(true);
+          const reponse = await mutation.mutateAsync(
+            {
+              receiverIds: data.data.inviteIds,
             },
-            onSuccess: () => {
-              toast.error("Invitation sent.");
-            },
-          }
-        );
+            {
+              onError: () => {
+                toast.error("Internal server error. Please try again later.");
+              },
+              onSuccess: () => {
+                toast.success("Zaproszenie wysłane.");
+              },
+            }
+          );
 
-        setLoading(false);
+          setLoading(false);
 
-        handleCancel();
+          onClose(reponse.sendFriendRequest);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setLoading(false);
+        }
       },
-      text: "Invite",
+      text: "Zaproś",
     };
-  }, [handleCancel, id]);
+  }, [onClose]);
 
   const cancel = useMemo(
     () => ({
-      onAction: handleCancel,
+      onAction: () => onClose([]),
     }),
-    [handleCancel]
+    [onClose]
   );
 
   return (
     <ModalTemplate title="Wyślij zaproszenie" open={true} loading={loading} cancel={cancel} confirm={invite}>
-      <InviteMember ref={inviteMemberRef} />
+      <InviteUser ref={inviteUserRef} />
     </ModalTemplate>
   );
 };
@@ -151,13 +150,23 @@ const StyledList = styled(List)(({ theme }) => ({
 }));
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
   const { data } = useSuspenseQuery(meQueryOptions());
+  const [openInviteFriendModal, setOpenInviteFriendModal] = useState(false);
+
+  const handleCloseModal = useCallback(async (friendRequests: FriendRequest[]) => {
+    await queryClient.invalidateQueries({
+      predicate: (query) => query.queryKey[0] === getSentFriendRequestsRootQueryKey,
+    });
+
+    setOpenInviteFriendModal(false);
+  }, []);
 
   const pathname = usePathname();
 
   return (
     <>
-      <InviteFriends />
+      {openInviteFriendModal && <InviteFriends onClose={handleCloseModal} />}
       <Stack gap={4}>
         <Stack direction="column" gap={2}>
           <Stack direction="row" position="relative">
@@ -190,7 +199,11 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <TruncatedTypography variant="body1">{data.me?.username}</TruncatedTypography>
               </Stack>
             </Stack>
-            <Button variant="contained" startIcon={<PersonAddOutlined />}>
+            <Button
+              variant="contained"
+              startIcon={<PersonAddOutlined />}
+              onClick={() => setOpenInviteFriendModal(true)}
+            >
               Dodaj znajomego
             </Button>
             <StyledList dense disablePadding>

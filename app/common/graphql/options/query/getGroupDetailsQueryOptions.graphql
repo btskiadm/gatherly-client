@@ -39,6 +39,8 @@ fragment eventTileFragment on EventTile {
 query GetGroupDetails($groupId: String!) {
   getGroupDetails(groupId: $groupId) {
     canceledLength
+    status
+    updatedAt
     categories {
       id
       label

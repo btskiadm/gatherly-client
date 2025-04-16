@@ -33,7 +33,7 @@ query GetUserWithProfile($userId: String!) {
       youtube
     }
   }
-  getGroupTilesByUserId(userId: $userId) {
+  getGroupTilesByUserId(userId: $userId, skip: 0, take: 1000) {
     count
     groups {
       id
@@ -46,6 +46,17 @@ query GetUserWithProfile($userId: String!) {
       smallPhoto
       mediumPhoto
       largePhoto
+      users {
+        id
+        username
+        email
+        createdAt
+        role
+        status
+        smallPhoto
+        mediumPhoto
+        largePhoto
+      }
       cities {
         id
         value

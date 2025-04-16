@@ -1,0 +1,3 @@
+mutation CancelSentGroupInvitation($groupId: String!) {
+  cancelSentGroupInvitation(groupId: $groupId)
+}

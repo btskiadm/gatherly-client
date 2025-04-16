@@ -9,11 +9,14 @@ type Unsubscribe = () => void;
 
 export function useNotificationSubscription(recipientId: string, onNotification: (data: Notification) => void) {
   const unsubscribeRef = useRef<Unsubscribe | null>(null);
+  const hasSubscribedRef = useRef(false);
 
   useEffect(() => {
-    if (!recipientId) return;
+    if (!recipientId || hasSubscribedRef.current) return;
 
-    (async () => {
+    hasSubscribedRef.current = true;
+
+    const subscribe = async () => {
       try {
         const client = await getWsClient();
 
@@ -49,7 +52,9 @@ export function useNotificationSubscription(recipientId: string, onNotification:
       } catch (err) {
         console.error("❗ Subscription setup failed:", err);
       }
-    })();
+    };
+
+    subscribe();
 
     return () => {
       if (unsubscribeRef.current) {

@@ -7,6 +7,7 @@ import {
   ExpandMore,
   Group,
   InterestsOutlined,
+  LockOutlined,
   PlaceOutlined,
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Chip, Popover, Stack, Tooltip } from "@mui/material";
@@ -33,7 +34,7 @@ function formatDateDifference(dateInput: Date): string {
 }
 
 export const GroupTile = ({
-  tile: { id, title, description, createdAt, usersCount, largePhoto, eventsCount, cities, categories },
+  tile: { id, title, description, createdAt, usersCount, largePhoto, eventsCount, cities, categories, isPrivate },
 }: PropsWithChildren<{ tile: GroupTileType }>) => {
   // ---------------------------
   // State & Handlers for Popovers
@@ -92,7 +93,8 @@ export const GroupTile = ({
 
         <Stack gap={1.5} py={2} px={3} height="100%">
           {/* Group Title */}
-          <Stack direction="row">
+          <Stack direction="row" gap={2}>
+            {isPrivate && <LockOutlined sx={{ color: "text.secondary" }} />}
             <Tooltip title={title}>
               <TruncatedTypography variant="h5">{title}</TruncatedTypography>
             </Tooltip>

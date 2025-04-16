@@ -1,0 +1,9 @@
+mutation MarkAsRead($id: String!) {
+  markAsRead(id: $id) {
+    id
+    type
+    data
+    read
+    createdAt
+  }
+}

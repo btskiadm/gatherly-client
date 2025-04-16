@@ -89,7 +89,6 @@ export const graphQLQueryFactory = async <
           : await graphQLClient.request<QueryData>({ document, signal });
       } catch (refreshError) {
         throw refreshError;
-
         // logout
         // clean access token
         // clean cookies

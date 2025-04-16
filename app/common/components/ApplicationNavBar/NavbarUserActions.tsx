@@ -1,12 +1,12 @@
 "use client";
 
-import { AddCircleOutlineRounded, NotificationsOutlined } from "@mui/icons-material";
+import { AddCircleOutlineRounded, ChatOutlined } from "@mui/icons-material";
 import { Badge, Button, IconButton, Stack } from "@mui/material";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { meQueryOptions } from "../../graphql/options/query/meQueryOptions";
 import { Link } from "../next-link";
 import { AccountButton } from "./AccountButton";
-import { MessagesButton } from "./MessagesButton";
+import { NotificationsButton } from "./NotificationsButton";
 
 export const NavbarUserActions = () => {
   const { data } = useSuspenseQuery(meQueryOptions());
@@ -48,6 +48,7 @@ export const NavbarUserActions = () => {
         Utwórz nowe
       </Button>
       <Stack direction="row" gap={0.5}>
+        <NotificationsButton me={me} />
         <Badge
           slotProps={{
             badge: {
@@ -86,10 +87,9 @@ export const NavbarUserActions = () => {
               },
             }}
           >
-            <NotificationsOutlined fontSize="small" />
+            <ChatOutlined fontSize="small" />
           </IconButton>
         </Badge>
-        <MessagesButton me={me} />
       </Stack>
 
       <AccountButton me={me} />

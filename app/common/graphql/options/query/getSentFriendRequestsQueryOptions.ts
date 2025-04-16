@@ -3,7 +3,13 @@ import { GetSentFriendRequestsQueryVariables } from "@/app/model/operations";
 import { queryOptions } from "@tanstack/react-query";
 import { graphQLQueryFactory } from "../../graphQLClient";
 
-export const getSentFriendRequestsQueryKey = (skip: number, take: number) => ["GetSentFriendRequests", skip, take];
+export const getSentFriendRequestsRootQueryKey = "GetSentFriendRequests";
+
+export const getSentFriendRequestsQueryKey = (skip: number, take: number) => [
+  getSentFriendRequestsRootQueryKey,
+  skip,
+  take,
+];
 
 export const getSentFriendRequestsQueryOptions = (variables: GetSentFriendRequestsQueryVariables) =>
   queryOptions({

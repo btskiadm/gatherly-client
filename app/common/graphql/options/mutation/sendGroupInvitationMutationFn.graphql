@@ -1,0 +1,3 @@
+mutation SendGroupInvitation($groupId: String!, $userId: String!) {
+  sendGroupInvitation(groupId: $groupId, userId: $userId)
+}

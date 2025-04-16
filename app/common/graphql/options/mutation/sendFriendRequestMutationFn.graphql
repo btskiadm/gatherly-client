@@ -1,5 +1,5 @@
-mutation SendFriendRequest($receiverId: String!) {
-  sendFriendRequest(receiverId: $receiverId) {
+mutation SendFriendRequest($receiverIds: [String!]!) {
+  sendFriendRequest(receiverIds: $receiverIds) {
     id
     sender {
       id

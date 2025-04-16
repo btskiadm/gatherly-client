@@ -1,6 +1,6 @@
 "use client";
 
-import { InviteMember, InviteMemberRef } from "@/app/common/components/InviteMember/InviteMember";
+import { InviteUser, inviteUserRef } from "@/app/common/components/InviteUser/InviteUser";
 import { ModalTemplate } from "@/app/common/components/Modal/modal-template";
 import { inviteUsersToGroupMutationFn } from "@/app/common/graphql/options/mutation/inviteUsersToGroupMutationFn";
 import { useMutation } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ export default function InviteUsersToGroupModalPage() {
     mutationFn: inviteUsersToGroupMutationFn,
   });
   const [loading, setLoading] = useState(false);
-  const inviteMemberRef = useRef<InviteMemberRef>(null);
+  const inviteUserRef = useRef<inviteUserRef>(null);
   const router = useRouter();
 
   const handleCancel = useCallback(() => {
@@ -24,7 +24,7 @@ export default function InviteUsersToGroupModalPage() {
   const invite = useMemo(() => {
     return {
       onAction: async () => {
-        const data = inviteMemberRef.current?.invite();
+        const data = inviteUserRef.current?.invite();
 
         if (!data?.success) {
           toast.error("Validation error. Please check the form.");
@@ -65,7 +65,7 @@ export default function InviteUsersToGroupModalPage() {
 
   return (
     <ModalTemplate title="Zaproś użytkowników do grupy" open={true} loading={loading} cancel={cancel} confirm={invite}>
-      <InviteMember ref={inviteMemberRef} />
+      <InviteUser ref={inviteUserRef} />
     </ModalTemplate>
   );
 }

@@ -14,6 +14,21 @@ export type AcceptFriendRequestMutationVariables = Model.Exact<{
 
 export type AcceptFriendRequestMutation = { __typename?: 'Mutation', acceptFriendRequest: { __typename?: 'Friendship', id: string, createdAt: any, user1: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }, user2: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } } };
 
+export type AcceptJoinRequestGroupMutationVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+  userId: Model.Scalars['String']['input'];
+}>;
+
+
+export type AcceptJoinRequestGroupMutation = { __typename?: 'Mutation', acceptJoinRequestGroup: boolean };
+
+export type AcceptSentGroupInvitationMutationVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+}>;
+
+
+export type AcceptSentGroupInvitationMutation = { __typename?: 'Mutation', acceptSentGroupInvitation: boolean };
+
 export type AddGroupCommentMutationVariables = Model.Exact<{
   groupId: Model.Scalars['String']['input'];
   addGroupCommentInput: Model.AddGroupCommentInput;
@@ -35,6 +50,21 @@ export type CancelFriendshipMutationVariables = Model.Exact<{
 
 
 export type CancelFriendshipMutation = { __typename?: 'Mutation', cancelFriendship: { __typename?: 'Friendship', id: string, createdAt: any, user1: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }, user2: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } } };
+
+export type CancelJoinRequestGroupMutationVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+  userId: Model.Scalars['String']['input'];
+}>;
+
+
+export type CancelJoinRequestGroupMutation = { __typename?: 'Mutation', cancelJoinRequestGroup: boolean };
+
+export type CancelSentGroupInvitationMutationVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+}>;
+
+
+export type CancelSentGroupInvitationMutation = { __typename?: 'Mutation', cancelSentGroupInvitation: boolean };
 
 export type CreateEventMutationVariables = Model.Exact<{
   groupId: Model.Scalars['String']['input'];
@@ -58,19 +88,26 @@ export type DeclineFriendRequestMutationVariables = Model.Exact<{
 
 export type DeclineFriendRequestMutation = { __typename?: 'Mutation', declineFriendRequest: { __typename?: 'FriendRequest', id: string, status: Model.FriendRequestStatus, createdAt: any, updatedAt: any, sender: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }, receiver: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } } };
 
+export type DeleteNotificationMutationVariables = Model.Exact<{
+  id: Model.Scalars['String']['input'];
+}>;
+
+
+export type DeleteNotificationMutation = { __typename?: 'Mutation', deleteNotification: { __typename?: 'Notification', id: string, type: Model.NotificationType, data?: any | null, read: boolean, createdAt: any } };
+
 export type JoinGroupMutationVariables = Model.Exact<{
   groupId: Model.Scalars['String']['input'];
 }>;
 
 
-export type JoinGroupMutation = { __typename?: 'Mutation', joinGroup: { __typename: 'JoinGroupReponse', success: boolean } };
+export type JoinGroupMutation = { __typename?: 'Mutation', joinGroup: boolean };
 
 export type LeaveGroupMutationVariables = Model.Exact<{
   groupId: Model.Scalars['String']['input'];
 }>;
 
 
-export type LeaveGroupMutation = { __typename?: 'Mutation', leaveGroup: { __typename: 'LeaveGroupReponse', success: boolean } };
+export type LeaveGroupMutation = { __typename?: 'Mutation', leaveGroup: boolean };
 
 export type LoginMutationVariables = Model.Exact<{
   username: Model.Scalars['String']['input'];
@@ -85,17 +122,32 @@ export type LogoutMutationVariables = Model.Exact<{ [key: string]: never; }>;
 
 export type LogoutMutation = { __typename?: 'Mutation', logout?: { __typename?: 'LogoutResponse', status: string } | null };
 
+export type MarkAsReadMutationVariables = Model.Exact<{
+  id: Model.Scalars['String']['input'];
+}>;
+
+
+export type MarkAsReadMutation = { __typename?: 'Mutation', markAsRead: { __typename?: 'Notification', id: string, type: Model.NotificationType, data?: any | null, read: boolean, createdAt: any } };
+
 export type RefreshTokenMutationVariables = Model.Exact<{ [key: string]: never; }>;
 
 
 export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'RefreshTokenResponse', accessToken: string, user: { __typename?: 'User', id: string, username: string, role: Model.AppRole } } | null };
 
 export type SendFriendRequestMutationVariables = Model.Exact<{
-  receiverId: Model.Scalars['String']['input'];
+  receiverIds: Array<Model.Scalars['String']['input']> | Model.Scalars['String']['input'];
 }>;
 
 
-export type SendFriendRequestMutation = { __typename?: 'Mutation', sendFriendRequest: { __typename?: 'FriendRequest', id: string, status: Model.FriendRequestStatus, createdAt: any, updatedAt: any, sender: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string }, receiver: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string } } };
+export type SendFriendRequestMutation = { __typename?: 'Mutation', sendFriendRequest: Array<{ __typename?: 'FriendRequest', id: string, status: Model.FriendRequestStatus, createdAt: any, updatedAt: any, sender: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string }, receiver: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, status: Model.AccountStatus, role: Model.AppRole, smallPhoto: string, mediumPhoto: string, largePhoto: string } }> };
+
+export type SendGroupInvitationMutationVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+  userId: Model.Scalars['String']['input'];
+}>;
+
+
+export type SendGroupInvitationMutation = { __typename?: 'Mutation', sendGroupInvitation: boolean };
 
 export type UsersQueryVariables = Model.Exact<{ [key: string]: never; }>;
 
@@ -151,7 +203,32 @@ export type GetGroupDetailsQueryVariables = Model.Exact<{
 }>;
 
 
-export type GetGroupDetailsQuery = { __typename?: 'Query', getGroupDetails?: { __typename?: 'GroupDetails', canceledLength: number, createdAt: any, description: string, eventsLength: number, id: string, largePhoto: string, mediumPhoto: string, pastLength: number, pendingLength?: number | null, smallPhoto: string, title: string, upcomingLength: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }>, commentsData: { __typename?: 'CommentsData', rate: number }, usersData: { __typename?: 'UsersData', count: number }, canceled: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }>, past: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, pending: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, upcoming: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }> } | null };
+export type GetGroupDetailsQuery = { __typename?: 'Query', getGroupDetails?: { __typename?: 'GroupDetails', canceledLength: number, status: Model.GroupStatus, updatedAt: any, createdAt: any, description: string, eventsLength: number, id: string, largePhoto: string, mediumPhoto: string, pastLength: number, pendingLength?: number | null, smallPhoto: string, title: string, upcomingLength: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }>, commentsData: { __typename?: 'CommentsData', rate: number }, usersData: { __typename?: 'UsersData', count: number }, canceled: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }>, past: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, pending: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }>, upcoming: Array<{ __typename?: 'GroupedEvents', monthReference: string, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, canceled: boolean, createdAt: any, updatedAt: any, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, usersCount: number, categories: Array<{ __typename?: 'Category', id: string, label: string, value: string }>, cities: Array<{ __typename?: 'City', id: string, label: string, value: string }> }> }> } | null };
+
+export type GetGroupJoinInvitationRequestsQueryVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+  status?: Model.InputMaybe<Array<Model.GroupJoinRequestStatus> | Model.GroupJoinRequestStatus>;
+}>;
+
+
+export type GetGroupJoinInvitationRequestsQuery = { __typename?: 'Query', getGroupJoinInvitationRequests: Array<{ __typename?: 'GroupJoinRequest', id: string, createdAt: any, updatedAt: any, status: Model.GroupJoinRequestStatus, user: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }, sender?: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } | null }> };
+
+export type GetGroupJoinRequestsQueryVariables = Model.Exact<{
+  groupId: Model.Scalars['String']['input'];
+  status?: Model.InputMaybe<Array<Model.GroupJoinRequestStatus> | Model.GroupJoinRequestStatus>;
+}>;
+
+
+export type GetGroupJoinRequestsQuery = { __typename?: 'Query', getGroupJoinRequests: Array<{ __typename?: 'GroupJoinRequest', id: string, createdAt: any, updatedAt: any, status: Model.GroupJoinRequestStatus, user: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }, sender?: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } | null }> };
+
+export type GetGroupTilesByUserIdQueryVariables = Model.Exact<{
+  userId?: Model.InputMaybe<Model.Scalars['String']['input']>;
+  skip: Model.Scalars['Int']['input'];
+  take: Model.Scalars['Int']['input'];
+}>;
+
+
+export type GetGroupTilesByUserIdQuery = { __typename?: 'Query', getGroupTilesByUserId: { __typename?: 'GetGroupsByUserIdReponse', count: number, groups: Array<{ __typename?: 'GroupTileWithUsers', id: string, title: string, description: string, createdAt: any, updatedAt: any, eventsCount: number, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, status: Model.GroupStatus, users: Array<{ __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }>, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> } };
 
 export type GetGroupTilesQueryVariables = Model.Exact<{
   categories: Array<Model.Scalars['String']['input']> | Model.Scalars['String']['input'];
@@ -164,7 +241,7 @@ export type GetGroupTilesQueryVariables = Model.Exact<{
 }>;
 
 
-export type GetGroupTilesQuery = { __typename?: 'Query', getGroupTiles: Array<{ __typename?: 'GroupTile', id: string, title: string, description: string, createdAt: any, updatedAt: any, eventsCount: number, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> };
+export type GetGroupTilesQuery = { __typename?: 'Query', getGroupTiles: Array<{ __typename?: 'GroupTile', id: string, title: string, description: string, createdAt: any, updatedAt: any, eventsCount: number, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, isPrivate: boolean, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> };
 
 export type GetReceivedFriendRequestsQueryVariables = Model.Exact<{
   skip: Model.Scalars['Int']['input'];
@@ -207,7 +284,7 @@ export type GetUserWithProfileQueryVariables = Model.Exact<{
 }>;
 
 
-export type GetUserWithProfileQuery = { __typename?: 'Query', getUserWithProfile?: { __typename?: 'UserWithProfile', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string, profile: { __typename?: 'Profile', bio?: string | null, facebook?: string | null, phoneNumber?: string | null, tiktok?: string | null, twitter?: string | null, instagram?: string | null, youtube?: string | null, categories: Array<{ __typename?: 'CategoryUserProfile', category: { __typename?: 'Category', id: string, label: string, value: string } }>, cities: Array<{ __typename?: 'CityUserProfile', city: { __typename?: 'City', id: string, label: string, value: string } }> } } | null, getGroupTilesByUserId: { __typename?: 'GetGroupsByUserIdReponse', count: number, groups: Array<{ __typename?: 'GroupTile', id: string, title: string, description: string, createdAt: any, updatedAt: any, eventsCount: number, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> }, getEventTilesByUserId: { __typename?: 'GetEventTilesByUserIdReponse', count: number, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, createdAt: any, canceled: boolean, updatedAt: any, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> }, getFriendsList: { __typename?: 'GetFriendsListResponse', count: number, friends: Array<{ __typename?: 'Friend', id: string, createdAt: any, user: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } }> } };
+export type GetUserWithProfileQuery = { __typename?: 'Query', getUserWithProfile?: { __typename?: 'UserWithProfile', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string, profile: { __typename?: 'Profile', bio?: string | null, facebook?: string | null, phoneNumber?: string | null, tiktok?: string | null, twitter?: string | null, instagram?: string | null, youtube?: string | null, categories: Array<{ __typename?: 'CategoryUserProfile', category: { __typename?: 'Category', id: string, label: string, value: string } }>, cities: Array<{ __typename?: 'CityUserProfile', city: { __typename?: 'City', id: string, label: string, value: string } }> } } | null, getGroupTilesByUserId: { __typename?: 'GetGroupsByUserIdReponse', count: number, groups: Array<{ __typename?: 'GroupTileWithUsers', id: string, title: string, description: string, createdAt: any, updatedAt: any, eventsCount: number, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, users: Array<{ __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string }>, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> }, getEventTilesByUserId: { __typename?: 'GetEventTilesByUserIdReponse', count: number, events: Array<{ __typename?: 'EventTile', id: string, title: string, description: string, createdAt: any, canceled: boolean, updatedAt: any, usersCount: number, smallPhoto: string, mediumPhoto: string, largePhoto: string, startAt: any, endAt: any, eventType: Model.EventType, cities: Array<{ __typename?: 'City', id: string, value: string, label: string }>, categories: Array<{ __typename?: 'Category', id: string, value: string, label: string }> }> }, getFriendsList: { __typename?: 'GetFriendsListResponse', count: number, friends: Array<{ __typename?: 'Friend', id: string, createdAt: any, user: { __typename?: 'User', id: string, username: string, email: string, createdAt: any, role: Model.AppRole, status: Model.AccountStatus, smallPhoto: string, mediumPhoto: string, largePhoto: string } }> } };
 
 export type GetUsersByUsernameQueryVariables = Model.Exact<{
   username: Model.Scalars['String']['input'];
